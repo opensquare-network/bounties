@@ -1,0 +1,44 @@
+{
+  "name": "@bounties/server",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "scripts": {
+    "serve": "node src/index.js",
+    "test": "jest --runInBand"
+  },
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "@osn/ipfs": "^0.0.3",
+    "@polkadot/util": "^9.6.1",
+    "@polkadot/util-crypto": "^9.6.1",
+    "bignumber.js": "^9.0.2",
+    "dotenv": "^8.2.0",
+    "ipfs-only-hash": "^4.0.0",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-helmet": "^6.0.0",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^10.0.0",
+    "lodash.flatten": "^4.4.0",
+    "lodash.uniq": "^4.5.0",
+    "lodash.uniqwith": "^4.5.0",
+    "log4js": "^6.5.2",
+    "mongoose": "^6.4.0",
+    "socket.io": "^4.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "@shelf/jest-mongodb": "^2.2.0",
+    "babel-jest": "^27.5.1",
+    "jest": "^27.5.1",
+    "jest-environment-node": "^27.5.1"
+  }
+}
