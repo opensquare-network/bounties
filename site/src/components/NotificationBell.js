@@ -18,10 +18,7 @@ export default function NotificationBell() {
   return (
     <Link to="/notifications">
       <Wrapper>
-        <img
-          src={"/imgs/icons/unread-notification.svg"}
-          alt=""
-        />
+        <img src={"/imgs/icons/unread-notification.svg"} alt="" />
       </Wrapper>
     </Link>
   );

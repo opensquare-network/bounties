@@ -24,9 +24,7 @@ export default function Home() {
     <Wrapper>
       <Background />
       <Container>
-        <ContentWrapper>
-          Home page
-        </ContentWrapper>
+        <ContentWrapper>Home page</ContentWrapper>
       </Container>
     </Wrapper>
   );

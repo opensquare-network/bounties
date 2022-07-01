@@ -1,8 +1,6 @@
 import { Chains } from "@osn/consts/src";
 
-const DEVELOPMENT_NETWORK = [
-  { network: Chains.westend },
-];
+const DEVELOPMENT_NETWORK = [{ network: Chains.westend }];
 
 const PRODUCTION_NETWORK = [
   { network: Chains.polkadot },
