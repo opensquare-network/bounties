@@ -8,12 +8,16 @@ const CommentSchema = new mongoose.Schema(
       bountyIndex: Number,
       childBountyIndex: Number,
     },
+    commenterNetwork: String,
     content: String,
     contentType: String,
-    cid: String,
-    pinned: Boolean,
+    data: mongoose.Schema.Types.Mixed,
+    address: String,
+    signature: String,
+    pinHash: String,
   },
   {
+    typeKey: "$type",
     timestamps: true,
     toJSON: { virtuals: true },
   }

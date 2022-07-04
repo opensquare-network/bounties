@@ -1,16 +1,13 @@
+const { hexToString } = require("@polkadot/util");
 const { HttpError } = require("../utils/exc");
-const { Bounty } = require("../models");
+const { Bounty, Comment } = require("../models");
 const { NetworkInfo } = require("../utils/chain");
-const {
-  getApi,
-  getBountyInfo,
-} = require("./node.service");
+const { getApi, getBountyInfo } = require("./node.service");
 
 async function getBounties(page, pageSize) {
   const q = {};
   const total = await Bounty.countDocuments(q);
-  const items = await Bounty
-    .find(q)
+  const items = await Bounty.find(q)
     .skip((page - 1) * pageSize)
     .limit(pageSize);
   return {
@@ -23,17 +20,31 @@ async function getBounties(page, pageSize) {
 
 async function getBounty(network, bountyIndex) {
   const bounty = await Bounty.findOne({ network, bountyIndex });
-  return bounty;
+  const comments = await Comment.find({
+    "indexer.type": "bounty",
+    "indexer.network": network,
+    "indexer.bountyIndex": bountyIndex,
+  });
+
+  return {
+    ...bounty,
+    comments,
+  };
 }
 
-async function getCurator(bountyMeta) {
-  return (
-    bountyMeta?.status?.active ||
-    bountyMeta?.status?.pendingPayout
-  )?.curator;
+function getCurator(bountyMeta) {
+  return (bountyMeta?.status?.active || bountyMeta?.status?.pendingPayout)
+    ?.curator;
 }
 
-async function importBounty(network, bountyIndex, logo, data, address, signature) {
+async function importBounty(
+  network,
+  bountyIndex,
+  logo,
+  data,
+  address,
+  signature
+) {
   const api = await getApi(network);
   const { meta, description } = await getBountyInfo(api, bountyIndex);
 
@@ -62,9 +73,9 @@ async function importBounty(network, bountyIndex, logo, data, address, signature
       value,
       decimals: networkInfo.decimals,
       symbol: networkInfo.symbol,
-      description,
+      description: hexToString(description),
       meta,
-    }
+    },
   });
 
   return bounty;

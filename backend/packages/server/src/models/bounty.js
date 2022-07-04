@@ -8,13 +8,16 @@ const BountySchema = new mongoose.Schema(
     content: String,
     contentType: String,
     logo: String,
+    data: mongoose.Schema.Types.Mixed,
+    address: String,
+    signature: String,
     links: [String],
     status: {
       type: String,
-      enum: ["open", "working", "closed"] //TODO: check enums
+      enum: ["open", "closed"],
     },
     bounty: {
-      value: Number,
+      value: mongoose.Schema.Types.Decimal128,
       decimals: Number,
       symbol: String,
       curator: String,

@@ -11,26 +11,41 @@ async function getBounties(ctx) {
 }
 
 async function importBounty(ctx) {
-  const {
-    data: { network, bountyIndex, logo } = {},
-    address,
-    signature,
-  } = ctx.request.body;
+  const { data, address, signature } = ctx.request.body;
+  const { action, network, bountyIndex, logo } = data || {};
+
+  if (action !== "importBounty") {
+    throw new HttpError(400, { action: ["Action must be importBounty"] });
+  }
 
   if (!network) {
-    throw new HttpError(400, "Network is missing")
+    throw new HttpError(400, { network: ["Network is missing"] });
   }
 
   if (bountyIndex === undefined) {
-    throw new HttpError(400, "Bounty index is missing")
+    throw new HttpError(400, { bountyIndex: ["Bounty index is missing"] });
   }
 
-  ctx.body = await bountyService.importBounty(network, parseInt(bountyIndex), logo, data, address, signature);
+  ctx.body = await bountyService.importBounty(
+    network,
+    parseInt(bountyIndex),
+    logo,
+    data,
+    address,
+    signature
+  );
 }
 
 async function getBounty(ctx) {
   const { network, bountyIndex } = ctx.params;
-  //TODO: check param
+
+  if (!network) {
+    throw new HttpError(400, "Network is missing");
+  }
+
+  if (bountyIndex === undefined) {
+    throw new HttpError(400, "Bounty index is missing");
+  }
 
   ctx.body = await bountyService.getBounty(network, parseInt(bountyIndex));
 }

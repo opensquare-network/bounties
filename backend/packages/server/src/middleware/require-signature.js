@@ -15,6 +15,7 @@ async function verifySignature(msg, address, signature) {
 
 async function requireSignature(ctx, next) {
   const { data, address, signature } = ctx.request.body;
+
   if (!data) {
     throw new HttpError(400, "Data is missing");
   }
