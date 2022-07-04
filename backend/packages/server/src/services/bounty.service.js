@@ -41,6 +41,9 @@ async function importBounty(
   network,
   bountyIndex,
   logo,
+  title,
+  content,
+  contentType,
   data,
   address,
   signature
@@ -68,6 +71,9 @@ async function importBounty(
     network,
     bountyIndex,
     logo,
+    title,
+    content,
+    contentType,
     bounty: {
       curator,
       value,
