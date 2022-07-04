@@ -43,7 +43,6 @@ async function importBounty(
   logo,
   title,
   content,
-  contentType,
   data,
   address,
   signature
@@ -73,7 +72,6 @@ async function importBounty(
     logo,
     title,
     content,
-    contentType,
     bounty: {
       curator,
       value,

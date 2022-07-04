@@ -10,7 +10,6 @@ const CommentSchema = new mongoose.Schema(
     },
     commenterNetwork: String,
     content: String,
-    contentType: String,
     data: mongoose.Schema.Types.Mixed,
     address: String,
     signature: String,

@@ -1,4 +1,3 @@
-const { ContentType } = require("../../constants");
 const bountyService = require("../../services/bounty.service");
 const { HttpError } = require("../../utils/exc");
 const { extractPage } = require("../../utils/pagination");
@@ -13,7 +12,7 @@ async function getBounties(ctx) {
 
 async function importBounty(ctx) {
   const { data, address, signature } = ctx.request.body;
-  const { action, network, bountyIndex, logo, title, content, contentType } = data || {};
+  const { action, network, bountyIndex, logo, title, content } = data || {};
 
   if (action !== "importBounty") {
     throw new HttpError(400, { action: ["Action must be importBounty"] });
@@ -35,20 +34,12 @@ async function importBounty(ctx) {
     throw new HttpError(400, { content: ["Content is missing"] });
   }
 
-  if (
-    contentType !== ContentType.Markdown &&
-    contentType !== ContentType.Html
-  ) {
-    throw new HttpError(400, { contentType: ["Unknown content type"] });
-  }
-
   ctx.body = await bountyService.importBounty(
     network,
     parseInt(bountyIndex),
     logo,
     title,
     content,
-    contentType,
     data,
     address,
     signature

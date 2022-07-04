@@ -3,7 +3,6 @@ const { Comment, Bounty } = require("../models");
 async function postComment(
   indexer,
   content,
-  contentType,
   commenterNetwork,
   data,
   address,
@@ -23,7 +22,6 @@ async function postComment(
   await Comment.create({
     indexer,
     content,
-    contentType,
     commenterNetwork,
     data,
     address,

@@ -6,7 +6,6 @@ const BountySchema = new mongoose.Schema(
     bountyIndex: Number,
     title: String,
     content: String,
-    contentType: String,
     logo: String,
     data: mongoose.Schema.Types.Mixed,
     address: String,
