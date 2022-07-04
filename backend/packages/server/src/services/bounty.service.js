@@ -1,9 +1,6 @@
-const { hexToString } = require("@polkadot/util");
 const { HttpError } = require("../utils/exc");
 const { Bounty, Comment } = require("../models");
-const { NetworkInfo } = require("../utils/chain");
-const { getNodeApi, getBountyInfo } = require("./node.service");
-const { getMultisigApi, getMultisigAddresses } = require("./multisig.service");
+const chainService = require("./chain.service");
 
 async function getBounties(page, pageSize) {
   const q = {};
@@ -33,11 +30,6 @@ async function getBounty(network, bountyIndex) {
   };
 }
 
-function getCurator(bountyMeta) {
-  return (bountyMeta?.status?.active || bountyMeta?.status?.pendingPayout)
-    ?.curator;
-}
-
 async function importBounty(
   network,
   bountyIndex,
@@ -48,48 +40,32 @@ async function importBounty(
   address,
   signature
 ) {
-  const nodeApi = await getNodeApi(network);
-  const { meta, description } = await getBountyInfo(nodeApi, bountyIndex);
-
-  const curator = getCurator(meta);
-  if (!curator) {
-    throw new HttpError(403, "Bounty curator is not found");
+  const bounty = await chainService.getBounty(network, bountyIndex);
+  if (!bounty) {
+    throw new HttpError(404, "Bounty is not found");
   }
 
-  const multisigApi = await getMultisigApi(network);
-  const multisigCurators = await getMultisigAddresses(multisigApi, curator);
-
-  if (
-    curator !== address &&
-    (!multisigCurators || !multisigCurators.include(address))
-  ) {
-    throw new HttpError(403, "Only curator is allowd to import the bounty");
+  if (bounty.curators.length === 0) {
+    throw new HttpError(403, "Bounty curator is not assigned yet");
   }
 
-  const networkInfo = NetworkInfo[network];
-  if (!networkInfo) {
-    throw new HttpError(400, `Unsupport network: ${network}`);
+  if (!bounty.curators.includes(address)) {
+    throw new HttpError(403, "Only curator is allowed to import the bounty");
   }
 
-  const value = meta.value;
-
-  const bounty = await Bounty.create({
+  const result = await Bounty.create({
     network,
     bountyIndex,
     logo,
     title,
     content,
-    bounty: {
-      curators: [curator, ...multisigCurators],
-      value,
-      decimals: networkInfo.decimals,
-      symbol: networkInfo.symbol,
-      description: hexToString(description),
-      meta,
-    },
+    bounty,
+    data,
+    address,
+    signature,
   });
 
-  return bounty;
+  return result;
 }
 
 module.exports = {
