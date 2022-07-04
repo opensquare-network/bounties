@@ -4,7 +4,7 @@ const router = new Router();
 
 const featureRouters = [
   require("./features/bounties/routes"),
-  require("./features/child-bounties/routes"),
+  require("./features/comments/routes"),
 ];
 
 for (const r of featureRouters) {

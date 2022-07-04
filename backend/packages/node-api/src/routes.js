@@ -3,7 +3,9 @@ const { Chains } = require("./constants");
 
 const router = new Router();
 
-const chainFeatureRouters = [];
+const chainFeatureRouters = [
+  require("./features/bounty/routes"),
+];
 
 const commonFeatureRouters = [];
 
