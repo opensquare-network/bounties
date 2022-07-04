@@ -30,7 +30,7 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "scripts": {
-    "prepare": "cd .. && husky install ./backend/.husky && husky set ./backend/.husky/pre-commit \"npx lint-staged\""
+    "prepare": "cd .. && husky install ./backend/.husky"
   },
   "repository": "https://github.com/opensquare-network/bounties.git",
   "author": "OpenSquare <https://www.opensquare.network/>"
