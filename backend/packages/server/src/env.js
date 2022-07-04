@@ -12,6 +12,9 @@ const USE_LOCAL_IPFS_NODE = ["true", "True", "TRUE", "1"].includes(
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
+const MULTISIG_API_ENDPOINT =
+  process.env.MULTISIG_API_ENDPOINT || "http://localhost:4701";
+
 module.exports = {
   NODE_API_ENDPOINT,
   INFURA_PROJECT_ID,
@@ -19,4 +22,5 @@ module.exports = {
   LOCAL_IPFS_NODE_URL,
   USE_LOCAL_IPFS_NODE,
   MONGODB_URI,
+  MULTISIG_API_ENDPOINT,
 };

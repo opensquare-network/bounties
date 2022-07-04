@@ -1,4 +1,4 @@
-const Api = require("./nodeApi");
+const Api = require("../utils/api");
 const { HttpError } = require("../utils/exc");
 const { NODE_API_ENDPOINT } = require("../env");
 

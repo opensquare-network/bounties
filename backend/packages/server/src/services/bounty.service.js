@@ -2,7 +2,8 @@ const { hexToString } = require("@polkadot/util");
 const { HttpError } = require("../utils/exc");
 const { Bounty, Comment } = require("../models");
 const { NetworkInfo } = require("../utils/chain");
-const { getApi, getBountyInfo } = require("./node.service");
+const { getNodeApi, getBountyInfo } = require("./node.service");
+const { getMultisigApi, getMultisigAddresses } = require("./multisig.service");
 
 async function getBounties(page, pageSize) {
   const q = {};
@@ -47,15 +48,21 @@ async function importBounty(
   address,
   signature
 ) {
-  const api = await getApi(network);
-  const { meta, description } = await getBountyInfo(api, bountyIndex);
+  const nodeApi = await getNodeApi(network);
+  const { meta, description } = await getBountyInfo(nodeApi, bountyIndex);
 
   const curator = getCurator(meta);
   if (!curator) {
     throw new HttpError(403, "Bounty curator is not found");
   }
 
-  if (curator !== address) {
+  const multisigApi = await getMultisigApi(network);
+  const multisigCurators = await getMultisigAddresses(multisigApi, curator);
+
+  if (
+    curator !== address &&
+    (!multisigCurators || !multisigCurators.include(address))
+  ) {
     throw new HttpError(403, "Only curator is allowd to import the bounty");
   }
 
@@ -73,7 +80,7 @@ async function importBounty(
     title,
     content,
     bounty: {
-      curator,
+      curators: [curator, ...multisigCurators],
       value,
       decimals: networkInfo.decimals,
       symbol: networkInfo.symbol,

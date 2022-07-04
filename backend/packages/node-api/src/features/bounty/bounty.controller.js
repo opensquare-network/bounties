@@ -2,10 +2,11 @@ const { getApis } = require("@osn/polkadot-api-container");
 
 async function getBountyFromOneApi(api, bountyIndex) {
   const bountyMeta = await api.query.bounties.bounties(bountyIndex);
-  const bountyDescription = await api.query.bounties.bountyDescriptions(bountyIndex);
+  const bountyDescription = await api.query.bounties.bountyDescriptions(
+    bountyIndex
+  );
   const meta = bountyMeta.toJSON();
   const description = bountyDescription.toJSON();
-  //TODO: parse multisig curators
 
   return {
     meta,
@@ -31,10 +32,7 @@ async function getBountyInfo(ctx) {
   }
 
   try {
-    const bountyInfo = await getBountyFromApis(
-      apis,
-      parseInt(bountyIndex)
-    );
+    const bountyInfo = await getBountyFromApis(apis, parseInt(bountyIndex));
     ctx.body = bountyInfo;
   } catch (e) {
     console.error("Get bounty info from node fail", e);
