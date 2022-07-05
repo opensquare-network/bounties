@@ -1,3 +1,4 @@
+const BigNumber = require("bignumber.js");
 const { hexToString } = require("@polkadot/util");
 const { HttpError } = require("../utils/exc");
 const { NetworkInfo } = require("../utils/chain");
@@ -28,7 +29,7 @@ async function getBounty(network, bountyIndex) {
     throw new HttpError(400, `Unsupport network: ${network}`);
   }
 
-  const value = meta.value;
+  const value = new BigNumber(meta.value).toFixed();
 
   return {
     curators,

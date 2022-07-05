@@ -1,6 +1,7 @@
 const { HttpError } = require("../utils/exc");
 const { Bounty, Comment } = require("../models");
 const chainService = require("./chain.service");
+const { ipfsAddBuffer } = require("./ipfs.service");
 
 async function getBounties(page, pageSize) {
   const q = {};
@@ -40,6 +41,11 @@ async function importBounty(
   address,
   signature
 ) {
+  const exist = await Bounty.exists({ network, bountyIndex });
+  if (exist) {
+    throw new HttpError(404, "Bounty is already imported");
+  }
+
   const bounty = await chainService.getBounty(network, bountyIndex);
   if (!bounty) {
     throw new HttpError(404, "Bounty is not found");
@@ -53,10 +59,22 @@ async function importBounty(
     throw new HttpError(403, "Only curator is allowed to import the bounty");
   }
 
+  let logoCid;
+  if (logo) {
+    const fileData = logo.buffer;
+    const Megabyte = 1024 * 1024;
+    if (logo.size > 10 * Megabyte) {
+      throw new HttpError(400, "The upload file has exceeded the size limitation");
+    }
+
+    const result = await ipfsAddBuffer(fileData);
+    logoCid = result.path;
+  }
+
   const result = await Bounty.create({
     network,
     bountyIndex,
-    logo,
+    logo: logoCid,
     title,
     content,
     bounty,

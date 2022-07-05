@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Decimal128 } = require("./utils");
 
 const BountySchema = new mongoose.Schema(
   {
@@ -16,7 +17,7 @@ const BountySchema = new mongoose.Schema(
       enum: ["open", "closed"],
     },
     bounty: {
-      value: mongoose.Schema.Types.Decimal128,
+      value: Decimal128,
       decimals: Number,
       symbol: String,
       curator: String,
@@ -26,7 +27,7 @@ const BountySchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    toJSON: { virtuals: true },
+    toJSON: { virtuals: true, getters: true },
   }
 );
 

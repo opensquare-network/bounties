@@ -24,7 +24,11 @@ async function requireSignature(ctx, next) {
     throw new HttpError(400, "Signature is missing");
   }
 
-  const msg = JSON.stringify(data);
+  let msg = data;
+  if (typeof data !== "string") {
+    msg = JSON.stringify(data);
+  }
+
   const verified = await verifySignature(msg, address, signature);
   if (!verified) {
     throw new HttpError(400, "Signature is invalid");

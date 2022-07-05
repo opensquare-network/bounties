@@ -12,7 +12,8 @@ async function getBounties(ctx) {
 
 async function importBounty(ctx) {
   const { data, address, signature } = ctx.request.body;
-  const { action, network, bountyIndex, logo, title, content } = data || {};
+  const { action, network, bountyIndex, title, content } = JSON.parse(data) || {};
+  const logo = ctx.request.file;
 
   if (action !== "importBounty") {
     throw new HttpError(400, { action: ["Action must be importBounty"] });
