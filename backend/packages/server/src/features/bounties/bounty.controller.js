@@ -11,8 +11,10 @@ async function getBounties(ctx) {
 }
 
 async function importBounty(ctx) {
-  const { data, address, signature } = ctx.request.body;
-  const { action, network, bountyIndex, title, content } = JSON.parse(data) || {};
+  const { data: msg, address, signature } = ctx.request.body;
+
+  const data = JSON.parse(msg);
+  const { action, network, bountyIndex, title, content } = data || {};
   const logo = ctx.request.file;
 
   if (action !== "importBounty") {
