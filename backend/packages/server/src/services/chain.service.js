@@ -1,8 +1,8 @@
 const { hexToString } = require("@polkadot/util");
 const { HttpError } = require("../utils/exc");
 const { NetworkInfo } = require("../utils/chain");
-const { getNodeApi, getBountyInfo } = require("./node.service");
-const { getMultisigApi, getMultisigAddresses } = require("./multisig.service");
+const { getApi: getNodeApi, getBountyInfo } = require("./node.service");
+const { getApi: getMultisigApi, getMultisigAddresses } = require("./multisig.service");
 
 function getCurator(bountyMeta) {
   return (bountyMeta?.status?.active || bountyMeta?.status?.pendingPayout)
