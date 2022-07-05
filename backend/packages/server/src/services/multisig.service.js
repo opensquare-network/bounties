@@ -14,8 +14,8 @@ function getApi(chain) {
 
 async function getMultisigAddresses(api, address) {
   try {
-    const result = []; //TODO: await api.get(`multisig/address/${address}`);
-    return result;
+    const result = await api.get(`multisig/address/${address}`);
+    return result?.signatories || [];
   } catch (err) {
     console.error(err.message);
     throw new HttpError(500, "Failed to get multisig address");
