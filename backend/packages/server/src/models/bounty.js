@@ -20,7 +20,7 @@ const BountySchema = new mongoose.Schema(
       value: Decimal128,
       decimals: Number,
       symbol: String,
-      curator: String,
+      curators: [String],
       description: String,
       meta: mongoose.Schema.Types.Mixed,
     },
