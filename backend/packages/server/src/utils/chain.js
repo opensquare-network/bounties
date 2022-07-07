@@ -16,6 +16,9 @@ const NetworkInfo = {
   }
 }
 
+const allChains = Object.keys(NetworkInfo);
+
 module.exports = {
   NetworkInfo,
+  allChains,
 };
