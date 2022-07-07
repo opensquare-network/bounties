@@ -48,17 +48,18 @@ async function importBounty(
 
   const bounty = await chainService.getBounty(network, bountyIndex);
   if (!bounty) {
-    throw new HttpError(404, "Bounty is not found");
+    throw new HttpError(404, `Can not find bounty ${ bountyIndex } on chain`);
   }
 
   if (bounty.curators.length === 0) {
-    throw new HttpError(403, "Bounty curator is not assigned yet");
+    throw new HttpError(403, "Can not find bounty curator");
   }
 
   if (!bounty.curators.includes(address)) {
     throw new HttpError(403, "Only curator is allowed to import the bounty");
   }
 
+  // todo: extract following logic in one separate file and function
   let logoCid;
   if (logo) {
     const fileData = logo.buffer;
@@ -71,7 +72,7 @@ async function importBounty(
     logoCid = result.path;
   }
 
-  const result = await Bounty.create({
+  return await Bounty.create({
     network,
     bountyIndex,
     logo: logoCid,
@@ -82,8 +83,6 @@ async function importBounty(
     address,
     signature,
   });
-
-  return result;
 }
 
 module.exports = {

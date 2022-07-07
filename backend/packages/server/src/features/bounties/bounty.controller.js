@@ -1,6 +1,9 @@
 const bountyService = require("../../services/bounty.service");
 const { HttpError } = require("../../utils/exc");
 const { extractPage } = require("../../utils/pagination");
+const isNil = require("lodash.isnil");
+const trim = require("lodash.trim");
+const { allChains } = require("../../utils/chain");
 
 async function getBounties(ctx) {
   const { page, pageSize } = extractPage(ctx);
@@ -13,7 +16,13 @@ async function getBounties(ctx) {
 async function importBounty(ctx) {
   const { data: msg, address, signature } = ctx.request.body;
 
-  const data = JSON.parse(msg);
+  let data;
+  try {
+    data = JSON.parse(msg);
+  } catch (e) {
+    throw new HttpError(400, "Invalid data");
+  }
+
   const { action, network, bountyIndex, title, content } = data || {};
   const logo = ctx.request.file;
 
@@ -21,19 +30,21 @@ async function importBounty(ctx) {
     throw new HttpError(400, { action: ["Action must be importBounty"] });
   }
 
-  if (!network) {
-    throw new HttpError(400, { network: ["Network is missing"] });
+  if (!network || !allChains.includes(network)) {
+    throw new HttpError(400, { network: ["Invalid network"] });
   }
 
-  if (bountyIndex === undefined) {
+  if (isNil(bountyIndex)) {
     throw new HttpError(400, { bountyIndex: ["Bounty index is missing"] });
   }
 
-  if (!title) {
+  const trimTitle = trim(title);
+  if (!trimTitle) {
     throw new HttpError(400, { title: ["Title is missing"] });
   }
 
-  if (!content) {
+  const trimContent = trim(content);
+  if (!trimContent) {
     throw new HttpError(400, { content: ["Content is missing"] });
   }
 
@@ -41,8 +52,8 @@ async function importBounty(ctx) {
     network,
     parseInt(bountyIndex),
     logo,
-    title,
-    content,
+    trimTitle,
+    trimContent,
     data,
     address,
     signature
