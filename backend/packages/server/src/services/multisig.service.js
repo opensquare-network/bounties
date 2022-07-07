@@ -4,17 +4,15 @@ const { MULTISIG_API_ENDPOINT } = require("../env");
 
 const cachedApis = {};
 
-function getApi(chain) {
-  if (!cachedApis[chain]) {
-    cachedApis[chain] = new Api(`${MULTISIG_API_ENDPOINT}/${chain}/`);
+async function getMultisigAddresses(network, address) {
+  if (!cachedApis[network]) {
+    cachedApis[network] = new Api(`${ MULTISIG_API_ENDPOINT }/${ network }/`);
   }
 
-  return cachedApis[chain];
-}
+  const api = cachedApis[network];
 
-async function getMultisigAddresses(api, address) {
   try {
-    const result = await api.get(`multisig/address/${address}`);
+    const result = await api.get(`multisig/address/${ address }`);
     return result?.signatories || [];
   } catch (err) {
     console.error(err.message);
@@ -23,6 +21,5 @@ async function getMultisigAddresses(api, address) {
 }
 
 module.exports = {
-  getApi,
   getMultisigAddresses,
 };
