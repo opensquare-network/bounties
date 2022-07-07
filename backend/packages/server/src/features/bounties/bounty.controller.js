@@ -13,7 +13,13 @@ async function getBounties(ctx) {
 async function importBounty(ctx) {
   const { data: msg, address, signature } = ctx.request.body;
 
-  const data = JSON.parse(msg);
+  let data;
+  try {
+    data = JSON.parse(msg);
+  } catch (e) {
+    throw new HttpError(400, "Invalid data");
+  }
+
   const { action, network, bountyIndex, title, content } = data || {};
   const logo = ctx.request.file;
 
