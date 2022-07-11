@@ -7,7 +7,7 @@ import {
   addressEllipsis,
   encodeNetworkAddress,
 } from "@osn/common/src/utils/address";
-import { identityChainMap } from "@osn/consts";
+import { identityChainMap } from "@osn/constants";
 
 const IdentityWrapper = styled.a`
   display: flex;
