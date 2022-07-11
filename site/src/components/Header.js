@@ -18,7 +18,7 @@ import {
 } from "../store/reducers/showConnectSlice";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 import { NavLink } from "react-router-dom";
 
 const RightWrapper = styled(Flex)`

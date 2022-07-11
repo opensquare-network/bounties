@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { Container } from "@osn/common-ui";
 import Background from "components/Background";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 
 const Wrapper = styled.div`
   position: relative;

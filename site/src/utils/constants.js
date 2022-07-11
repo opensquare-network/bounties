@@ -1,4 +1,4 @@
-import { Chains } from "@osn/consts/src";
+import { Chains } from "@osn/constants";
 
 const DEVELOPMENT_NETWORK = [{ network: Chains.westend }];
 
