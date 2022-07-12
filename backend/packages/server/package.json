@@ -15,10 +15,12 @@
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
-    "@osn/ipfs": "^0.0.3",
+    "@koa/multer": "^3.0.0",
+    "@osn/ipfs": "^0.0.4",
     "@polkadot/util": "^9.6.1",
     "@polkadot/util-crypto": "^9.6.1",
     "bignumber.js": "^9.0.2",
+    "cid": "multiformats/cid",
     "dotenv": "^8.2.0",
     "ipfs-only-hash": "^4.0.0",
     "koa": "^2.13.1",
@@ -27,10 +29,13 @@
     "koa-logger": "^3.2.1",
     "koa-router": "^10.0.0",
     "lodash.flatten": "^4.4.0",
+    "lodash.isnil": "^4.0.0",
+    "lodash.trim": "^4.5.1",
     "lodash.uniq": "^4.5.0",
     "lodash.uniqwith": "^4.5.0",
     "log4js": "^6.5.2",
     "mongoose": "^6.4.0",
+    "multer": "^1.4.5-lts.1",
     "socket.io": "^4.5.0"
   },
   "devDependencies": {

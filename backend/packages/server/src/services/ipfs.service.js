@@ -22,6 +22,11 @@ async function ipfsAdd(data) {
   return added;
 }
 
+async function ipfsAddBuffer(data) {
+  const added = await ipfsClient.add(data);
+  return added;
+}
+
 async function cidOf(obj) {
   const data = JSON.stringify(obj);
   const cidV0 = await Hash.of(Buffer.from(data));
@@ -32,4 +37,5 @@ async function cidOf(obj) {
 module.exports = {
   cidOf,
   ipfsAdd,
+  ipfsAddBuffer,
 };
