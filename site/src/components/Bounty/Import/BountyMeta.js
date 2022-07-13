@@ -33,7 +33,7 @@ const DisabledText = styled(Text)`
   color: #a1a8b3;
 `;
 
-const ChainWrapper = styled.div`
+const FieldBox = styled.div`
   display: flex;
   align-items: center;
   padding: 12px 16px;
@@ -142,10 +142,10 @@ export default function BountyMeta({
           <StyledText>Network</StyledText>
           <NetworkIcon />
         </FlexBetween>
-        <ChainWrapper>
+        <FieldBox>
           <ChainIcon chainName={account?.network} />
           <Text>{account?.network}</Text>
-        </ChainWrapper>
+        </FieldBox>
       </Field>
       <Field>
         <FlexBetween>
@@ -191,7 +191,7 @@ export default function BountyMeta({
               )}
             </>
           ) : (
-            <ChainWrapper>
+            <FieldBox>
               <img
                 width="20px"
                 height="20px"
@@ -200,7 +200,7 @@ export default function BountyMeta({
               />
               <DisabledText>Unspecified</DisabledText>
               {loading && <Loading />}
-            </ChainWrapper>
+            </FieldBox>
           )}
         </SubField>
       </Field>
@@ -209,7 +209,7 @@ export default function BountyMeta({
           <StyledText>Bounty</StyledText>
           <RewardIcon />
         </FlexBetween>
-        <ChainWrapper>
+        <FieldBox>
           <ChainIcon chainName={account?.network} />
           {value ? (
             <Text>
@@ -223,7 +223,7 @@ export default function BountyMeta({
             </DisabledText>
           )}
           {loading && <Loading />}
-        </ChainWrapper>
+        </FieldBox>
       </Field>
     </>
   );
