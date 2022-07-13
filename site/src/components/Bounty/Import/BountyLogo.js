@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
 import { ReactComponent as KusamaLogoIcon } from "imgs/icons/bounty-logo-kusama.svg";
+import { ReactComponent as PolkadotLogoIcon } from "imgs/icons/bounty-logo-polkadot.svg";
 import { ReactComponent as UploadLogoIcon } from "imgs/icons/logo-upload.svg";
 import { useRef, useState } from "react";
 
@@ -57,7 +58,7 @@ const Info = styled.div`
   color: #a1a8b3;
 `;
 
-export default function BountyLogo({ setImageFile }) {
+export default function BountyLogo({ network, setImageFile }) {
   const inputEl = useRef();
   const [imageDataUrl, setImageDataUrl] = useState(null);
 
@@ -96,11 +97,13 @@ export default function BountyLogo({ setImageFile }) {
     }
   };
 
+  const defaultLogo = network === "kusama" ? <KusamaLogoIcon /> : <PolkadotLogoIcon />;
+
   return (
     <>
       <Title>Logo</Title>
       <LogoContainer>
-        {!inputEl.current?.vaule && <KusamaLogoIcon />}
+        {!inputEl.current?.vaule && defaultLogo}
         <Layer style={{ opacity: imageDataUrl ? 1 : 0 }}>
           <img className="logo" src={imageDataUrl} alt="" />
         </Layer>

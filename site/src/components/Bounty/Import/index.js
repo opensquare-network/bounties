@@ -238,7 +238,7 @@ export default function ImportBounty() {
   return (
     <Wrapper>
       <Main>
-        <BountyLogo imageFile={imageFile} setImageFile={setImageFile} />
+        <BountyLogo imageFile={imageFile} setImageFile={setImageFile} network={account?.network} />
         <Title>
           <span>Bounty ID</span>
           <Tooltip
