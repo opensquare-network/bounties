@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   border-bottom: 1px solid #e2e8f0;
   :hover,
   :focus,
+  :focus-within,
   :active {
     border-color: #b7c0cc;
   }
