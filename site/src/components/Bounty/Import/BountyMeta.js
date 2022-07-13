@@ -154,10 +154,10 @@ export default function BountyMeta({
         </FlexBetween>
         <SubField>
           <FieldTitle>Funder</FieldTitle>
-          <ChainWrapper>
+          <FieldBox>
             <ChainIcon chainName={account?.network} />
             <Text>{account?.network} Treasury</Text>
-          </ChainWrapper>
+          </FieldBox>
         </SubField>
         <SubField>
           <FieldTitle>Curator</FieldTitle>
