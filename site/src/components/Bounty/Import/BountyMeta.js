@@ -33,7 +33,7 @@ const DisabledText = styled(Text)`
   color: #a1a8b3;
 `;
 
-const ChainWrapper = styled.div`
+const FieldBox = styled.div`
   display: flex;
   align-items: center;
   padding: 12px 16px;
@@ -51,6 +51,54 @@ const ChainWrapper = styled.div`
   > :nth-child(2) {
     flex-grow: 1;
   }
+`;
+
+const CuratorsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 12px 16px;
+
+  min-height: 48px;
+
+  background: #fbfcfe;
+  border: 1px solid #e2e8f0;
+  box-sizing: border-box;
+`;
+
+const CuratorItem = styled.div`
+  display: flex;
+  align-items: center;
+
+  > :first-child {
+    margin-right: 8px;
+  }
+
+  > :nth-child(2) {
+    flex-grow: 1;
+  }
+`;
+
+const Signatories = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+  > span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #A1A8B3;
+  }
+`;
+
+const SignatoriesDivider = styled.div`
+  flex-grow: 1;
+  display: inline-block;
+  height: 1px;
+  background: #F0F3F8;
 `;
 
 const Field = styled.div`
@@ -85,6 +133,7 @@ export default function BountyMeta({
   loading,
 }) {
   const account = useSelector(accountSelector);
+  const multisigCurators = curators.slice(1);
 
   return (
     <>
@@ -93,10 +142,10 @@ export default function BountyMeta({
           <StyledText>Network</StyledText>
           <NetworkIcon />
         </FlexBetween>
-        <ChainWrapper>
+        <FieldBox>
           <ChainIcon chainName={account?.network} />
           <Text>{account?.network}</Text>
-        </ChainWrapper>
+        </FieldBox>
       </Field>
       <Field>
         <FlexBetween>
@@ -114,9 +163,27 @@ export default function BountyMeta({
           <FieldTitle>Curator</FieldTitle>
           {curators?.length > 0 ? (
             <>
-              <ChainWrapper>
-                <NetworkUser network={account?.network} address={curators[0]} />
-              </ChainWrapper>
+              <CuratorsList>
+                <CuratorItem>
+                  <NetworkUser network={account?.network} address={curators[0]} />
+                </CuratorItem>
+                {multisigCurators?.length > 0 && (
+                  <>
+                    <Signatories>
+                      <span>Signatories</span>
+                      <SignatoriesDivider />
+                    </Signatories>
+                    {multisigCurators.map((curator) => (
+                      <CuratorItem key={curator}>
+                        <NetworkUser
+                          network={account?.network}
+                          address={curator}
+                        />
+                      </CuratorItem>
+                    ))}
+                  </>
+                )}
+              </CuratorsList>
               {!curators?.includes(account?.address) && (
                 <ErrorMessage>
                   Only bounty curator can import this bounty.
@@ -124,7 +191,7 @@ export default function BountyMeta({
               )}
             </>
           ) : (
-            <ChainWrapper>
+            <FieldBox>
               <img
                 width="20px"
                 height="20px"
@@ -133,7 +200,7 @@ export default function BountyMeta({
               />
               <DisabledText>Unspecified</DisabledText>
               {loading && <Loading />}
-            </ChainWrapper>
+            </FieldBox>
           )}
         </SubField>
       </Field>
@@ -142,14 +209,21 @@ export default function BountyMeta({
           <StyledText>Bounty</StyledText>
           <RewardIcon />
         </FlexBetween>
-        <ChainWrapper>
+        <FieldBox>
           <ChainIcon chainName={account?.network} />
-          <Text>
-            {new BigNumber(value).div(Math.pow(10, decimals)).toFixed()}{" "}
-            {symbol}
-          </Text>
+          {value ? (
+            <Text>
+              {new BigNumber(value).div(Math.pow(10, decimals)).toFixed()}{" "}
+              {symbol}
+            </Text>
+          ) : (
+            <DisabledText>
+              {"0.00 "}
+              {symbol}
+            </DisabledText>
+          )}
           {loading && <Loading />}
-        </ChainWrapper>
+        </FieldBox>
       </Field>
     </>
   );
