@@ -21,6 +21,7 @@ import { ASSETS } from "utils/constants";
 import { signApiData } from "utils/signature";
 import Tooltip from "@osn/common-ui/es/Tooltip";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
+import LoadingInput from "../../LoadingInput";
 
 const Wrapper = styled.div`
   display: flex;
@@ -120,10 +121,6 @@ export default function ImportBounty() {
   const fetchBountyMeta = useMemo(() => {
     return debounce(async (bountyId) => {
       if (!bountyId) {
-        setTitle("");
-        setValue(0);
-        setBountyError("");
-        setCurators([]);
         return;
       }
 
@@ -135,11 +132,7 @@ export default function ImportBounty() {
       setLoading(true);
       serverApi
         .fetch(`chain/${account?.network}/bounty/${bountyId}`)
-        .then(({ result, error }) => {
-          if (isMounted.current) {
-            setLoading(false);
-          }
-
+        .then(({ result }) => {
           if (result) {
             if (isMounted.current) {
               setTitle(result.description);
@@ -149,14 +142,10 @@ export default function ImportBounty() {
               setLoaded(true);
             }
           }
-
-          if (error) {
-            if (isMounted.current) {
-              setTitle("");
-              setValue(0);
-              setBountyError(error.message);
-              setCurators([]);
-            }
+        })
+        .finally(() => {
+          if (isMounted.current) {
+            setLoading(false);
           }
         });
     }, 300);
@@ -164,6 +153,11 @@ export default function ImportBounty() {
 
   useEffect(() => {
     setLoaded(false);
+    setTitle("");
+    setValue(0);
+    setBountyError("");
+    setCurators([]);
+
     fetchBountyMeta(bountyId);
   }, [fetchBountyMeta, bountyId]);
 
@@ -238,13 +232,14 @@ export default function ImportBounty() {
   return (
     <Wrapper>
       <Main>
-        <BountyLogo imageFile={imageFile} setImageFile={setImageFile} network={account?.network} />
+        <BountyLogo
+          imageFile={imageFile}
+          setImageFile={setImageFile}
+          network={account?.network}
+        />
         <Title>
           <span>Bounty ID</span>
-          <Tooltip
-            content={`The bounty ID on-chain`}
-            size="fit"
-          >
+          <Tooltip content={`The bounty ID on-chain`} size="fit">
             <div>
               <FlexCenter>
                 <img src="/imgs/icons/question.svg" alt="" />
@@ -264,13 +259,14 @@ export default function ImportBounty() {
           {bountyError && <ErrorMessage>{bountyError}</ErrorMessage>}
         </InputAndError>
         <Title>Title</Title>
-        <Input
+        <LoadingInput
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
           placeholder="Input title here..."
           disabled={loading}
+          loading={loading}
         />
         <Title>Topic</Title>
         <RichEditor
@@ -288,6 +284,7 @@ export default function ImportBounty() {
               symbol={asset?.symbol}
               decimals={asset?.decimals}
               value={value}
+              loading={loading}
             />
             <Button primary block disabled={!canImport} onClick={doImport}>
               Publish
