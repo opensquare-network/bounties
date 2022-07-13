@@ -6,6 +6,7 @@ import ChainIcon from "@osn/common-ui/es/Chain/ChainIcon";
 import { ReactComponent as NetworkIcon } from "imgs/icons/network.svg";
 import { ReactComponent as RewardIcon } from "imgs/icons/treasury.svg";
 import { ReactComponent as InfoIcon } from "imgs/icons/info.svg";
+import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import {
   p_14_medium,
   p_16_semibold,
@@ -46,6 +47,10 @@ const ChainWrapper = styled.div`
   > :first-child {
     margin-right: 8px;
   }
+
+  > :nth-child(2) {
+    flex-grow: 1;
+  }
 `;
 
 const Field = styled.div`
@@ -72,7 +77,13 @@ const FieldTitle = styled.div`
   color: #1e2134;
 `;
 
-export default function BountyMeta({ value, symbol, decimals, curators = [] }) {
+export default function BountyMeta({
+  value,
+  symbol,
+  decimals,
+  curators = [],
+  loading,
+}) {
   const account = useSelector(accountSelector);
 
   return (
@@ -121,6 +132,7 @@ export default function BountyMeta({ value, symbol, decimals, curators = [] }) {
                 alt=""
               />
               <DisabledText>Unspecified</DisabledText>
+              {loading && <Loading />}
             </ChainWrapper>
           )}
         </SubField>
@@ -136,6 +148,7 @@ export default function BountyMeta({ value, symbol, decimals, curators = [] }) {
             {new BigNumber(value).div(Math.pow(10, decimals)).toFixed()}{" "}
             {symbol}
           </Text>
+          {loading && <Loading />}
         </ChainWrapper>
       </Field>
     </>
