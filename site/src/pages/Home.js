@@ -5,6 +5,7 @@ import Background from "components/Background";
 import { MOBILE_SIZE } from "@osn/constants";
 import { h3_36_bold, p_20_semibold } from "@osn/common-ui/es/styles/textStyles";
 import ChildBountyList from "components/Bounty/ChildBountyList";
+import BountyList from "components/Bounty/BountyList";
 
 const Wrapper = styled.div`
   position: relative;
@@ -37,6 +38,8 @@ export default function Home() {
         <ContentWrapper>
           <div>
             <Title>Bounties</Title>
+
+            <BountyList />
           </div>
 
           <div>
