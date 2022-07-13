@@ -168,7 +168,6 @@ function ConnectedAccount({ account, showMenu, setShowMenu }) {
     </MenuWrapper>
   );
 
-  console.log({ address, network });
   return (
     <Wrapper>
       <AccountWrapperPC

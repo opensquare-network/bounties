@@ -13,6 +13,10 @@ function getCurator(bountyMeta) {
 async function getBounty(network, bountyIndex) {
   const { meta, description } = await getBountyInfo(network, bountyIndex);
 
+  if (!meta) {
+    throw new HttpError(404, `Bounty does not exists`);
+  }
+
   let curators = [];
 
   const curator = getCurator(meta);
@@ -24,7 +28,7 @@ async function getBounty(network, bountyIndex) {
 
   const networkInfo = NetworkInfo[network];
   if (!networkInfo) {
-    throw new HttpError(400, `Unsupport network: ${ network }`);
+    throw new HttpError(400, `Unsupport network: ${network}`);
   }
 
   const value = new BigNumber(meta.value).toFixed();
@@ -34,7 +38,7 @@ async function getBounty(network, bountyIndex) {
     value,
     decimals: networkInfo.decimals,
     symbol: networkInfo.symbol,
-    description: hexToString(description),
+    description: description ? hexToString(description) : "",
     meta,
   };
 }

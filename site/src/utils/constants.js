@@ -1,6 +1,10 @@
 import { Chains } from "@osn/constants";
 
-const DEVELOPMENT_NETWORK = [{ network: Chains.westend }];
+const DEVELOPMENT_NETWORK = [
+  { network: Chains.polkadot },
+  { network: Chains.kusama },
+  { network: Chains.westend },
+];
 
 const PRODUCTION_NETWORK = [
   { network: Chains.polkadot },
@@ -20,19 +24,34 @@ export const ASSETS = [
     id: "polkadot",
     name: "Polkadot",
     symbol: "DOT",
+    decimals: 10,
   },
   {
     id: "kusama",
     name: "Kusama",
     symbol: "KSM",
+    decimals: 12,
   },
 ];
 
 export const TEST_ASSETS = [
   {
+    id: "polkadot",
+    name: "Polkadot",
+    symbol: "DOT",
+    decimals: 10,
+  },
+  {
+    id: "kusama",
+    name: "Kusama",
+    symbol: "KSM",
+    decimals: 12,
+  },
+  {
     id: "westend",
     name: "Westend",
     symbol: "WND",
+    decimals: 12,
   },
 ];
 
