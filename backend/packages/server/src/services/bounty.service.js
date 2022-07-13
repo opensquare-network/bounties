@@ -43,12 +43,12 @@ async function importBounty(
 ) {
   const exist = await Bounty.exists({ network, bountyIndex });
   if (exist) {
-    throw new HttpError(404, "Bounty is already imported");
+    throw new HttpError(400, "Bounty is already imported");
   }
 
   const bounty = await chainService.getBounty(network, bountyIndex);
   if (!bounty) {
-    throw new HttpError(404, `Can not find bounty ${ bountyIndex } on chain`);
+    throw new HttpError(404, `Can not find bounty ${bountyIndex} on chain`);
   }
 
   if (bounty.curators.length === 0) {
@@ -65,7 +65,10 @@ async function importBounty(
     const fileData = logo.buffer;
     const Megabyte = 1024 * 1024;
     if (logo.size > 10 * Megabyte) {
-      throw new HttpError(400, "The upload file has exceeded the size limitation");
+      throw new HttpError(
+        400,
+        "The upload file has exceeded the size limitation"
+      );
     }
 
     const result = await ipfsAddBuffer(fileData);

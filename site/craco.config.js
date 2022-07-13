@@ -34,11 +34,11 @@ const enableImportOutsideSrcDir = {
 
 module.exports = {
   plugins: [
-    // {
-    //   // now that we're compiling these files, enable importing them
-    //   plugin: enableImportOutsideSrcDir,
-    //   options: { path: "./public/imgs", name: "imgs" },
-    // },
+    {
+      // now that we're compiling these files, enable importing them
+      plugin: enableImportOutsideSrcDir,
+      options: { path: "./public/imgs", name: "imgs" },
+    },
   ],
   webpack: {
     configure: {
