@@ -20,7 +20,7 @@
     "@polkadot/util": "^9.6.1",
     "@polkadot/util-crypto": "^9.6.1",
     "bignumber.js": "^9.0.2",
-    "cid": "multiformats/cid",
+    "multiformats": "^9.6.5",
     "dotenv": "^8.2.0",
     "ipfs-only-hash": "^4.0.0",
     "koa": "^2.13.1",
