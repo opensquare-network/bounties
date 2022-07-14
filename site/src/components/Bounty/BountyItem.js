@@ -1,11 +1,12 @@
 import { Card, ChainIcon, FlexCenter, List } from "@osn/common-ui";
 import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
 import Tooltip from "@osn/common-ui/es/Tooltip";
+import { Link } from "react-router-dom";
 import { Detail, Head, SubTitle, Title } from "./styled/bounty";
 import { detailLoading, headLoading } from "./styled/bountyLoading";
 
 function BountyItem(props) {
-  const { network, title, bounty } = props ?? {};
+  const { network, title, bountyIndex, bounty } = props ?? {};
 
   const details = [
     {
@@ -44,7 +45,11 @@ function BountyItem(props) {
       head={
         <Head>
           <ChainIcon chainName={network} size={64} />
-          <Title>{title}</Title>
+          <Title>
+            <Link to={`/network/${network}/bounty/${bountyIndex}`}>
+              {title}
+            </Link>
+          </Title>
           <SubTitle>{network} Network</SubTitle>
         </Head>
       }
