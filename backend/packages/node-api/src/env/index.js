@@ -3,7 +3,6 @@ const { Chains } = require("../constants");
 const chainEndpointsMap = {
   [Chains.polkadot]: process.env.DOT_ENDPOINTS,
   [Chains.kusama]: process.env.KSM_ENDPOINTS,
-  [Chains.westend]: process.env.WND_ENDPOINTS,
 };
 
 // [chain, endpoints]
