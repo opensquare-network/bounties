@@ -1,13 +1,9 @@
 import styled from "styled-components";
-import {
-  p_14_normal,
-  p_16_semibold,
-} from "@osn/common-ui/es/styles/textStyles";
+import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
 import { MarkdownPreviewer } from "@osn/previewer";
 import Accordion from "components/Accordion";
 
-const Wrapper = styled.div`
-`;
+const Wrapper = styled.div``;
 
 const Title = styled.span`
   ${p_16_semibold}
