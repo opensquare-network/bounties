@@ -12,7 +12,7 @@ router.get(
 );
 
 router.post(
-  "/bounties/import",
+  "/bounties",
   upload.single("logo"),
   requireSignature,
   bountyController.importBounty,

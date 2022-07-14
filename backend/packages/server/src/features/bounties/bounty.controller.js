@@ -8,9 +8,7 @@ const { allChains } = require("../../utils/chain");
 async function getBounties(ctx) {
   const { page, pageSize } = extractPage(ctx);
 
-  const result = await bountyService.getBounties(page, pageSize);
-
-  ctx.body = result;
+  ctx.body = await bountyService.getBounties(page, pageSize);
 }
 
 async function importBounty(ctx) {

@@ -198,7 +198,7 @@ export default function ImportBounty() {
       }
 
       const { result, error } = await serverApi.fetch(
-        `bounties/import`,
+        `bounties`,
         {},
         {
           method: "POST",
