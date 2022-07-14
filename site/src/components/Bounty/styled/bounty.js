@@ -20,6 +20,11 @@ export const Title = styled.h4`
   color: ${text_dark_major};
   margin-top: 20px;
   margin-bottom: 0;
+  cursor: pointer;
+
+  :hover {
+    text-decoration: underline;
+  }
 `;
 
 export const SubTitle = styled.p`
