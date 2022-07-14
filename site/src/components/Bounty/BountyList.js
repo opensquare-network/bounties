@@ -1,6 +1,3 @@
-import { useDispatch } from "react-redux";
-import { fetchBountyList } from "store/reducers/bountySlice";
-import { useAsyncState } from "@osn/common";
 import BountyItem from "./BountyItem";
 import styled from "styled-components";
 import { MOBILE_SIZE } from "@osn/constants";
@@ -16,22 +13,19 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function BountyList() {
-  const dispatch = useDispatch();
+export default function BountyList({ items = [], isLoading = false }) {
+  if (!items.length || isLoading) {
+    return (
+      <Wrapper>
+        <BountyItem.Loading />
+      </Wrapper>
+    );
+  }
 
-  const {
-    state: { payload },
-    isLoading,
-  } = useAsyncState(() => dispatch(fetchBountyList()), {});
-
-  return isLoading ? (
-    <Wrapper>
-      <BountyItem.Loading />
-    </Wrapper>
-  ) : (
+  return (
     <Wrapper>
       {/* TODO: how many in mobile size */}
-      {payload?.items?.map?.((item, idx) => (
+      {items?.map((item, idx) => (
         <BountyItem key={idx} {...item}></BountyItem>
       ))}
     </Wrapper>
