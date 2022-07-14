@@ -1,27 +1,15 @@
 import styled from "styled-components";
 
-import Card from "@osn/common-ui/es/styled/Card";
+import { Card, Divider } from "@osn/common-ui";
 import Title from "./Title";
 import Info from "./Info";
 import Description from "./Description";
 import Share from "./Share";
-import DetailLoader from "@osn/common-ui/es/Skeleton/DetailLoader";
 import JoinGroupButton from "./JoinGroupButton";
-
-const Wrapper = styled(Card)`
-  > :not(:first-child) {
-    padding-top: 20px;
-    border-top: solid 1px #f0f3f8;
-  }
-  > :not(:last-child) {
-    padding-bottom: 20px;
-  }
-
-  .post-detail-resolve {
-    padding-top: 0;
-    border-top: none;
-  }
-`;
+import {
+  descriptionLoading,
+  metaLoading,
+} from "components/Bounty/styled/metaLoading";
 
 const BottomBar = styled.div`
   display: flex;
@@ -30,18 +18,25 @@ const BottomBar = styled.div`
 
 export default function BountyMeta({ bountyDetail }) {
   if (!bountyDetail) {
-    return <DetailLoader />;
+    return <Card head={metaLoading}>{descriptionLoading}</Card>;
   }
 
   return (
-    <Wrapper>
-      <Title bountyDetail={bountyDetail} />
-      <Info bountyDetail={bountyDetail} />
+    <Card
+      head={
+        <>
+          <Title bountyDetail={bountyDetail} />
+          <Divider />
+          <Info bountyDetail={bountyDetail} />
+        </>
+      }
+    >
       <Description bountyDetail={bountyDetail} />
+      <Divider />
       <BottomBar>
         <Share />
         <JoinGroupButton />
       </BottomBar>
-    </Wrapper>
+    </Card>
   );
 }

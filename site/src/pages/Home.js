@@ -13,6 +13,9 @@ import ChildBountyList from "components/Bounty/ChildBountyList";
 import BountyList from "components/Bounty/BountyList";
 import { Link } from "react-router-dom";
 import { text_dark_minor } from "@osn/common-ui/es/styles/colors";
+import { useDispatch } from "react-redux";
+import { fetchBountyList } from "store/reducers/bountySlice";
+import { useAsyncState } from "@osn/common";
 
 const Wrapper = styled.div`
   position: relative;
@@ -57,6 +60,12 @@ const BountyListWrapper = styled.div`
 `;
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const {
+    state: { payload },
+    isLoading,
+  } = useAsyncState(() => dispatch(fetchBountyList()), {});
+
   return (
     <Wrapper>
       <Background />
@@ -74,7 +83,7 @@ export default function Home() {
             </FlexBetween>
 
             <BountyListWrapper>
-              <BountyList />
+              <BountyList isLoading={isLoading} items={payload?.items} />
             </BountyListWrapper>
           </div>
 
