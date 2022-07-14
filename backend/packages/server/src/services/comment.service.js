@@ -1,3 +1,4 @@
+const { HttpError } = require("../utils/exc");
 const { Comment, Bounty } = require("../models");
 
 async function postComment(

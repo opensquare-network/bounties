@@ -19,6 +19,11 @@ async function getBounties(page, pageSize) {
 
 async function getBounty(network, bountyIndex) {
   const bounty = await Bounty.findOne({ network, bountyIndex });
+
+  if (!bounty) {
+    throw new HttpError(404, "Bounty not found");
+  }
+
   const comments = await Comment.find({
     "indexer.type": "bounty",
     "indexer.network": network,
@@ -26,7 +31,7 @@ async function getBounty(network, bountyIndex) {
   });
 
   return {
-    ...bounty,
+    ...bounty.toJSON(),
     comments,
   };
 }
@@ -41,8 +46,8 @@ async function importBounty(
   address,
   signature
 ) {
-  const exist = await Bounty.exists({ network, bountyIndex });
-  if (exist) {
+  const exists = await Bounty.exists({ network, bountyIndex });
+  if (exists) {
     throw new HttpError(400, "Bounty is already imported");
   }
 
@@ -88,8 +93,30 @@ async function importBounty(
   });
 }
 
+async function getBountyComments(network, bountyIndex, page, pageSize) {
+  const q = {
+    "indexer.type": "bounty",
+    "indexer.network": network,
+    "indexer.bountyIndex": bountyIndex,
+  };
+
+  const total = await Comment.count(q);
+  const comments = await Comment
+    .find(q)
+    .skip((page - 1) * pageSize)
+    .limit(pageSize);
+
+  return {
+    items: comments,
+    page,
+    pageSize,
+    total,
+  }
+}
+
 module.exports = {
   importBounty,
   getBounties,
   getBounty,
+  getBountyComments,
 };

@@ -23,4 +23,9 @@ router.get(
   bountyController.getBounty,
 );
 
+router.get(
+  "/network/:network/bounties/:bountyIndex/comments",
+  bountyController.getBountyComments,
+);
+
 module.exports = router;

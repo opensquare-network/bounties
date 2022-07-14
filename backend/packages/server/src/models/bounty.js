@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 const { Decimal128 } = require("./utils");
 
+const IPFS_GATEWAY_URL = process.env.IPFS_GATEWAY_URL || "https://ipfs.infura.io/ipfs/";
+
+function getIpfsUrl(logoCid) {
+  return `${IPFS_GATEWAY_URL}${logoCid}`;
+}
+
 const BountySchema = new mongoose.Schema(
   {
     network: String,
@@ -30,6 +36,10 @@ const BountySchema = new mongoose.Schema(
     toJSON: { virtuals: true, getters: true },
   }
 );
+
+BountySchema.virtual("logoUrl").get(function() {
+  return getIpfsUrl(this.logo);
+});
 
 const Bounty = mongoose.model("Bounty", BountySchema);
 
