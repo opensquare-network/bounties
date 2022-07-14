@@ -64,11 +64,9 @@ const MoreActionItem = styled(FlexBetween)`
   }
 `;
 
-export default function ActionBar({
-  network,
-  address,
-  onReply = ()=>{},
-}) {
+export default function ActionBar({ network, address, onReply = () => {} }) {
+  // FIXME: remove this
+  // eslint-disable-next-line
   const [showReport, setShowReport] = useState(false);
   const [showMoreActions, setShowMoreActions] = useState(false);
   const account = useSelector(accountSelector);

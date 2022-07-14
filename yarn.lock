@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@2nthony/prettier-config@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@2nthony/prettier-config/-/prettier-config-1.0.1.tgz#995fc3dcc9660217e75d3dcee2e249fc7dfa6446"
+  integrity sha512-GRIHMYFWAfmIGDt9A1LiwoVCd6UoB4WEhqzk7nU4t4VDiXPeO7WAoovkKw3YVEz94gMeo044yLuTiug4EIPFSA==
+
 "@types/minimatch@^3.0.3":
   version "3.0.5"
   resolved "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.5.tgz#1001cc5e6a3704b83c236027e77f2f58ea010f40"
