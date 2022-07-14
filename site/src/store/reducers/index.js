@@ -5,6 +5,7 @@ import nodeReducer from "./nodeSlice";
 import toastReducer from "./toastSlice";
 import showConnectReducer from "./showConnectSlice";
 import bountyReducer from "./bountySlice";
+import discussionReducer from "./discussionSlice";
 
 export default combineReducers({
   account: accountReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   toast: toastReducer,
   showConnect: showConnectReducer,
   bounty: bountyReducer,
+  discussion: discussionReducer,
 });

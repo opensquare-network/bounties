@@ -8,6 +8,7 @@ import Main from "@osn/common-ui/es/styled/Main";
 import Toast from "components/Toast";
 import Home from "pages/Home";
 import ImportBounty from "pages/ImportBounty";
+import BountyDetail from "pages/BountyDetail";
 import FourOFour from "pages/404";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -21,6 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/import_bounty" element={<ImportBounty />} />
+            <Route path="/network/:network/bounty/:bountyId" element={<BountyDetail />} />
             <Route path="*" element={<FourOFour />} />
           </Routes>
         </Main>

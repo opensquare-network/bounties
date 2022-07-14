@@ -74,8 +74,25 @@ async function getBounty(ctx) {
   ctx.body = await bountyService.getBounty(network, parseInt(bountyIndex));
 }
 
+async function getBountyComments(ctx) {
+  const { network, bountyIndex } = ctx.params;
+  const { page, pageSize } = extractPage(ctx);
+
+  if (!network) {
+    throw new HttpError(400, "Network is missing");
+  }
+
+  if (bountyIndex === undefined) {
+    throw new HttpError(400, "Bounty index is missing");
+  }
+
+  ctx.body = await bountyService.getBountyComments(network, parseInt(bountyIndex), page, pageSize);
+
+}
+
 module.exports = {
   getBounty,
   getBounties,
   importBounty,
+  getBountyComments,
 };
