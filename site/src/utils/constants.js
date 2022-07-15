@@ -3,7 +3,6 @@ import { Chains } from "@osn/constants";
 const DEVELOPMENT_NETWORK = [
   { network: Chains.polkadot },
   { network: Chains.kusama },
-  { network: Chains.westend },
 ];
 
 const PRODUCTION_NETWORK = [
@@ -47,12 +46,6 @@ export const TEST_ASSETS = [
     symbol: "KSM",
     decimals: 12,
   },
-  {
-    id: "westend",
-    name: "Westend",
-    symbol: "WND",
-    decimals: 12,
-  },
 ];
 
 export const DEFAULT_POLKADOT_NODES = [
@@ -87,31 +80,9 @@ export const DEFAULT_KUSAMA_NODES = [
 ];
 export const DEFAULT_KUSAMA_NODE_URL = DEFAULT_KUSAMA_NODES[0]?.url;
 
-export const DEFAULT_WESTEND_NODES = [
-  {
-    name: "Parity",
-    url: "wss://westend-rpc.polkadot.io",
-  },
-  {
-    name: "OnFinality",
-    url: "wss://westend.api.onfinality.io/public-ws",
-  },
-  {
-    name: "Pinknode",
-    url: "wss://rpc.pinknode.io/westend/explorer",
-  },
-  {
-    name: "Dwellir",
-    url: "wss://westend-rpc.dwellir.com",
-  },
-];
-
-export const DEFAULT_WESTEND_NODE_URL = DEFAULT_WESTEND_NODES[0]?.url;
-
 export const DEFAULT_NODES = {
   polkadot: DEFAULT_POLKADOT_NODE_URL,
   kusama: DEFAULT_KUSAMA_NODE_URL,
-  westend: DEFAULT_WESTEND_NODE_URL,
 };
 
 export const EmptyList = {
