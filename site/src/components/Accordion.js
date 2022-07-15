@@ -23,13 +23,13 @@ const Title = styled.div`
   }
 `;
 
-const RotateCaret = styled(Caret)`
-  & {
+const CaretWrapper = styled.span`
+  svg {
     transform: rotate(${(props) => (props.fold ? 180 : 0)}deg);
-  }
-  &:hover {
-    path {
-      fill: #506176;
+    &:hover {
+      path {
+        fill: #506176;
+      }
     }
   }
 `;
@@ -53,7 +53,9 @@ function Accordion({ children, title, showFold = true, divider }) {
         <div>{title}</div>
         {showFold && (
           <span onClick={() => setFold(!fold)}>
-            <RotateCaret fold={fold} />
+            <CaretWrapper fold={fold}>
+              <Caret />
+            </CaretWrapper>
           </span>
         )}
       </Title>
