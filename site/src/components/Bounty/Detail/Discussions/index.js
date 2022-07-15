@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { Card, Dot, Divider, List } from "@osn/common-ui";
+import { Card, Dot, List } from "@osn/common-ui";
 import Item from "./Item";
 import Pagination from "@osn/common-ui/es/styled/Pagination";
 import {
