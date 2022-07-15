@@ -7,6 +7,7 @@ import Tooltip from "@osn/common-ui/es/Tooltip";
 import { ReactComponent as PolkassemblyIcon } from "imgs/icons/polkassembly.svg";
 import { ReactComponent as SubSquareIcon } from "imgs/icons/subsquare.svg";
 import { ReactComponent as DotreasuryIcon } from "imgs/icons/dotreasury.svg";
+import { capitalize } from "utils";
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,7 +38,7 @@ const InfoContent = styled.div`
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
-  color: #1E2134;
+  color: #1e2134;
   gap: 8px;
   > a {
     cursor: pointer;
@@ -54,7 +55,7 @@ export default function Info({ bountyDetail }) {
         content={
           <InfoContent>
             <ChainIcon chainName={bountyDetail?.network} />
-            <span>Kusama Treasury</span>
+            <span>{capitalize(bountyDetail?.network)} Treasury</span>
           </InfoContent>
         }
       />
@@ -62,7 +63,10 @@ export default function Info({ bountyDetail }) {
         title={<InfoHeader>Curator</InfoHeader>}
         content={
           <InfoContent>
-            <NetworkUser network={bountyDetail?.network} address={bountyDetail?.bounty?.curators?.[0]} />
+            <NetworkUser
+              network={bountyDetail?.network}
+              address={bountyDetail?.bounty?.curators?.[0]}
+            />
           </InfoContent>
         }
       />
@@ -100,16 +104,29 @@ export default function Info({ bountyDetail }) {
         title={<InfoHeader>Related Links</InfoHeader>}
         content={
           <InfoContent>
-            <a target="_blank" rel="noreferrer" href={`https://${bountyDetail?.network}.subsquare.io/treasury/bounty/${bountyDetail?.bountyIndex}`}>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`https://${bountyDetail?.network}.subsquare.io/treasury/bounty/${bountyDetail?.bountyIndex}`}
+            >
               <SubSquareIcon />
             </a>
-            <a target="_blank" rel="noreferrer" href={`https://dotreasury.com/${dotreasuryNetwork}/bounties/${bountyDetail?.bountyIndex}`}>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`https://dotreasury.com/${dotreasuryNetwork}/bounties/${bountyDetail?.bountyIndex}`}
+            >
               <DotreasuryIcon />
             </a>
-            <a target="_blank" rel="noreferrer" href={`https://${bountyDetail?.network}.polkassembly.io/bounty/${bountyDetail?.bountyIndex}`}>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`https://${bountyDetail?.network}.polkassembly.io/bounty/${bountyDetail?.bountyIndex}`}
+            >
               <PolkassemblyIcon />
             </a>
-          </InfoContent>}
+          </InfoContent>
+        }
       />
     </Wrapper>
   );
