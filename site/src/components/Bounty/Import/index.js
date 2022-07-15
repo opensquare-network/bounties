@@ -7,7 +7,14 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import { popUpConnect } from "store/reducers/showConnectSlice";
-import { newErrorToast, newPendingToast, newSuccessToast, newToastId, removeToast, updatePendingToast } from "store/reducers/toastSlice";
+import {
+  newErrorToast,
+  newPendingToast,
+  newSuccessToast,
+  newToastId,
+  removeToast,
+  updatePendingToast,
+} from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
 import { useNavigate } from "react-router-dom";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
