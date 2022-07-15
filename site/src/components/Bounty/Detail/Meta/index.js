@@ -5,7 +5,7 @@ import Title from "./Title";
 import Info from "./Info";
 import Description from "./Description";
 import Share from "./Share";
-import JoinGroupButton from "./JoinGroupButton";
+// import JoinGroupButton from "./JoinGroupButton";
 import {
   descriptionLoading,
   metaLoading,
@@ -35,7 +35,7 @@ export default function BountyMeta({ bountyDetail }) {
       <Divider />
       <BottomBar>
         <Share />
-        <JoinGroupButton />
+        {/* <JoinGroupButton /> */}
       </BottomBar>
     </Card>
   );

@@ -38,7 +38,7 @@ const BountySchema = new mongoose.Schema(
 );
 
 BountySchema.virtual("logoUrl").get(function() {
-  return getIpfsUrl(this.logo);
+  return this.logo && getIpfsUrl(this.logo);
 });
 
 const Bounty = mongoose.model("Bounty", BountySchema);
