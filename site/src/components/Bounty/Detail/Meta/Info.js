@@ -8,6 +8,7 @@ import { ReactComponent as PolkassemblyIcon } from "imgs/icons/polkassembly.svg"
 import { ReactComponent as SubSquareIcon } from "imgs/icons/subsquare.svg";
 import { ReactComponent as DotreasuryIcon } from "imgs/icons/dotreasury.svg";
 import { capitalize } from "utils";
+import { LinkIdentityUser } from "@osn/common-ui";
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ const InfoHeader = styled.div`
 `;
 
 const InfoContent = styled.div`
+  max-width: 100%;
   display: flex;
   align-items: center;
   font-style: normal;
@@ -63,7 +65,8 @@ export default function Info({ bountyDetail }) {
         title={<InfoHeader>Curator</InfoHeader>}
         content={
           <InfoContent>
-            <NetworkUser
+            <LinkIdentityUser
+              explore
               network={bountyDetail?.network}
               address={bountyDetail?.bounty?.curators?.[0]}
             />
