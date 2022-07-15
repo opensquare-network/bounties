@@ -5,8 +5,6 @@ import {
   DEFAULT_POLKADOT_NODES,
   DEFAULT_KUSAMA_NODE_URL,
   DEFAULT_KUSAMA_NODES,
-  DEFAULT_WESTEND_NODES,
-  DEFAULT_WESTEND_NODE_URL,
 } from "utils/constants";
 
 let nodeUrl = (() => {
@@ -24,16 +22,12 @@ let nodeUrl = (() => {
     kusama:
       DEFAULT_KUSAMA_NODES.find((item) => item.url === localNodeUrl?.kusama)
         ?.url || DEFAULT_KUSAMA_NODE_URL,
-    westend:
-      DEFAULT_WESTEND_NODES.find((item) => item.url === localNodeUrl?.bifrost)
-        ?.url || DEFAULT_WESTEND_NODE_URL,
   };
 })();
 
 export const defaultNodes = {
   polkadot: DEFAULT_POLKADOT_NODES,
   kusama: DEFAULT_KUSAMA_NODES,
-  westend: DEFAULT_WESTEND_NODES,
 };
 
 const nodeSlice = createSlice({
