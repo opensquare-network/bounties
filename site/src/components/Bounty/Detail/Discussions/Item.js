@@ -52,7 +52,7 @@ export default function Item({ comment, height, onReply }) {
           <Height>#{height}</Height>
           <IpfsSquare
             href={
-              comment.pinned ? `https://ipfs.infura.io/ipfs/${comment.cid}` : null
+              comment.pinHash ? `https://ipfs.infura.io/ipfs/${comment.pinHash}` : null
             }
           />
         </DividerWrapper>

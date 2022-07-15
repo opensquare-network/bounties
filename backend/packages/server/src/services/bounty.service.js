@@ -1,7 +1,7 @@
 const { HttpError } = require("../utils/exc");
 const { Bounty, Comment } = require("../models");
 const chainService = require("./chain.service");
-const { ipfsAddBuffer } = require("./ipfs.service");
+const { ipfsAddBuffer, ipfsAdd } = require("./ipfs.service");
 const { isTestAccount } = require("../utils/testAccount");
 
 async function getBounties(page, pageSize) {
@@ -83,7 +83,7 @@ async function importBounty(
     logoCid = result.path;
   }
 
-  return await Bounty.create({
+  const result = await Bounty.create({
     network,
     bountyIndex,
     logo: logoCid,
@@ -94,6 +94,17 @@ async function importBounty(
     address,
     signature,
   });
+
+  // Upload data to IPFS
+  try {
+    const added = await ipfsAdd(data);
+    const pinHash = added?.cid?.toV1().toString();
+    await Bounty.updateOne({ _id: result._id }, { pinHash });
+  } catch (err) {
+    console.error(err);
+  }
+
+  return result;
 }
 
 async function getBountyComments(network, bountyIndex, page, pageSize) {

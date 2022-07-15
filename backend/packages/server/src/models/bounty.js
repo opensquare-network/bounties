@@ -15,9 +15,9 @@ const BountySchema = new mongoose.Schema(
     content: String,
     logo: String,
     data: mongoose.Schema.Types.Mixed,
+    pinHash: String,
     address: String,
     signature: String,
-    links: [String],
     status: {
       type: String,
       enum: ["open", "closed"],
