@@ -22,6 +22,17 @@ const Title = styled.div`
   }
 `;
 
+const RotateCaret = styled(Caret)`
+  & {
+    transform: rotate(${(props) => (props.fold ? 180 : 0)}deg);
+  }
+  &:hover {
+    path {
+      fill: #506176;
+    }
+  }
+`;
+
 const Items = styled.article`
   display: ${(props) => (props.show ? "block" : "none")};
   margin-top: 16px;
@@ -36,7 +47,7 @@ function Accordion({ children, title, showFold = true }) {
         <div>{title}</div>
         {showFold && (
           <span onClick={() => setFold(!fold)}>
-            <Caret size={16} isGrey={true} down={fold} />
+            <RotateCaret fold={fold} />
           </span>
         )}
       </Title>
