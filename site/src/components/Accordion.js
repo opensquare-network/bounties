@@ -1,6 +1,7 @@
 import React, { useState, memo } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ReactComponent as Caret } from "imgs/icons/caret.svg";
+import { Divider } from "@osn/common-ui";
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,10 +36,15 @@ const RotateCaret = styled(Caret)`
 
 const Items = styled.article`
   display: ${(props) => (props.show ? "block" : "none")};
-  margin-top: 16px;
+
+  ${(p) =>
+    !p.divider &&
+    css`
+      margin-top: 16px;
+    `}
 `;
 
-function Accordion({ children, title, showFold = true }) {
+function Accordion({ children, title, showFold = true, divider }) {
   const [fold, setFold] = useState(false);
 
   return (
@@ -51,7 +57,12 @@ function Accordion({ children, title, showFold = true }) {
           </span>
         )}
       </Title>
-      <Items show={!fold}>{children}</Items>
+
+      {divider && <Divider />}
+
+      <Items divider={divider} show={!fold}>
+        {children}
+      </Items>
     </Wrapper>
   );
 }

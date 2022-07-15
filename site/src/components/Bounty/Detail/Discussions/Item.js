@@ -14,10 +14,6 @@ import {
 import { MentionIdentityUser } from "@osn/common-ui";
 import ActionBar from "./ActionBar";
 
-const Wrapper = styled.div`
-  padding-top: 20px;
-`;
-
 const ContentWrapper = styled.div`
   margin: 8px 0 0 28px;
   padding-bottom: 20px;
@@ -36,9 +32,12 @@ const Height = styled.span`
 `;
 
 export default function Item({ comment, height, onReply }) {
-  const signerAddress = encodeNetworkAddress(comment.address, comment.commenterNetwork);
+  const signerAddress = encodeNetworkAddress(
+    comment.address,
+    comment.commenterNetwork,
+  );
   return (
-    <Wrapper>
+    <div>
       <FlexBetween>
         <DividerWrapper>
           <NetworkUser
@@ -52,7 +51,9 @@ export default function Item({ comment, height, onReply }) {
           <Height>#{height}</Height>
           <IpfsSquare
             href={
-              comment.pinHash ? `https://ipfs.infura.io/ipfs/${comment.pinHash}` : null
+              comment.pinHash
+                ? `https://ipfs.infura.io/ipfs/${comment.pinHash}`
+                : null
             }
           />
         </DividerWrapper>
@@ -69,8 +70,7 @@ export default function Item({ comment, height, onReply }) {
           address={comment.address}
           onReply={onReply}
         />
-
       </ContentWrapper>
-    </Wrapper>
+    </div>
   );
 }
