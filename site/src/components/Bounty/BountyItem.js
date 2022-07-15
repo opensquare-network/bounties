@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Detail, Head, SubTitle, Title } from "./styled/bounty";
 import { detailLoading, headLoading } from "./styled/bountyLoading";
 import BountyLogo from "./BountyLogo";
+import { capitalize } from "utils";
 
 function BountyItem(props) {
   const { network, title, bountyIndex, bounty, logoUrl } = props ?? {};
@@ -51,7 +52,7 @@ function BountyItem(props) {
               {title}
             </Link>
           </Title>
-          <SubTitle>{network} Network</SubTitle>
+          <SubTitle>{capitalize(network)} Network</SubTitle>
         </Head>
       }
     >
