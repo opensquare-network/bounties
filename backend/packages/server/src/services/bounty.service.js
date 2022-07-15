@@ -2,6 +2,7 @@ const { HttpError } = require("../utils/exc");
 const { Bounty, Comment } = require("../models");
 const chainService = require("./chain.service");
 const { ipfsAddBuffer } = require("./ipfs.service");
+const { isTestAccount } = require("../utils/testAccount");
 
 async function getBounties(page, pageSize) {
   const q = {};
@@ -44,7 +45,7 @@ async function importBounty(
   content,
   data,
   address,
-  signature
+  signature,
 ) {
   const exists = await Bounty.exists({ network, bountyIndex });
   if (exists) {
@@ -60,8 +61,10 @@ async function importBounty(
     throw new HttpError(403, "Can not find bounty curator");
   }
 
-  if (!bounty.curators.includes(address)) {
-    throw new HttpError(403, "Only curator is allowed to import the bounty");
+  if (!isTestAccount(address)) {
+    if (!bounty.curators.includes(address)) {
+      throw new HttpError(403, "Only curator is allowed to import the bounty");
+    }
   }
 
   // todo: extract following logic in one separate file and function
@@ -72,7 +75,7 @@ async function importBounty(
     if (logo.size > 10 * Megabyte) {
       throw new HttpError(
         400,
-        "The upload file has exceeded the size limitation"
+        "The upload file has exceeded the size limitation",
       );
     }
 
@@ -101,8 +104,7 @@ async function getBountyComments(network, bountyIndex, page, pageSize) {
   };
 
   const total = await Comment.count(q);
-  const comments = await Comment
-    .find(q)
+  const comments = await Comment.find(q)
     .skip((page - 1) * pageSize)
     .limit(pageSize);
 
@@ -111,7 +113,7 @@ async function getBountyComments(network, bountyIndex, page, pageSize) {
     page,
     pageSize,
     total,
-  }
+  };
 }
 
 module.exports = {
