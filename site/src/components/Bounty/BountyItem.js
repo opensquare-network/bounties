@@ -2,7 +2,7 @@ import { Card, FlexCenter, List } from "@osn/common-ui";
 import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
 import Tooltip from "@osn/common-ui/es/Tooltip";
 import { Link } from "react-router-dom";
-import { Detail, Head, SubTitle, Title, Logo } from "./styled/bounty";
+import { Detail, Head, SubTitle, Title } from "./styled/bounty";
 import { detailLoading, headLoading } from "./styled/bountyLoading";
 import BountyLogo from "./BountyLogo";
 
