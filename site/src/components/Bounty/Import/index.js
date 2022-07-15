@@ -22,6 +22,7 @@ import { signApiData } from "utils/signature";
 import Tooltip from "@osn/common-ui/es/Tooltip";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import LoadingInput from "../../LoadingInput";
+import { isTestAccount } from "utils/testAccount";
 
 const Wrapper = styled.div`
   display: flex;
@@ -203,13 +204,13 @@ export default function ImportBounty() {
         {
           method: "POST",
           body: formData,
-        }
+        },
       );
       setSubmitting(false);
 
       if (result) {
         dispatch(newSuccessToast("Bounty imported successfully"));
-        navigate(`/${account?.network}/bounty/${bountyId}`);
+        navigate(`/network/${account?.network}/bounty/${bountyId}`);
         return;
       }
 
@@ -222,12 +223,11 @@ export default function ImportBounty() {
     }
   };
 
-  const canImport =
-    curators.includes(account?.address) &&
-    title &&
-    content &&
-    loaded &&
-    !submitting;
+  const isCurator = isTestAccount(account?.address)
+    ? true
+    : curators.includes(account?.address);
+
+  const canImport = isCurator && title && content && loaded && !submitting;
 
   return (
     <Wrapper>
@@ -268,7 +268,7 @@ export default function ImportBounty() {
           disabled={loading}
           loading={loading}
         />
-        <Title>Topic</Title>
+        <Title>Description</Title>
         <RichEditor
           content={content}
           setContent={setContent}
