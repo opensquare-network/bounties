@@ -7,7 +7,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import { popUpConnect } from "store/reducers/showConnectSlice";
-import { newErrorToast, newSuccessToast } from "store/reducers/toastSlice";
+import { newErrorToast, newPendingToast, newSuccessToast, newToastId, removeToast, updatePendingToast } from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
 import { useNavigate } from "react-router-dom";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
@@ -133,7 +133,7 @@ export default function ImportBounty() {
       setLoading(true);
       serverApi
         .fetch(`chain/${account?.network}/bounty/${bountyId}`)
-        .then(({ result }) => {
+        .then(({ result, error }) => {
           if (result) {
             if (isMounted.current) {
               setTitle(result.description);
@@ -141,6 +141,11 @@ export default function ImportBounty() {
               setValue(result.value);
               setBountyError("");
               setLoaded(true);
+            }
+          }
+          if (error) {
+            if (isMounted.current) {
+              setBountyError(error.message);
             }
           }
         })
@@ -186,9 +191,14 @@ export default function ImportBounty() {
       content,
     };
 
+    const toastId = newToastId();
+    dispatch(newPendingToast(toastId, "Waiting for signing..."));
+
     setSubmitting(true);
     try {
       const signedData = await signApiData(data, account?.address);
+
+      dispatch(updatePendingToast(toastId, "Importing..."));
 
       const formData = new FormData();
       formData.set("data", JSON.stringify(signedData.data));
@@ -209,7 +219,7 @@ export default function ImportBounty() {
       setSubmitting(false);
 
       if (result) {
-        dispatch(newSuccessToast("Bounty imported successfully"));
+        dispatch(newSuccessToast("Bounty imported"));
         navigate(`/network/${account?.network}/bounty/${bountyId}`);
         return;
       }
@@ -219,7 +229,10 @@ export default function ImportBounty() {
         return;
       }
     } finally {
-      setSubmitting(false);
+      dispatch(removeToast(toastId));
+      if (isMounted.current) {
+        setSubmitting(false);
+      }
     }
   };
 
