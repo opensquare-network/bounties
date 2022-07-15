@@ -2,8 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
-import Card from "@osn/common-ui/es/styled/Card";
+import { Card, Dot, Divider, List } from "@osn/common-ui";
 import Item from "./Item";
 import Pagination from "@osn/common-ui/es/styled/Pagination";
 import {
@@ -41,12 +40,7 @@ import { MentionIdentityUser } from "@osn/common-ui";
 import Accordion from "components/Accordion";
 
 const Title = styled.div`
-  border-bottom: solid 1px #f0f3f8;
-  > div > div {
-    ${p_16_semibold};
-    padding-bottom: 17px;
-    display: inline-block;
-  }
+  ${p_16_semibold};
 `;
 
 const PaginationWrapper = styled.div`
@@ -55,7 +49,7 @@ const PaginationWrapper = styled.div`
 
 const EditorWrapper = styled.div``;
 
-const Count = styled.div`
+const Count = styled.span`
   color: #a1a8b3;
 `;
 
@@ -129,10 +123,7 @@ export default function Discussion({ network, bountyId }) {
 
       dispatch(updatePendingToast(toastId, "Posting..."));
 
-      const { result, error } = await serverApi.post(
-        `/comments`,
-        payload
-      );
+      const { result, error } = await serverApi.post(`/comments`, payload);
       if (result) {
         setContent("");
         dispatch(newSuccessToast("Comment posted"));
@@ -155,7 +146,8 @@ export default function Discussion({ network, bountyId }) {
     const userIdentities = await Promise.all(
       uniqWith(
         discussions?.items || [],
-        (a, b) => a.address === b.address && a.commenterNetwork === b.commenterNetwork
+        (a, b) =>
+          a.address === b.address && a.commenterNetwork === b.commenterNetwork,
       )
         .map((item) => ({
           address: encodeNetworkAddress(item.address, item.commenterNetwork),
@@ -168,7 +160,7 @@ export default function Discussion({ network, bountyId }) {
             ...item,
             identity,
           };
-        })
+        }),
     );
 
     return userIdentities.map((user) => {
@@ -190,7 +182,7 @@ export default function Discussion({ network, bountyId }) {
 
   const loadSuggestions = (text) => {
     return suggestions.filter((i) =>
-      i.address.toLowerCase().includes(text.toLowerCase())
+      i.address.toLowerCase().includes(text.toLowerCase()),
     );
   };
 
@@ -210,37 +202,46 @@ export default function Discussion({ network, bountyId }) {
   };
 
   const title = (
-    <Title>
-      <DividerWrapper>
-        <div>Discussions</div>
+    <>
+      <Title>
+        Discussions
         {typeof discussions?.total === "number" && (
-          <Count>{discussions?.total}</Count>
+          <>
+            <Dot />
+            <Count>{discussions?.total}</Count>
+          </>
         )}
-      </DividerWrapper>
-    </Title>
+      </Title>
+    </>
   );
 
   return (
     <Card>
-      <Accordion title={title} showFold={true}>
+      <Accordion divider title={title} showFold={true}>
         {discussions === null && (
           <LoadingWrapper>
             <Loading />
           </LoadingWrapper>
         )}
+
         {discussions?.items.length === 0 ? (
           <NoDiscussions message={"No current discussions"} />
         ) : (
-          <div>
-            {discussions?.items?.map((comment, index) => (
-              <Item
-                key={index}
-                height={(discussions?.page - 1) * discussions?.pageSize + index + 1}
-                comment={comment}
-                onReply={onReply}
-              />
-            ))}
-          </div>
+          <List
+            gap={20}
+            data={discussions?.items}
+            itemRender={(comment, index) => (
+              <List.Item>
+                <Item
+                  height={
+                    (discussions?.page - 1) * discussions?.pageSize + index + 1
+                  }
+                  comment={comment}
+                  onReply={onReply}
+                />
+              </List.Item>
+            )}
+          />
         )}
         <PaginationWrapper>
           <Pagination
