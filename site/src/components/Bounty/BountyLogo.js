@@ -20,14 +20,12 @@ const Wrapper = styled.div`
 `;
 
 export default function Logo({ network, logoUrl }) {
-  const defaultLogo = network === "kusama" ? <KusamaLogoIcon /> : <PolkadotLogoIcon />;
+  const defaultLogo =
+    network === "kusama" ? <KusamaLogoIcon /> : <PolkadotLogoIcon />;
 
   return (
     <Wrapper>
-      {logoUrl
-        ? <img className="logo" src={logoUrl} alt="" />
-        : defaultLogo
-      }
+      {logoUrl ? <img className="logo" src={logoUrl} alt="" /> : defaultLogo}
     </Wrapper>
   );
 }

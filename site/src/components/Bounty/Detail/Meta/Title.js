@@ -4,7 +4,7 @@ import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
 import BountyTag from "../../BountyTag";
 import { p_18_semibold } from "@osn/common-ui/es/styles/textStyles";
 import BigNumber from "bignumber.js";
-import Logo from "./Logo";
+import BountyLogo from "../../BountyLogo";
 
 const Wrapper = styled.div`
   > :nth-child(1) {
@@ -26,7 +26,7 @@ const Status = styled.div`
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
-  color: #4CAF50;
+  color: #4caf50;
 `;
 
 const Type = styled.div`
@@ -34,14 +34,14 @@ const Type = styled.div`
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
-  color: #A1A8B3;
+  color: #a1a8b3;
 `;
 
 const TitleText = styled.div`
   font-weight: 600;
   font-size: 20px;
   line-height: 32px;
-  color: #1E2134;
+  color: #1e2134;
 `;
 
 export default function Title({ bountyDetail }) {
@@ -51,7 +51,10 @@ export default function Title({ bountyDetail }) {
 
   return (
     <Wrapper>
-      <Logo network={bountyDetail?.network} logoUrl={bountyDetail?.logoUrl} />
+      <BountyLogo
+        network={bountyDetail?.network}
+        logoUrl={bountyDetail?.logoUrl}
+      />
       <TitleText>{bountyDetail.title}</TitleText>
       <div>
         <DividerWrapper>
@@ -59,7 +62,10 @@ export default function Title({ bountyDetail }) {
           <Status>Open</Status>
           <Type>Bounty</Type>
         </DividerWrapper>
-        <BountyTag value={new BigNumber(value).div(Math.pow(10,decimals)).toFixed()} symbol={symbol} />
+        <BountyTag
+          value={new BigNumber(value).div(Math.pow(10, decimals)).toFixed()}
+          symbol={symbol}
+        />
       </div>
     </Wrapper>
   );

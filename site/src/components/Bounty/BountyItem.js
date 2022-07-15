@@ -1,12 +1,13 @@
-import { Card, ChainIcon, FlexCenter, List } from "@osn/common-ui";
+import { Card, FlexCenter, List } from "@osn/common-ui";
 import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
 import Tooltip from "@osn/common-ui/es/Tooltip";
 import { Link } from "react-router-dom";
-import { Detail, Head, SubTitle, Title } from "./styled/bounty";
+import { Detail, Head, SubTitle, Title, Logo } from "./styled/bounty";
 import { detailLoading, headLoading } from "./styled/bountyLoading";
+import BountyLogo from "./BountyLogo";
 
 function BountyItem(props) {
-  const { network, title, bountyIndex, bounty } = props ?? {};
+  const { network, title, bountyIndex, bounty, logoUrl } = props ?? {};
 
   const details = [
     {
@@ -44,7 +45,7 @@ function BountyItem(props) {
       size="small"
       head={
         <Head>
-          <ChainIcon chainName={network} size={64} />
+          <BountyLogo network={network} logoUrl={logoUrl} />
           <Title>
             <Link to={`/network/${network}/bounty/${bountyIndex}`}>
               {title}
