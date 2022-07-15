@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import InfoItem from "./InfoItem";
-import NetworkUser from "components/User/NetworkUser";
 import ChainIcon from "@osn/common-ui/es/Chain/ChainIcon";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import Tooltip from "@osn/common-ui/es/Tooltip";

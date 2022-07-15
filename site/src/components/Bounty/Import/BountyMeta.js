@@ -12,7 +12,7 @@ import {
   p_16_semibold,
 } from "@osn/common-ui/es/styles/textStyles";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
-import NetworkUser from "components/User/NetworkUser";
+import { LinkIdentityUser } from "@osn/common-ui";
 import { ErrorMessage } from "./styled";
 import BigNumber from "bignumber.js";
 
@@ -61,10 +61,15 @@ const CuratorsList = styled.div`
   padding: 12px 16px;
 
   min-height: 48px;
+  max-width: 236px;
 
   background: #fbfcfe;
   border: 1px solid #e2e8f0;
   box-sizing: border-box;
+
+  a {
+    cursor: pointer;
+  }
 `;
 
 const CuratorItem = styled.div`
@@ -165,7 +170,11 @@ export default function BountyMeta({
             <>
               <CuratorsList>
                 <CuratorItem>
-                  <NetworkUser network={account?.network} address={curators[0]} />
+                  <LinkIdentityUser
+                    explore
+                    network={account?.network}
+                    address={curators[0]}
+                  />
                 </CuratorItem>
                 {multisigCurators?.length > 0 && (
                   <>
@@ -175,7 +184,8 @@ export default function BountyMeta({
                     </Signatories>
                     {multisigCurators.map((curator) => (
                       <CuratorItem key={curator}>
-                        <NetworkUser
+                        <LinkIdentityUser
+                          explore
                           network={account?.network}
                           address={curator}
                         />
