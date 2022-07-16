@@ -1,25 +1,21 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
-import { Header, Flex, FlexBetween } from "@osn/common-ui";
+import { Flex, FlexBetween, Header } from "@osn/common-ui";
 import NotificationBell from "./NotificationBell";
-import ConnectModal from "./ConnectModal";
 import { accountSelector } from "../store/reducers/accountSlice";
-import { useRef, useState } from "react";
 import ConnectWallet from "./ConnectWallet";
 import NodeSelect from "./NodeSelect";
 import { useDispatch, useSelector } from "react-redux";
 import ConnectedAccount from "./User/ConnectedAccount";
 import { useOnClickOutside, useWindowSize } from "@osn/common/src/utils/hooks";
 import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
-import {
-  popUpConnect,
-  showConnectSelector,
-} from "../store/reducers/showConnectSlice";
+import { popUpConnect, showConnectSelector, } from "../store/reducers/showConnectSlice";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";
 import { MOBILE_SIZE } from "@osn/constants";
 import { NavLink } from "react-router-dom";
+import Connect from "./Connect";
 
 const RightWrapper = styled(Flex)`
   > :not(:first-child) {
@@ -79,7 +75,7 @@ export default function PageHeader() {
               <MobileMenu />
             </>
           )}
-          {showConnect && <ConnectModal />}
+          {showConnect && <Connect />}
         </RightWrapper>
       </ContentWrapper>
     </Header>
