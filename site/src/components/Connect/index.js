@@ -22,8 +22,6 @@ export default function Connect() {
 
   const { accounts, hasExtension, isPolkadotExtensionAccessible, detecting } = usePolkadotExtension();
 
-  console.log(accounts, hasExtension, isPolkadotExtensionAccessible, detecting)
-
   useEffect(() => {
     setNormalizedAccounts((accounts || []).map(({address, meta: {name}}) => ({address, name})));
   }, [accounts]);
