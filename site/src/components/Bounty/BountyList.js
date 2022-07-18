@@ -4,10 +4,16 @@ import { MOBILE_SIZE } from "@osn/constants";
 import BountyNoData from "./BountyNoData";
 
 const Wrapper = styled.div`
-  gap: 20px;
+  --gap: 20px;
+  --cols: 3;
+  --gaps: calc(var(--gap) * calc(var(--cols) - 1));
+  gap: var(--gap);
   flex-wrap: wrap;
   display: grid;
-  grid-template-columns: repeat(3, 33.33%);
+  grid-template-columns: repeat(
+    var(--cols),
+    calc((100% - var(--gaps)) / var(--cols))
+  );
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     display: block;
