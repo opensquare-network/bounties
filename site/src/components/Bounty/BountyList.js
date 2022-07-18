@@ -1,6 +1,7 @@
 import BountyItem from "./BountyItem";
 import styled from "styled-components";
 import { MOBILE_SIZE } from "@osn/constants";
+import BountyNoData from "./BountyNoData";
 
 const Wrapper = styled.div`
   gap: 20px;
@@ -14,12 +15,16 @@ const Wrapper = styled.div`
 `;
 
 export default function BountyList({ items = [], isLoading = false }) {
-  if (!items.length || isLoading) {
+  if (isLoading) {
     return (
       <Wrapper>
         <BountyItem.Loading />
       </Wrapper>
     );
+  }
+
+  if (!items.length) {
+    return <BountyNoData />;
   }
 
   return (

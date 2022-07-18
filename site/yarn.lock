@@ -1591,10 +1591,10 @@
     react-router-dom "^6.3.0"
     styled-components "^5.3.1"
 
-"@osn/common@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.npmjs.org/@osn/common/-/common-0.0.16.tgz#6c2d1ba066aa161c4ac15e851f21aafd091b9ee8"
-  integrity sha512-k+EXW0YsRH8sZ1AQz0q5fxltfVvuBqGlldBsR6pqX0i++IGFtQycrZDfV7LLDAdUVH34M6CMYrYY5yhtp4W0Ww==
+"@osn/common@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.npmjs.org/@osn/common/-/common-0.0.17.tgz#917d245810a430a589bccd95ba7f1ed2a77299c0"
+  integrity sha512-30I/CH8jiBBLVGe2kMxtVzs3i/qcmFqKwWPoM9mX3hJTNY12C7xehTNGbM9Fz3BgPOKue3d6JO7CL3bHjTzlhw==
   dependencies:
     "@osn/constants" "^1.1.0"
     "@osn/provider-options" "^1.0.2"
