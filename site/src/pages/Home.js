@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { Container, FlexBetween, FlexCenter } from "@osn/common-ui";
 import Background from "components/Background";
@@ -16,20 +16,31 @@ import { text_dark_minor } from "@osn/common-ui/es/styles/colors";
 import { useDispatch } from "react-redux";
 import { fetchBountyList } from "store/reducers/bountySlice";
 import { useAsyncState } from "@osn/common";
+import { useMemo } from "react";
 
 const Wrapper = styled.div`
   position: relative;
-  padding: 40px 0 64px;
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     padding-top: 20px;
   }
 `;
 
-const ContentWrapper = styled.div`
+const BountiesWrapper = styled.div`
   position: relative;
-  > :not(:first-child) {
-    margin-top: 24px;
-  }
+  padding-top: 40px;
+
+  ${(p) =>
+    p.bg &&
+    css`
+      border-bottom: solid 1px #f0f3f8;
+      background-color: #ffffff;
+      padding-bottom: 40px;
+    `}
+`;
+
+const ChildBountiesWrapper = styled.div`
+  margin-top: 24px;
+  margin-bottom: 64px;
 `;
 
 const Title = styled.h3`
@@ -61,39 +72,45 @@ const BountyListWrapper = styled.div`
 
 export default function Home() {
   const dispatch = useDispatch();
-  const {
-    state: { payload },
-    isLoading,
-  } = useAsyncState(() => dispatch(fetchBountyList()), {});
+  const { state, isLoading } = useAsyncState(
+    () => dispatch(fetchBountyList()),
+    {},
+  );
+
+  const data = useMemo(
+    () => state?.payload?.items || [],
+    [state?.payload?.items],
+  );
 
   return (
     <Wrapper>
-      <Background />
-      <Container>
-        <ContentWrapper>
-          <div>
-            <FlexBetween>
-              <Title>Bounties</Title>
-              <ImportLink to="/import_bounty">
-                <FlexCenter>
-                  <img src="/imgs/icons/add.svg" alt="" />
-                  <span>Import a Bounty</span>
-                </FlexCenter>
-              </ImportLink>
-            </FlexBetween>
+      {(isLoading || !!data.length) && <Background />}
 
-            <BountyListWrapper>
-              <BountyList isLoading={isLoading} items={payload?.items} />
-            </BountyListWrapper>
-          </div>
+      <BountiesWrapper bg={!isLoading && !data.length}>
+        <Container>
+          <FlexBetween>
+            <Title>Bounties</Title>
+            <ImportLink to="/import_bounty">
+              <FlexCenter>
+                <img src="/imgs/icons/add.svg" alt="" />
+                <span>Import a Bounty</span>
+              </FlexCenter>
+            </ImportLink>
+          </FlexBetween>
 
-          <div>
-            <SubTitle>Child Bounties</SubTitle>
+          <BountyListWrapper>
+            <BountyList isLoading={isLoading} items={data} />
+          </BountyListWrapper>
+        </Container>
+      </BountiesWrapper>
 
-            <ChildBountyList></ChildBountyList>
-          </div>
-        </ContentWrapper>
-      </Container>
+      <ChildBountiesWrapper>
+        <Container>
+          <SubTitle>Child Bounties</SubTitle>
+
+          <ChildBountyList></ChildBountyList>
+        </Container>
+      </ChildBountiesWrapper>
     </Wrapper>
   );
 }
