@@ -7,7 +7,7 @@ import ConnectModal from "./ConnectModal";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { useRef, useState } from "react";
 import ConnectWallet from "./ConnectWallet";
-import NodeSelect from "./NodeSelect";
+// import NodeSelect from "./NodeSelect";
 import { useDispatch, useSelector } from "react-redux";
 import ConnectedAccount from "./User/ConnectedAccount";
 import { useOnClickOutside, useWindowSize } from "@osn/common/src/utils/hooks";
@@ -69,7 +69,7 @@ export default function PageHeader() {
                   {...{ showMenu, setShowMenu, account }}
                   showNetwork
                 />
-                <NodeSelect small chain={account?.network} />
+                {/* <NodeSelect small chain={account?.network} /> */}
               </>
             ) : (
               <ConnectWallet onClick={() => dispatch(popUpConnect())} />
