@@ -20,6 +20,10 @@ export const Title = styled.h4`
   color: ${text_dark_major};
   margin-top: 20px;
   margin-bottom: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  overflow: hidden;
 
   a {
     cursor: pointer;

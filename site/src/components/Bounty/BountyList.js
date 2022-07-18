@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   gap: 20px;
   flex-wrap: wrap;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 33.33%);
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     display: block;
