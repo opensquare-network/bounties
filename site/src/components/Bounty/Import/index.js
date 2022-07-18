@@ -243,9 +243,11 @@ export default function ImportBounty() {
     }
   };
 
-  const isCurator = isTestAccount(account?.address)
-    ? true
-    : curators.includes(account?.address);
+  const isCurator = account?.address
+    ? isTestAccount(account?.address)
+      ? true
+      : curators.includes(account?.address)
+    : false;
 
   const canImport = isCurator && title && content && loaded && !submitting;
 
