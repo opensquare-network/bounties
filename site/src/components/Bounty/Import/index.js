@@ -243,11 +243,9 @@ export default function ImportBounty() {
     }
   };
 
-  const isCurator = account?.address
-    ? isTestAccount(account?.address)
-      ? true
-      : curators.includes(account?.address)
-    : false;
+  const isCurator =
+    account?.address &&
+    (isTestAccount(account?.address) || curators.includes(account?.address));
 
   const canImport = isCurator && title && content && loaded && !submitting;
 
