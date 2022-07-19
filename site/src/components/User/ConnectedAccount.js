@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/reducers/accountSlice";
 import { ReactComponent as ExitIcon } from "@osn/common-ui/es/Account/exit.svg";
 import { ReactComponent as CircleIcon } from "@osn/common-ui/es/Account/circle.svg";
-import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 import NetworkUser from "./NetworkUser";
 import { encodeNetworkAddress } from "@osn/common/src/utils/address";
@@ -125,13 +124,18 @@ const LogoutWrapper = styled(FlexBetween)`
   }
 `;
 
-function ConnectedAccount({ account, showMenu, setShowMenu }) {
+function ConnectedAccount({
+  account,
+  showMenu,
+  setShowMenu,
+  setConnectWalletModalVisible = () => {},
+}) {
   const dispatch = useDispatch();
   const network = account.network;
   const address = encodeNetworkAddress(account.address, network);
 
   const onSwitch = () => {
-    dispatch(popUpConnect());
+    setConnectWalletModalVisible(true);
     setShowMenu(false);
   };
 
