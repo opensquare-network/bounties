@@ -12,8 +12,8 @@
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "@craco/craco": "^6.4.3",
-    "@osn/common": "^0.0.17",
-    "@osn/common-ui": "^0.0.89",
+    "@osn/common": "^0.0.18",
+    "@osn/common-ui": "^0.0.91",
     "@osn/constants": "^1.1.0",
     "@osn/polkadot-react-identicon": "^1.0.8",
     "@osn/previewer": "^0.11.0",

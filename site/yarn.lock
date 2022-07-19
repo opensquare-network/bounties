@@ -1580,10 +1580,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@osn/common-ui@^0.0.89":
-  version "0.0.89"
-  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-0.0.89.tgz#74b7995cc7485a0178bf2fe7d21d0baa6f41dd4b"
-  integrity sha512-xvDP1HwggILdrTm5ntMqAr8kXpzBGhFCrMKwWiTpVZRP4arHKJngfquQyJKmpIwO8k9+J9YyJcWfVBEBZDqoZA==
+"@osn/common-ui@^0.0.91":
+  version "0.0.91"
+  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-0.0.91.tgz#48f150fa453f83447545d579dea2ffd6a25a13c8"
+  integrity sha512-34V/pRlDkrnxceLDgjY3lKu7QupOq95N+89lfHrUqlg4/p8yAhHMOcMXmmUMmWec1ZGO+pMrQry+qaj9322e3Q==
   dependencies:
     "@craco/craco" "^6.4.3"
     dayjs "^1.10.8"
@@ -1591,10 +1591,10 @@
     react-router-dom "^6.3.0"
     styled-components "^5.3.1"
 
-"@osn/common@^0.0.17":
-  version "0.0.17"
-  resolved "https://registry.npmjs.org/@osn/common/-/common-0.0.17.tgz#917d245810a430a589bccd95ba7f1ed2a77299c0"
-  integrity sha512-30I/CH8jiBBLVGe2kMxtVzs3i/qcmFqKwWPoM9mX3hJTNY12C7xehTNGbM9Fz3BgPOKue3d6JO7CL3bHjTzlhw==
+"@osn/common@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.npmjs.org/@osn/common/-/common-0.0.18.tgz#c364c7efbc7d1be7f7c00cdf8bb50fc2c2ac4500"
+  integrity sha512-Jc7aYHa41jg8MSAXAooeYvcZ1X67KjODejsRygkxQfb5LYTtjspBJWpstuAdsojgyYYxDdWE/vIRvhw1vvfvSw==
   dependencies:
     "@osn/constants" "^1.1.0"
     "@osn/provider-options" "^1.0.2"
