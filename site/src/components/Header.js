@@ -4,18 +4,16 @@ import styled from "styled-components";
 import { Flex, FlexBetween, Header } from "@osn/common-ui";
 import NotificationBell from "./NotificationBell";
 import { accountSelector } from "../store/reducers/accountSlice";
-import ConnectWallet from "./ConnectWallet";
+import { ConnectWalletModal, ConnectWalletButton } from "./ConnectWallet";
 // import NodeSelect from "./NodeSelect";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ConnectedAccount from "./User/ConnectedAccount";
 import { useOnClickOutside, useWindowSize } from "@osn/common/src/utils/hooks";
 import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
-import { popUpConnect, showConnectSelector, } from "../store/reducers/showConnectSlice";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";
 import { MOBILE_SIZE } from "@osn/constants";
 import { NavLink } from "react-router-dom";
-import Connect from "./Connect";
 
 const RightWrapper = styled(Flex)`
   > :not(:first-child) {
@@ -30,9 +28,9 @@ const ContentWrapper = styled(FlexBetween)`
 `;
 
 export default function PageHeader() {
-  const dispatch = useDispatch();
+  const [connectWalletModalVisible, setConnectWalletModalVisible] =
+    useState(false);
   const windowSize = useWindowSize();
-  const showConnect = useSelector(showConnectSelector);
   const [showMenu, setShowMenu] = useState(false);
   const ref = useRef();
   useOnClickOutside(ref, (event) => {
@@ -64,18 +62,23 @@ export default function PageHeader() {
                 <ConnectedAccount
                   {...{ showMenu, setShowMenu, account }}
                   showNetwork
+                  setConnectWalletModalVisible={setConnectWalletModalVisible}
                 />
                 {/* <NodeSelect small chain={account?.network} /> */}
               </>
             ) : (
-              <ConnectWallet onClick={() => dispatch(popUpConnect())} />
+              <ConnectWalletButton setVisible={setConnectWalletModalVisible} />
             )
           ) : (
             <>
               <MobileMenu />
             </>
           )}
-          {showConnect && <Connect />}
+
+          <ConnectWalletModal
+            visible={connectWalletModalVisible}
+            setVisible={setConnectWalletModalVisible}
+          />
         </RightWrapper>
       </ContentWrapper>
     </Header>
