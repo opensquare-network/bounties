@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import DropdownSelector from "@osn/common-ui/es/DropdownSelector";
 import Flex from "@osn/common-ui/es/styled/Flex";
-import { ASSETS, TEST_ASSETS } from "../utils/constants";
+import { ASSETS } from "../utils/constants";
 
 const Wrapper = styled.div`
   > div div {
@@ -58,13 +58,8 @@ const Assets = [
     id: "all",
     name: "All Assets",
   },
+  ...ASSETS,
 ];
-if (process.env.REACT_APP_ENVIRONMENT === "production") {
-  Assets.push(...ASSETS);
-}
-if (process.env.REACT_APP_ENVIRONMENT === "development") {
-  Assets.push(...TEST_ASSETS);
-}
 
 export default function AssetSelector({ asset, setAsset }) {
   const index = Assets.findIndex((item) => item.id === asset?.id);
