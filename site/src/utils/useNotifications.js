@@ -26,7 +26,7 @@ export function useNotifications(page, account, tab, setPage) {
           }
         });
     }
-  }, [account?.network, account?.address, tab, page, pageSize]);
+  }, [account?.network, account?.address, page, pageSize]);
 
   useEffect(() => {
     // Got new notifications
