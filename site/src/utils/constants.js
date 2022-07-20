@@ -1,39 +1,11 @@
 import { Chains } from "@osn/constants";
 
-const DEVELOPMENT_NETWORK = [
+export const AVAILABLE_NETWORKS = [
   { network: Chains.polkadot },
   { network: Chains.kusama },
 ];
-
-const PRODUCTION_NETWORK = [
-  { network: Chains.polkadot },
-  { network: Chains.kusama },
-];
-
-export const AVAILABLE_NETWORKS = [];
-
-if (process.env.REACT_APP_ENVIRONMENT === "development") {
-  AVAILABLE_NETWORKS.push(...DEVELOPMENT_NETWORK);
-} else if (process.env.REACT_APP_ENVIRONMENT === "production") {
-  AVAILABLE_NETWORKS.push(...PRODUCTION_NETWORK);
-}
 
 export const ASSETS = [
-  {
-    id: "polkadot",
-    name: "Polkadot",
-    symbol: "DOT",
-    decimals: 10,
-  },
-  {
-    id: "kusama",
-    name: "Kusama",
-    symbol: "KSM",
-    decimals: 12,
-  },
-];
-
-export const TEST_ASSETS = [
   {
     id: "polkadot",
     name: "Polkadot",
