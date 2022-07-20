@@ -47,7 +47,7 @@ function BountyItem(props) {
       head={
         <Head>
           <BountyLogo network={network} logoUrl={logoUrl} />
-          <Title>
+          <Title title={title}>
             <Link to={`/network/${network}/bounty/${bountyIndex}`}>
               {title}
             </Link>
