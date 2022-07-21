@@ -96,7 +96,7 @@ const Signatories = styled.div`
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
-    color: #A1A8B3;
+    color: #a1a8b3;
   }
 `;
 
@@ -104,7 +104,7 @@ const SignatoriesDivider = styled.div`
   flex-grow: 1;
   display: inline-block;
   height: 1px;
-  background: #F0F3F8;
+  background: #f0f3f8;
 `;
 
 const Field = styled.div`
@@ -139,8 +139,12 @@ export default function BountyMeta({
   loading,
 }) {
   const account = useSelector(accountSelector);
-  const encodedAddress = account?.address && encodeNetworkAddress(account?.address, account?.network);
+  const encodedAddress =
+    account?.address &&
+    encodeNetworkAddress(account?.address, account?.network);
   const multisigCurators = curators.slice(1);
+
+  const isCurator = encodedAddress && curators.includes(encodedAddress);
 
   return (
     <>
@@ -196,7 +200,7 @@ export default function BountyMeta({
                   </>
                 )}
               </CuratorsList>
-              {!curators?.includes(encodedAddress) && (
+              {!isCurator && (
                 <ErrorMessage>
                   Only bounty curator can import this bounty.
                 </ErrorMessage>

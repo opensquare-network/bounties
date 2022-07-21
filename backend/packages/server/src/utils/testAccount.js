@@ -10,5 +10,6 @@ function isTestAccount(address) {
 }
 
 module.exports = {
+  testAccounts,
   isTestAccount,
 };

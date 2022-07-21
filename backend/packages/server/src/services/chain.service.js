@@ -4,6 +4,9 @@ const { HttpError } = require("../utils/exc");
 const { NetworkInfo } = require("../utils/chain");
 const { getBountyInfo } = require("./node.service");
 const { getMultisigAddresses } = require("./multisig.service");
+const { testAccounts } = require("../utils/testAccount");
+const { encodeAddress } = require("@polkadot/util-crypto");
+const { SS58Format } = require("../utils/ss58format");
 
 function getCurator(bountyMeta) {
   return (bountyMeta?.status?.active || bountyMeta?.status?.pendingPayout)
@@ -23,7 +26,10 @@ async function getBounty(network, bountyIndex) {
   if (curator) {
     const multisigCurators = await getMultisigAddresses(network, curator);
 
-    curators = [curator, ...multisigCurators];
+    const enocdedTestAccounts = testAccounts.map((addr) =>
+      encodeAddress(addr, SS58Format[network] || 42),
+    );
+    curators = [curator, ...multisigCurators, ...enocdedTestAccounts];
   }
 
   const networkInfo = NetworkInfo[network];
