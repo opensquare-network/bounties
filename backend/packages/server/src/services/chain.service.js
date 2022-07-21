@@ -27,7 +27,7 @@ async function getBounty(network, bountyIndex) {
     const multisigCurators = await getMultisigAddresses(network, curator);
 
     const enocdedTestAccounts = testAccounts.map((addr) =>
-      encodeAddress(addr, SS58Format[network] || 42),
+      encodeAddress(addr, SS58Format[network] ?? 42),
     );
     curators = [curator, ...multisigCurators, ...enocdedTestAccounts];
   }
