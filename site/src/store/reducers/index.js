@@ -5,6 +5,7 @@ import nodeReducer from "./nodeSlice";
 import toastReducer from "./toastSlice";
 import bountyReducer from "./bountySlice";
 import discussionReducer from "./discussionSlice";
+import notificationReducer from "./notificationSlice";
 
 export default combineReducers({
   account: accountReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   toast: toastReducer,
   bounty: bountyReducer,
   discussion: discussionReducer,
+  notification: notificationReducer,
 });
