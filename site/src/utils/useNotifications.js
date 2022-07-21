@@ -17,7 +17,7 @@ export function useNotifications(page, account, tab, setPage) {
     if (account?.network && account?.address) {
       serverApi
         .fetch(
-          `https://test-qa-api.opensquare.io/network/${account.network}/address/${account.address}/notifications`,
+          `/network/${account.network}/address/${account.address}/notifications`,
           { page, pageSize },
         )
         .then(({ result }) => {
@@ -47,7 +47,7 @@ export function useNotifications(page, account, tab, setPage) {
       setIsLoading(true);
       serverApi
         .fetch(
-          `https://test-qa-api.opensquare.io/network/${account.network}/address/${account.address}/notifications`,
+          `/network/${account.network}/address/${account.address}/notifications`,
           { page, pageSize },
         )
         .then(({ result }) => {
