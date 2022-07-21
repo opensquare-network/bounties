@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { Card, Dot, List } from "@osn/common-ui";
+import { Card, Dot, List, Divider } from "@osn/common-ui";
 import Item from "./Item";
 import Pagination from "@osn/common-ui/es/styled/Pagination";
 import {
@@ -17,7 +17,6 @@ import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
 import RichEditor from "@osn/common-ui/es/RichEditor";
 import { signMessage } from "utils/signature";
-import NoDiscussions from "components/NoDiscussions";
 import {
   discussionsSelector,
   fetchBountyDiscussions,
@@ -55,7 +54,6 @@ const Count = styled.span`
 
 const LoadingWrapper = styled(FlexCenter)`
   height: 104px;
-  border-bottom: 1px solid #f0f3f8;
 `;
 
 export default function Discussion({ network, bountyId }) {
@@ -218,18 +216,19 @@ export default function Discussion({ network, bountyId }) {
   return (
     <Card>
       <Accordion divider title={title} showFold={true}>
-        {discussions === null && (
+        {!discussions ? (
           <LoadingWrapper>
             <Loading />
           </LoadingWrapper>
-        )}
-
-        {discussions?.items.length === 0 ? (
-          <NoDiscussions message={"No current discussions"} />
         ) : (
           <List
             gap={20}
             data={discussions?.items}
+            noDataMessage="No current discussions"
+            noDataProps={{
+              bordered: false,
+              shadow: false,
+            }}
             itemRender={(comment, index) => (
               <List.Item>
                 <Item
@@ -243,6 +242,9 @@ export default function Discussion({ network, bountyId }) {
             )}
           />
         )}
+
+        <Divider mt={0} />
+
         <PaginationWrapper>
           <Pagination
             className="pagination"
