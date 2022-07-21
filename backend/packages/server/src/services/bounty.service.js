@@ -2,7 +2,6 @@ const { HttpError } = require("../utils/exc");
 const { Bounty, Comment } = require("../models");
 const chainService = require("./chain.service");
 const { ipfsAddBuffer, ipfsAdd } = require("./ipfs.service");
-const { isTestAccount } = require("../utils/testAccount");
 
 async function getBounties(page, pageSize) {
   const q = {};
@@ -61,10 +60,8 @@ async function importBounty(
     throw new HttpError(403, "Can not find bounty curator");
   }
 
-  if (!isTestAccount(address)) {
-    if (!bounty.curators.includes(address)) {
-      throw new HttpError(403, "Only curator is allowed to import the bounty");
-    }
+  if (!bounty.curators.includes(address)) {
+    throw new HttpError(403, "Only curator is allowed to import the bounty");
   }
 
   // todo: extract following logic in one separate file and function

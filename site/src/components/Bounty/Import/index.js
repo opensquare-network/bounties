@@ -29,7 +29,6 @@ import Tooltip from "@osn/common-ui/es/Tooltip";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import LoadingInput from "../../LoadingInput";
 import { encodeNetworkAddress } from "@osn/common/src";
-import { isTestAccount } from "utils/testAccount";
 
 const Wrapper = styled.div`
   display: flex;
@@ -248,9 +247,7 @@ export default function ImportBounty() {
     }
   };
 
-  const isCurator =
-    encodedAddress &&
-    (isTestAccount(encodedAddress) || curators.includes(encodedAddress));
+  const isCurator = encodedAddress && curators.includes(encodedAddress);
 
   const canImport = isCurator && title && content && loaded && !submitting;
 

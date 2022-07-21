@@ -16,7 +16,6 @@ import { LinkIdentityUser } from "@osn/common-ui";
 import { ErrorMessage } from "./styled";
 import BigNumber from "bignumber.js";
 import { encodeNetworkAddress } from "@osn/common/src";
-import { isTestAccount } from "utils/testAccount";
 
 const StyledText = styled.p`
   ${p_16_semibold};
@@ -145,9 +144,7 @@ export default function BountyMeta({
     encodeNetworkAddress(account?.address, account?.network);
   const multisigCurators = curators.slice(1);
 
-  const isCurator =
-    encodedAddress &&
-    (isTestAccount(encodedAddress) || curators.includes(encodedAddress));
+  const isCurator = encodedAddress && curators.includes(encodedAddress);
 
   return (
     <>
