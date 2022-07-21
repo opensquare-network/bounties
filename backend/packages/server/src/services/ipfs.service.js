@@ -18,13 +18,11 @@ const [ipfsClient] = getClients(
 );
 
 async function ipfsAdd(data) {
-  const added = await ipfsClient.add(JSON.stringify(data));
-  return added;
+  return await ipfsClient.add(JSON.stringify(data));
 }
 
 async function ipfsAddBuffer(data) {
-  const added = await ipfsClient.add(data);
-  return added;
+  return await ipfsClient.add(data);
 }
 
 async function cidOf(obj) {
