@@ -6,7 +6,6 @@ import Button from "@osn/common-ui/es/styled/Button";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
-import { popUpConnect } from "store/reducers/showConnectSlice";
 import {
   newErrorToast,
   newPendingToast,
@@ -118,6 +117,8 @@ export default function ImportBounty() {
   const [curators, setCurators] = useState([]);
   const [value, setValue] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const [connectWalletModalVisible, setConnectWalletModalVisible] =
+    useState(false);
 
   const asset = ASSETS.find((item) => item.id === account?.network);
   const encodedAddress = account?.address && encodeNetworkAddress(account?.address, account?.network);
@@ -311,7 +312,10 @@ export default function ImportBounty() {
           </Box>
         ) : (
           <Box>
-            <ConnectWallet onClick={() => dispatch(popUpConnect())} />
+            <ConnectWallet
+              visible={connectWalletModalVisible}
+              setVisible={setConnectWalletModalVisible}
+            />
           </Box>
         )}
       </Side>
