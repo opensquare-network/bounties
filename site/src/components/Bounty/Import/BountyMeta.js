@@ -15,6 +15,7 @@ import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { LinkIdentityUser } from "@osn/common-ui";
 import { ErrorMessage } from "./styled";
 import BigNumber from "bignumber.js";
+import { encodeNetworkAddress } from "@osn/common/src";
 
 const StyledText = styled.p`
   ${p_16_semibold};
@@ -138,6 +139,7 @@ export default function BountyMeta({
   loading,
 }) {
   const account = useSelector(accountSelector);
+  const encodedAddress = account?.address && encodeNetworkAddress(account?.address, account?.network);
   const multisigCurators = curators.slice(1);
 
   return (
@@ -194,7 +196,7 @@ export default function BountyMeta({
                   </>
                 )}
               </CuratorsList>
-              {!curators?.includes(account?.address) && (
+              {!curators?.includes(encodedAddress) && (
                 <ErrorMessage>
                   Only bounty curator can import this bounty.
                 </ErrorMessage>
@@ -208,7 +210,7 @@ export default function BountyMeta({
                 src="/imgs/icons/default-avatar.png"
                 alt=""
               />
-              <DisabledText>Unspecified</DisabledText>
+              <DisabledText>{"--"}</DisabledText>
               {loading && <Loading />}
             </FieldBox>
           )}

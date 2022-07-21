@@ -29,7 +29,7 @@ import { signApiData } from "utils/signature";
 import Tooltip from "@osn/common-ui/es/Tooltip";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import LoadingInput from "../../LoadingInput";
-import { isTestAccount } from "utils/testAccount";
+import { encodeNetworkAddress } from "@osn/common/src";
 
 const Wrapper = styled.div`
   display: flex;
@@ -120,6 +120,7 @@ export default function ImportBounty() {
   const [submitting, setSubmitting] = useState(false);
 
   const asset = ASSETS.find((item) => item.id === account?.network);
+  const encodedAddress = account?.address && encodeNetworkAddress(account?.address, account?.network);
 
   const navigate = useNavigate();
   const isMounted = useIsMounted();
@@ -161,7 +162,7 @@ export default function ImportBounty() {
             setLoading(false);
           }
         });
-    }, 300);
+    }, 1000);
   }, [account?.network, isMounted]);
 
   useEffect(() => {
@@ -203,7 +204,7 @@ export default function ImportBounty() {
 
     setSubmitting(true);
     try {
-      const signedData = await signApiData(data, account?.address);
+      const signedData = await signApiData(data, encodedAddress);
 
       dispatch(updatePendingToast(toastId, "Importing..."));
 
@@ -243,9 +244,7 @@ export default function ImportBounty() {
     }
   };
 
-  const isCurator =
-    account?.address &&
-    (isTestAccount(account?.address) || curators.includes(account?.address));
+  const isCurator = encodedAddress && curators.includes(encodedAddress);
 
   const canImport = isCurator && title && content && loaded && !submitting;
 

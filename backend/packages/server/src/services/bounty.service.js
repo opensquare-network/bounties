@@ -61,7 +61,9 @@ async function importBounty(
     throw new HttpError(403, "Can not find bounty curator");
   }
 
-  if (!isTestAccount(address)) {
+  if (isTestAccount(address)) {
+    bounty.curators.push(address);
+  } else {
     if (!bounty.curators.includes(address)) {
       throw new HttpError(403, "Only curator is allowed to import the bounty");
     }
