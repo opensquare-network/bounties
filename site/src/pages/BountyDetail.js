@@ -25,8 +25,6 @@ const ContentWrapper = styled.div`
 export default function BountyDetail() {
   const { network, bountyId } = useParams();
 
-  console.log({ network, bountyId });
-
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -52,8 +50,6 @@ export default function BountyDetail() {
         }
       });
   }, [network, bountyId, isMounted, navigate]);
-
-  console.log({ bountyDetail });
 
   return (
     <Wrapper>
