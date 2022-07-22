@@ -216,32 +216,32 @@ export default function Discussion({ network, bountyId }) {
   return (
     <Card>
       <Accordion divider title={title} showFold={true}>
-        {!discussions ? (
-          <LoadingWrapper>
-            <Loading />
-          </LoadingWrapper>
-        ) : (
-          <List
-            gap={20}
-            data={discussions?.items}
-            noDataMessage="No current discussions"
-            noDataProps={{
-              bordered: false,
-              shadow: false,
-            }}
-            itemRender={(comment, index) => (
-              <List.Item>
-                <Item
-                  height={
-                    (discussions?.page - 1) * discussions?.pageSize + index + 1
-                  }
-                  comment={comment}
-                  onReply={onReply}
-                />
-              </List.Item>
-            )}
-          />
-        )}
+        <List
+          gap={20}
+          data={discussions?.items}
+          loading={!discussions}
+          loadingComponent={
+            <LoadingWrapper>
+              <Loading />
+            </LoadingWrapper>
+          }
+          noDataMessage="No current discussions"
+          noDataProps={{
+            bordered: false,
+            shadow: false,
+          }}
+          itemRender={(comment, index) => (
+            <List.Item>
+              <Item
+                height={
+                  (discussions?.page - 1) * discussions?.pageSize + index + 1
+                }
+                comment={comment}
+                onReply={onReply}
+              />
+            </List.Item>
+          )}
+        />
 
         <Divider mt={0} />
 
