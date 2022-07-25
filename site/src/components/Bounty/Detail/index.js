@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Meta from "./Meta";
 import Discussions from "./Discussions";
 import { MOBILE_SIZE } from "@osn/constants";
+import ChildBounties from "./ChildBounties";
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,7 +24,11 @@ export default function BountyDetail({ bountyDetail, loading = false }) {
   return (
     <Wrapper>
       <Meta bountyDetail={bountyDetail} />
-      <Discussions network={bountyDetail?.network} bountyId={bountyDetail?.bountyIndex} />
+      <ChildBounties bountyDetail={bountyDetail} />
+      <Discussions
+        network={bountyDetail?.network}
+        bountyId={bountyDetail?.bountyIndex}
+      />
     </Wrapper>
   );
 }
