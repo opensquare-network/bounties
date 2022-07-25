@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { Card, Dot, List, Divider } from "@osn/common-ui";
+import { Dot, List, Collapse } from "@osn/common-ui";
 import Item from "./Item";
 import Pagination from "@osn/common-ui/es/styled/Pagination";
 import {
@@ -36,7 +36,6 @@ import { useSearchParams } from "react-router-dom";
 import { identityChainMap } from "@osn/constants";
 import NetworkUser from "components/User/NetworkUser";
 import { MentionIdentityUser } from "@osn/common-ui";
-import Accordion from "components/Accordion";
 
 const Title = styled.div`
   ${p_16_semibold};
@@ -214,62 +213,58 @@ export default function Discussion({ network, bountyId }) {
   );
 
   return (
-    <Card>
-      <Accordion divider title={title} showFold={true}>
-        <List
-          gap={20}
-          data={discussions?.items}
-          loading={!discussions}
-          loadingComponent={
-            <LoadingWrapper>
-              <Loading />
-            </LoadingWrapper>
-          }
-          noDataMessage="No current discussions"
-          noDataProps={{
-            bordered: false,
-            shadow: false,
-          }}
-          itemRender={(comment, index) => (
-            <List.Item>
-              <Item
-                height={
-                  (discussions?.page - 1) * discussions?.pageSize + index + 1
-                }
-                comment={comment}
-                onReply={onReply}
-              />
-            </List.Item>
-          )}
-        />
-
-        <Divider mt={0} />
-
-        <PaginationWrapper>
-          <Pagination
-            className="pagination"
-            page={discussions?.page}
-            pageSize={discussions?.pageSize}
-            total={discussions?.total}
-            setPage={setPage}
-          />
-        </PaginationWrapper>
-        {!(discussions === null) && (
-          <EditorWrapper>
-            <RichEditor
-              ref={editorRef}
-              content={content}
-              setContent={setContent}
-              onSubmit={onSubmit}
-              showButtons={true}
-              submitButtonName="Comment"
-              submitting={loading}
-              loadSuggestions={loadSuggestions}
-              identifier={<MentionIdentityUser hashRoute target="_blank" />}
+    <Collapse title={title}>
+      <List
+        gap={20}
+        data={discussions?.items}
+        loading={!discussions}
+        loadingComponent={
+          <LoadingWrapper>
+            <Loading />
+          </LoadingWrapper>
+        }
+        noDataMessage="No current discussions"
+        noDataProps={{
+          bordered: false,
+          shadow: false,
+        }}
+        itemRender={(comment, index) => (
+          <List.Item>
+            <Item
+              height={
+                (discussions?.page - 1) * discussions?.pageSize + index + 1
+              }
+              comment={comment}
+              onReply={onReply}
             />
-          </EditorWrapper>
+          </List.Item>
         )}
-      </Accordion>
-    </Card>
+      />
+
+      <PaginationWrapper>
+        <Pagination
+          className="pagination"
+          page={discussions?.page}
+          pageSize={discussions?.pageSize}
+          total={discussions?.total}
+          setPage={setPage}
+        />
+      </PaginationWrapper>
+      {!(discussions === null) && (
+        <EditorWrapper>
+          <RichEditor
+            ref={editorRef}
+            content={content}
+            setContent={setContent}
+            onSubmit={onSubmit}
+            showButtons={true}
+            submitButtonName="Comment"
+            submitting={loading}
+            loadSuggestions={loadSuggestions}
+            identifier={<MentionIdentityUser hashRoute target="_blank" />}
+          />
+        </EditorWrapper>
+      )}
+    </Collapse>
   );
 }
