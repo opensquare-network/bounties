@@ -14,9 +14,13 @@ import BountyList from "components/Bounty/BountyList";
 import { Link } from "react-router-dom";
 import { text_dark_minor } from "@osn/common-ui/es/styles/colors";
 import { useDispatch } from "react-redux";
-import { fetchBountyList } from "store/reducers/bountySlice";
+import {
+  fetchBountyList,
+  fetchChildBountyList,
+} from "store/reducers/bountySlice";
 import { useAsyncState } from "@osn/common";
 import { useMemo } from "react";
+import { EmptyList } from "utils/constants";
 
 const Wrapper = styled.div`
   position: relative;
@@ -72,21 +76,22 @@ const BountyListWrapper = styled.div`
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { state, isLoading } = useAsyncState(
-    () => dispatch(fetchBountyList()),
-    {},
+  const { state: bountyListState, isLoading: bountyListLoading } =
+    useAsyncState(() => dispatch(fetchBountyList()), EmptyList);
+
+  const bountyList = useMemo(
+    () => bountyListState?.payload?.items || [],
+    [bountyListState?.payload?.items],
   );
 
-  const data = useMemo(
-    () => state?.payload?.items || [],
-    [state?.payload?.items],
-  );
+  const { state: childBountyListState, isLoading: childBountyListLoading } =
+    useAsyncState(() => dispatch(fetchChildBountyList()), EmptyList);
 
   return (
     <Wrapper>
-      {(isLoading || !!data.length) && <Background />}
+      {(bountyListLoading || !!bountyList.length) && <Background />}
 
-      <BountiesWrapper bg={!isLoading && !data.length}>
+      <BountiesWrapper bg={!bountyListLoading && !bountyList.length}>
         <Container>
           <FlexBetween>
             <Title>Bounties</Title>
@@ -99,7 +104,7 @@ export default function Home() {
           </FlexBetween>
 
           <BountyListWrapper>
-            <BountyList isLoading={isLoading} items={data} />
+            <BountyList isLoading={bountyListLoading} items={bountyList} />
           </BountyListWrapper>
         </Container>
       </BountiesWrapper>
@@ -108,7 +113,10 @@ export default function Home() {
         <Container>
           <SubTitle>Child Bounties</SubTitle>
 
-          <ChildBountyList></ChildBountyList>
+          <ChildBountyList
+            isLoading={childBountyListLoading}
+            items={childBountyListState?.payload?.items}
+          />
         </Container>
       </ChildBountiesWrapper>
     </Wrapper>
