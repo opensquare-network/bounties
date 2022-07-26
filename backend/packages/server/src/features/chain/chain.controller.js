@@ -5,6 +5,16 @@ async function getBounty(ctx) {
   ctx.body = await chainService.getBounty(network, bountyIndex);
 }
 
+async function getChildBounty(ctx) {
+  const { network, parentBountyIndex, index } = ctx.params;
+  ctx.body = await chainService.getChildBounty(
+    network,
+    parentBountyIndex,
+    index,
+  );
+}
+
 module.exports = {
   getBounty,
+  getChildBounty,
 };
