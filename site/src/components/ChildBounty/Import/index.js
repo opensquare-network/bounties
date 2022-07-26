@@ -14,7 +14,7 @@ import {
   updatePendingToast,
 } from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import debounce from "lodash.debounce";
 import { ASSETS } from "utils/constants";
@@ -25,6 +25,7 @@ import InputDescription from "components/Common/Import/InputDescription";
 import InputBountyId from "components/Common/Import/InputBountyId";
 import BountyMeta from "components/Common/Import/BountyMeta";
 import BountySkills from "./BountySkills";
+import BountyHeader from "./BountyHeader";
 
 const Wrapper = styled.div`
   display: flex;
@@ -86,11 +87,7 @@ const Side = styled.div`
   }
 `;
 
-export default function ImportChildBounty() {
-  const [searchParams] = useSearchParams();
-  const network = searchParams.get("network");
-  const parentBountyId = searchParams.get("parentBountyId");
-
+export default function ImportChildBounty({ network, parentBountyId }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [title, setTitle] = useState("");
@@ -248,6 +245,7 @@ export default function ImportChildBounty() {
   return (
     <Wrapper>
       <Main>
+        <BountyHeader network={network} bountyIndex={parentBountyId} />
         <InputBountyId
           title={"Child bounty ID"}
           tooltip={"The child bounty ID on-chain"}
