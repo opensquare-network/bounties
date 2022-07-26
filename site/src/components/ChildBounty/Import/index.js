@@ -14,9 +14,8 @@ import {
   updatePendingToast,
 } from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
-import BountyLogo from "./BountyLogo";
 import debounce from "lodash.debounce";
 import { ASSETS } from "utils/constants";
 import { signApiData } from "utils/signature";
@@ -25,6 +24,7 @@ import InputTitle from "components/Common/Import/InputTitle";
 import InputDescription from "components/Common/Import/InputDescription";
 import InputBountyId from "components/Common/Import/InputBountyId";
 import BountyMeta from "components/Common/Import/BountyMeta";
+import BountySkills from "./BountySkills";
 
 const Wrapper = styled.div`
   display: flex;
@@ -86,46 +86,54 @@ const Side = styled.div`
   }
 `;
 
-export default function ImportBounty() {
+export default function ImportChildBounty() {
+  const [searchParams] = useSearchParams();
+  const network = searchParams.get("network");
+  const parentBountyId = searchParams.get("parentBountyId");
+
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [title, setTitle] = useState("");
-  const [bountyId, setBountyId] = useState("");
+  const [childBountyId, setChildBountyId] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
   const [bountyError, setBountyError] = useState("");
   const [curators, setCurators] = useState([]);
   const [value, setValue] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [connectWalletModalVisible, setConnectWalletModalVisible] =
     useState(false);
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
-  const asset = ASSETS.find((item) => item.id === account?.network);
+  const asset = ASSETS.find((item) => item.id === network);
   const encodedAddress =
-    account?.address &&
-    encodeNetworkAddress(account?.address, account?.network);
+    account?.address && encodeNetworkAddress(account?.address, network);
 
   const navigate = useNavigate();
   const isMounted = useIsMounted();
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
-  const fetchBountyMeta = useMemo(() => {
-    return debounce(async (bountyId) => {
-      if (!bountyId) {
+  const fetchChildBountyMeta = useMemo(() => {
+    return debounce(async (parentBountyId, index) => {
+      if (!index) {
         return;
       }
 
-      if (!bountyId.match(/^\d+$/)) {
-        setBountyError("Please input a valid bounty ID");
+      if (!index.match(/^\d+$/)) {
+        setBountyError("Please input a valid child bounty ID");
+        return;
+      }
+
+      if (!parentBountyId || !parentBountyId.match(/^\d+$/)) {
+        setBountyError("Invalid parent bounty ID");
         return;
       }
 
       setLoading(true);
       serverApi
-        .fetch(`chain/${account?.network}/bounty/${bountyId}`)
+        .fetch(`chain/${network}/child-bounty/${parentBountyId}_${index}`)
         .then(({ result, error }) => {
           if (result) {
             if (isMounted.current) {
@@ -148,7 +156,7 @@ export default function ImportBounty() {
           }
         });
     }, 1000);
-  }, [account?.network, isMounted]);
+  }, [network, isMounted]);
 
   useEffect(() => {
     setLoaded(false);
@@ -157,12 +165,17 @@ export default function ImportBounty() {
     setBountyError("");
     setCurators([]);
 
-    fetchBountyMeta(bountyId);
-  }, [fetchBountyMeta, bountyId]);
+    fetchChildBountyMeta(parentBountyId, childBountyId);
+  }, [fetchChildBountyMeta, parentBountyId, childBountyId]);
 
   const doImport = async () => {
-    if (!bountyId) {
-      showErrorToast("Bounty ID is required");
+    if (!parentBountyId) {
+      showErrorToast("Parent bounty ID is required");
+      return;
+    }
+
+    if (!childBountyId) {
+      showErrorToast("Child bounty ID is required");
       return;
     }
 
@@ -177,11 +190,13 @@ export default function ImportBounty() {
     }
 
     const data = {
-      action: "importBounty",
-      network: account?.network,
-      bountyIndex: bountyId,
+      action: "importChildBounty",
+      network,
+      parentBountyIndex: parentBountyId,
+      index: childBountyId,
       title,
       content,
+      skills: selectedSkills,
     };
 
     const toastId = newToastId();
@@ -193,27 +208,24 @@ export default function ImportBounty() {
 
       dispatch(updatePendingToast(toastId, "Importing..."));
 
-      const formData = new FormData();
-      formData.set("data", JSON.stringify(signedData.data));
-      formData.set("address", signedData.address);
-      formData.set("signature", signedData.signature);
-      if (imageFile) {
-        formData.set("logo", imageFile);
-      }
-
       const { result, error } = await serverApi.fetch(
-        `bounties`,
+        `child-bounties`,
         {},
         {
           method: "POST",
-          body: formData,
+          body: JSON.stringify(signedData),
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
       );
       setSubmitting(false);
 
       if (result) {
-        dispatch(newSuccessToast("Bounty imported"));
-        navigate(`/network/${account?.network}/bounty/${bountyId}`);
+        dispatch(newSuccessToast("Child bounty imported"));
+        navigate(
+          `/network/${network}/child-bounty/${parentBountyId}_${childBountyId}`,
+        );
         return;
       }
 
@@ -236,20 +248,19 @@ export default function ImportBounty() {
   return (
     <Wrapper>
       <Main>
-        <BountyLogo
-          imageFile={imageFile}
-          setImageFile={setImageFile}
-          network={account?.network}
-        />
         <InputBountyId
-          title={"Bounty ID"}
-          tooltip={"The bounty ID on-chain"}
-          bountyId={bountyId}
-          setBountyId={setBountyId}
+          title={"Child bounty ID"}
+          tooltip={"The child bounty ID on-chain"}
+          bountyId={childBountyId}
+          setBountyId={setChildBountyId}
           isLoading={loading}
           errorMsg={bountyError}
         />
         <InputTitle title={title} setTitle={setTitle} isLoading={loading} />
+        <BountySkills
+          selectedSkills={selectedSkills}
+          setSelectedSkills={setSelectedSkills}
+        />
         <InputDescription
           content={content}
           setContent={setContent}
@@ -260,7 +271,7 @@ export default function ImportBounty() {
         {account ? (
           <Box>
             <BountyMeta
-              network={account?.network}
+              network={network}
               curators={curators}
               symbol={asset?.symbol}
               decimals={asset?.decimals}

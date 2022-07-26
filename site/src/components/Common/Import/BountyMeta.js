@@ -132,6 +132,7 @@ const FieldTitle = styled.div`
 `;
 
 export default function BountyMeta({
+  network,
   value,
   symbol,
   decimals,
@@ -140,8 +141,7 @@ export default function BountyMeta({
 }) {
   const account = useSelector(accountSelector);
   const encodedAddress =
-    account?.address &&
-    encodeNetworkAddress(account?.address, account?.network);
+    account?.address && encodeNetworkAddress(account?.address, network);
   const multisigCurators = curators.slice(1);
 
   const isCurator = encodedAddress && curators.includes(encodedAddress);
@@ -154,8 +154,8 @@ export default function BountyMeta({
           <NetworkIcon />
         </FlexBetween>
         <FieldBox>
-          <ChainIcon chainName={account?.network} />
-          <Text>{account?.network}</Text>
+          <ChainIcon chainName={network} />
+          <Text>{network}</Text>
         </FieldBox>
       </Field>
       <Field>
@@ -166,8 +166,8 @@ export default function BountyMeta({
         <SubField>
           <FieldTitle>Funder</FieldTitle>
           <FieldBox>
-            <ChainIcon chainName={account?.network} />
-            <Text>{account?.network} Treasury</Text>
+            <ChainIcon chainName={network} />
+            <Text>{network} Treasury</Text>
           </FieldBox>
         </SubField>
         <SubField>
@@ -178,7 +178,7 @@ export default function BountyMeta({
                 <CuratorItem>
                   <LinkIdentityUser
                     explore
-                    network={account?.network}
+                    network={network}
                     address={curators[0]}
                   />
                 </CuratorItem>
@@ -192,7 +192,7 @@ export default function BountyMeta({
                       <CuratorItem key={curator}>
                         <LinkIdentityUser
                           explore
-                          network={account?.network}
+                          network={network}
                           address={curator}
                         />
                       </CuratorItem>
@@ -226,7 +226,7 @@ export default function BountyMeta({
           <RewardIcon />
         </FlexBetween>
         <FieldBox>
-          <ChainIcon chainName={account?.network} />
+          <ChainIcon chainName={network} />
           {value ? (
             <Text>
               {new BigNumber(value).div(Math.pow(10, decimals)).toFixed()}{" "}
