@@ -8,6 +8,12 @@ export const Wrapper = styled(FlexBetween)`
 
 export const IdentityUserWrapper = styled(Flex)`
   flex: 1;
+  a {
+    cursor: pointer;
+    :hover {
+      text-decoration: underline;
+    }
+  }
 `;
 export const ApplicantWrapper = styled(Flex)`
   flex: 1;
