@@ -1,4 +1,5 @@
 import { Tag } from "@osn/common-ui";
+import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
 
 const symbolColorMap = {
   KSM: "#000000",
@@ -10,11 +11,11 @@ const symbolColorMap = {
 const getSymbolColor = (symbol) => symbolColorMap[symbol] || "#000000";
 
 export default function BountyTag(props = {}) {
-  const { symbol, value } = props;
+  const { symbol } = props;
 
   return (
     <Tag color={getSymbolColor(symbol)}>
-      {value} {symbol}
+      <ValueDisplay {...props} />
     </Tag>
   );
 }
