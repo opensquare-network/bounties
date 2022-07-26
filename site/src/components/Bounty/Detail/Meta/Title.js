@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
 import BountyTag from "../../BountyTag";
 import { p_18_semibold } from "@osn/common-ui/es/styles/textStyles";
 import BountyLogo from "../../BountyLogo";
