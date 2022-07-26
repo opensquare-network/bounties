@@ -43,17 +43,17 @@ export default function PageChildBountyDetail() {
     () =>
       serverApi
         .fetch(
-          `network/${network}/bounties/${bountyId}/child-bounty/${childBountyId}`,
+          `/network/${network}/child-bounties/${bountyId}_${childBountyId}`,
         )
         .then(({ result, error }) => {
           if (result) {
             return result;
           }
           if (error) {
-            return new Error(error);
+            return Promise.reject(error);
           }
         }),
-    {},
+    null,
     {
       immediate: false,
       onError() {
