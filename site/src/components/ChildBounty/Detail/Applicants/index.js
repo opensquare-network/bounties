@@ -62,7 +62,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
               </ApplicantWrapper>
 
               <TimeWrapper>
-                <Time time={Date.now()} />
+                <Time time={new Date()} />
               </TimeWrapper>
             </Wrapper>
           </List.Item>
