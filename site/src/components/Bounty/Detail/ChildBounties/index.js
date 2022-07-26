@@ -1,8 +1,18 @@
 import { useAsyncState } from "@osn/common";
 import { Collapse, List, Button } from "@osn/common-ui";
 import DetailLoader from "@osn/common-ui/es/Skeleton/DetailLoader";
+import { useCallback } from "react";
+import { useNavigate } from "react-router";
 
 export default function ChildBounties({ bountyDetail = {} }) {
+  const navigate = useNavigate();
+
+  const goImportChild = useCallback(() => {
+    navigate(
+      `/import_child_bounty?network=${bountyDetail?.network}&parentBountyId=${bountyDetail?.bountyIndex}`,
+    );
+  }, [navigate, bountyDetail?.bountyIndex, bountyDetail?.network]);
+
   const { state, isLoading } = useAsyncState(
     () => [],
     {},
@@ -23,7 +33,9 @@ export default function ChildBounties({ bountyDetail = {} }) {
         renderItem={(item) => <List.Item></List.Item>}
       />
 
-      <Button block>Import a Child Bounty</Button>
+      <Button block onClick={goImportChild}>
+        Import a Child Bounty
+      </Button>
     </Collapse>
   );
 }

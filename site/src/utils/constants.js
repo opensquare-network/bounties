@@ -65,3 +65,13 @@ export const EmptyList = {
 };
 
 export const PROJECT_NAME = "OpenSquare-Bounties";
+
+export const SKILLS = [
+  "TypeScript",
+  "Java",
+  "Design",
+  "React",
+  "Vue",
+  "Backend",
+  "Translation",
+];

@@ -1,14 +1,9 @@
+import { useRef, useState } from "react";
 import styled from "styled-components";
-import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
+import { Title } from "components/Common/Import/styled";
 import { ReactComponent as KusamaLogoIcon } from "imgs/icons/bounty-logo-kusama.svg";
 import { ReactComponent as PolkadotLogoIcon } from "imgs/icons/bounty-logo-polkadot.svg";
 import { ReactComponent as UploadLogoIcon } from "imgs/icons/logo-upload.svg";
-import { useRef, useState } from "react";
-
-const Title = styled.div`
-  ${p_16_semibold};
-  color: #1e2134;
-`;
 
 const LogoContainer = styled.div`
   display: inline-flex;
@@ -97,7 +92,8 @@ export default function BountyLogo({ network, setImageFile }) {
     }
   };
 
-  const defaultLogo = network === "kusama" ? <KusamaLogoIcon /> : <PolkadotLogoIcon />;
+  const defaultLogo =
+    network === "kusama" ? <KusamaLogoIcon /> : <PolkadotLogoIcon />;
 
   return (
     <>
