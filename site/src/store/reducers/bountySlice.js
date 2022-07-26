@@ -34,8 +34,15 @@ export const fetchBountyList = () => async (dispatch) => {
   });
 };
 
-export const fetchChildBountyList = (network, address) => async (dispatch) => {
-  return dispatch(setChildBountyList([]));
+export const fetchChildBountyList = () => async (dispatch) => {
+  return serverApi.fetch("/child-bounties", {}).then(({ result, error }) => {
+    if (result) {
+      return dispatch(setChildBountyList(result));
+    }
+    if (error) {
+      return Promise.reject(error.message);
+    }
+  });
 };
 
 export default bountySlice.reducer;

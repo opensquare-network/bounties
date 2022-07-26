@@ -5,6 +5,7 @@ const router = new Router();
 
 const chainFeatureRouters = [
   require("./features/bounty/routes"),
+  require("./features/child-bounty/routes"),
 ];
 
 const commonFeatureRouters = [];
@@ -18,7 +19,7 @@ module.exports = (app) => {
     router.use(
       `/:chain(${Object.keys(Chains).join("|")})`,
       r.routes(),
-      r.allowedMethods({ throw: true })
+      r.allowedMethods({ throw: true }),
     );
   }
 
