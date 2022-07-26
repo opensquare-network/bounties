@@ -1,4 +1,5 @@
 import { FlexBetween, Flex } from "@osn/common-ui";
+import { text_dark_accessory } from "@osn/common-ui/es/styles/colors";
 import styled from "styled-components";
 
 export const Wrapper = styled(FlexBetween)`
@@ -15,4 +16,8 @@ export const ApplicantWrapper = styled(Flex)`
 export const TimeWrapper = styled(Flex)`
   flex: 1;
   justify-content: flex-end;
+`;
+
+export const Count = styled.span`
+  color: ${text_dark_accessory};
 `;
