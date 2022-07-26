@@ -9,7 +9,8 @@ import {
 import BountyTag from "../BountyTag";
 import { Link } from "react-router-dom";
 import { Title } from "../styled/bounty";
-import { Mark, SkillList, SkillTag } from "./styled";
+import { Mark } from "./styled";
+import SkillList from "./SkillList";
 
 export default function ChildBountyItem({ children, ...props } = {}) {
   const {
@@ -51,11 +52,7 @@ export default function ChildBountyItem({ children, ...props } = {}) {
           {!!skills.length && (
             <>
               <Dot />
-              <SkillList>
-                {skills.map((skill) => (
-                  <SkillTag>{skill}</SkillTag>
-                ))}
-              </SkillList>
+              <SkillList skills={skills} />
             </>
           )}
         </FlexCenter>

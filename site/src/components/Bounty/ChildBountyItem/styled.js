@@ -11,7 +11,7 @@ export const Mark = styled.span`
   margin-right: 8px;
 `;
 
-export const SkillList = styled.ul`
+export const SkillListWrapper = styled.ul`
   display: flex;
   list-style: none;
   padding-left: 0;
