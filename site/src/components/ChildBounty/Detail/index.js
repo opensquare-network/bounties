@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { MOBILE_SIZE } from "@osn/constants";
-import Meta from "../../Bounty/Detail/Meta";
 import Discussions from "../../Bounty/Detail/Discussions";
-import ChildBountyApplicants from "./Applicants";
+import ChildBountyDetailApplicants from "./Applicants";
+import ChildBountyDetailMeta from "./Meta";
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,8 +22,9 @@ const Wrapper = styled.div`
 export default function ChildBountyDetail({ childBountyDetail }) {
   return (
     <Wrapper>
-      {/* <Meta bountyDetail={childBountyDetail} /> */}
-      <ChildBountyApplicants bountyDetail={childBountyDetail} />
+      <ChildBountyDetailMeta childBountyDetail={childBountyDetail} />
+      <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
+
       <Discussions
         network={childBountyDetail?.network}
         bountyId={childBountyDetail?.bountyIndex}
