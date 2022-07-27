@@ -6,10 +6,7 @@ const requireSignature = require("../../middleware/require-signature");
 const router = new Router();
 const upload = multer();
 
-router.get(
-  "/bounties",
-  bountyController.getBounties,
-);
+router.get("/bounties", bountyController.getBounties);
 
 router.post(
   "/bounties",
