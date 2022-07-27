@@ -16,26 +16,24 @@ import {
 } from "./styled";
 
 export default function ChildBountyApplicants({ childBountyDetail }) {
-  const { network, childBounty } = childBountyDetail ?? {};
-  // FIXME: which value, now is `curators` instead
-  const applicants = childBounty?.curators;
+  const { applications = [] } = childBountyDetail ?? {};
 
   return (
     <Card
       title={
         <>
           Applicants
-          {!!applicants?.length && (
+          {!!applications?.length && (
             <>
               <Dot />
-              <Count>{applicants?.length}</Count>
+              <Count>{applications.length}</Count>
             </>
           )}
         </>
       }
     >
       <List
-        data={applicants}
+        data={applications}
         gap={20}
         noDataMessage="No current applicants"
         noDataProps={{ bordered: false, shadow: false }}
@@ -45,28 +43,40 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
             <Loading />
           </FlexCenter>
         }
-        itemRender={(address) => (
-          <List.Item>
-            <Wrapper>
-              <IdentityUserWrapper>
-                <LinkIdentityUser
-                  items={["avatarIcon", "networkIcon", "identityIcon", "text"]}
-                  explore
-                  network={network}
-                  address={address}
-                />
-              </IdentityUserWrapper>
+        itemRender={(application) => {
+          const {
+            address,
+            createdAt,
+            bountyIndexer = {},
+            description,
+          } = application;
 
-              <ApplicantWrapper>
-                FIXME: Lobortis dictum odio semper consectetur dolor, elementum.
-              </ApplicantWrapper>
+          return (
+            <List.Item>
+              <Wrapper>
+                <IdentityUserWrapper>
+                  <LinkIdentityUser
+                    items={[
+                      "avatarIcon",
+                      "networkIcon",
+                      "identityIcon",
+                      "text",
+                    ]}
+                    explore
+                    network={bountyIndexer?.network}
+                    address={address}
+                  />
+                </IdentityUserWrapper>
 
-              <TimeWrapper>
-                <Time time={new Date()} />
-              </TimeWrapper>
-            </Wrapper>
-          </List.Item>
-        )}
+                <ApplicantWrapper>{description}</ApplicantWrapper>
+
+                <TimeWrapper>
+                  <Time time={new Date(createdAt)} />
+                </TimeWrapper>
+              </Wrapper>
+            </List.Item>
+          );
+        }}
       />
     </Card>
   );
