@@ -5,9 +5,7 @@ import {
 } from "components/Bounty/Detail/Meta/Info/styled";
 
 export default function InfoApplicants({ childBountyDetail }) {
-  const { childBounty } = childBountyDetail ?? {};
-  // FIXME: which value, now is `curators` instead
-  const applicants = childBounty?.curators;
+  const { applications = [] } = childBountyDetail ?? {};
 
   return (
     <InfoItem
@@ -16,7 +14,7 @@ export default function InfoApplicants({ childBountyDetail }) {
           <span>Applicants</span>
         </InfoHeader>
       }
-      content={<InfoContent>{applicants?.length}</InfoContent>}
+      content={<InfoContent>{applications.length}</InfoContent>}
     />
   );
 }
