@@ -32,6 +32,23 @@ const ChildBountySchema = new mongoose.Schema(
   },
 );
 
+ChildBountySchema.virtual("parentBounty", {
+  ref: "Bounty",
+  localField: "parentBountyIndex",
+  foreignField: "bountyIndex",
+  match: (childBounty) => ({ network: childBounty.network }),
+});
+
+ChildBountySchema.virtual("applications", {
+  ref: "Application",
+  localField: "index",
+  foreignField: "bountyIndexer.childBountyIndex",
+  match: (childBounty) => ({
+    "bountyIndexer.network": childBounty.network,
+    "bountyIndexer.bountyIndex": childBounty.parentBountyIndex,
+  }),
+});
+
 const ChildBounty = mongoose.model("ChildBounty", ChildBountySchema);
 
 module.exports = { ChildBountySchema, ChildBounty };

@@ -22,15 +22,15 @@ async function postComment(ctx) {
     throw new HttpError(400, { content: ["Comment content is missing"] });
   }
 
-  let indexer;
+  let bountyIndexer;
   if (type === "bounty") {
-    indexer = {
+    bountyIndexer = {
       type,
       network,
       bountyIndex,
     };
   } else if (type === "childBounty") {
-    indexer = {
+    bountyIndexer = {
       type,
       network,
       bountyIndex,
@@ -41,7 +41,7 @@ async function postComment(ctx) {
   }
 
   ctx.body = await commentService.postComment(
-    indexer,
+    bountyIndexer,
     content,
     commenterNetwork,
     data,

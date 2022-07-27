@@ -8,7 +8,8 @@ async function getBounties(page, pageSize) {
   const total = await Bounty.countDocuments(q);
   const items = await Bounty.find(q)
     .skip((page - 1) * pageSize)
-    .limit(pageSize);
+    .limit(pageSize)
+    .populate("childBountiesCount");
   return {
     items,
     total,
@@ -24,16 +25,7 @@ async function getBounty(network, bountyIndex) {
     throw new HttpError(404, "Bounty not found");
   }
 
-  const comments = await Comment.find({
-    "indexer.type": "bounty",
-    "indexer.network": network,
-    "indexer.bountyIndex": bountyIndex,
-  });
-
-  return {
-    ...bounty.toJSON(),
-    comments,
-  };
+  return bounty.toJSON();
 }
 
 async function importBounty(
@@ -95,9 +87,9 @@ async function importBounty(
 
 async function getBountyComments(network, bountyIndex, page, pageSize) {
   const q = {
-    "indexer.type": "bounty",
-    "indexer.network": network,
-    "indexer.bountyIndex": bountyIndex,
+    "bountyIndexer.type": "bounty",
+    "bountyIndexer.network": network,
+    "bountyIndexer.bountyIndex": bountyIndex,
   };
 
   const total = await Comment.count(q);
