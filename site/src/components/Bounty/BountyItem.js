@@ -8,7 +8,8 @@ import BountyLogo from "./BountyLogo";
 import { capitalize } from "utils";
 
 function BountyItem(props) {
-  const { network, title, bountyIndex, bounty, logoUrl } = props ?? {};
+  const { network, title, bountyIndex, bounty, logoUrl, childBountiesCount } =
+    props ?? {};
 
   const details = [
     {
@@ -27,8 +28,7 @@ function BountyItem(props) {
           </Tooltip>
         </>
       ),
-      // FIXME: form server
-      value: 0,
+      value: childBountiesCount,
     },
     {
       label: (
