@@ -3,7 +3,7 @@ const { ChildBounty, Comment } = require("../models");
 const chainService = require("./chain.service");
 
 async function getChildBounties(page, pageSize) {
-  const q = { deleted: { $ne: null } };
+  const q = { deleted: null };
   const total = await ChildBounty.countDocuments(q);
   const items = await ChildBounty.find(q)
     .skip((page - 1) * pageSize)
