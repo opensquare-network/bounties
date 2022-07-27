@@ -5,7 +5,7 @@ import {
 } from "components/Bounty/Detail/Meta/Info/styled";
 
 export default function InfoParentBounty({ childBountyDetail }) {
-  const { parentBountyIndex } = childBountyDetail ?? {};
+  const { parentBounty = {} } = childBountyDetail ?? {};
 
   return (
     <InfoItem
@@ -14,8 +14,7 @@ export default function InfoParentBounty({ childBountyDetail }) {
           <span>Parent Bounty</span>
         </InfoHeader>
       }
-      // FIXME: is should be parent bounty title
-      content={<InfoContent>{parentBountyIndex}</InfoContent>}
+      content={<InfoContent>{parentBounty.title}</InfoContent>}
     />
   );
 }
