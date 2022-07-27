@@ -16,6 +16,7 @@ export const SkillListWrapper = styled.ul`
   list-style: none;
   padding-left: 0;
   gap: 8px;
+  margin: 0;
 `;
 
 // TODO: it should be a tag component with rounded prop
