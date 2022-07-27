@@ -37,6 +37,7 @@ ChildBountySchema.virtual("parentBounty", {
   localField: "parentBountyIndex",
   foreignField: "bountyIndex",
   match: (childBounty) => ({ network: childBounty.network }),
+  justOne: true,
 });
 
 ChildBountySchema.virtual("applications", {
