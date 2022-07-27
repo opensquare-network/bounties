@@ -172,7 +172,6 @@ async function assignApplication(
     throw new HttpError(400, "Incorrect application status");
   }
 
-  console.log(application.bountyIndexer);
   const childBounty = await ChildBounty.findOne({
     network: application.bountyIndexer.network,
     parentBountyIndex: application.bountyIndexer.bountyIndex,
