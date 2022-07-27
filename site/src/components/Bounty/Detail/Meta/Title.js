@@ -4,6 +4,7 @@ import BountyTag from "../../BountyTag";
 import { p_18_semibold } from "@osn/common-ui/es/styles/textStyles";
 import BountyLogo from "../../BountyLogo";
 import { Dot } from "@osn/common-ui";
+import StatusLabel from "components/Bounty/StatusLabel";
 
 const Wrapper = styled.div`
   > :nth-child(1) {
@@ -18,14 +19,6 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: space-between;
   }
-`;
-
-const Status = styled.span`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  color: #4caf50;
 `;
 
 const Type = styled.span`
@@ -44,7 +37,7 @@ const TitleText = styled.div`
 `;
 
 export default function Title({ bountyDetail }) {
-  const { bounty } = bountyDetail ?? {};
+  const { bounty, status } = bountyDetail ?? {};
 
   return (
     <Wrapper>
@@ -55,8 +48,7 @@ export default function Title({ bountyDetail }) {
       <TitleText>{bountyDetail.title}</TitleText>
       <div>
         <span>
-          {/* TODO: Bind bounty status */}
-          <Status>Open</Status>
+          <StatusLabel>{status}</StatusLabel>
           <Dot />
           <Type>Bounty</Type>
         </span>
