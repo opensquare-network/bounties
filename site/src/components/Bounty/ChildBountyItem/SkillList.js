@@ -4,7 +4,7 @@ export default function SkillList({ skills = [] }) {
   return (
     <SkillListWrapper>
       {skills.map((skill) => (
-        <SkillTag>{skill}</SkillTag>
+        <SkillTag key={skill}>{skill}</SkillTag>
       ))}
     </SkillListWrapper>
   );
