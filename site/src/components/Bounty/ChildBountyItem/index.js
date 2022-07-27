@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { Title } from "../styled/bounty";
 import { Mark } from "./styled";
 import SkillList from "./SkillList";
+import StatusLabel from "../StatusLabel";
 
 export default function ChildBountyItem({ children, ...props } = {}) {
   const {
@@ -21,6 +22,7 @@ export default function ChildBountyItem({ children, ...props } = {}) {
     parentBountyIndex,
     index,
     skills = [],
+    status,
   } = props ?? {};
 
   return (
@@ -43,8 +45,7 @@ export default function ChildBountyItem({ children, ...props } = {}) {
     >
       <FlexBetween>
         <FlexCenter>
-          {/* FIXME: status */}
-          <span>Open</span>
+          <StatusLabel>{status}</StatusLabel>
           <Dot />
           <Mark>Curated by</Mark>
           <IdentityUser network={network} address={address} />
