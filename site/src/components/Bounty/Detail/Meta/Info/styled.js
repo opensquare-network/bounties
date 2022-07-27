@@ -32,7 +32,12 @@ export const InfoContent = styled.div`
   line-height: 24px;
   color: #1e2134;
   gap: 8px;
-  > a {
+
+  a {
     cursor: pointer;
+
+    :hover {
+      text-decoration: underline;
+    }
   }
 `;
