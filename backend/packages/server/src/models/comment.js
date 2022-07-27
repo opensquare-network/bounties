@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const CommentSchema = new mongoose.Schema(
   {
-    indexer: {
+    bountyIndexer: {
       type: String,
       network: String,
       bountyIndex: Number,

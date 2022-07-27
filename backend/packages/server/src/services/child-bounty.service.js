@@ -1,5 +1,5 @@
 const { HttpError } = require("../utils/exc");
-const { ChildBounty } = require("../models");
+const { ChildBounty, Comment } = require("../models");
 const chainService = require("./chain.service");
 
 async function getChildBounties(page, pageSize) {
@@ -21,15 +21,19 @@ async function getChildBounty(network, parentBountyIndex, index) {
     network,
     parentBountyIndex,
     index,
+  }).populate({
+    path: "parentBounty",
+    select: "bountyIndex network title logo logoUrl",
+  }).populate({
+    path: "applications",
+    select: "bountyIndexer description address createdAt updatedAt"
   });
 
   if (!childBounty) {
     throw new HttpError(404, "Child bounty not found");
   }
 
-  return {
-    ...childBounty.toJSON(),
-  };
+  return childBounty.toJSON();
 }
 
 async function importChildBounty(
@@ -94,10 +98,10 @@ async function getChildBountyComments(
   pageSize,
 ) {
   const q = {
-    "indexer.type": "childBounty",
-    "indexer.network": network,
-    "indexer.bountyIndex": parentBountyIndex,
-    "indexer.childBountyIndex": index,
+    "bountyIndexer.type": "childBounty",
+    "bountyIndexer.network": network,
+    "bountyIndexer.bountyIndex": parentBountyIndex,
+    "bountyIndexer.childBountyIndex": index,
   };
 
   const total = await Comment.count(q);

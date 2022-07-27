@@ -2,7 +2,7 @@ const { HttpError } = require("../utils/exc");
 const { Comment, Bounty, ChildBounty } = require("../models");
 
 async function postComment(
-  indexer,
+  bountyIndexer,
   content,
   commenterNetwork,
   data,
@@ -10,19 +10,19 @@ async function postComment(
   signature,
 ) {
   // Check bounty
-  if (indexer.type === "bounty") {
+  if (bountyIndexer.type === "bounty") {
     const bounty = await Bounty.findOne({
-      network: indexer.network,
-      bountyIndex: indexer.bountyIndex,
+      network: bountyIndexer.network,
+      bountyIndex: bountyIndexer.bountyIndex,
     });
     if (!bounty) {
       throw new HttpError(400, "Bounty not found");
     }
   } else if (index.type === "childBounty") {
     const childBounty = await ChildBounty.findOne({
-      network: indexer.network,
-      parentBountyIndex: indexer.bountyIndex,
-      index: indexer.childBountyIndex,
+      network: bountyIndexer.network,
+      parentBountyIndex: bountyIndexer.bountyIndex,
+      index: bountyIndexer.childBountyIndex,
     });
     if (!childBounty) {
       throw new HttpError(400, "Child bounty not found");
@@ -30,7 +30,7 @@ async function postComment(
   }
 
   await Comment.create({
-    indexer,
+    bountyIndexer,
     content,
     commenterNetwork,
     data,
