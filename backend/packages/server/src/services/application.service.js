@@ -29,7 +29,6 @@ async function apply(
     status: "apply",
   });
 
-  //TODO: applicantNetwork?
   await ApplicationTimeline.create({
     bountyIndexer,
     applicantAddress: address,
@@ -61,18 +60,52 @@ async function updateApplication(
     address: applicantAddress,
   });
   if (!application) {
-    throw new HttpError(400, "Application not found");
+    throw new HttpError(400, "Application is not found");
   }
 
   if (action === "cancelApplication") {
     await cancelApplication(application, action, data, address, signature);
   } else if (action === "assignApplication") {
     await assignApplication(application, action, data, address, signature);
+  } else if (action === "unassignApplication") {
+    await unassignApplication(application, action, data, address, signature);
   } else if (action === "acceptAssignment") {
     await acceptAssignment(application, action, data, address, signature);
   } else if (action === "submitWork") {
     await submitWork(application, action, data, address, signature);
   }
+
+  // Update child bounty status
+  const allApplicationStatus = await Application.find({
+    "bountyIndexer.network": bountyIndexer.network,
+    "bountyIndexer.bountyIndex": bountyIndexer.bountyIndex,
+    "bountyIndexer.childBountyIndex": bountyIndexer.childBountyIndex,
+  }).distinct("status");
+
+  let newStatus = "open";
+  for (const status of [
+    "workDone",
+    "submitted",
+    "started",
+    "assigned",
+    "apply",
+  ]) {
+    if (allApplicationStatus.includes(status)) {
+      newStatus = status;
+      break;
+    }
+  }
+
+  await ChildBounty.updateOne(
+    {
+      network: bountyIndexer.network,
+      parentBountyIndex: bountyIndexer.bountyIndex,
+      index: bountyIndexer.childBountyIndex,
+    },
+    {
+      status: newStatus,
+    },
+  );
 
   // fixme: it's strange to return just {result: true}
   return {
@@ -187,6 +220,43 @@ async function assignApplication(
   }
 
   await Application.updateOne({ _id: application._id }, { status: "assigned" });
+
+  await ApplicationTimeline.create({
+    bountyIndexer: application.bountyIndexer,
+    applicantAddress: application.address,
+    action,
+    data,
+    address,
+    signature,
+  });
+}
+
+async function unassignApplication(
+  application,
+  action,
+  data,
+  address,
+  signature,
+) {
+  if (!["assigned", "started"].includes(application.status)) {
+    throw new HttpError(400, "Incorrect application status");
+  }
+
+  const childBounty = await ChildBounty.findOne({
+    network: application.bountyIndexer.network,
+    parentBountyIndex: application.bountyIndexer.bountyIndex,
+    index: application.bountyIndexer.childBountyIndex,
+  });
+  if (!childBounty) {
+    throw new HttpError(500, "Related bounty not found");
+  }
+
+  // Check if caller is bounty curator
+  if (!childBounty.childBounty.curators.includes(address)) {
+    throw new HttpError(403, "Only the curator is allow to unassign the work");
+  }
+
+  await Application.updateOne({ _id: application._id }, { status: "apply" });
 
   await ApplicationTimeline.create({
     bountyIndexer: application.bountyIndexer,

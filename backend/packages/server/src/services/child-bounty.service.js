@@ -1,5 +1,5 @@
 const { HttpError } = require("../utils/exc");
-const { ChildBounty, Comment } = require("../models");
+const { ChildBounty, Comment, Application } = require("../models");
 const chainService = require("./chain.service");
 
 async function getChildBounties(page, pageSize) {
@@ -127,6 +127,7 @@ async function deleteChildBounty(
   address,
   signature,
 ) {
+  // Verify caller is the child bounty importer
   const childBounty = await ChildBounty.findOne({
     network,
     parentBountyIndex,
@@ -136,24 +137,32 @@ async function deleteChildBounty(
     throw new HttpError(404, "Child bounty not found");
   }
 
-  if (childBounty.status === "done") {
-    throw new HttpError(403, "Cannot delete completed bounty");
+  if (!["open", "apply"].includes(childBounty.status)) {
+    throw new HttpError(403, "Cannot delete the bounty at the moment");
   }
 
-  if (childBounty.address !== address) {
-    throw new HttpError(403, "Only importer can delete the bounty");
+  if (!childBounty.childBounty.curators.includes(address)) {
+    throw new HttpError(403, "Only the curator can delete it");
   }
 
-  await ChildBounty.updateOne(
-    { _id: childBounty._id },
-    {
-      deleted: {
-        data,
-        address,
-        signature,
-      },
-    },
-  );
+  await Comment.deleteMany({
+    "bountyIndexer.type": "childBounty",
+    "bountyIndexer.network": network,
+    "bountyIndexer.bountyIndex": parentBountyIndex,
+    "bountyIndexer.childBountyIndex": index,
+  });
+
+  await Application.deleteMany({
+    "bountyIndexer.network": network,
+    "bountyIndexer.bountyIndex": parentBountyIndex,
+    "bountyIndexer.childBountyIndex": index,
+  });
+
+  await ChildBounty.deleteOne({
+    network,
+    parentBountyIndex,
+    index,
+  });
 
   return {
     result: true,
