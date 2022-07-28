@@ -12,6 +12,12 @@ router.post(
   childBountyController.importChildBounty,
 );
 
+router.patch(
+  "/child-bounty",
+  requireSignature,
+  childBountyController.deleteChildBounty,
+);
+
 router.get(
   "/network/:network/child-bounties/:parentBountyIndex(\\d+)_:index(\\d+)",
   childBountyController.getChildBounty,

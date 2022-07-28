@@ -3,7 +3,7 @@ const { ChildBounty, Comment } = require("../models");
 const chainService = require("./chain.service");
 
 async function getChildBounties(page, pageSize) {
-  const q = {};
+  const q = { deleted: null };
   const total = await ChildBounty.countDocuments(q);
   const items = await ChildBounty.find(q)
     .skip((page - 1) * pageSize)
@@ -21,13 +21,15 @@ async function getChildBounty(network, parentBountyIndex, index) {
     network,
     parentBountyIndex,
     index,
-  }).populate({
-    path: "parentBounty",
-    select: "bountyIndex network title logo logoUrl",
-  }).populate({
-    path: "applications",
-    select: "bountyIndexer description address createdAt updatedAt"
-  });
+  })
+    .populate({
+      path: "parentBounty",
+      select: "bountyIndex network title logo logoUrl",
+    })
+    .populate({
+      path: "applications",
+      select: "bountyIndexer description address createdAt updatedAt",
+    });
 
   if (!childBounty) {
     throw new HttpError(404, "Child bounty not found");
@@ -117,8 +119,50 @@ async function getChildBountyComments(
   };
 }
 
+async function deleteChildBounty(
+  network,
+  parentBountyIndex,
+  index,
+  data,
+  address,
+  signature,
+) {
+  const childBounty = await ChildBounty.findOne({
+    network,
+    parentBountyIndex,
+    index,
+  });
+  if (!childBounty) {
+    throw new HttpError(404, "Child bounty not found");
+  }
+
+  if (childBounty.status === "done") {
+    throw new HttpError(403, "Cannot delete completed bounty");
+  }
+
+  if (childBounty.address !== address) {
+    throw new HttpError(403, "Only importer can delete the bounty");
+  }
+
+  await ChildBounty.updateOne(
+    { _id: childBounty._id },
+    {
+      deleted: {
+        data,
+        address,
+        signature,
+      },
+    },
+  );
+
+  return {
+    result: true,
+  };
+}
+
 module.exports = {
   importChildBounty,
+  deleteChildBounty,
   getChildBounties,
   getChildBounty,
   getChildBountyComments,

@@ -19,7 +19,10 @@ async function getBounties(page, pageSize) {
 }
 
 async function getBounty(network, bountyIndex) {
-  const bounty = await Bounty.findOne({ network, bountyIndex });
+  const bounty = await Bounty.findOne({ network, bountyIndex }).populate({
+    path: "childBounties",
+    select: "network parentBountyIndex index title deleted",
+  });
 
   if (!bounty) {
     throw new HttpError(404, "Bounty not found");

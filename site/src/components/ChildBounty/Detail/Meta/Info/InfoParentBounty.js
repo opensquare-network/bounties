@@ -3,9 +3,15 @@ import {
   InfoContent,
   InfoHeader,
 } from "components/Bounty/Detail/Meta/Info/styled";
+import { Link } from "react-router-dom";
+import { resolveBountyDetailRoute } from "utils/route";
 
 export default function InfoParentBounty({ childBountyDetail }) {
-  const { parentBountyIndex } = childBountyDetail ?? {};
+  const {
+    parentBounty = {},
+    parentBountyIndex = "",
+    network,
+  } = childBountyDetail ?? {};
 
   return (
     <InfoItem
@@ -14,8 +20,13 @@ export default function InfoParentBounty({ childBountyDetail }) {
           <span>Parent Bounty</span>
         </InfoHeader>
       }
-      // FIXME: is should be parent bounty title
-      content={<InfoContent>{parentBountyIndex}</InfoContent>}
+      content={
+        <InfoContent>
+          <Link to={resolveBountyDetailRoute(network, parentBountyIndex)}>
+            {parentBounty.title}
+          </Link>
+        </InfoContent>
+      }
     />
   );
 }
