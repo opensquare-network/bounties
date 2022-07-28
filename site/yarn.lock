@@ -1580,12 +1580,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@osn/common-ui@^0.0.99":
-  version "0.0.99"
-  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-0.0.99.tgz#c9f42cc5c05492dcfd9135628cb23b59aa4e9d28"
-  integrity sha512-a1W5pH1QhNEWc2shrVQRz+a9yLIaHLOCdSNg5QysKnmr0+J4lQNyPXKcH6xO4j12bxAsnCkggVhQ15GwrLTCVw==
+"@osn/common-ui@^0.0.101":
+  version "0.0.101"
+  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-0.0.101.tgz#a975af64f0e749eaf401cc86896c8f48b443cce1"
+  integrity sha512-XAI0qllsPH9Yrn0W92g0AdpYfWyB6Y07PzYzr1GM+27eHeyZ2YWyUPZVdClnFEMjZAvTcoxcb7/PNUkVChVVxg==
   dependencies:
-    "@craco/craco" "^6.4.3"
     dayjs "^1.10.8"
     react-mde "^11.5.0"
     react-router-dom "^6.3.0"

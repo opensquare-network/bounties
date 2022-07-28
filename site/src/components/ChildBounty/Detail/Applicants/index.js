@@ -5,8 +5,8 @@ import {
   Time,
   FlexCenter,
   Dot,
+  LoadingDot,
 } from "@osn/common-ui";
-import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import {
   ApplicantWrapper,
   IdentityUserWrapper,
@@ -40,7 +40,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
         loading={!childBountyDetail}
         loadingComponent={
           <FlexCenter>
-            <Loading />
+            <LoadingDot />
           </FlexCenter>
         }
         itemRender={(application) => {

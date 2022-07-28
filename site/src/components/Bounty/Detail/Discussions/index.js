@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { Dot, List, Collapse } from "@osn/common-ui";
+import { Dot, List, Collapse, LoadingDot } from "@osn/common-ui";
 import Item from "./Item";
 import Pagination from "@osn/common-ui/es/styled/Pagination";
 import {
@@ -28,7 +28,6 @@ import {
 } from "@osn/common/src/utils/address";
 import { fetchIdentity } from "@osn/common/src/services/identity";
 import uniqWith from "lodash.uniqwith";
-import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
@@ -220,7 +219,7 @@ export default function Discussion({ network, bountyId }) {
         loading={!discussions}
         loadingComponent={
           <LoadingWrapper>
-            <Loading />
+            <LoadingDot />
           </LoadingWrapper>
         }
         noDataMessage="No current discussions"

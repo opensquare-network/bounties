@@ -6,13 +6,12 @@ import ChainIcon from "@osn/common-ui/es/Chain/ChainIcon";
 import { ReactComponent as NetworkIcon } from "imgs/icons/network.svg";
 import { ReactComponent as RewardIcon } from "imgs/icons/treasury.svg";
 import { ReactComponent as InfoIcon } from "imgs/icons/info.svg";
-import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import {
   p_14_medium,
   p_16_semibold,
 } from "@osn/common-ui/es/styles/textStyles";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
-import { LinkIdentityUser } from "@osn/common-ui";
+import { LinkIdentityUser, LoadingDot } from "@osn/common-ui";
 import { ErrorMessage } from "./styled";
 import BigNumber from "bignumber.js";
 import { encodeNetworkAddress } from "@osn/common/src";
@@ -215,7 +214,7 @@ export default function BountyMeta({
                 alt=""
               />
               <DisabledText>{"--"}</DisabledText>
-              {loading && <Loading />}
+              {loading && <LoadingDot />}
             </FieldBox>
           )}
         </SubField>
@@ -238,7 +237,7 @@ export default function BountyMeta({
               {symbol}
             </DisabledText>
           )}
-          {loading && <Loading />}
+          {loading && <LoadingDot />}
         </FieldBox>
       </Field>
     </>

@@ -3,12 +3,12 @@ import debounce from "lodash.debounce";
 import { hexToString } from "@polkadot/util";
 import { useApi } from "../utils/hooks";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
-import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import styled from "styled-components";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 import { getSymbolMetaByChain } from "@osn/common/src/utils/tokenValue";
 import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
+import { LoadingDot } from "@osn/common-ui";
 
 const Wrapper = styled(FlexBetween)`
   margin-top: 8px;
@@ -97,7 +97,7 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
         } else {
           const assetAccount = await api.query.assets.account(
             assetId,
-            account?.address
+            account?.address,
           );
           const { balance: hexBalance = 0 } = assetAccount.toJSON() || {};
           balance = hexBalance;
@@ -126,7 +126,7 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
       <span>Balance</span>
       <div>
         {loadingBalance || loadingSymbol ? (
-          <Loading />
+          <LoadingDot />
         ) : symbol === null ? (
           <div>0</div>
         ) : (
