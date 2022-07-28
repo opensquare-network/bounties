@@ -26,6 +26,7 @@ import InputBountyId from "components/Common/Import/InputBountyId";
 import BountyMeta from "components/Common/Import/BountyMeta";
 import BountySkills from "./BountySkills";
 import BountyHeader from "./BountyHeader";
+import { resolveChildBountyDetailRoute } from "utils/route";
 
 const Wrapper = styled.div`
   display: flex;
@@ -221,7 +222,7 @@ export default function ImportChildBounty({ network, parentBountyId }) {
       if (result) {
         dispatch(newSuccessToast("Child bounty imported"));
         navigate(
-          `/network/${network}/child-bounty/${parentBountyId}_${childBountyId}`,
+          resolveChildBountyDetailRoute(network, parentBountyId, childBountyId),
         );
         return;
       }
