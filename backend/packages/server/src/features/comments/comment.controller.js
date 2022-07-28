@@ -4,6 +4,7 @@ const commentService = require("../../services/comment.service");
 async function postComment(ctx) {
   const { data, address, signature } = ctx.request.body;
   const {
+    action,
     type,
     network,
     bountyIndex,
@@ -11,6 +12,10 @@ async function postComment(ctx) {
     content,
     commenterNetwork,
   } = data;
+
+  if (action !== "comment") {
+    throw new HttpError(400, { action: ["Action must be comment"] });
+  }
 
   if (!commenterNetwork) {
     throw new HttpError(400, {
@@ -46,7 +51,7 @@ async function postComment(ctx) {
     commenterNetwork,
     data,
     address,
-    signature
+    signature,
   );
 }
 

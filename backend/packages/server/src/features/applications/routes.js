@@ -4,5 +4,10 @@ const requireSignature = require("../../middleware/require-signature");
 
 const router = new Router();
 router.post("/applications", requireSignature, applicationController.apply);
+router.patch(
+  "/application",
+  requireSignature,
+  applicationController.updateApplication,
+);
 
 module.exports = router;

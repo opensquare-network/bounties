@@ -3,6 +3,7 @@ const { MONGODB_URI } = require("../env");
 const { Bounty } = require("./bounty");
 const { ChildBounty } = require("./child-bounty");
 const { Application } = require("./application");
+const { ApplicationTimeline } = require("./applicationTimeline");
 const { Comment } = require("./comment");
 
 mongoose.connect(MONGODB_URI);
@@ -17,5 +18,6 @@ module.exports = {
   Bounty,
   ChildBounty,
   Application,
+  ApplicationTimeline,
   Comment,
 };

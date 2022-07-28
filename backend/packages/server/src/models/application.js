@@ -23,6 +23,16 @@ const ApplicationSchema = new mongoose.Schema(
   },
 );
 
+ApplicationSchema.index(
+  {
+    "bountyIndexer.network": 1,
+    "bountyIndexer.bountyIndex": 1,
+    "bountyIndexer.childBountyIndex": 1,
+    address: 1,
+  },
+  { unique: true },
+);
+
 const Application = mongoose.model("Application", ApplicationSchema);
 
 module.exports = { ApplicationSchema, Application };

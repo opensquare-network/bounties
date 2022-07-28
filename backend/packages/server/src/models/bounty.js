@@ -46,8 +46,21 @@ BountySchema.virtual("childBountiesCount", {
   ref: "ChildBounty",
   localField: "bountyIndex",
   foreignField: "parentBountyIndex",
-  match: (bounty) => ({ network: bounty.network }),
+  match: (bounty) => ({
+    network: bounty.network,
+    deleted: null,
+  }),
   count: true,
+});
+
+BountySchema.virtual("childBounties", {
+  ref: "ChildBounty",
+  localField: "bountyIndex",
+  foreignField: "parentBountyIndex",
+  match: (bounty) => ({
+    network: bounty.network,
+    deleted: null,
+  }),
 });
 
 const Bounty = mongoose.model("Bounty", BountySchema);
