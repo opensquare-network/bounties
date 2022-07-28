@@ -1,6 +1,7 @@
 const { HttpError } = require("../utils/exc");
 const { ChildBounty, Comment, Application } = require("../models");
 const chainService = require("./chain.service");
+const { ChildBountyStatus } = require("../utils/constants");
 
 async function getChildBounties(page, pageSize) {
   const q = { deleted: null };
@@ -89,6 +90,7 @@ async function importChildBounty(
     data,
     address,
     signature,
+    status: ChildBountyStatus.Open,
   });
 }
 

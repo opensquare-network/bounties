@@ -1,5 +1,11 @@
 const { HttpError } = require("../utils/exc");
-const { ChildBounty, Application, ApplicationTimeline } = require("../models");
+const { ChildBounty, Application, ApplicationTimeline, Notification } = require("../models");
+const {
+  ApplicationStatus,
+  ChildBountyStatus,
+  NotificationType,
+} = require("../utils/constants");
+const { toPublicKey } = require("../utils/address");
 
 async function apply(
   bountyIndexer,
@@ -19,6 +25,20 @@ async function apply(
     throw new HttpError(400, "Child bounty not found");
   }
 
+  if (applicantNetwork !== childBounty.network) {
+    throw new HttpError(400, "Applicant address network does not match");
+  }
+
+  const exists = await Application.findOne({
+    "bountyIndexer.network": bountyIndexer.network,
+    "bountyIndexer.bountyIndex": bountyIndexer.bountyIndex,
+    "bountyIndexer.childBountyIndex": bountyIndexer.childBountyIndex,
+    applicantNetwork,
+  });
+  if (exists) {
+    throw new HttpError(400, "Application already exists");
+  }
+
   await Application.create({
     bountyIndexer,
     description,
@@ -26,16 +46,30 @@ async function apply(
     data,
     address,
     signature,
-    status: "apply",
+    status: ApplicationStatus.Apply,
   });
 
-  await ApplicationTimeline.create({
+  const timelineItem = await ApplicationTimeline.create({
     bountyIndexer,
     applicantAddress: address,
     action: "applyChildBounty",
     data,
     address,
     signature,
+  });
+
+  const notificationOwner = toPublicKey(childBounty.address);
+  await Notification.create({
+    owner: notificationOwner,
+    type: [NotificationType.Applied],
+    read: false,
+    data: {
+      byWho: {
+        address,
+        network: applicantNetwork,
+      },
+      applicationTimelineItem: timelineItem._id,
+    },
   });
 
   // fixme: it's strange to return just {result: true}
@@ -63,16 +97,60 @@ async function updateApplication(
     throw new HttpError(400, "Application is not found");
   }
 
+  const childBounty = await ChildBounty.findOne({
+    network: application.bountyIndexer.network,
+    parentBountyIndex: application.bountyIndexer.bountyIndex,
+    index: application.bountyIndexer.childBountyIndex,
+  });
+  if (!childBounty) {
+    throw new HttpError(500, "Related bounty not found");
+  }
+
   if (action === "cancelApplication") {
-    await cancelApplication(application, action, data, address, signature);
+    await cancelApplication(
+      childBounty,
+      application,
+      action,
+      data,
+      address,
+      signature,
+    );
   } else if (action === "assignApplication") {
-    await assignApplication(application, action, data, address, signature);
+    await assignApplication(
+      childBounty,
+      application,
+      action,
+      data,
+      address,
+      signature,
+    );
   } else if (action === "unassignApplication") {
-    await unassignApplication(application, action, data, address, signature);
+    await unassignApplication(
+      childBounty,
+      application,
+      action,
+      data,
+      address,
+      signature,
+    );
   } else if (action === "acceptAssignment") {
-    await acceptAssignment(application, action, data, address, signature);
+    await acceptAssignment(
+      childBounty,
+      application,
+      action,
+      data,
+      address,
+      signature,
+    );
   } else if (action === "submitWork") {
-    await submitWork(application, action, data, address, signature);
+    await submitWork(
+      childBounty,
+      application,
+      action,
+      data,
+      address,
+      signature,
+    );
   }
 
   // Update child bounty status
@@ -82,13 +160,13 @@ async function updateApplication(
     "bountyIndexer.childBountyIndex": bountyIndexer.childBountyIndex,
   }).distinct("status");
 
-  let newStatus = "open";
+  let newStatus = ChildBountyStatus.Open;
   for (const status of [
-    "workDone",
-    "submitted",
-    "started",
-    "assigned",
-    "apply",
+    ApplicationStatus.WorkDone,
+    ApplicationStatus.Submitted,
+    ApplicationStatus.Started,
+    ApplicationStatus.Assigned,
+    ApplicationStatus.Apply,
   ]) {
     if (allApplicationStatus.includes(status)) {
       newStatus = status;
@@ -114,13 +192,18 @@ async function updateApplication(
 }
 
 async function cancelApplication(
+  childBounty,
   application,
   action,
   data,
   address,
   signature,
 ) {
-  if (!["apply", "assigned"].includes(application.status)) {
+  if (
+    ![ApplicationStatus.Apply, ApplicationStatus.Assigned].includes(
+      application.status,
+    )
+  ) {
     throw new HttpError(400, "Incorrect application status");
   }
 
@@ -134,10 +217,10 @@ async function cancelApplication(
 
   await Application.updateOne(
     { _id: application._id },
-    { status: "cancelled" },
+    { status: ApplicationStatus.Cancelled },
   );
 
-  await ApplicationTimeline.create({
+  const timelineItem = await ApplicationTimeline.create({
     bountyIndexer: application.bountyIndexer,
     applicantAddress: application.address,
     action,
@@ -145,10 +228,31 @@ async function cancelApplication(
     address,
     signature,
   });
+
+  const notificationOwner = toPublicKey(childBounty.address);
+  await Notification.create({
+    owner: notificationOwner,
+    type: [NotificationType.Cancelled],
+    read: false,
+    data: {
+      byWho: {
+        address,
+        network: childBounty.network,
+      },
+      applicationTimelineItem: timelineItem._id,
+    },
+  });
 }
 
-async function submitWork(application, action, data, address, signature) {
-  if (application.status !== "started") {
+async function submitWork(
+  childBounty,
+  application,
+  action,
+  data,
+  address,
+  signature,
+) {
+  if (application.status !== ApplicationStatus.Started) {
     throw new HttpError(400, "Incorrect application status");
   }
 
@@ -159,10 +263,10 @@ async function submitWork(application, action, data, address, signature) {
 
   await Application.updateOne(
     { _id: application._id },
-    { status: "submitted" },
+    { status: ApplicationStatus.Submitted },
   );
 
-  await ApplicationTimeline.create({
+  const timelineItem = await ApplicationTimeline.create({
     bountyIndexer: application.bountyIndexer,
     applicantAddress: application.address,
     action,
@@ -170,10 +274,31 @@ async function submitWork(application, action, data, address, signature) {
     address,
     signature,
   });
+
+  const notificationOwner = toPublicKey(childBounty.address);
+  await Notification.create({
+    owner: notificationOwner,
+    type: [NotificationType.Submitted],
+    read: false,
+    data: {
+      byWho: {
+        address,
+        network: childBounty.network,
+      },
+      applicationTimelineItem: timelineItem._id,
+    },
+  });
 }
 
-async function acceptAssignment(application, action, data, address, signature) {
-  if (application.status !== "assigned") {
+async function acceptAssignment(
+  childBounty,
+  application,
+  action,
+  data,
+  address,
+  signature,
+) {
+  if (application.status !== ApplicationStatus.Assigned) {
     throw new HttpError(400, "Incorrect application status");
   }
 
@@ -182,9 +307,12 @@ async function acceptAssignment(application, action, data, address, signature) {
     throw new HttpError(403, "Only the owner is allow to accept the work");
   }
 
-  await Application.updateOne({ _id: application._id }, { status: "started" });
+  await Application.updateOne(
+    { _id: application._id },
+    { status: ApplicationStatus.Started },
+  );
 
-  await ApplicationTimeline.create({
+  const timelineItem = await ApplicationTimeline.create({
     bountyIndexer: application.bountyIndexer,
     applicantAddress: application.address,
     action,
@@ -192,26 +320,32 @@ async function acceptAssignment(application, action, data, address, signature) {
     address,
     signature,
   });
+
+  const notificationOwner = toPublicKey(childBounty.address);
+  await Notification.create({
+    owner: notificationOwner,
+    type: [NotificationType.Accepted],
+    read: false,
+    data: {
+      byWho: {
+        address,
+        network: childBounty.network,
+      },
+      applicationTimelineItem: timelineItem._id,
+    },
+  });
 }
 
 async function assignApplication(
+  childBounty,
   application,
   action,
   data,
   address,
   signature,
 ) {
-  if (application.status !== "apply") {
+  if (application.status !== ApplicationStatus.Apply) {
     throw new HttpError(400, "Incorrect application status");
-  }
-
-  const childBounty = await ChildBounty.findOne({
-    network: application.bountyIndexer.network,
-    parentBountyIndex: application.bountyIndexer.bountyIndex,
-    index: application.bountyIndexer.childBountyIndex,
-  });
-  if (!childBounty) {
-    throw new HttpError(500, "Related bounty not found");
   }
 
   // Check if caller is bounty curator
@@ -219,9 +353,12 @@ async function assignApplication(
     throw new HttpError(403, "Only the curator is allow to assign the work");
   }
 
-  await Application.updateOne({ _id: application._id }, { status: "assigned" });
+  await Application.updateOne(
+    { _id: application._id },
+    { status: ApplicationStatus.Assigned },
+  );
 
-  await ApplicationTimeline.create({
+  const timelineItem = await ApplicationTimeline.create({
     bountyIndexer: application.bountyIndexer,
     applicantAddress: application.address,
     action,
@@ -229,26 +366,36 @@ async function assignApplication(
     address,
     signature,
   });
+
+  const notificationOwner = toPublicKey(application.address);
+  await Notification.create({
+    owner: notificationOwner,
+    type: [NotificationType.Assigned],
+    read: false,
+    data: {
+      byWho: {
+        address,
+        network: childBounty.network,
+      },
+      applicationTimelineItem: timelineItem._id,
+    },
+  });
 }
 
 async function unassignApplication(
+  childBounty,
   application,
   action,
   data,
   address,
   signature,
 ) {
-  if (!["assigned", "started"].includes(application.status)) {
+  if (
+    ![ApplicationStatus.Assigned, ApplicationStatus.Started].includes(
+      application.status,
+    )
+  ) {
     throw new HttpError(400, "Incorrect application status");
-  }
-
-  const childBounty = await ChildBounty.findOne({
-    network: application.bountyIndexer.network,
-    parentBountyIndex: application.bountyIndexer.bountyIndex,
-    index: application.bountyIndexer.childBountyIndex,
-  });
-  if (!childBounty) {
-    throw new HttpError(500, "Related bounty not found");
   }
 
   // Check if caller is bounty curator
@@ -256,15 +403,32 @@ async function unassignApplication(
     throw new HttpError(403, "Only the curator is allow to unassign the work");
   }
 
-  await Application.updateOne({ _id: application._id }, { status: "apply" });
+  await Application.updateOne(
+    { _id: application._id },
+    { status: ApplicationStatus.Apply },
+  );
 
-  await ApplicationTimeline.create({
+  const timelineItem = await ApplicationTimeline.create({
     bountyIndexer: application.bountyIndexer,
     applicantAddress: application.address,
     action,
     data,
     address,
     signature,
+  });
+
+  const notificationOwner = toPublicKey(application.address);
+  await Notification.create({
+    owner: notificationOwner,
+    type: [NotificationType.Unassigned],
+    read: false,
+    data: {
+      byWho: {
+        address,
+        network: childBounty.network,
+      },
+      applicationTimelineItem: timelineItem._id,
+    },
   });
 }
 

@@ -7,6 +7,7 @@ const featureRouters = [
   require("./features/child-bounties/routes"),
   require("./features/applications/routes"),
   require("./features/comments/routes"),
+  require("./features/notification/routes"),
   require("./features/chain/routes"),
 ];
 
