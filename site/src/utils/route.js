@@ -12,3 +12,7 @@ export function resolveChildBountyDetailRoute(
     `/child-bounty/${childIndex}`
   );
 }
+
+export function resolveImportChildBountyRoute(network, parentIndex) {
+  return `/import_child_bounty?network=${network}&parentBountyId=${parentIndex}`;
+}

@@ -1,23 +1,16 @@
+import { Link } from "react-router-dom";
 import { Collapse, List, Button, Time, FlexCenter } from "@osn/common-ui";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import BountyTag from "components/Bounty/BountyTag";
 import StatusLabel from "components/Bounty/StatusLabel";
-import { useCallback } from "react";
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-import { resolveChildBountyDetailRoute } from "utils/route";
+import {
+  resolveChildBountyDetailRoute,
+  resolveImportChildBountyRoute,
+} from "utils/route";
 import { Index, Item, ListWrapper, Status, TimeWrapper, Title } from "./styled";
 
 export default function ChildBounties({ bountyDetail = {} }) {
-  const { childBounties = [] } = bountyDetail ?? {};
-
-  const navigate = useNavigate();
-
-  const goImportChild = useCallback(() => {
-    navigate(
-      `/import_child_bounty?network=${bountyDetail?.network}&parentBountyId=${bountyDetail?.bountyIndex}`,
-    );
-  }, [navigate, bountyDetail?.bountyIndex, bountyDetail?.network]);
+  const { childBounties = [], network, bountyIndex } = bountyDetail ?? {};
 
   return (
     <Collapse title="Child Bounties">
@@ -76,9 +69,12 @@ export default function ChildBounties({ bountyDetail = {} }) {
         />
       </ListWrapper>
 
-      <Button block onClick={goImportChild}>
-        Import a Child Bounty
-      </Button>
+      <Link
+        style={{ display: "flex" }}
+        to={resolveImportChildBountyRoute(network, bountyIndex)}
+      >
+        <Button block>Import a Child Bounty</Button>
+      </Link>
     </Collapse>
   );
 }
