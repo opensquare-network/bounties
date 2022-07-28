@@ -25,6 +25,7 @@ import InputTitle from "components/Common/Import/InputTitle";
 import InputDescription from "components/Common/Import/InputDescription";
 import InputBountyId from "components/Common/Import/InputBountyId";
 import BountyMeta from "components/Common/Import/BountyMeta";
+import { resolveBountyDetailRoute } from "utils/route";
 
 const Wrapper = styled.div`
   display: flex;
@@ -213,7 +214,7 @@ export default function ImportBounty() {
 
       if (result) {
         dispatch(newSuccessToast("Bounty imported"));
-        navigate(`/network/${account?.network}/bounty/${bountyId}`);
+        navigate(resolveBountyDetailRoute(account?.network, bountyId));
         return;
       }
 

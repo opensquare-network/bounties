@@ -8,6 +8,7 @@ import { useAsyncState } from "@osn/common";
 import serverApi from "services/serverApi";
 import { useEffect } from "react";
 import ChildBountyDetail from "components/ChildBounty/Detail";
+import { resolveBountyDetailRoute } from "utils/route";
 
 const Wrapper = styled.div`
   position: relative;
@@ -31,7 +32,7 @@ export default function PageChildBountyDetail() {
       name: "Explore",
     },
     {
-      link: `/network/${network}/bounty/${bountyId}`,
+      link: resolveBountyDetailRoute(network, bountyId),
       name: `${capitalize(network)} #${bountyId}`,
     },
     {

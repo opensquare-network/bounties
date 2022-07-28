@@ -12,6 +12,7 @@ import { Title } from "../styled/bounty";
 import { Mark } from "./styled";
 import SkillList from "./SkillList";
 import StatusLabel from "../StatusLabel";
+import { resolveChildBountyDetailRoute } from "utils/route";
 
 export default function ChildBountyItem({ children, ...props } = {}) {
   const {
@@ -31,7 +32,11 @@ export default function ChildBountyItem({ children, ...props } = {}) {
       title={
         <Title>
           <Link
-            to={`/network/${network}/bounty/${parentBountyIndex}/child-bounty/${index}`}
+            to={resolveChildBountyDetailRoute(
+              network,
+              parentBountyIndex,
+              index,
+            )}
           >
             {title}
           </Link>

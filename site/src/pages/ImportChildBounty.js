@@ -5,6 +5,7 @@ import ChildBountyImport from "../components/ChildBounty/Import";
 import Breadcrumb from "../components/Breadcrumb";
 import { useSearchParams } from "react-router-dom";
 import { capitalize } from "utils";
+import { resolveBountyDetailRoute } from "utils/route";
 
 const Wrapper = styled.div`
   position: relative;
@@ -27,7 +28,7 @@ export default function ImportChildBounty() {
   const path = [
     {
       title: `${capitalize(network)} #${parentBountyId}`,
-      href: `/network/${network}/bounty/${parentBountyId}`,
+      href: resolveBountyDetailRoute(network, parentBountyId),
     },
   ];
   return (
