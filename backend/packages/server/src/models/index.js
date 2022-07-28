@@ -5,6 +5,7 @@ const { ChildBounty } = require("./child-bounty");
 const { Application } = require("./application");
 const { ApplicationTimeline } = require("./applicationTimeline");
 const { Comment } = require("./comment");
+const { NotificationEvent, Notification } = require("./notification");
 
 mongoose.connect(MONGODB_URI);
 mongoose.connection.on("error", () => {
@@ -20,4 +21,6 @@ module.exports = {
   Application,
   ApplicationTimeline,
   Comment,
+  Notification,
+  NotificationEvent,
 };
