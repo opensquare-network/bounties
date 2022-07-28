@@ -9,7 +9,7 @@ import {
 import Info from "./Info";
 import { ButtonGroup, Group } from "./styled";
 
-export default function ChildBountyDetailMeta({ childBountyDetail }) {
+export default function ChildBountyDetailMeta({ childBountyDetail, type }) {
   if (!childBountyDetail) {
     return <Card head={metaLoading}>{descriptionLoading}</Card>;
   }
@@ -19,7 +19,10 @@ export default function ChildBountyDetailMeta({ childBountyDetail }) {
   return (
     <Card
       head={
-        <Title bountyDetail={{ ...childBountyDetail, bounty: childBounty }} />
+        <Title
+          type={type}
+          bountyDetail={{ ...childBountyDetail, bounty: childBounty }}
+        />
       }
     >
       <Info childBountyDetail={childBountyDetail} />

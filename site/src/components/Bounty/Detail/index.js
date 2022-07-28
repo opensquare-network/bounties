@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 export default function BountyDetail({ bountyDetail, loading = false }) {
   return (
     <Wrapper>
-      <Meta bountyDetail={bountyDetail} />
+      <Meta type="Bounty" bountyDetail={bountyDetail} />
       <ChildBounties bountyDetail={bountyDetail} />
       <Discussions
         network={bountyDetail?.network}

@@ -16,7 +16,7 @@ const BottomBar = styled.div`
   justify-content: space-between;
 `;
 
-export default function BountyMeta({ bountyDetail }) {
+export default function BountyMeta({ bountyDetail, type }) {
   if (!bountyDetail) {
     return <Card head={metaLoading}>{descriptionLoading}</Card>;
   }
@@ -25,7 +25,7 @@ export default function BountyMeta({ bountyDetail }) {
     <Card
       head={
         <>
-          <Title bountyDetail={bountyDetail} />
+          <Title type={type} bountyDetail={bountyDetail} />
           <Divider />
           <Info bountyDetail={bountyDetail} />
         </>
