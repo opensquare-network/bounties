@@ -36,7 +36,7 @@ const TitleText = styled.div`
   color: #1e2134;
 `;
 
-export default function Title({ bountyDetail }) {
+export default function Title({ bountyDetail, type }) {
   const { bounty, status } = bountyDetail ?? {};
 
   return (
@@ -50,7 +50,7 @@ export default function Title({ bountyDetail }) {
         <span>
           <StatusLabel>{status}</StatusLabel>
           <Dot />
-          <Type>Bounty</Type>
+          <Type>{type}</Type>
         </span>
 
         <BountyTag {...bounty} />

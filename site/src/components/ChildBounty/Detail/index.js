@@ -22,7 +22,10 @@ const Wrapper = styled.div`
 export default function ChildBountyDetail({ childBountyDetail }) {
   return (
     <Wrapper>
-      <ChildBountyDetailMeta childBountyDetail={childBountyDetail} />
+      <ChildBountyDetailMeta
+        type="Child Bounty"
+        childBountyDetail={childBountyDetail}
+      />
       <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
 
       <Discussions
