@@ -82,6 +82,7 @@ async function importBounty(
     data,
     address,
     signature,
+    status: "open",
   });
 }
 
