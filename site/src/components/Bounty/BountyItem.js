@@ -19,7 +19,10 @@ function BountyItem(props) {
             <span className="hide-in-mobile">Child </span>
             Bounties
           </div>
-          <Tooltip content={`0 open child bounties`} size="fit">
+          <Tooltip
+            content={`${childBountiesCount} open child bounties`}
+            size="fit"
+          >
             <div>
               <FlexCenter>
                 <img src="/imgs/icons/question.svg" alt="" />
