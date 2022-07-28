@@ -1,5 +1,5 @@
-export function resolveBountyDetailRoute(network = "", idIndex = "") {
-  return `/network/${network}/bounty/${idIndex}`;
+export function resolveBountyDetailRoute(network = "", parentIndex = "") {
+  return `/network/${network}/bounty/${parentIndex}`;
 }
 
 export function resolveChildBountyDetailRoute(
