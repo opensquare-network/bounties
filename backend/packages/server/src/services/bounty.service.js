@@ -21,7 +21,7 @@ async function getBounties(page, pageSize) {
 async function getBounty(network, bountyIndex) {
   const bounty = await Bounty.findOne({ network, bountyIndex }).populate({
     path: "childBounties",
-    select: "network parentBountyIndex index title status childBounty deleted",
+    select: "network parentBountyIndex index title status childBounty deleted createdAt updatedAt",
   });
 
   if (!bounty) {
