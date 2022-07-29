@@ -17,7 +17,7 @@ const enableImportOutsideSrcDir = {
   }) {
     const absolutePath = path.join(paths.appPath, pluginOptions.path);
     const moduleScopePlugin = webpackConfig.resolve.plugins.find(
-      (plugin) => plugin.appSrcs && plugin.allowedFiles
+      (plugin) => plugin.appSrcs && plugin.allowedFiles,
     );
 
     if (moduleScopePlugin) {
@@ -51,6 +51,11 @@ module.exports = {
             },
           },
         ],
+      },
+      resolve: {
+        fallback: {
+          crypto: false,
+        },
       },
     },
   },

@@ -1580,16 +1580,14 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@osn/common-ui@^0.0.99":
-  version "0.0.99"
-  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-0.0.99.tgz#c9f42cc5c05492dcfd9135628cb23b59aa4e9d28"
-  integrity sha512-a1W5pH1QhNEWc2shrVQRz+a9yLIaHLOCdSNg5QysKnmr0+J4lQNyPXKcH6xO4j12bxAsnCkggVhQ15GwrLTCVw==
+"@osn/common-ui@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-1.0.0.tgz#9aedfce8cf56affae8699aaac6335a4f8d583cde"
+  integrity sha512-B7yoxoguhfh9G707C+ElDWgjXHCy8ofCuHC1KadwNDrpGP50oYPXZDRi1c/8aPBE64Vhas7BPe/PDlx/Xefouw==
   dependencies:
-    "@craco/craco" "^6.4.3"
+    "@osn/polkadot-react-identicon" "^1.0.8"
+    copy-to-clipboard "^3.3.1"
     dayjs "^1.10.8"
-    react-mde "^11.5.0"
-    react-router-dom "^6.3.0"
-    styled-components "^5.3.1"
 
 "@osn/common@^0.0.18":
   version "0.0.18"
@@ -1635,10 +1633,10 @@
   resolved "https://registry.yarnpkg.com/@osn/provider-options/-/provider-options-1.0.7.tgz#bd7fce7426b44c370812376704aa9092ca6cc216"
   integrity sha512-8P45Pc/N9FrFJz4R922J47w2u8ZCQ8e7/UpMpUmRKayCgQ3oCSH1xtsKYNozbSUsuGNsWJ+UZaap2AfIJIrgjA==
 
-"@osn/rich-text-editor@^0.1.50":
-  version "0.1.50"
-  resolved "https://registry.npmjs.org/@osn/rich-text-editor/-/rich-text-editor-0.1.50.tgz#ee35edbf75daf35f9351ac3092f8935db958507e"
-  integrity sha512-sY9esqRL0IfaZCywgS8Inoy9ArQlc7WI3rn9SPsyPlAGVFakg4PcEhDRd9XRjsWU/UtZEUXEcz5mOqsfrB32Bg==
+"@osn/rich-text-editor@^0.1.52":
+  version "0.1.52"
+  resolved "https://registry.npmjs.org/@osn/rich-text-editor/-/rich-text-editor-0.1.52.tgz#3f0abf3830a4c014e79362b56abe47e32b15e667"
+  integrity sha512-bMjCSBwNvLdm0dkxv/JT0cfZdjXIxnsPxviSVpuNPBm/T3H/uQm9xgiDRrxf31cNAWStzuC0pU/pHPzipJuXEQ==
   dependencies:
     "@polkadot/keyring" "^9.6.2"
     "@types/lodash" "^4.14.182"
@@ -8590,7 +8588,7 @@ react-refresh@^0.11.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"
   integrity sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==
 
-react-router-dom@^6.2.2, react-router-dom@^6.3.0:
+react-router-dom@^6.2.2:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.3.0.tgz#a0216da813454e521905b5fa55e0e5176123f43d"
   integrity sha512-uaJj7LKytRxZNQV8+RbzJWnJ8K2nPsOOEuX7aQstlMZKQT0164C+X2w6bnkqU3sjtLvpd5ojrezAyfZ1+0sStw==
