@@ -4,6 +4,7 @@ import serverApi from "services/serverApi";
 import BountyLogo from "components/Bounty/BountyLogo";
 import styled from "styled-components";
 import { newErrorToast } from "store/reducers/toastSlice";
+import { ReactComponent as BountyHeaderLoading } from "./BountyHeaderLoading.svg";
 
 const HeaderText = styled.div`
   font-style: normal;
@@ -29,6 +30,10 @@ export default function BountyHeader({ network, bountyIndex }) {
         }
       });
   }, [dispatch, network, bountyIndex]);
+
+  if (!bountyDetail) {
+    return <BountyHeaderLoading />
+  }
 
   return (
     <>
