@@ -5,7 +5,7 @@ import {
   Time,
   FlexCenter,
   Dot,
-  LoadingDot,
+  LoadingIcon,
 } from "@osn/common-ui";
 import {
   ApplicantWrapper,
@@ -40,7 +40,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
         loading={!childBountyDetail}
         loadingComponent={
           <FlexCenter>
-            <LoadingDot />
+            <LoadingIcon />
           </FlexCenter>
         }
         itemRender={(application) => {

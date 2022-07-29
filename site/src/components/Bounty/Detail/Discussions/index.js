@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { Dot, List, Collapse, LoadingDot } from "@osn/common-ui";
+import { Dot, List, Collapse, LoadingIcon } from "@osn/common-ui";
 import Item from "./Item";
 import Pagination from "@osn/common-ui/es/styled/Pagination";
 import {
@@ -219,7 +219,7 @@ export default function Discussion({ network, bountyId }) {
         loading={!discussions}
         loadingComponent={
           <LoadingWrapper>
-            <LoadingDot />
+            <LoadingIcon />
           </LoadingWrapper>
         }
         noDataMessage="No current discussions"

@@ -11,7 +11,7 @@ import {
   p_16_semibold,
 } from "@osn/common-ui/es/styles/textStyles";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
-import { LinkIdentityUser, LoadingDot } from "@osn/common-ui";
+import { LinkIdentityUser, LoadingIcon } from "@osn/common-ui";
 import { ErrorMessage } from "./styled";
 import BigNumber from "bignumber.js";
 import { encodeNetworkAddress } from "@osn/common/src";
@@ -214,7 +214,7 @@ export default function BountyMeta({
                 alt=""
               />
               <DisabledText>{"--"}</DisabledText>
-              {loading && <LoadingDot />}
+              {loading && <LoadingIcon />}
             </FieldBox>
           )}
         </SubField>
@@ -237,7 +237,7 @@ export default function BountyMeta({
               {symbol}
             </DisabledText>
           )}
-          {loading && <LoadingDot />}
+          {loading && <LoadingIcon />}
         </FieldBox>
       </Field>
     </>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { p_14_normal } from "@osn/common-ui/es/styles/textStyles";
-import { LoadingDot } from "@osn/common-ui";
+import { LoadingIcon } from "@osn/common-ui";
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,7 +39,7 @@ export default function LoadingInput({ loading, ...props }) {
   return (
     <Wrapper>
       <input {...props} />
-      {loading && <LoadingDot />}
+      {loading && <LoadingIcon />}
     </Wrapper>
   );
 }

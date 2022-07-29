@@ -8,7 +8,7 @@ import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 import { getSymbolMetaByChain } from "@osn/common/src/utils/tokenValue";
 import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
-import { LoadingDot } from "@osn/common-ui";
+import { LoadingIcon } from "@osn/common-ui";
 
 const Wrapper = styled(FlexBetween)`
   margin-top: 8px;
@@ -126,7 +126,7 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
       <span>Balance</span>
       <div>
         {loadingBalance || loadingSymbol ? (
-          <LoadingDot />
+          <LoadingIcon />
         ) : symbol === null ? (
           <div>0</div>
         ) : (

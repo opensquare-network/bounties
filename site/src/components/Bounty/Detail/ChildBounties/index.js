@@ -5,7 +5,7 @@ import {
   Button,
   Time,
   FlexCenter,
-  LoadingDot,
+  LoadingIcon,
 } from "@osn/common-ui";
 import BountyTag from "components/Bounty/BountyTag";
 import StatusLabel from "components/Bounty/StatusLabel";
@@ -28,7 +28,7 @@ export default function ChildBounties({ bountyDetail = {} }) {
           loading={!childBounties.length}
           loadingComponent={
             <FlexCenter>
-              <LoadingDot />
+              <LoadingIcon />
             </FlexCenter>
           }
           itemRender={(item, idx) => {
