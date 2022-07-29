@@ -15,6 +15,12 @@ router.post(
 router.patch(
   "/child-bounty",
   requireSignature,
+  childBountyController.updateChildBounty,
+);
+
+router.delete(
+  "/child-bounty",
+  requireSignature,
   childBountyController.deleteChildBounty,
 );
 

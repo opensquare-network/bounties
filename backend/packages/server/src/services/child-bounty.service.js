@@ -171,8 +171,68 @@ async function deleteChildBounty(
   };
 }
 
+async function updateChildBounty(
+  action,
+  network,
+  parentBountyIndex,
+  index,
+  data,
+  address,
+  signature,
+) {
+  const childBounty = await ChildBounty.findOne({
+    network,
+    parentBountyIndex,
+    index,
+  });
+  if (!childBounty) {
+    throw new HttpError(500, "Child bounty not found");
+  }
+
+  if (action === "resolveChildBounty") {
+    await resolveChildBounty(
+      childBounty,
+      action,
+      data,
+      address,
+      signature,
+    );
+  }
+
+  return {
+    result: true,
+  };
+}
+
+async function resolveChildBounty(
+  childBounty,
+  action,
+  data,
+  address,
+  signature,
+) {
+  if (
+    ![ChildBountyStatus.Submitted].includes(
+      childBounty.status,
+    )
+  ) {
+    throw new HttpError(400, "Incorrect child bounty status");
+  }
+
+  // Check if caller is bounty curator
+  if (!childBounty.childBounty.curators.includes(address)) {
+    throw new HttpError(403, "Only the curator can resolve");
+  }
+
+  await ChildBounty.updateOne(
+    { _id: childBounty._id },
+    { status: ChildBountyStatus.Awarded },
+  );
+}
+
 module.exports = {
   importChildBounty,
+  updateChildBounty,
   deleteChildBounty,
   getChildBounties,
   getChildBounty,
