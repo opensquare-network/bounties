@@ -96,6 +96,37 @@ async function deleteChildBounty(ctx) {
   );
 }
 
+async function updateChildBounty(ctx) {
+  const { data, address, signature } = ctx.request.body;
+
+  const { action, network, parentBountyIndex, index } = data || {};
+
+  if (!action) {
+    throw new HttpError(400, "Action is missing");
+  }
+
+  if (!network) {
+    throw new HttpError(400, "Network is missing");
+  }
+
+  if (parentBountyIndex === undefined) {
+    throw new HttpError(400, "Parent bounty index is missing");
+  }
+
+  if (index === undefined) {
+    throw new HttpError(400, "Child bounty index is missing");
+  }
+
+  ctx.body = await childBountyService.updateChildBounty(
+    network,
+    parseInt(parentBountyIndex),
+    parseInt(index),
+    data,
+    address,
+    signature,
+  );
+}
+
 async function getChildBounty(ctx) {
   const { network, parentBountyIndex, index } = ctx.params;
 
@@ -146,6 +177,7 @@ async function getChildBountyComments(ctx) {
 module.exports = {
   getChildBounty,
   deleteChildBounty,
+  updateChildBounty,
   getChildBounties,
   importChildBounty,
   getChildBountyComments,
