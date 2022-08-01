@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
-import { Collapse, List, Button, Time, FlexCenter } from "@osn/common-ui";
-import { ReactComponent as Loading } from "imgs/icons/loading.svg";
+import {
+  Collapse,
+  List,
+  Button,
+  Time,
+  FlexCenter,
+  LoadingIcon,
+} from "@osn/common-ui";
 import BountyTag from "components/Bounty/BountyTag";
 import StatusLabel from "components/Bounty/StatusLabel";
 import {
@@ -22,7 +28,7 @@ export default function ChildBounties({ bountyDetail = {} }) {
           loading={!childBounties.length}
           loadingComponent={
             <FlexCenter>
-              <Loading />
+              <LoadingIcon />
             </FlexCenter>
           }
           itemRender={(item, idx) => {
