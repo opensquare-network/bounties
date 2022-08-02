@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { unreadSelector } from "store/reducers/notificationSlice";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 
 const Wrapper = styled(FlexCenter)`
@@ -15,10 +17,19 @@ const Wrapper = styled(FlexCenter)`
 `;
 
 export default function NotificationBell() {
+  const unread = useSelector(unreadSelector);
+
   return (
     <Link to="/notifications">
       <Wrapper>
-        <img src={"/imgs/icons/unread-notification.svg"} alt="" />
+        <img
+          src={
+            unread
+              ? "/imgs/icons/unread-notification.svg"
+              : "/imgs/icons/notification.svg"
+          }
+          alt=""
+        />
       </Wrapper>
     </Link>
   );
