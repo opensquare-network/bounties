@@ -6,10 +6,13 @@ import {
   descriptionLoading,
   metaLoading,
 } from "components/Bounty/styled/metaLoading";
+import { useAction } from "./actions";
 import Info from "./Info";
-import { ButtonGroup, Group } from "./styled";
+import { Group } from "./styled";
 
 export default function ChildBountyDetailMeta({ childBountyDetail, type }) {
+  const action = useAction(childBountyDetail);
+
   if (!childBountyDetail) {
     return <Card head={metaLoading}>{descriptionLoading}</Card>;
   }
@@ -37,14 +40,7 @@ export default function ChildBountyDetailMeta({ childBountyDetail, type }) {
         <Share />
       </Group>
 
-      <ButtonGroup>
-        <Flex>
-          <Button block primary isLoading>
-            Collecting Applications
-          </Button>
-          <Button>Delete</Button>
-        </Flex>
-      </ButtonGroup>
+      {action}
     </Card>
   );
 }
