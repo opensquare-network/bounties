@@ -1,4 +1,4 @@
-import { Card, Divider, Button, Flex } from "@osn/common-ui";
+import { Card, Divider } from "@osn/common-ui";
 import Description from "components/Bounty/Detail/Meta/Description";
 import Share from "components/Bounty/Detail/Meta/Share";
 import Title from "components/Bounty/Detail/Meta/Title";
