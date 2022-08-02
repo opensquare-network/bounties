@@ -27,6 +27,17 @@ ApplicationTimelineSchema.index({
   address: 1,
 });
 
+ApplicationTimelineSchema.virtual("childBounty", {
+  ref: "ChildBounty",
+  localField: "bountyIndexer.childBountyIndex",
+  foreignField: "index",
+  match: (application) => ({
+    network: application.bountyIndexer.network,
+    bountyIndex: application.bountyIndexer.parentBountyIndex,
+  }),
+  justOne: true,
+});
+
 const ApplicationTimeline = mongoose.model(
   "ApplicationTimeline",
   ApplicationTimelineSchema,

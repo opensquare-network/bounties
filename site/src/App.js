@@ -14,11 +14,13 @@ import ChildBountyDetail from "pages/ChildBountyDetail";
 import FourOFour from "pages/404";
 import ScrollToTop from "./components/ScrollToTop";
 import Notifications from "pages/Notifications";
+import NotificationMonitor from "components/NotificationMonitor";
 
 function App() {
   return (
     <HashRouter>
       <Layout>
+        <NotificationMonitor />
         <Header />
         <ScrollToTop />
         <Main>

@@ -9,7 +9,10 @@ async function getNotifications(network, address, page, pageSize) {
     .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("data.applicationTimelineItem")
+    .populate({
+      path: "data.applicationTimelineItem",
+      populate: "childBounty",
+    });
   return {
     items: notifications,
     page,

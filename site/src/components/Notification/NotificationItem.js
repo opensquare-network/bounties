@@ -155,27 +155,30 @@ const UnreadDot = styled.div`
 `;
 
 const assertType = (t = [], expect) => t.includes(expect);
-const resolveItemState = (t = []) => {
+const getItemDate = (t = [], data) => {
   const value = {
     type: "",
-    shouldShowAmount: false,
-    shouldShowAnswer: false,
+    amout: "",
+    content: "",
   };
 
-  if (assertType(t, "topicResolved")) {
-    value.type = "resolved";
-  } else if (assertType(t, "support")) {
-    value.type = "promised";
-    value.shouldShowAmount = true;
-  } else if (assertType(t, "fund")) {
-    value.type = "funded";
-    value.shouldShowAmount = true;
+  if (assertType(t, "applied")) {
+    value.type = "applied";
+    value.content = data.data.applicationTimelineItem?.data?.description;
+  } else if (assertType(t, "assigned")) {
+    value.type = "assigned";
+  } else if (assertType(t, "unassigned")) {
+    value.type = "unassigned";
+  } else if (assertType(t, "accepted")) {
+    value.type = "accepted";
+  } else if (assertType(t, "submitted")) {
+    value.type = "submitted";
+  } else if (assertType(t, "cancelled")) {
+    value.type = "cancelled";
   } else if (assertType(t, "mention")) {
     value.type = "mentioned";
-    value.shouldShowAnswer = true;
   } else if (assertType(t, "reply")) {
     value.type = "replied";
-    value.shouldShowAnswer = true;
   }
 
   return value;
@@ -185,13 +188,14 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   const {
     type: origType,
     read: origRead,
-    data: { byWho, topic, answer, support, fund },
+    data: { byWho, applicationTimelineItem },
   } = data;
+  const { childBounty } = applicationTimelineItem || {};
 
   const [read, setRead] = useState(origRead);
 
-  const { type, shouldShowAmount, shouldShowAnswer } =
-    resolveItemState(origType);
+  const { type, amount, content } =
+    getItemDate(origType, data);
 
   function handleMarkAsRead(data) {
     onMarkAsRead(data);
@@ -199,14 +203,10 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   }
 
   let titlePrefix;
-  if (shouldShowAmount) {
-    const { bounty } = { ...support, ...fund };
-
+  if (amount) {
     titlePrefix = (
       <>
-        <Amount>
-          {bounty?.value} {bounty?.symbol}
-        </Amount>
+        <Amount>{amount}</Amount>
         <Dot />
       </>
     );
@@ -223,7 +223,11 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
               <Dot />
               {titlePrefix}
               <Title>
-                <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
+                <Link
+                  to={`/network/${childBounty.network}/bounty/${childBounty.parentBountyIndex}/child-bounty/${childBounty.index}`}
+                >
+                  {childBounty.title}
+                </Link>
               </Title>
             </TitleWrapper>
 
@@ -240,7 +244,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
               </LinkIdentityUserWrapper>
 
               <TimeWrapper>
-                <Time time={topic.createdAt} />
+                <Time time={childBounty.createdAt} />
               </TimeWrapper>
 
               <StatusWrapper>
@@ -257,9 +261,9 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
           </Head>
         }
       >
-        {shouldShowAnswer && (
+        {content && (
           <MarkdownPreviewer
-            content={answer.content}
+            content={content}
             allowedTags={["a"]}
             maxLines={3}
             plugins={[
