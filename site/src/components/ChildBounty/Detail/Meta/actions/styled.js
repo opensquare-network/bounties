@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {
+  p_14_medium,
   p_14_normal,
   p_16_semibold,
   p_20_semibold,
@@ -35,4 +36,9 @@ export const ButtonGroup = styled.div`
   button + button {
     margin-left: 20px;
   }
+`;
+
+export const ButtonText = styled.span`
+  color: ${text_dark_minor};
+  ${p_14_medium};
 `;
