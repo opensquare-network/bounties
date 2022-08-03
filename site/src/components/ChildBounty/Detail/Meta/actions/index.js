@@ -1,6 +1,5 @@
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
-import { accountSelector } from "store/reducers/accountSlice";
+import { useAccount } from "hooks/useAccount";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useHunterApplyAction } from "./hunter/apply";
 import { useCuratorCollectingApplicantAction } from "./curator/collectingApplicant";
@@ -12,7 +11,7 @@ import { useCuratorWorkDoneAction } from "./curator/workDone";
 export function useAction(childBountyDetail) {
   const { status, childBounty } = childBountyDetail ?? {};
   const { curators = [] } = childBounty ?? {};
-  const account = useSelector(accountSelector);
+  const account = useAccount();
 
   const isCurator = useMemo(
     () => curators.some((i) => i === account?.address),
