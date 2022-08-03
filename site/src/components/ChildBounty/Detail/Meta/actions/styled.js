@@ -25,3 +25,9 @@ export const FormLabel = styled.h4`
   color: ${text_dark_major};
   ${p_16_semibold};
 `;
+
+export const ButtonGroup = styled.div`
+  button + button {
+    margin-left: 20px;
+  }
+`;
