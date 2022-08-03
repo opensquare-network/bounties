@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
+const { ApplicationStatus } = require("../utils/constants");
 
 const ApplicationSchema = new mongoose.Schema(
   {
     bountyIndexer: {
       network: String,
-      bountyIndex: Number,
-      childBountyIndex: Number,
+      parentBountyIndex: Number,
+      index: Number,
     },
     description: String,
     data: mongoose.Schema.Types.Mixed,
@@ -14,7 +15,14 @@ const ApplicationSchema = new mongoose.Schema(
     signature: String,
     status: {
       type: String,
-      enum: ["apply", "assigned", "started", "done"],
+      enum: [
+        ApplicationStatus.Apply,
+        ApplicationStatus.Assigned,
+        ApplicationStatus.Started,
+        ApplicationStatus.Submitted,
+        ApplicationStatus.Cancelled,
+        ApplicationStatus.WorkDone,
+      ],
     },
   },
   {
@@ -26,8 +34,8 @@ const ApplicationSchema = new mongoose.Schema(
 ApplicationSchema.index(
   {
     "bountyIndexer.network": 1,
-    "bountyIndexer.bountyIndex": 1,
-    "bountyIndexer.childBountyIndex": 1,
+    "bountyIndexer.parentBountyIndex": 1,
+    "bountyIndexer.index": 1,
     address: 1,
   },
   { unique: true },

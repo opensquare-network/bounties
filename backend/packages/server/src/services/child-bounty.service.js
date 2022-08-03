@@ -1,5 +1,5 @@
 const { HttpError } = require("../utils/exc");
-const { ChildBounty, Comment, Application } = require("../models");
+const { ChildBounty, ChildBountyComment, Application } = require("../models");
 const chainService = require("./chain.service");
 const { ChildBountyStatus } = require("../utils/constants");
 
@@ -102,14 +102,13 @@ async function getChildBountyComments(
   pageSize,
 ) {
   const q = {
-    "bountyIndexer.type": "childBounty",
     "bountyIndexer.network": network,
-    "bountyIndexer.bountyIndex": parentBountyIndex,
-    "bountyIndexer.childBountyIndex": index,
+    "bountyIndexer.parentBountyIndex": parentBountyIndex,
+    "bountyIndexer.index": index,
   };
 
-  const total = await Comment.count(q);
-  const comments = await Comment.find(q)
+  const total = await ChildBountyComment.count(q);
+  const comments = await ChildBountyComment.find(q)
     .skip((page - 1) * pageSize)
     .limit(pageSize);
 
@@ -147,17 +146,16 @@ async function deleteChildBounty(
     throw new HttpError(403, "Only the curator can delete it");
   }
 
-  await Comment.deleteMany({
-    "bountyIndexer.type": "childBounty",
+  await ChildBountyComment.deleteMany({
     "bountyIndexer.network": network,
-    "bountyIndexer.bountyIndex": parentBountyIndex,
-    "bountyIndexer.childBountyIndex": index,
+    "bountyIndexer.parentBountyIndex": parentBountyIndex,
+    "bountyIndexer.index": index,
   });
 
   await Application.deleteMany({
     "bountyIndexer.network": network,
-    "bountyIndexer.bountyIndex": parentBountyIndex,
-    "bountyIndexer.childBountyIndex": index,
+    "bountyIndexer.parentBountyIndex": parentBountyIndex,
+    "bountyIndexer.index": index,
   });
 
   await ChildBounty.deleteOne({
@@ -190,13 +188,7 @@ async function updateChildBounty(
   }
 
   if (action === "resolveChildBounty") {
-    await resolveChildBounty(
-      childBounty,
-      action,
-      data,
-      address,
-      signature,
-    );
+    await resolveChildBounty(childBounty, action, data, address, signature);
   }
 
   return {
@@ -211,11 +203,7 @@ async function resolveChildBounty(
   address,
   signature,
 ) {
-  if (
-    ![ChildBountyStatus.Submitted].includes(
-      childBounty.status,
-    )
-  ) {
+  if (![ChildBountyStatus.Submitted].includes(childBounty.status)) {
     throw new HttpError(400, "Incorrect child bounty status");
   }
 

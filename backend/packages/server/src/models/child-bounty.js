@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ChildBountyStatus } = require("../utils/constants");
 const { Decimal128 } = require("./utils");
 
 const ChildBountySchema = new mongoose.Schema(
@@ -16,7 +17,15 @@ const ChildBountySchema = new mongoose.Schema(
     signature: String,
     status: {
       type: String,
-      enum: ["open", "apply", "assigned", "started", "submitted", "awarded"],
+      enum: [
+        ChildBountyStatus.Open,
+        ChildBountyStatus.Apply,
+        ChildBountyStatus.Assigned,
+        ChildBountyStatus.Started,
+        ChildBountyStatus.Submitted,
+        ChildBountyStatus.WorkDone,
+        ChildBountyStatus.Awarded,
+      ],
     },
     childBounty: {
       value: Decimal128,
@@ -44,10 +53,10 @@ ChildBountySchema.virtual("parentBounty", {
 ChildBountySchema.virtual("applications", {
   ref: "Application",
   localField: "index",
-  foreignField: "bountyIndexer.childBountyIndex",
+  foreignField: "bountyIndexer.index",
   match: (childBounty) => ({
     "bountyIndexer.network": childBounty.network,
-    "bountyIndexer.bountyIndex": childBounty.parentBountyIndex,
+    "bountyIndexer.parentBountyIndex": childBounty.parentBountyIndex,
   }),
 });
 

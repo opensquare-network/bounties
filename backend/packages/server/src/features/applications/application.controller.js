@@ -6,8 +6,8 @@ async function apply(ctx) {
   const {
     action,
     network,
-    bountyIndex,
-    childBountyIndex,
+    parentBountyIndex,
+    index,
     description,
     applicantNetwork,
   } = data;
@@ -30,8 +30,8 @@ async function apply(ctx) {
 
   const bountyIndexer = {
     network,
-    bountyIndex,
-    childBountyIndex,
+    parentBountyIndex,
+    index,
   };
 
   ctx.body = await applicationService.apply(
@@ -46,8 +46,7 @@ async function apply(ctx) {
 
 async function updateApplication(ctx) {
   const { data, address, signature } = ctx.request.body;
-  const { action, network, bountyIndex, childBountyIndex, applicantAddress } =
-    data;
+  const { action, network, parentBountyIndex, index, applicantAddress } = data;
 
   if (!action) {
     throw new HttpError(400, "Action is missing");
@@ -61,8 +60,8 @@ async function updateApplication(ctx) {
 
   const bountyIndexer = {
     network,
-    bountyIndex,
-    childBountyIndex,
+    parentBountyIndex,
+    index,
   };
 
   ctx.body = await applicationService.updateApplication(
