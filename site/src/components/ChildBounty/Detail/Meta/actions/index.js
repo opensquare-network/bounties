@@ -1,21 +1,14 @@
+import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useApplyAction } from "./apply";
 
-const ACTION_MAP = {
-  apply: "applyChildBounty",
-  applied: "",
-  accept: "acceptAssignment",
-  submit: "submitWork",
-  submitted: "",
-  award: "",
-  done: "",
-};
-
 export function useAction(childBountyDetail) {
-  const { data: { action } = {} } = childBountyDetail ?? {};
+  const { status } = childBountyDetail ?? {};
   const applyAction = useApplyAction();
 
-  if (action === ACTION_MAP.apply) {
+  if (status === CHILD_BOUNTY_STATUS.Open) {
     return applyAction;
+  } else if (status === CHILD_BOUNTY_STATUS.Apply) {
+    return;
   }
 
   return null;
