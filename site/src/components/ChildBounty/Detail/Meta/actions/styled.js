@@ -43,3 +43,7 @@ export const ButtonText = styled.span`
   color: ${text_dark_minor};
   ${p_14_medium};
 `;
+
+export const Gap = styled.span`
+  margin: 0 4px;
+`;
