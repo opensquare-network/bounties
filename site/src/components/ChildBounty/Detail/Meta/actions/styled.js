@@ -39,6 +39,7 @@ export const ButtonGroup = styled.div`
 `;
 
 export const ButtonText = styled.span`
+  display: inline-flex;
   color: ${text_dark_minor};
   ${p_14_medium};
 `;
