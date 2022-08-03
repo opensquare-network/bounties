@@ -6,6 +6,9 @@ export function useApplyAction() {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((v) => !v);
 
+  // FIXME: implement submit
+  function handleSubmit() {}
+
   return (
     <>
       <Button block onClick={toggle}>
@@ -20,7 +23,7 @@ export function useApplyAction() {
         </ModalDescription>
 
         <FormLabel>Work Plan</FormLabel>
-        <RichEditor submitButtonText="Confirm"></RichEditor>
+        <RichEditor submitButtonText="Confirm" onSubmit={handleSubmit} />
       </Modal>
     </>
   );
