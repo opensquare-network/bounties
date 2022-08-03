@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MOBILE_SIZE } from "@osn/constants";
-import Discussions from "../../Bounty/Detail/Discussions";
+import Discussions from "./Discussions";
 import ChildBountyDetailApplicants from "./Applicants";
 import ChildBountyDetailMeta from "./Meta";
 
@@ -30,7 +30,8 @@ export default function ChildBountyDetail({ childBountyDetail }) {
 
       <Discussions
         network={childBountyDetail?.network}
-        bountyId={childBountyDetail?.bountyIndex}
+        parentBountyIndex={childBountyDetail?.parentBountyIndex}
+        index={childBountyDetail?.index}
       />
     </Wrapper>
   );

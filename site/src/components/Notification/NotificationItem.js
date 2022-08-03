@@ -160,6 +160,9 @@ const getItemDate = (t = [], data) => {
     type: "",
     amout: "",
     content: "",
+    title: "",
+    link: "",
+    time: new Date(),
   };
 
   if (assertType(t, "applied")) {
@@ -181,6 +184,22 @@ const getItemDate = (t = [], data) => {
     value.type = "replied";
   }
 
+  const childBounty =
+    data.data.applicationTimelineItem?.childBounty ||
+    data.data.childBountyComment?.childBounty;
+  if (childBounty) {
+    value.title = childBounty?.title;
+    value.link = `/network/${childBounty?.network}/bounty/${childBounty?.parentBountyIndex}/child-bounty/${childBounty?.index}`;
+    value.time = childBounty?.createdAt;
+  }
+
+  const bounty = data.data.bountyComment?.bounty;
+  if (bounty) {
+    value.title = bounty?.title;
+    value.link = `/network/${bounty?.network}/bounty/${bounty?.bountyIndex}`;
+    value.time = bounty?.createdAt;
+  }
+
   return value;
 };
 
@@ -188,14 +207,15 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   const {
     type: origType,
     read: origRead,
-    data: { byWho, applicationTimelineItem },
+    data: { byWho },
   } = data;
-  const { childBounty } = applicationTimelineItem || {};
 
   const [read, setRead] = useState(origRead);
 
-  const { type, amount, content } =
-    getItemDate(origType, data);
+  const { type, amount, title, content, link, time } = getItemDate(
+    origType,
+    data,
+  );
 
   function handleMarkAsRead(data) {
     onMarkAsRead(data);
@@ -223,11 +243,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
               <Dot />
               {titlePrefix}
               <Title>
-                <Link
-                  to={`/network/${childBounty.network}/bounty/${childBounty.parentBountyIndex}/child-bounty/${childBounty.index}`}
-                >
-                  {childBounty.title}
-                </Link>
+                <Link to={link}>{title}</Link>
               </Title>
             </TitleWrapper>
 
@@ -244,7 +260,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
               </LinkIdentityUserWrapper>
 
               <TimeWrapper>
-                <Time time={childBounty.createdAt} />
+                <Time time={time} />
               </TimeWrapper>
 
               <StatusWrapper>

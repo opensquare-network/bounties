@@ -16,6 +16,7 @@ async function createCommentNotification(comment) {
     await Notification.create({
       owner,
       type: ["reply"],
+      read: false,
       data: {
         childBountyComment: comment._id,
         byWho: {
