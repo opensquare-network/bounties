@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useApplyAction } from "./apply";
+import { useCollectingApplicantAction } from "./collectingApplicant";
 import { useSubmitAction } from "./submit";
 import { useSubmitedAction } from "./submitted";
 
@@ -19,9 +20,13 @@ export function useAction(childBountyDetail) {
   const applyAction = useApplyAction();
   const submitAction = useSubmitAction();
   const submittedAction = useSubmitedAction();
+  const collectingApplicantAction = useCollectingApplicantAction();
 
   // curator view
   if (isCurator) {
+    if (status === CHILD_BOUNTY_STATUS.Open) {
+      return collectingApplicantAction;
+    }
   }
   // hunter view
   else {
