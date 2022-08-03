@@ -1,6 +1,6 @@
 import { Button, RichEditor, Modal } from "@osn/common-ui";
 import { useState } from "react";
-import { Title, Description, SubTitle } from "./styled";
+import { ModalTitle, ModalDescription, FormLabel } from "../styled";
 
 export function useApplyAction() {
   const [open, setOpen] = useState(false);
@@ -13,13 +13,13 @@ export function useApplyAction() {
       </Button>
 
       <Modal open={open} setOpen={setOpen} footer={false} width={640}>
-        <Title>Apply Bounty</Title>
-        <Description>
+        <ModalTitle>Apply Bounty</ModalTitle>
+        <ModalDescription>
           Provide an action work plan and any initial questions you have for
           this bounty.
-        </Description>
+        </ModalDescription>
 
-        <SubTitle>Work Plan</SubTitle>
+        <FormLabel>Work Plan</FormLabel>
         <RichEditor submitButtonText="Confirm"></RichEditor>
       </Modal>
     </>

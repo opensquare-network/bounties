@@ -7,19 +7,19 @@ import {
   text_dark_minor,
 } from "@osn/common-ui";
 
-export const Title = styled.h4`
+export const ModalTitle = styled.h3`
   margin-top: 0;
   margin-bottom: 8px;
   color: ${text_dark_major};
   ${p_20_semibold};
 `;
 
-export const Description = styled.p`
+export const ModalDescription = styled.p`
   color: ${text_dark_minor};
   ${p_14_normal};
 `;
 
-export const SubTitle = styled.h4`
+export const FormLabel = styled.h4`
   margin-top: 0;
   margin-bottom: 8px;
   color: ${text_dark_major};
