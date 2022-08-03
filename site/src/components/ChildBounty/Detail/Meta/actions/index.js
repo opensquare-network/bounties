@@ -1,7 +1,13 @@
 import { useApplyAction } from "./apply";
 
 const ACTION_MAP = {
-  apply: "importChildBounty",
+  apply: "applyChildBounty",
+  applied: "",
+  accept: "acceptAssignment",
+  submit: "submitWork",
+  submitted: "",
+  award: "",
+  done: "",
 };
 
 export function useAction(childBountyDetail) {
