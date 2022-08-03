@@ -24,6 +24,8 @@ const NotificationType = {
   Cancelled: "cancelled",
   Accepted: "accepted",
   Submitted: "submitted",
+  Reply: "reply",
+  Mention: "mention",
 };
 
 module.exports = {

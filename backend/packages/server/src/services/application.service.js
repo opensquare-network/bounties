@@ -1,5 +1,10 @@
 const { HttpError } = require("../utils/exc");
-const { ChildBounty, Application, ApplicationTimeline, Notification } = require("../models");
+const {
+  ChildBounty,
+  Application,
+  ApplicationTimeline,
+  Notification,
+} = require("../models");
 const {
   ApplicationStatus,
   ChildBountyStatus,
@@ -18,8 +23,8 @@ async function apply(
   // Check bounty
   const childBounty = await ChildBounty.findOne({
     network: bountyIndexer.network,
-    parentBountyIndex: bountyIndexer.bountyIndex,
-    index: bountyIndexer.childBountyIndex,
+    parentBountyIndex: bountyIndexer.parentBountyIndex,
+    index: bountyIndexer.index,
   });
   if (!childBounty) {
     throw new HttpError(400, "Child bounty not found");
@@ -31,8 +36,8 @@ async function apply(
 
   const exists = await Application.findOne({
     "bountyIndexer.network": bountyIndexer.network,
-    "bountyIndexer.bountyIndex": bountyIndexer.bountyIndex,
-    "bountyIndexer.childBountyIndex": bountyIndexer.childBountyIndex,
+    "bountyIndexer.parentBountyIndex": bountyIndexer.parentBountyIndex,
+    "bountyIndexer.index": bountyIndexer.index,
     applicantNetwork,
   });
   if (exists) {
@@ -89,8 +94,8 @@ async function updateApplication(
   // Check application
   const application = await Application.findOne({
     "bountyIndexer.network": bountyIndexer.network,
-    "bountyIndexer.bountyIndex": bountyIndexer.bountyIndex,
-    "bountyIndexer.childBountyIndex": bountyIndexer.childBountyIndex,
+    "bountyIndexer.parentBountyIndex": bountyIndexer.parentBountyIndex,
+    "bountyIndexer.index": bountyIndexer.index,
     address: applicantAddress,
   });
   if (!application) {
@@ -99,8 +104,8 @@ async function updateApplication(
 
   const childBounty = await ChildBounty.findOne({
     network: application.bountyIndexer.network,
-    parentBountyIndex: application.bountyIndexer.bountyIndex,
-    index: application.bountyIndexer.childBountyIndex,
+    parentBountyIndex: application.bountyIndexer.parentBountyIndex,
+    index: application.bountyIndexer.index,
   });
   if (!childBounty) {
     throw new HttpError(500, "Related bounty not found");
@@ -156,8 +161,8 @@ async function updateApplication(
   // Update child bounty status
   const allApplicationStatus = await Application.find({
     "bountyIndexer.network": bountyIndexer.network,
-    "bountyIndexer.bountyIndex": bountyIndexer.bountyIndex,
-    "bountyIndexer.childBountyIndex": bountyIndexer.childBountyIndex,
+    "bountyIndexer.parentBountyIndex": bountyIndexer.parentBountyIndex,
+    "bountyIndexer.index": bountyIndexer.index,
   }).distinct("status");
 
   let newStatus = ChildBountyStatus.Open;
@@ -177,8 +182,8 @@ async function updateApplication(
   await ChildBounty.updateOne(
     {
       network: bountyIndexer.network,
-      parentBountyIndex: bountyIndexer.bountyIndex,
-      index: bountyIndexer.childBountyIndex,
+      parentBountyIndex: bountyIndexer.parentBountyIndex,
+      index: bountyIndexer.index,
     },
     {
       status: newStatus,

@@ -3,8 +3,9 @@ const { MONGODB_URI } = require("../env");
 const { Bounty } = require("./bounty");
 const { ChildBounty } = require("./child-bounty");
 const { Application } = require("./application");
-const { ApplicationTimeline } = require("./applicationTimeline");
-const { Comment } = require("./comment");
+const { ApplicationTimeline } = require("./application-timeline");
+const { BountyComment } = require("./bounty-comment");
+const { ChildBountyComment } = require("./child-bounty-comment");
 const { NotificationEvent, Notification } = require("./notification");
 
 mongoose.connect(MONGODB_URI);
@@ -20,7 +21,8 @@ module.exports = {
   ChildBounty,
   Application,
   ApplicationTimeline,
-  Comment,
+  BountyComment,
+  ChildBountyComment,
   Notification,
   NotificationEvent,
 };

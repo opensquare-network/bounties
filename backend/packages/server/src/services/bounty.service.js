@@ -1,5 +1,5 @@
 const { HttpError } = require("../utils/exc");
-const { Bounty, Comment } = require("../models");
+const { Bounty, BountyComment } = require("../models");
 const chainService = require("./chain.service");
 const { ipfsAddBuffer } = require("./ipfs.service");
 
@@ -21,7 +21,8 @@ async function getBounties(page, pageSize) {
 async function getBounty(network, bountyIndex) {
   const bounty = await Bounty.findOne({ network, bountyIndex }).populate({
     path: "childBounties",
-    select: "network parentBountyIndex index title status childBounty deleted createdAt updatedAt",
+    select:
+      "network parentBountyIndex index title status childBounty deleted createdAt updatedAt",
   });
 
   if (!bounty) {
@@ -91,13 +92,12 @@ async function importBounty(
 
 async function getBountyComments(network, bountyIndex, page, pageSize) {
   const q = {
-    "bountyIndexer.type": "bounty",
     "bountyIndexer.network": network,
     "bountyIndexer.bountyIndex": bountyIndex,
   };
 
-  const total = await Comment.count(q);
-  const comments = await Comment.find(q)
+  const total = await BountyComment.count(q);
+  const comments = await BountyComment.find(q)
     .skip((page - 1) * pageSize)
     .limit(pageSize);
 

@@ -1,5 +1,6 @@
 const { HttpError } = require("../../utils/exc");
-const commentService = require("../../services/comment.service");
+const bountyCommentService = require("../../services/bounty-comment.service");
+const childBountyCommentService = require("../../services/child-bounty-comment.service");
 
 async function postComment(ctx) {
   const { data, address, signature } = ctx.request.body;
@@ -8,7 +9,8 @@ async function postComment(ctx) {
     type,
     network,
     bountyIndex,
-    childBountyIndex,
+    parentBountyIndex,
+    index,
     content,
     commenterNetwork,
   } = data;
@@ -27,32 +29,30 @@ async function postComment(ctx) {
     throw new HttpError(400, { content: ["Comment content is missing"] });
   }
 
-  let bountyIndexer;
   if (type === "bounty") {
-    bountyIndexer = {
-      type,
+    ctx.body = await bountyCommentService.postBountyComment(
       network,
       bountyIndex,
-    };
+      content,
+      commenterNetwork,
+      data,
+      address,
+      signature,
+    );
   } else if (type === "childBounty") {
-    bountyIndexer = {
-      type,
+    ctx.body = await childBountyCommentService.postChildBountyComment(
       network,
-      bountyIndex,
-      childBountyIndex,
-    };
+      parentBountyIndex,
+      index,
+      content,
+      commenterNetwork,
+      data,
+      address,
+      signature,
+    );
   } else {
     throw new HttpError(400, { type: ["Type is missing"] });
   }
-
-  ctx.body = await commentService.postComment(
-    bountyIndexer,
-    content,
-    commenterNetwork,
-    data,
-    address,
-    signature,
-  );
 }
 
 module.exports = {

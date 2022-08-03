@@ -14,6 +14,8 @@ const NotificationSchema = new mongoose.Schema(
         NotificationType.Accepted,
         NotificationType.Submitted,
         NotificationType.Cancelled,
+        NotificationType.Reply,
+        NotificationType.Mention,
       ],
     },
     read: Boolean,
@@ -25,6 +27,14 @@ const NotificationSchema = new mongoose.Schema(
       applicationTimelineItem: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "ApplicationTimeline",
+      },
+      bountyComment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "BountyComment",
+      },
+      childBountyComment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ChildBountyComment",
       },
     },
   },

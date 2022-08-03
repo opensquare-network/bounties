@@ -4,8 +4,8 @@ const ApplicationTimelineSchema = new mongoose.Schema(
   {
     bountyIndexer: {
       network: String,
-      bountyIndex: Number,
-      childBountyIndex: Number,
+      parentBountyIndex: Number,
+      index: Number,
     },
     applicantAddress: String,
     action: String,
@@ -22,18 +22,18 @@ const ApplicationTimelineSchema = new mongoose.Schema(
 
 ApplicationTimelineSchema.index({
   "bountyIndexer.network": 1,
-  "bountyIndexer.bountyIndex": 1,
-  "bountyIndexer.childBountyIndex": 1,
+  "bountyIndexer.parentBountyIndex": 1,
+  "bountyIndexer.index": 1,
   address: 1,
 });
 
 ApplicationTimelineSchema.virtual("childBounty", {
   ref: "ChildBounty",
-  localField: "bountyIndexer.childBountyIndex",
+  localField: "bountyIndexer.index",
   foreignField: "index",
   match: (application) => ({
     network: application.bountyIndexer.network,
-    bountyIndex: application.bountyIndexer.parentBountyIndex,
+    parentBountyIndex: application.bountyIndexer.parentBountyIndex,
   }),
   justOne: true,
 });
