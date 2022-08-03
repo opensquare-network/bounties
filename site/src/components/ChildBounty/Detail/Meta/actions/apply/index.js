@@ -1,5 +1,4 @@
 import { Button, RichEditor, Modal } from "@osn/common-ui";
-// TODO: expose Modal from ui
 import { useState } from "react";
 import { Title, Description, SubTitle } from "./styled";
 
