@@ -5,7 +5,7 @@ import {
   ModalDescription,
   FormLabel,
   FormLabelTip,
-} from "../styled";
+} from "../../styled";
 
 export function useSubmitModal(options) {
   const {

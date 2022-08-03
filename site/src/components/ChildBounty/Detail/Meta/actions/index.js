@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
-import { useApplyAction } from "./apply";
-import { useCollectingApplicantAction } from "./collectingApplicant";
-import { useSubmitAction } from "./submit";
-import { useSubmitedAction } from "./submitted";
+import { useApplyAction } from "./hunter/apply";
+import { useCollectingApplicantAction } from "./curator/collectingApplicant";
+import { useSubmitAction } from "./hunter/submit";
+import { useSubmitedAction } from "./hunter/submitted";
 
 export function useAction(childBountyDetail) {
   const { status, childBounty } = childBountyDetail ?? {};

@@ -1,4 +1,4 @@
-import { ButtonGroup, ButtonText } from "../styled";
+import { ButtonGroup, ButtonText } from "../../styled";
 import { Button, Flex } from "@osn/common-ui";
 
 export function useCollectingApplicantAction() {

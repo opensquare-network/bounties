@@ -1,4 +1,4 @@
-import { ButtonGroup } from "../styled";
+import { ButtonGroup } from "../../styled";
 import { Button, Flex } from "@osn/common-ui";
 import { useSubmitModal } from "./useSubmitModal";
 

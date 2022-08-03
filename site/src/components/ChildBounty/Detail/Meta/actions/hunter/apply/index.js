@@ -1,6 +1,6 @@
 import { Button, RichEditor, Modal } from "@osn/common-ui";
 import { useState } from "react";
-import { ModalTitle, ModalDescription, FormLabel } from "../styled";
+import { ModalTitle, ModalDescription, FormLabel } from "../../styled";
 
 export function useApplyAction() {
   const [open, setOpen] = useState(false);
