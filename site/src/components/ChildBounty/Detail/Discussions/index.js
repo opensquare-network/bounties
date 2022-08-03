@@ -19,7 +19,7 @@ import RichEditor from "@osn/common-ui/es/RichEditor";
 import { signMessage } from "utils/signature";
 import {
   discussionsSelector,
-  fetchBountyDiscussions,
+  fetchChildBountyDiscussions,
   setDiscussions,
 } from "store/reducers/discussionSlice";
 import {
@@ -54,7 +54,7 @@ const LoadingWrapper = styled(FlexCenter)`
   height: 104px;
 `;
 
-export default function Discussion({ network, bountyId }) {
+export default function Discussion({ network, parentBountyIndex, index }) {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const discussions = useSelector(discussionsSelector);
@@ -78,13 +78,15 @@ export default function Discussion({ network, bountyId }) {
     }-${user.network}) `;
 
   useEffect(() => {
-    if (network && bountyId) {
-      dispatch(fetchBountyDiscussions(network, bountyId, page));
+    if (network && parentBountyIndex !== undefined && index !== undefined) {
+      dispatch(
+        fetchChildBountyDiscussions(network, parentBountyIndex, index, page),
+      );
     }
     return () => {
       dispatch(setDiscussions(null));
     };
-  }, [dispatch, network, bountyId, page]);
+  }, [dispatch, network, parentBountyIndex, index, page]);
 
   const onSubmit = async () => {
     if (!account) {
@@ -97,9 +99,10 @@ export default function Discussion({ network, bountyId }) {
 
     const data = {
       action: "comment",
-      type: "bounty",
+      type: "childBounty",
       network,
-      bountyIndex: bountyId,
+      parentBountyIndex,
+      index,
       content,
       commenterNetwork: account.network,
     };
@@ -124,7 +127,9 @@ export default function Discussion({ network, bountyId }) {
       if (result) {
         setContent("");
         dispatch(newSuccessToast("Comment posted"));
-        dispatch(fetchBountyDiscussions(network, bountyId, page));
+        dispatch(
+          fetchChildBountyDiscussions(network, parentBountyIndex, index, page),
+        );
       }
       if (error) {
         dispatch(newErrorToast(error.message));
