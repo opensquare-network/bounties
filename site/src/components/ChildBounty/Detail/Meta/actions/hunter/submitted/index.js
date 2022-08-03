@@ -3,7 +3,7 @@ import { Button, Flex, Dot, FlexCenter, Time } from "@osn/common-ui";
 import { useSubmitModal } from "../submit/useSubmitModal";
 
 // FIXME: submitted action has default content and link
-export function useSubmitedAction() {
+export function useHunterSubmitedAction() {
   const { toggle, modal } = useSubmitModal({
     // FIXME: submitted action submit
     onConfirm(v) {

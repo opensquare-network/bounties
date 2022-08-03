@@ -2,7 +2,7 @@ import { Button, RichEditor, Modal } from "@osn/common-ui";
 import { useState } from "react";
 import { ModalTitle, ModalDescription, FormLabel } from "../../styled";
 
-export function useApplyAction() {
+export function useHunterApplyAction() {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((v) => !v);
 

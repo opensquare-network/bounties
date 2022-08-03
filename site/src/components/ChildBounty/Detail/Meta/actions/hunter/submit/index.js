@@ -2,7 +2,7 @@ import { ButtonGroup } from "../../styled";
 import { Button, Flex } from "@osn/common-ui";
 import { useSubmitModal } from "./useSubmitModal";
 
-export function useSubmitAction() {
+export function useHunterSubmitAction() {
   const { toggle, modal } = useSubmitModal({
     // FIXME: submit action submit
     onConfirm(v) {
