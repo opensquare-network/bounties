@@ -44,7 +44,7 @@ async function apply(
     throw new HttpError(400, "Application already exists");
   }
 
-  await Application.create({
+  const application = await Application.create({
     bountyIndexer,
     description,
     applicantNetwork,
@@ -77,10 +77,7 @@ async function apply(
     },
   });
 
-  // fixme: it's strange to return just {result: true}
-  return {
-    result: true,
-  };
+  return application;
 }
 
 async function updateApplication(
@@ -111,8 +108,9 @@ async function updateApplication(
     throw new HttpError(500, "Related bounty not found");
   }
 
+  let updatedApplication;
   if (action === "cancelApplication") {
-    await cancelApplication(
+    updatedApplication = await cancelApplication(
       childBounty,
       application,
       action,
@@ -121,7 +119,7 @@ async function updateApplication(
       signature,
     );
   } else if (action === "assignApplication") {
-    await assignApplication(
+    updatedApplication = await assignApplication(
       childBounty,
       application,
       action,
@@ -130,7 +128,7 @@ async function updateApplication(
       signature,
     );
   } else if (action === "unassignApplication") {
-    await unassignApplication(
+    updatedApplication = await unassignApplication(
       childBounty,
       application,
       action,
@@ -139,7 +137,7 @@ async function updateApplication(
       signature,
     );
   } else if (action === "acceptAssignment") {
-    await acceptAssignment(
+    updatedApplication = await acceptAssignment(
       childBounty,
       application,
       action,
@@ -148,7 +146,7 @@ async function updateApplication(
       signature,
     );
   } else if (action === "submitWork") {
-    await submitWork(
+    updatedApplication = await submitWork(
       childBounty,
       application,
       action,
@@ -156,6 +154,8 @@ async function updateApplication(
       address,
       signature,
     );
+  } else {
+    throw new HttpError(400, `Unknown action: ${action}`);
   }
 
   // Update child bounty status
@@ -190,10 +190,7 @@ async function updateApplication(
     },
   );
 
-  // fixme: it's strange to return just {result: true}
-  return {
-    result: true,
-  };
+  return updatedApplication;
 }
 
 async function cancelApplication(
@@ -220,9 +217,10 @@ async function cancelApplication(
     );
   }
 
-  await Application.updateOne(
+  const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
     { status: ApplicationStatus.Cancelled },
+    { new: true }
   );
 
   const timelineItem = await ApplicationTimeline.create({
@@ -247,6 +245,8 @@ async function cancelApplication(
       applicationTimelineItem: timelineItem._id,
     },
   });
+
+  return updatedApplication;
 }
 
 async function submitWork(
@@ -266,9 +266,10 @@ async function submitWork(
     throw new HttpError(403, "Only the owner is allow to submit work");
   }
 
-  await Application.updateOne(
+  const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
     { status: ApplicationStatus.Submitted },
+    { new: true }
   );
 
   const timelineItem = await ApplicationTimeline.create({
@@ -293,6 +294,8 @@ async function submitWork(
       applicationTimelineItem: timelineItem._id,
     },
   });
+
+  return updatedApplication;
 }
 
 async function acceptAssignment(
@@ -312,9 +315,10 @@ async function acceptAssignment(
     throw new HttpError(403, "Only the owner is allow to accept the work");
   }
 
-  await Application.updateOne(
+  const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
     { status: ApplicationStatus.Started },
+    { new: true }
   );
 
   const timelineItem = await ApplicationTimeline.create({
@@ -339,6 +343,8 @@ async function acceptAssignment(
       applicationTimelineItem: timelineItem._id,
     },
   });
+
+  return updatedApplication;
 }
 
 async function assignApplication(
@@ -358,9 +364,10 @@ async function assignApplication(
     throw new HttpError(403, "Only the curator is allow to assign the work");
   }
 
-  await Application.updateOne(
+  const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
     { status: ApplicationStatus.Assigned },
+    { new: true }
   );
 
   const timelineItem = await ApplicationTimeline.create({
@@ -385,6 +392,8 @@ async function assignApplication(
       applicationTimelineItem: timelineItem._id,
     },
   });
+
+  return updatedApplication;
 }
 
 async function unassignApplication(
@@ -408,9 +417,10 @@ async function unassignApplication(
     throw new HttpError(403, "Only the curator is allow to unassign the work");
   }
 
-  await Application.updateOne(
+  const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
     { status: ApplicationStatus.Apply },
+    { new: true }
   );
 
   const timelineItem = await ApplicationTimeline.create({
@@ -435,6 +445,8 @@ async function unassignApplication(
       applicationTimelineItem: timelineItem._id,
     },
   });
+
+  return updatedApplication;
 }
 
 module.exports = {

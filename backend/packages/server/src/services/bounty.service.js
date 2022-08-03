@@ -2,6 +2,7 @@ const { HttpError } = require("../utils/exc");
 const { Bounty, BountyComment } = require("../models");
 const chainService = require("./chain.service");
 const { ipfsAddBuffer } = require("./ipfs.service");
+const { BountyStatus } = require("../utils/constants");
 
 async function getBounties(page, pageSize) {
   const q = {};
@@ -32,6 +33,21 @@ async function getBounty(network, bountyIndex) {
   return bounty.toJSON();
 }
 
+async function pinFile(file) {
+  const fileData = file.buffer;
+  const Megabyte = 1024 * 1024;
+  if (file.size > 10 * Megabyte) {
+    throw new HttpError(
+      400,
+      "The upload file has exceeded the size limitation",
+    );
+  }
+
+  const result = await ipfsAddBuffer(fileData);
+  const cid = result.path;
+  return cid;
+}
+
 async function importBounty(
   network,
   bountyIndex,
@@ -60,20 +76,9 @@ async function importBounty(
     throw new HttpError(403, "Only curator is allowed to import the bounty");
   }
 
-  // todo: extract following logic in one separate file and function
   let logoCid;
   if (logo) {
-    const fileData = logo.buffer;
-    const Megabyte = 1024 * 1024;
-    if (logo.size > 10 * Megabyte) {
-      throw new HttpError(
-        400,
-        "The upload file has exceeded the size limitation",
-      );
-    }
-
-    const result = await ipfsAddBuffer(fileData);
-    logoCid = result.path;
+    logoCid = await pinFile(logo);
   }
 
   return await Bounty.create({
@@ -86,7 +91,7 @@ async function importBounty(
     data,
     address,
     signature,
-    status: "open",
+    status: BountyStatus.Open,
   });
 }
 

@@ -82,10 +82,7 @@ async function postBountyComment(
 
   await createCommentNotification(comment);
 
-  // fixme: it's strange to return just {result: true}
-  return {
-    result: true,
-  };
+  return comment;
 }
 
 module.exports = {

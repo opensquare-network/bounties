@@ -1,5 +1,9 @@
 const { HttpError } = require("../utils/exc");
-const { ChildBounty, ChildBountyComment, Application } = require("../models");
+const {
+  ChildBounty,
+  ChildBountyComment,
+  Application,
+} = require("../models");
 const chainService = require("./chain.service");
 const { ChildBountyStatus } = require("../utils/constants");
 
@@ -138,7 +142,7 @@ async function deleteChildBounty(
     throw new HttpError(404, "Child bounty not found");
   }
 
-  if (!["open", "apply"].includes(childBounty.status)) {
+  if (![ChildBountyStatus.Open, ChildBountyStatus.Apply].includes(childBounty.status)) {
     throw new HttpError(403, "Cannot delete the bounty at the moment");
   }
 
@@ -164,9 +168,7 @@ async function deleteChildBounty(
     index,
   });
 
-  return {
-    result: true,
-  };
+  return true;
 }
 
 async function updateChildBounty(
@@ -187,13 +189,14 @@ async function updateChildBounty(
     throw new HttpError(500, "Child bounty not found");
   }
 
+  let updatedChildBounty;
   if (action === "resolveChildBounty") {
-    await resolveChildBounty(childBounty, action, data, address, signature);
+    updatedChildBounty = await resolveChildBounty(childBounty, action, data, address, signature);
+  } else {
+    throw new HttpError(400, `Unknown action: ${action}`);
   }
 
-  return {
-    result: true,
-  };
+  return updatedChildBounty;
 }
 
 async function resolveChildBounty(
@@ -212,10 +215,13 @@ async function resolveChildBounty(
     throw new HttpError(403, "Only the curator can resolve");
   }
 
-  await ChildBounty.updateOne(
+  const updatedChildBounty = await ChildBounty.findOneAndUpdate(
     { _id: childBounty._id },
     { status: ChildBountyStatus.Awarded },
+    { new: true }
   );
+
+  return updatedChildBounty;
 }
 
 module.exports = {

@@ -86,7 +86,7 @@ async function deleteChildBounty(ctx) {
     throw new HttpError(400, "Child bounty index is missing");
   }
 
-  ctx.body = await childBountyService.deleteChildBounty(
+  const result = await childBountyService.deleteChildBounty(
     network,
     parseInt(parentBountyIndex),
     parseInt(index),
@@ -94,6 +94,8 @@ async function deleteChildBounty(ctx) {
     address,
     signature,
   );
+
+  ctx.body = { result };
 }
 
 async function updateChildBounty(ctx) {

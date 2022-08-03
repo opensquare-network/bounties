@@ -17,6 +17,11 @@ const ChildBountyStatus = {
   Awarded: "awarded",
 };
 
+const BountyStatus = {
+  Open: "open",
+  Closed: "closed",
+};
+
 const NotificationType = {
   Applied: "applied",
   Assigned: "assigned",
@@ -31,5 +36,6 @@ const NotificationType = {
 module.exports = {
   ApplicationStatus,
   ChildBountyStatus,
+  BountyStatus,
   NotificationType,
 };
