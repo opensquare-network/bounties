@@ -7,6 +7,7 @@ export const Wrapper = styled(FlexBetween)`
 `;
 
 export const IdentityUserWrapper = styled(Flex)`
+  max-width: 232px;
   flex: 1;
   a {
     cursor: pointer;
@@ -15,13 +16,12 @@ export const IdentityUserWrapper = styled(Flex)`
     }
   }
 `;
-export const ApplicantWrapper = styled(Flex)`
+export const DescriptionWrapper = styled(Flex)`
   flex: 1;
-  max-width: 50%;
 `;
 export const ActionWrapper = styled(Flex)`
+  max-width: 120px;
   flex: 1;
-  justify-content: flex-end;
 `;
 
 export const Count = styled.span`
