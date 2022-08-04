@@ -12,10 +12,7 @@ export function useAction(childBountyDetail) {
   const { curators = [] } = childBounty ?? {};
   const account = useAccount();
 
-  const isCurator = useMemo(
-    () => curators.includes(account?.address),
-    [account?.address, curators],
-  );
+  const isCurator = curators.includes(account?.encodedAddress);
 
   const hunterApplyAction = useHunterApplyAction(childBountyDetail);
   const hunterSubmitAction = useHunterSubmitAction();
