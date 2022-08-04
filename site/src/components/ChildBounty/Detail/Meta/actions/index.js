@@ -7,6 +7,7 @@ import { useHunterSubmitedAction } from "./hunter/submitted";
 import { useCuratorSubmittedAction } from "./curator/submitted";
 import { useCuratorWorkDoneAction } from "./curator/workDone";
 import { useCuratorAssignedAction } from "./curator/assigned";
+import { useHunterAssignedAction } from "./hunter/assigned";
 
 export function useAction(childBountyDetail) {
   const { status, childBounty } = childBountyDetail ?? {};
@@ -18,6 +19,7 @@ export function useAction(childBountyDetail) {
   const hunterApplyAction = useHunterApplyAction(childBountyDetail);
   const hunterSubmitAction = useHunterSubmitAction();
   const hunterSubmittedAction = useHunterSubmitedAction();
+  const hunterAssignedAction = useHunterAssignedAction(childBountyDetail);
   const curatorCollectingApplicantAction =
     useCuratorCollectingApplicantAction();
   const curatorSubmittedAction = useCuratorSubmittedAction();
@@ -40,8 +42,8 @@ export function useAction(childBountyDetail) {
   else {
     if (status === CHILD_BOUNTY_STATUS.Open) {
       return hunterApplyAction;
-    } else if (status === CHILD_BOUNTY_STATUS.Apply) {
-      return;
+    } else if (status === CHILD_BOUNTY_STATUS.Assigned) {
+      return hunterAssignedAction;
     } else if (status === CHILD_BOUNTY_STATUS.Started) {
       return hunterSubmitAction;
     } else if (status === CHILD_BOUNTY_STATUS.Submitted) {
