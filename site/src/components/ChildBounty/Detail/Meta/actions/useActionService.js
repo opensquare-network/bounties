@@ -1,8 +1,6 @@
 import { useAccount } from "hooks/useAccount";
 import serverApi from "services/serverApi";
 
-const endpoint = "/application";
-
 export function useActionService(childBountyDetail) {
   const { network, parentBountyIndex, index } = childBountyDetail ?? {};
   const account = useAccount();
@@ -17,11 +15,16 @@ export function useActionService(childBountyDetail) {
     },
   };
 
-  function apply(value) {
+  async function apply(value) {
     data.data.action = "applyChildBounty";
     data.data.description = value.content;
     data.data.applicantNetwork = account?.network;
-    return serverApi.post(endpoint);
+
+    return serverApi.post("/applications", data).then(({ error }) => {
+      if (error) {
+        // TODO: error toast
+      }
+    });
   }
 
   return {
