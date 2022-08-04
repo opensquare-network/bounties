@@ -282,9 +282,20 @@ async function submitWork(
     throw new HttpError(403, "Only the owner is allow to submit work");
   }
 
+  const { description, link } = data || {};
+  if (!description) {
+    throw new HttpError(400, "Description must not be empty");
+  }
+
   const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
-    { status: ApplicationStatus.Submitted },
+    {
+      status: ApplicationStatus.Submitted,
+      submission: {
+        description,
+        link,
+      },
+    },
     { new: true },
   );
 

@@ -9,6 +9,10 @@ const ApplicationSchema = new mongoose.Schema(
       index: Number,
     },
     description: String,
+    submission: {
+      description: String,
+      link: String,
+    },
     data: mongoose.Schema.Types.Mixed,
     pinHash: String,
     address: String,
