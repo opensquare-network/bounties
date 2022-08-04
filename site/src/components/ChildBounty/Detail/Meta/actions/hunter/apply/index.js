@@ -1,13 +1,20 @@
 import { Button, RichEditor, Modal } from "@osn/common-ui";
 import { useState } from "react";
 import { ModalTitle, ModalDescription, FormLabel } from "../../styled";
+import { useActionService } from "../../useActionService";
 
-export function useHunterApplyAction() {
+export function useHunterApplyAction(childBountyDetail) {
+  const {} = childBountyDetail ?? {};
+
+  const [content, setContent] = useState("");
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((v) => !v);
 
-  // FIXME: implement submit
-  function handleSubmit() {}
+  const { apply } = useActionService(childBountyDetail);
+
+  function handleSubmit() {
+    apply({ content });
+  }
 
   return (
     <>
@@ -23,7 +30,12 @@ export function useHunterApplyAction() {
         </ModalDescription>
 
         <FormLabel>Work Plan</FormLabel>
-        <RichEditor submitButtonText="Confirm" onSubmit={handleSubmit} />
+        <RichEditor
+          content={content}
+          setContent={setContent}
+          submitButtonText="Confirm"
+          onSubmit={handleSubmit}
+        />
       </Modal>
     </>
   );

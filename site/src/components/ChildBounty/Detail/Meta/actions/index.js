@@ -18,7 +18,7 @@ export function useAction(childBountyDetail) {
     [account?.address, curators],
   );
 
-  const hunterApplyAction = useHunterApplyAction();
+  const hunterApplyAction = useHunterApplyAction(childBountyDetail);
   const hunterSubmitAction = useHunterSubmitAction();
   const hunterSubmittedAction = useHunterSubmitedAction();
   const curatorCollectingApplicantAction =
