@@ -50,7 +50,7 @@ async function apply(
     "bountyIndexer.network": bountyIndexer.network,
     "bountyIndexer.parentBountyIndex": bountyIndexer.parentBountyIndex,
     "bountyIndexer.index": bountyIndexer.index,
-    applicantNetwork,
+    address,
   });
   if (exists) {
     throw new HttpError(400, "Application already exists");
