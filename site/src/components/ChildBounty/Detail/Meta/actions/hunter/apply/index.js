@@ -1,7 +1,7 @@
 import { Button, RichEditor, Modal } from "@osn/common-ui";
+import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { useState } from "react";
 import { ModalTitle, ModalDescription, FormLabel } from "../../styled";
-import { useActionService } from "../../useActionService";
 
 export function useHunterApplyAction(childBountyDetail) {
   const {} = childBountyDetail ?? {};
@@ -10,10 +10,10 @@ export function useHunterApplyAction(childBountyDetail) {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((v) => !v);
 
-  const { apply } = useActionService(childBountyDetail);
+  const { applyService } = useWorkflowActionService(childBountyDetail);
 
   function handleSubmit() {
-    apply({ content });
+    applyService({ content });
   }
 
   return (

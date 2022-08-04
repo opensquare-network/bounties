@@ -1,7 +1,7 @@
 import { useAccount } from "hooks/useAccount";
 import serverApi from "services/serverApi";
 
-export function useActionService(childBountyDetail) {
+export function useWorkflowActionService(childBountyDetail) {
   const { network, parentBountyIndex, index } = childBountyDetail ?? {};
   const account = useAccount();
 
@@ -15,7 +15,7 @@ export function useActionService(childBountyDetail) {
     },
   };
 
-  async function apply(value) {
+  async function applyService(value) {
     data.data.action = "applyChildBounty";
     data.data.description = value.content;
     data.data.applicantNetwork = account?.network;
@@ -28,6 +28,6 @@ export function useActionService(childBountyDetail) {
   }
 
   return {
-    apply,
+    applyService,
   };
 }
