@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useAccount } from "hooks/useAccount";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useHunterApplyAction } from "./hunter/apply";
