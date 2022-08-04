@@ -17,7 +17,7 @@ export function useWorkflowActionService(childBountyDetail) {
     data.action = "applyChildBounty";
     data.description = value.content;
     data.applicantNetwork = account?.network;
-    const signedData = await signApiData(data, account?.address);
+    const signedData = await signApiData(data, account?.encodedAddress);
 
     try {
       const res = await serverApi.post("/applications", signedData);
@@ -33,7 +33,7 @@ export function useWorkflowActionService(childBountyDetail) {
   async function assignService(value = {}) {
     data.action = "assignApplication";
     data.applicantAddress = value.applicantAddress;
-    const signedData = await signApiData(data, account?.address);
+    const signedData = await signApiData(data, account?.encodedAddress);
 
     try {
       const res = await serverApi.patch("/application", signedData);
