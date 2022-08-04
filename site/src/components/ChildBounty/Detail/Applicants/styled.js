@@ -19,7 +19,7 @@ export const ApplicantWrapper = styled(Flex)`
   flex: 1;
   max-width: 50%;
 `;
-export const TimeWrapper = styled(Flex)`
+export const ActionWrapper = styled(Flex)`
   flex: 1;
   justify-content: flex-end;
 `;

@@ -10,7 +10,7 @@ import {
 import {
   ApplicantWrapper,
   IdentityUserWrapper,
-  TimeWrapper,
+  ActionWrapper,
   Wrapper,
   Count,
 } from "./styled";
@@ -70,9 +70,9 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
 
                 <ApplicantWrapper>{description}</ApplicantWrapper>
 
-                <TimeWrapper>
-                  <Time time={new Date(createdAt)} />
-                </TimeWrapper>
+                <ActionWrapper>
+                    <Time time={new Date(createdAt)} />
+                </ActionWrapper>
               </Wrapper>
             </List.Item>
           );
