@@ -4,7 +4,7 @@ import { Button, Flex } from "@osn/common-ui";
 export function useCuratorCollectingApplicantAction() {
   // FIXME: collecting applicant action delete
   // sign
-  function handleDelete() {}
+  function handleClose() {}
 
   return (
     <ButtonGroup>
@@ -13,7 +13,7 @@ export function useCuratorCollectingApplicantAction() {
           <ButtonText>Collecting Applications</ButtonText>
         </Button>
 
-        <Button onClick={handleDelete}>Delete</Button>
+        <Button onClick={handleClose}>Close</Button>
       </Flex>
     </ButtonGroup>
   );
