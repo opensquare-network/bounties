@@ -30,7 +30,24 @@ export function useWorkflowActionService(childBountyDetail) {
     } catch {}
   }
 
+  async function assignService(value = {}) {
+    data.action = "assignApplication";
+    data.applicantAddress = value.applicantAddress;
+    const signedData = await signApiData(data, account?.address);
+
+    try {
+      const res = await serverApi.patch("/application", signedData);
+
+      // TODO: error toast
+      if (res.error) {
+      }
+
+      return res;
+    } catch {}
+  }
+
   return {
     applyService,
+    assignService,
   };
 }
