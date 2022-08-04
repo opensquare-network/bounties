@@ -17,7 +17,7 @@ async function getBounty(network, bountyIndex) {
   const { meta, description } = await getBountyInfo(network, bountyIndex);
 
   if (!meta) {
-    throw new HttpError(404, `Bounty does not exists`);
+    throw new HttpError(404, `Bounty does not found on chain`);
   }
 
   let curators = [];
@@ -57,7 +57,7 @@ async function getChildBounty(network, parentBountyIndex, index) {
   );
 
   if (!meta) {
-    throw new HttpError(404, `Child bounty does not exists`);
+    throw new HttpError(404, `Child bounty does not found on chain`);
   }
 
   let curators = [];

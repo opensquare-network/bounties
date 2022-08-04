@@ -120,6 +120,7 @@ async function updateChildBounty(ctx) {
   }
 
   ctx.body = await childBountyService.updateChildBounty(
+    action,
     network,
     parseInt(parentBountyIndex),
     parseInt(index),

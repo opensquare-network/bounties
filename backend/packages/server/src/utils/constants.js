@@ -8,11 +8,9 @@ const ApplicationStatus = {
 
 const ChildBountyStatus = {
   Open: "open",
-  Apply: "apply",
   Assigned: "assigned",
-  Started: "started",
-  Submitted: "submitted",
   Awarded: "awarded",
+  Closed: "closed",
 };
 
 const BountyStatus = {

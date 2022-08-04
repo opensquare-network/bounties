@@ -11,6 +11,7 @@ const {
   NotificationType,
 } = require("../utils/constants");
 const { toPublicKey } = require("../utils/address");
+const { evaluteChildBountyStatus } = require("./child-bounty.service");
 
 async function apply(
   bountyIndexer,
@@ -34,8 +35,15 @@ async function apply(
     throw new HttpError(400, "Applicant address network does not match");
   }
 
-  if (childBounty.status === ChildBountyStatus.Awarded) {
-    throw new HttpError(400, "Cannot apply after child bounty awarded");
+  if (
+    ![ChildBountyStatus.Open, ChildBountyStatus.Assigned].includes(
+      childBounty.status,
+    )
+  ) {
+    throw new HttpError(
+      500,
+      `Cannot apply on a ${childBounty.status} child bounty`,
+    );
   }
 
   const exists = await Application.findOne({
@@ -92,6 +100,26 @@ async function updateApplication(
   address,
   signature,
 ) {
+  const childBounty = await ChildBounty.findOne({
+    network: bountyIndexer.network,
+    parentBountyIndex: bountyIndexer.parentBountyIndex,
+    index: bountyIndexer.index,
+  });
+  if (!childBounty) {
+    throw new HttpError(500, "Related bounty not found");
+  }
+
+  if (
+    ![ChildBountyStatus.Open, ChildBountyStatus.Assigned].includes(
+      childBounty.status,
+    )
+  ) {
+    throw new HttpError(
+      500,
+      `Cannot update application on a ${childBounty.status} child bounty`,
+    );
+  }
+
   // Check application
   const application = await Application.findOne({
     "bountyIndexer.network": bountyIndexer.network,
@@ -101,15 +129,6 @@ async function updateApplication(
   });
   if (!application) {
     throw new HttpError(400, "Application is not found");
-  }
-
-  const childBounty = await ChildBounty.findOne({
-    network: application.bountyIndexer.network,
-    parentBountyIndex: application.bountyIndexer.parentBountyIndex,
-    index: application.bountyIndexer.index,
-  });
-  if (!childBounty) {
-    throw new HttpError(500, "Related bounty not found");
   }
 
   let updatedApplication;
@@ -163,24 +182,11 @@ async function updateApplication(
   }
 
   // Update child bounty status
-  const allApplicationStatus = await Application.find({
-    "bountyIndexer.network": bountyIndexer.network,
-    "bountyIndexer.parentBountyIndex": bountyIndexer.parentBountyIndex,
-    "bountyIndexer.index": bountyIndexer.index,
-  }).distinct("status");
-
-  let newStatus = ChildBountyStatus.Open;
-  for (const status of [
-    ApplicationStatus.Submitted,
-    ApplicationStatus.Started,
-    ApplicationStatus.Assigned,
-    ApplicationStatus.Apply,
-  ]) {
-    if (allApplicationStatus.includes(status)) {
-      newStatus = status;
-      break;
-    }
-  }
+  const newStatus = await evaluteChildBountyStatus(
+    bountyIndexer.network,
+    bountyIndexer.parentBountyIndex,
+    bountyIndexer.index,
+  );
 
   await ChildBounty.updateOne(
     {
@@ -205,9 +211,12 @@ async function cancelApplication(
   signature,
 ) {
   if (
-    ![ApplicationStatus.Apply, ApplicationStatus.Assigned].includes(
-      application.status,
-    )
+    ![
+      ApplicationStatus.Apply,
+      ApplicationStatus.Assigned,
+      ApplicationStatus.Started,
+      ApplicationStatus.Submitted,
+    ].includes(application.status)
   ) {
     throw new HttpError(400, "Incorrect application status");
   }
@@ -223,7 +232,7 @@ async function cancelApplication(
   const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
     { status: ApplicationStatus.Cancelled },
-    { new: true }
+    { new: true },
   );
 
   const timelineItem = await ApplicationTimeline.create({
@@ -260,7 +269,11 @@ async function submitWork(
   address,
   signature,
 ) {
-  if (application.status !== ApplicationStatus.Started) {
+  if (
+    ![ApplicationStatus.Started, ApplicationStatus.Submitted].includes(
+      application.status,
+    )
+  ) {
     throw new HttpError(400, "Incorrect application status");
   }
 
@@ -272,7 +285,7 @@ async function submitWork(
   const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
     { status: ApplicationStatus.Submitted },
-    { new: true }
+    { new: true },
   );
 
   const timelineItem = await ApplicationTimeline.create({
@@ -321,7 +334,7 @@ async function acceptAssignment(
   const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
     { status: ApplicationStatus.Started },
-    { new: true }
+    { new: true },
   );
 
   const timelineItem = await ApplicationTimeline.create({
@@ -370,7 +383,7 @@ async function assignApplication(
   const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
     { status: ApplicationStatus.Assigned },
-    { new: true }
+    { new: true },
   );
 
   const timelineItem = await ApplicationTimeline.create({
@@ -408,9 +421,11 @@ async function unassignApplication(
   signature,
 ) {
   if (
-    ![ApplicationStatus.Assigned, ApplicationStatus.Started].includes(
-      application.status,
-    )
+    ![
+      ApplicationStatus.Assigned,
+      ApplicationStatus.Started,
+      ApplicationStatus.Submitted,
+    ].includes(application.status)
   ) {
     throw new HttpError(400, "Incorrect application status");
   }
@@ -423,7 +438,7 @@ async function unassignApplication(
   const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
     { status: ApplicationStatus.Apply },
-    { new: true }
+    { new: true },
   );
 
   const timelineItem = await ApplicationTimeline.create({

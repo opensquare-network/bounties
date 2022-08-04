@@ -54,7 +54,34 @@ async function importBounty(ctx) {
     trimContent,
     data,
     address,
-    signature
+    signature,
+  );
+}
+
+async function updateBounty(ctx) {
+  const { data, address, signature } = ctx.request.body;
+
+  const { action, network, bountyIndex } = data || {};
+
+  if (!action) {
+    throw new HttpError(400, "Action is missing");
+  }
+
+  if (!network) {
+    throw new HttpError(400, "Network is missing");
+  }
+
+  if (bountyIndex === undefined) {
+    throw new HttpError(400, "Bounty index is missing");
+  }
+
+  ctx.body = await bountyService.updateBounty(
+    action,
+    network,
+    parseInt(bountyIndex),
+    data,
+    address,
+    signature,
   );
 }
 
@@ -84,13 +111,18 @@ async function getBountyComments(ctx) {
     throw new HttpError(400, "Bounty index is missing");
   }
 
-  ctx.body = await bountyService.getBountyComments(network, parseInt(bountyIndex), page, pageSize);
-
+  ctx.body = await bountyService.getBountyComments(
+    network,
+    parseInt(bountyIndex),
+    page,
+    pageSize,
+  );
 }
 
 module.exports = {
   getBounty,
   getBounties,
   importBounty,
+  updateBounty,
   getBountyComments,
 };
