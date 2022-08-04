@@ -20,11 +20,15 @@ export function useWorkflowActionService(childBountyDetail) {
     data.data.description = value.content;
     data.data.applicantNetwork = account?.network;
 
-    return serverApi.post("/applications", data).then(({ error }) => {
-      if (error) {
-        // TODO: error toast
+    try {
+      const res = await serverApi.post("/applications", data);
+
+      // TODO: error toast
+      if (res.error) {
       }
-    });
+
+      return res;
+    } catch {}
   }
 
   return {
