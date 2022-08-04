@@ -3,7 +3,6 @@ const ApplicationStatus = {
   Assigned: "assigned",
   Started: "started",
   Submitted: "submitted",
-  WorkDone: "workDone",
   Cancelled: "cancelled",
 };
 
@@ -13,7 +12,6 @@ const ChildBountyStatus = {
   Assigned: "assigned",
   Started: "started",
   Submitted: "submitted",
-  WorkDone: "workDone",
   Awarded: "awarded",
 };
 

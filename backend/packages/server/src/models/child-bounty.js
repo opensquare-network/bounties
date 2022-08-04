@@ -23,7 +23,6 @@ const ChildBountySchema = new mongoose.Schema(
         ChildBountyStatus.Assigned,
         ChildBountyStatus.Started,
         ChildBountyStatus.Submitted,
-        ChildBountyStatus.WorkDone,
         ChildBountyStatus.Awarded,
       ],
     },

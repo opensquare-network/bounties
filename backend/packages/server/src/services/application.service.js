@@ -34,6 +34,10 @@ async function apply(
     throw new HttpError(400, "Applicant address network does not match");
   }
 
+  if (childBounty.status === ChildBountyStatus.Awarded) {
+    throw new HttpError(400, "Cannot apply after child bounty awarded");
+  }
+
   const exists = await Application.findOne({
     "bountyIndexer.network": bountyIndexer.network,
     "bountyIndexer.parentBountyIndex": bountyIndexer.parentBountyIndex,
@@ -167,7 +171,6 @@ async function updateApplication(
 
   let newStatus = ChildBountyStatus.Open;
   for (const status of [
-    ApplicationStatus.WorkDone,
     ApplicationStatus.Submitted,
     ApplicationStatus.Started,
     ApplicationStatus.Assigned,

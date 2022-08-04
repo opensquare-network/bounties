@@ -68,6 +68,10 @@ async function importBounty(
     throw new HttpError(404, `Can not find bounty ${bountyIndex} on chain`);
   }
 
+  if (!bounty.meta?.status?.active) {
+    throw new HttpError(404, `Can import active bounty only`);
+  }
+
   if (bounty.curators.length === 0) {
     throw new HttpError(403, "Can not find bounty curator");
   }
