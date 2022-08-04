@@ -3,9 +3,14 @@ const {
   ChildBounty,
   ChildBountyComment,
   Application,
+  Bounty,
 } = require("../models");
 const chainService = require("./chain.service");
-const { ChildBountyStatus } = require("../utils/constants");
+const {
+  ChildBountyStatus,
+  ApplicationStatus,
+  BountyStatus,
+} = require("../utils/constants");
 
 async function getChildBounties(page, pageSize) {
   const q = { deleted: null };
@@ -54,6 +59,18 @@ async function importChildBounty(
   address,
   signature,
 ) {
+  const parentBounty = await Bounty.findOne({
+    network,
+    bountyIndex: parentBountyIndex,
+  });
+  if (!parentBounty) {
+    throw new HttpError(400, "Parent bounty has not imported yet");
+  }
+
+  if (parentBounty.status === BountyStatus.Closed) {
+    throw new HttpError(400, "Parent bounty has been closed");
+  }
+
   const exists = await ChildBounty.exists({
     network,
     parentBountyIndex,
@@ -70,6 +87,10 @@ async function importChildBounty(
   );
   if (!childBounty) {
     throw new HttpError(404, `Can not find child bounty ${index} on chain`);
+  }
+
+  if (!childBounty.meta?.status?.active) {
+    throw new HttpError(400, `Can import active child bounty only`);
   }
 
   if (childBounty.curators.length === 0) {
@@ -124,53 +145,6 @@ async function getChildBountyComments(
   };
 }
 
-async function deleteChildBounty(
-  network,
-  parentBountyIndex,
-  index,
-  data,
-  address,
-  signature,
-) {
-  // Verify caller is the child bounty importer
-  const childBounty = await ChildBounty.findOne({
-    network,
-    parentBountyIndex,
-    index,
-  });
-  if (!childBounty) {
-    throw new HttpError(404, "Child bounty not found");
-  }
-
-  if (![ChildBountyStatus.Open, ChildBountyStatus.Apply].includes(childBounty.status)) {
-    throw new HttpError(403, "Cannot delete the bounty at the moment");
-  }
-
-  if (!childBounty.childBounty.curators.includes(address)) {
-    throw new HttpError(403, "Only the curator can delete it");
-  }
-
-  await ChildBountyComment.deleteMany({
-    "bountyIndexer.network": network,
-    "bountyIndexer.parentBountyIndex": parentBountyIndex,
-    "bountyIndexer.index": index,
-  });
-
-  await Application.deleteMany({
-    "bountyIndexer.network": network,
-    "bountyIndexer.parentBountyIndex": parentBountyIndex,
-    "bountyIndexer.index": index,
-  });
-
-  await ChildBounty.deleteOne({
-    network,
-    parentBountyIndex,
-    index,
-  });
-
-  return true;
-}
-
 async function updateChildBounty(
   action,
   network,
@@ -191,7 +165,29 @@ async function updateChildBounty(
 
   let updatedChildBounty;
   if (action === "resolveChildBounty") {
-    updatedChildBounty = await resolveChildBounty(childBounty, action, data, address, signature);
+    updatedChildBounty = await resolveChildBounty(
+      childBounty,
+      action,
+      data,
+      address,
+      signature,
+    );
+  } else if (action === "closeChildBounty") {
+    updatedChildBounty = await closeChildBounty(
+      childBounty,
+      action,
+      data,
+      address,
+      signature,
+    );
+  } else if (action === "reopenChildBounty") {
+    updatedChildBounty = await reopenChildBounty(
+      childBounty,
+      action,
+      data,
+      address,
+      signature,
+    );
   } else {
     throw new HttpError(400, `Unknown action: ${action}`);
   }
@@ -206,7 +202,7 @@ async function resolveChildBounty(
   address,
   signature,
 ) {
-  if (![ChildBountyStatus.Submitted].includes(childBounty.status)) {
+  if (![ChildBountyStatus.Assigned].includes(childBounty.status)) {
     throw new HttpError(400, "Incorrect child bounty status");
   }
 
@@ -218,17 +214,104 @@ async function resolveChildBounty(
   const updatedChildBounty = await ChildBounty.findOneAndUpdate(
     { _id: childBounty._id },
     { status: ChildBountyStatus.Awarded },
-    { new: true }
+    { new: true },
   );
 
   return updatedChildBounty;
 }
 
+async function closeChildBounty(childBounty, action, data, address, signature) {
+  if (![ChildBountyStatus.Open].includes(childBounty.status)) {
+    throw new HttpError(400, 'Can close child bounty on "open" status only');
+  }
+
+  // Check if caller is bounty curator
+  if (!childBounty.childBounty.curators.includes(address)) {
+    throw new HttpError(403, "Only the curator can close");
+  }
+
+  const updatedChildBounty = await ChildBounty.findOneAndUpdate(
+    { _id: childBounty._id },
+    { status: ChildBountyStatus.Closed },
+    { new: true },
+  );
+
+  return updatedChildBounty;
+}
+
+async function reopenChildBounty(
+  childBounty,
+  action,
+  data,
+  address,
+  signature,
+) {
+  if (![ChildBountyStatus.Closed].includes(childBounty.status)) {
+    throw new HttpError(400, 'Can reopen child bounty on "closed" status only');
+  }
+
+  const onchainChildBounty = await chainService.getChildBounty(
+    childBounty.network,
+    childBounty.parentBountyIndex,
+    childBounty.index,
+  );
+  if (!onchainChildBounty) {
+    throw new HttpError(404, `Can not find child bounty ${index} on chain`);
+  }
+
+  if (!onchainChildBounty.meta?.status?.active) {
+    throw new HttpError(400, `Can reopen active child bounty only`);
+  }
+
+  // Check if caller is bounty curator
+  if (!childBounty.childBounty.curators.includes(address)) {
+    throw new HttpError(403, "Only the curator can reopen");
+  }
+
+  // Find current status
+  const newStatus = await evaluteChildBountyStatus(
+    childBounty.network,
+    childBounty.parentBountyIndex,
+    childBounty.index,
+  );
+
+  const updatedChildBounty = await ChildBounty.findOneAndUpdate(
+    { _id: childBounty._id },
+    { status: newStatus },
+    { new: true },
+  );
+
+  return updatedChildBounty;
+}
+
+async function evaluteChildBountyStatus(network, parentBountyIndex, index) {
+  // Update child bounty status
+  const allApplicationStatus = await Application.find({
+    "bountyIndexer.network": network,
+    "bountyIndexer.parentBountyIndex": parentBountyIndex,
+    "bountyIndexer.index": index,
+  }).distinct("status");
+
+  let result = ChildBountyStatus.Open;
+  for (const status of [
+    ApplicationStatus.Submitted,
+    ApplicationStatus.Started,
+    ApplicationStatus.Assigned,
+  ]) {
+    if (allApplicationStatus.includes(status)) {
+      result = ChildBountyStatus.Assigned;
+      break;
+    }
+  }
+
+  return result;
+}
+
 module.exports = {
   importChildBounty,
   updateChildBounty,
-  deleteChildBounty,
   getChildBounties,
   getChildBounty,
   getChildBountyComments,
+  evaluteChildBountyStatus,
 };

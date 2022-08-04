@@ -99,6 +99,88 @@ async function importBounty(
   });
 }
 
+async function updateBounty(
+  action,
+  network,
+  bountyIndex,
+  data,
+  address,
+  signature,
+) {
+  const bounty = await Bounty.findOne({
+    network,
+    bountyIndex,
+  });
+  if (!bounty) {
+    throw new HttpError(500, "Bounty not found");
+  }
+
+  let updatedBounty;
+  if (action === "closeBounty") {
+    updatedBounty = await closeBounty(bounty, action, data, address, signature);
+  } else if (action === "reopenBounty") {
+    updatedBounty = await reopenBounty(
+      bounty,
+      action,
+      data,
+      address,
+      signature,
+    );
+  } else {
+    throw new HttpError(400, `Unknown action: ${action}`);
+  }
+
+  return updatedBounty;
+}
+
+async function closeBounty(bounty, action, data, address, signature) {
+  if (![BountyStatus.Open].includes(bounty.status)) {
+    throw new HttpError(400, 'Can close bounty on "open" status only');
+  }
+
+  // Check if caller is bounty curator
+  if (!bounty.bounty.curators.includes(address)) {
+    throw new HttpError(403, "Only the curator can close");
+  }
+
+  const updatedBounty = await Bounty.findOneAndUpdate(
+    { _id: bounty._id },
+    { status: BountyStatus.Closed },
+    { new: true },
+  );
+
+  return updatedBounty;
+}
+
+async function reopenBounty(bounty, action, data, address, signature) {
+  if (![BountyStatus.Closed].includes(bounty.status)) {
+    throw new HttpError(400, 'Can reopen bounty on "closed" status only');
+  }
+
+  // Check bounty on-chain status
+  const onchainBounty = await chainService.getBounty(bounty.network, bounty.bountyIndex);
+  if (!onchainBounty) {
+    throw new HttpError(404, `Can not find bounty ${bountyIndex} on chain`);
+  }
+
+  if (!onchainBounty.meta?.status?.active) {
+    throw new HttpError(400, `Can reopen active bounty only`);
+  }
+
+  // Check if caller is bounty curator
+  if (!bounty.bounty.curators.includes(address)) {
+    throw new HttpError(403, "Only the curator can reopen");
+  }
+
+  const updatedBounty = await Bounty.findOneAndUpdate(
+    { _id: bounty._id },
+    { status: BountyStatus.Open },
+    { new: true },
+  );
+
+  return updatedBounty;
+}
+
 async function getBountyComments(network, bountyIndex, page, pageSize) {
   const q = {
     "bountyIndexer.network": network,
@@ -120,6 +202,7 @@ async function getBountyComments(network, bountyIndex, page, pageSize) {
 
 module.exports = {
   importBounty,
+  updateBounty,
   getBounties,
   getBounty,
   getBountyComments,
