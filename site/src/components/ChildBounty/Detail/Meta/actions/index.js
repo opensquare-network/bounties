@@ -14,7 +14,7 @@ export function useAction(childBountyDetail) {
   const account = useAccount();
 
   const isCurator = useMemo(
-    () => curators.some((i) => i === account?.address),
+    () => curators.includes(account?.address),
     [account?.address, curators],
   );
 
