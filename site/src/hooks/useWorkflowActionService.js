@@ -1,3 +1,4 @@
+import { encodeNetworkAddress } from "@osn/common/src";
 import { useAccount } from "hooks/useAccount";
 import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";
@@ -32,7 +33,10 @@ export function useWorkflowActionService(childBountyDetail) {
 
   async function assignService(value = {}) {
     data.action = "assignApplication";
-    data.applicantAddress = value.applicantAddress;
+    data.applicantAddress = encodeNetworkAddress(
+      value.applicantAddress,
+      value.applicantNetwork,
+    );
     const signedData = await signApiData(data, account?.encodedAddress);
 
     try {
@@ -48,7 +52,29 @@ export function useWorkflowActionService(childBountyDetail) {
 
   async function unassignService(value = {}) {
     data.action = "unassignApplication";
-    data.applicantAddress = value.applicantAddress;
+    data.applicantAddress = encodeNetworkAddress(
+      value.applicantAddress,
+      value.applicantNetwork,
+    );
+    const signedData = await signApiData(data, account?.encodedAddress);
+
+    try {
+      const res = await serverApi.patch("/application", signedData);
+
+      // TODO: error toast
+      if (res.error) {
+      }
+
+      return res;
+    } catch {}
+  }
+
+  async function acceptService(value = {}) {
+    data.action = "acceptAssignment";
+    data.applicantAddress = encodeNetworkAddress(
+      value.applicantAddress,
+      value.applicantNetwork,
+    );
     const signedData = await signApiData(data, account?.encodedAddress);
 
     try {
@@ -66,5 +92,6 @@ export function useWorkflowActionService(childBountyDetail) {
     applyService,
     assignService,
     unassignService,
+    acceptService,
   };
 }
