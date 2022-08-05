@@ -6,6 +6,7 @@ import {
   IdentityUser,
   Time,
 } from "@osn/common-ui";
+import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { ButtonGroup, ButtonText, Gap } from "../../styled";
 import { findAssignedApplicant } from "../../utils";
 
@@ -14,7 +15,11 @@ export function useCuratorAssignedAction(childBountyDetail) {
 
   const assignedApplicant = findAssignedApplicant(applications);
 
-  function handleUnassign() {}
+  const { unassignService } = useWorkflowActionService(childBountyDetail);
+
+  function handleUnassign() {
+    unassignService({ applicantAddress: assignedApplicant.address });
+  }
 
   return (
     <ButtonGroup>
