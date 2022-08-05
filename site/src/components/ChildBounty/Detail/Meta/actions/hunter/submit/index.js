@@ -6,6 +6,7 @@ export function useHunterSubmitAction() {
   const { toggle, modal } = useSubmitModal({
     // FIXME: submit action submit
     onConfirm(v) {
+      // eslint-disable-next-line
       const { content, link } = v;
     },
   });

@@ -86,3 +86,11 @@ export const CHILD_BOUNTY_STATUS = {
   WorkDone: "workDone",
   Awarded: "awarded",
 };
+
+export const APPLICATION_STATUS = {
+  Apply: "apply",
+  Assigned: "assigned",
+  Started: "started",
+  Submitted: "submitted",
+  Cancelled: "cancelled",
+};

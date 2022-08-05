@@ -6,17 +6,34 @@ import {
   FlexCenter,
   Dot,
   LoadingIcon,
+  Button,
 } from "@osn/common-ui";
+import StatusLabel from "components/Bounty/StatusLabel";
+import { useAccount } from "hooks/useAccount";
+import { useWorkflowActionService } from "hooks/useWorkflowActionService";
+import { APPLICATION_STATUS } from "utils/constants";
+import { findAssignedApplicant } from "../Meta/actions/utils";
 import {
-  ApplicantWrapper,
+  DescriptionWrapper,
   IdentityUserWrapper,
-  TimeWrapper,
+  ActionWrapper,
   Wrapper,
   Count,
 } from "./styled";
 
 export default function ChildBountyApplicants({ childBountyDetail }) {
-  const { applications = [] } = childBountyDetail ?? {};
+  const { applications = [], childBounty } = childBountyDetail ?? {};
+  const { curators = [] } = childBounty ?? {};
+  const account = useAccount();
+
+  const isCurator = curators.includes(account?.encodedAddress);
+  const { assignService } = useWorkflowActionService(childBountyDetail);
+
+  const assignedApplicant = findAssignedApplicant(applications);
+
+  function handleAssign(applicantAddress) {
+    assignService({ applicantAddress });
+  }
 
   return (
     <Card
@@ -44,12 +61,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
           </FlexCenter>
         }
         itemRender={(application) => {
-          const {
-            address,
-            createdAt,
-            bountyIndexer = {},
-            description,
-          } = application;
+          const { address, bountyIndexer = {}, description } = application;
 
           return (
             <List.Item>
@@ -68,16 +80,54 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
                   />
                 </IdentityUserWrapper>
 
-                <ApplicantWrapper>{description}</ApplicantWrapper>
+                <DescriptionWrapper>{description}</DescriptionWrapper>
 
-                <TimeWrapper>
-                  <Time time={new Date(createdAt)} />
-                </TimeWrapper>
+                <ActionWrapper>
+                  {isCurator ? (
+                    <CuratorAction
+                      hasAssignedApplicant={!!assignedApplicant}
+                      handleAssign={handleAssign}
+                      {...application}
+                    />
+                  ) : (
+                    <HunterAction {...application} />
+                  )}
+                </ActionWrapper>
               </Wrapper>
             </List.Item>
           );
         }}
       />
     </Card>
+  );
+}
+
+function CuratorAction({
+  handleAssign,
+  hasAssignedApplicant,
+  address,
+  status,
+  updatedAt,
+}) {
+  return !hasAssignedApplicant ? (
+    <Button onClick={() => handleAssign(address)}>Assign</Button>
+  ) : (
+    <div>
+      {status !== APPLICATION_STATUS.Apply && (
+        <StatusLabel>{status}</StatusLabel>
+      )}
+      <Time time={updatedAt} />
+    </div>
+  );
+}
+
+function HunterAction({ createdAt, status }) {
+  return (
+    <div>
+      {status !== APPLICATION_STATUS.Apply && (
+        <StatusLabel>{status}</StatusLabel>
+      )}
+      <Time time={createdAt} />
+    </div>
   );
 }

@@ -1,17 +1,45 @@
-import { Button, RichEditor, Modal } from "@osn/common-ui";
+import {
+  Button,
+  RichEditor,
+  Modal,
+  Flex,
+  Dot,
+  Time,
+  FlexCenter,
+} from "@osn/common-ui";
+import { useAccount } from "hooks/useAccount";
+import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { useState } from "react";
-import { ModalTitle, ModalDescription, FormLabel } from "../../styled";
+import {
+  ModalTitle,
+  ModalDescription,
+  FormLabel,
+  ButtonText,
+  ButtonGroup,
+} from "../../styled";
+import { useHunterCancelButton } from "../useCancelButton";
 
-export function useHunterApplyAction() {
+export function useHunterApplyAction(childBountyDetail) {
+  const { applications = [] } = childBountyDetail ?? {};
+  const account = useAccount();
+
+  const [content, setContent] = useState("");
   const [open, setOpen] = useState(false);
-  const toggle = () => setOpen((v) => !v);
+  const toggleApplyModal = () => setOpen((v) => !v);
 
-  // FIXME: implement submit
-  function handleSubmit() {}
+  const { cancelButton } = useHunterCancelButton(childBountyDetail);
 
-  return (
+  const isApplied = applications.some((i) => i.address === account?.address);
+
+  const { applyService } = useWorkflowActionService(childBountyDetail);
+
+  function handleSubmit() {
+    applyService({ content });
+  }
+
+  const applyEl = (
     <>
-      <Button block onClick={toggle}>
+      <Button block onClick={toggleApplyModal}>
         Apply
       </Button>
 
@@ -23,8 +51,31 @@ export function useHunterApplyAction() {
         </ModalDescription>
 
         <FormLabel>Work Plan</FormLabel>
-        <RichEditor submitButtonText="Confirm" onSubmit={handleSubmit} />
+        <RichEditor
+          content={content}
+          setContent={setContent}
+          submitButtonText="Confirm"
+          onSubmit={handleSubmit}
+        />
       </Modal>
     </>
   );
+
+  const isAppliedEl = (
+    <ButtonGroup>
+      <Flex>
+        <Button block primary disabled>
+          <FlexCenter>
+            <ButtonText>Applied</ButtonText>
+            <Dot />
+            <Time time={new Date()} />
+          </FlexCenter>
+        </Button>
+
+        {cancelButton}
+      </Flex>
+    </ButtonGroup>
+  );
+
+  return isApplied ? isAppliedEl : applyEl;
 }
