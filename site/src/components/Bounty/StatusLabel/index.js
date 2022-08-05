@@ -8,10 +8,12 @@ import { Wrapper } from "./styled";
 
 const COLOR_MAP = {
   [CHILD_BOUNTY_STATUS.Open]: secondary_green_500,
-  [CHILD_BOUNTY_STATUS.Started]: primary_purple_500,
-  [CHILD_BOUNTY_STATUS.Submitted]: primary_purple_500,
   [CHILD_BOUNTY_STATUS.Assigned]: primary_purple_500,
-  [CHILD_BOUNTY_STATUS.WorkDone]: text_dark_accessory,
+  [CHILD_BOUNTY_STATUS.Closed]: text_dark_accessory,
+  [CHILD_BOUNTY_STATUS.Awarded]: "#EEAD30",
+  [APPLICATION_STATUS.Assigned]: primary_purple_500,
+  [APPLICATION_STATUS.Started]: primary_purple_500,
+  [APPLICATION_STATUS.Submitted]: primary_purple_500,
   [APPLICATION_STATUS.Cancelled]: text_dark_accessory,
 };
 
