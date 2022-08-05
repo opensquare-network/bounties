@@ -6,15 +6,20 @@ import {
   IdentityUser,
   Time,
 } from "@osn/common-ui";
+import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { ButtonGroup, ButtonText, Gap } from "../../styled";
 import { findAssignedApplicant } from "../../utils";
-import { useCuratorUnassignButton } from "../useUnassignButton";
 
 export function useCuratorAssignedAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
-  const { unassignButton } = useCuratorUnassignButton();
 
   const assignedApplicant = findAssignedApplicant(applications);
+
+  const { unassignService } = useWorkflowActionService(childBountyDetail);
+
+  function handleUnassign() {
+    unassignService({ applicantAddress: assignedApplicant.address });
+  }
 
   return (
     <ButtonGroup>
@@ -34,7 +39,7 @@ export function useCuratorAssignedAction(childBountyDetail) {
           </FlexCenter>
         </Button>
 
-        {unassignButton}
+        <Button onClick={handleUnassign}>Unassign</Button>
       </Flex>
     </ButtonGroup>
   );
