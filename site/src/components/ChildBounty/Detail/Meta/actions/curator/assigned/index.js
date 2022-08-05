@@ -8,13 +8,13 @@ import {
 } from "@osn/common-ui";
 import { ButtonGroup, ButtonText, Gap } from "../../styled";
 import { findAssignedApplicant } from "../../utils";
-import { useCuratorUnassignButton } from "../useUnassignButton";
 
 export function useCuratorAssignedAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
-  const { unassignButton } = useCuratorUnassignButton();
 
   const assignedApplicant = findAssignedApplicant(applications);
+
+  function handleUnassign() {}
 
   return (
     <ButtonGroup>
@@ -34,7 +34,7 @@ export function useCuratorAssignedAction(childBountyDetail) {
           </FlexCenter>
         </Button>
 
-        {unassignButton}
+        <Button onClick={handleUnassign}>Unassign</Button>
       </Flex>
     </ButtonGroup>
   );
