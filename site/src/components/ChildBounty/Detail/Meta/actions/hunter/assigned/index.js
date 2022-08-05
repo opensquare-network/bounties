@@ -1,36 +1,21 @@
-import {
-  Button,
-  Dot,
-  Flex,
-  FlexCenter,
-  IdentityUser,
-  Time,
-} from "@osn/common-ui";
-import { ButtonGroup, ButtonText, Gap } from "../../styled";
+import { Flex } from "@osn/common-ui";
+import { useAccount } from "hooks/useAccount";
+import AssignedToButton from "../../components/AssignedToButton";
+import { ButtonGroup } from "../../styled";
 import { findAssignedApplicant } from "../../utils";
 
 export function useHunterAssignedAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
+  const account = useAccount();
 
   const assignedApplicant = findAssignedApplicant(applications);
+
+  const isAssignedToMe = account?.address === assignedApplicant?.address;
 
   return (
     <ButtonGroup>
       <Flex>
-        <Button block primary disabled>
-          <FlexCenter>
-            <ButtonText>
-              Assigned to
-              <Gap />
-              <IdentityUser
-                address={assignedApplicant?.address}
-                network={assignedApplicant?.network}
-              />
-            </ButtonText>
-            <Dot />
-            <Time time={assignedApplicant?.updatedAt} />
-          </FlexCenter>
-        </Button>
+        <AssignedToButton assignedApplicant={assignedApplicant} />
       </Flex>
     </ButtonGroup>
   );

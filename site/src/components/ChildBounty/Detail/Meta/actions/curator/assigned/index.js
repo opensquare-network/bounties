@@ -1,13 +1,7 @@
-import {
-  Button,
-  Dot,
-  Flex,
-  FlexCenter,
-  IdentityUser,
-  Time,
-} from "@osn/common-ui";
+import { Button, Flex } from "@osn/common-ui";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
-import { ButtonGroup, ButtonText, Gap } from "../../styled";
+import AssignedToButton from "../../components/AssignedToButton";
+import { ButtonGroup } from "../../styled";
 import { findAssignedApplicant } from "../../utils";
 
 export function useCuratorAssignedAction(childBountyDetail) {
@@ -24,20 +18,7 @@ export function useCuratorAssignedAction(childBountyDetail) {
   return (
     <ButtonGroup>
       <Flex>
-        <Button block primary disabled>
-          <FlexCenter>
-            <ButtonText>
-              Assigned to
-              <Gap />
-              <IdentityUser
-                address={assignedApplicant?.address}
-                network={assignedApplicant?.network}
-              />
-            </ButtonText>
-            <Dot />
-            <Time time={assignedApplicant?.updatedAt} />
-          </FlexCenter>
-        </Button>
+        <AssignedToButton assignedApplicant={assignedApplicant} />
 
         <Button onClick={handleUnassign}>Unassign</Button>
       </Flex>
