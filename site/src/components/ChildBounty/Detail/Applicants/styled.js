@@ -1,4 +1,4 @@
-import { FlexBetween, Flex } from "@osn/common-ui";
+import { FlexBetween, Flex, p_12_normal } from "@osn/common-ui";
 import { text_dark_accessory } from "@osn/common-ui/es/styles/colors";
 import styled from "styled-components";
 
@@ -26,4 +26,10 @@ export const ActionWrapper = styled(Flex)`
 
 export const Count = styled.span`
   color: ${text_dark_accessory};
+`;
+
+export const ActionTimeWrapper = styled.div`
+  div {
+    ${p_12_normal};
+  }
 `;

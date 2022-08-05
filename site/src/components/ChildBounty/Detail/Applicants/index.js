@@ -19,6 +19,7 @@ import {
   ActionWrapper,
   Wrapper,
   Count,
+  ActionTimeWrapper,
 } from "./styled";
 
 export default function ChildBountyApplicants({ childBountyDetail }) {
@@ -83,14 +84,12 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
                 <DescriptionWrapper>{description}</DescriptionWrapper>
 
                 <ActionWrapper>
-                  {isCurator ? (
-                    <CuratorAction
-                      hasAssignedApplicant={!!assignedApplicant}
-                      handleAssign={handleAssign}
-                      {...application}
-                    />
+                  {isCurator && !assignedApplicant ? (
+                    <Button onClick={() => handleAssign(address)}>
+                      Assign
+                    </Button>
                   ) : (
-                    <HunterAction {...application} />
+                    <TimeStatus {...application} />
                   )}
                 </ActionWrapper>
               </Wrapper>
@@ -102,32 +101,19 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
   );
 }
 
-function CuratorAction({
-  handleAssign,
-  hasAssignedApplicant,
-  address,
-  status,
-  updatedAt,
-}) {
-  return !hasAssignedApplicant ? (
-    <Button onClick={() => handleAssign(address)}>Assign</Button>
-  ) : (
-    <div>
-      {status !== APPLICATION_STATUS.Apply && (
-        <StatusLabel>{status}</StatusLabel>
-      )}
-      <Time time={updatedAt} />
-    </div>
-  );
-}
-
-function HunterAction({ createdAt, status }) {
+function TimeStatus({ updatedAt, createdAt, status }) {
   return (
     <div>
-      {status !== APPLICATION_STATUS.Apply && (
-        <StatusLabel>{status}</StatusLabel>
+      {status !== APPLICATION_STATUS.Apply ? (
+        <>
+          <StatusLabel>{status}</StatusLabel>
+          <ActionTimeWrapper>
+            <Time time={updatedAt} />
+          </ActionTimeWrapper>
+        </>
+      ) : (
+        <Time time={createdAt} />
       )}
-      <Time time={createdAt} />
     </div>
   );
 }
