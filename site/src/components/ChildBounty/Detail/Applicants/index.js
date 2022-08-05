@@ -32,8 +32,8 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
 
   const assignedApplicant = findAssignedApplicant(applications);
 
-  function handleAssign(applicantAddress) {
-    assignService({ applicantAddress });
+  function handleAssign(applicantAddress, applicantNetwork) {
+    assignService({ applicantAddress, applicantNetwork });
   }
 
   return (
@@ -85,7 +85,11 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
 
                 <ActionWrapper>
                   {isCurator && !assignedApplicant ? (
-                    <Button onClick={() => handleAssign(address)}>
+                    <Button
+                      onClick={() =>
+                        handleAssign(address, bountyIndexer?.network)
+                      }
+                    >
                       Assign
                     </Button>
                   ) : (

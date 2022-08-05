@@ -12,7 +12,10 @@ export function useCuratorAssignedAction(childBountyDetail) {
   const { unassignService } = useWorkflowActionService(childBountyDetail);
 
   function handleUnassign() {
-    unassignService({ applicantAddress: assignedApplicant.address });
+    unassignService({
+      applicantAddress: assignedApplicant.address,
+      applicantNetwork: assignedApplicant.bountyIndexer.network,
+    });
   }
 
   return (
