@@ -1,6 +1,6 @@
 import { useAccount } from "hooks/useAccount";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
-import { useHunterApplyAction } from "./hunter/apply";
+import { useHunterOpenAction } from "./hunter/open";
 import { useCuratorCollectingApplicantAction } from "./curator/collectingApplicant";
 import { useHunterSubmitAction } from "./hunter/submit";
 import { useHunterSubmitedAction } from "./hunter/submitted";
@@ -17,7 +17,7 @@ export function useAction(childBountyDetail, reloadData) {
 
   const isCurator = curators.includes(account?.encodedAddress);
 
-  const hunterApplyAction = useHunterApplyAction(childBountyDetail, reloadData);
+  const hunterApplyAction = useHunterOpenAction(childBountyDetail, reloadData);
   const hunterSubmitAction = useHunterSubmitAction();
   const hunterSubmittedAction = useHunterSubmitedAction();
   const hunterAssignedAction = useHunterAssignedAction(
