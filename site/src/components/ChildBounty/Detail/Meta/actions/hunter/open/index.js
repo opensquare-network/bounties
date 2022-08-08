@@ -73,7 +73,7 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
           <FlexCenter>
             <ButtonText>Applied</ButtonText>
             <Dot />
-            <Time time={appliedApplicant.updatedAt} />
+            <Time time={appliedApplicant?.updatedAt} />
           </FlexCenter>
         </Button>
 
