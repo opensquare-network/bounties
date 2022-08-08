@@ -10,13 +10,15 @@ import {
   descriptionLoading,
   metaLoading,
 } from "components/Bounty/styled/metaLoading";
+import Action from "./Action";
+import { Group } from "../../../Common/Detail/styled";
 
 const BottomBar = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-export default function BountyMeta({ bountyDetail, type }) {
+export default function BountyMeta({ bountyDetail, type, reloadData }) {
   if (!bountyDetail) {
     return <Card head={metaLoading}>{descriptionLoading}</Card>;
   }
@@ -33,10 +35,13 @@ export default function BountyMeta({ bountyDetail, type }) {
     >
       <Description bountyDetail={bountyDetail} />
       <Divider />
-      <BottomBar>
-        <Share />
-        {/* <JoinGroupButton /> */}
-      </BottomBar>
+      <Group>
+        <BottomBar>
+          <Share />
+          {/* <JoinGroupButton /> */}
+        </BottomBar>
+      </Group>
+      <Action bountyDetail={bountyDetail} reloadData={reloadData} />
     </Card>
   );
 }

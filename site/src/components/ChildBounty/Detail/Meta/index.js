@@ -8,7 +8,7 @@ import {
 } from "components/Bounty/styled/metaLoading";
 import { useAction } from "./actions";
 import Info from "./Info";
-import { Group } from "./styled";
+import { Group } from "../../../Common/Detail/styled";
 
 export default function ChildBountyDetailMeta({
   childBountyDetail,

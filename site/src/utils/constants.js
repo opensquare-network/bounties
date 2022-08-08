@@ -77,6 +77,11 @@ export const SKILLS = [
 ];
 
 // TODO: should shared via common
+export const BOUNTY_STATUS = {
+  Open: "open",
+  Closed: "closed",
+};
+
 export const CHILD_BOUNTY_STATUS = {
   Open: "open",
   Assigned: "assigned",
