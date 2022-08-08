@@ -14,9 +14,15 @@ import {
   resolveImportChildBountyRoute,
 } from "utils/route";
 import { Index, Item, ListWrapper, Status, TimeWrapper, Title } from "./styled";
+import { BOUNTY_STATUS } from "utils/constants";
 
 export default function ChildBounties({ bountyDetail = {} }) {
-  const { childBounties = [], network, bountyIndex } = bountyDetail ?? {};
+  const {
+    status,
+    childBounties = [],
+    network,
+    bountyIndex,
+  } = bountyDetail ?? {};
 
   return (
     <Collapse title="Child Bounties">
@@ -75,12 +81,14 @@ export default function ChildBounties({ bountyDetail = {} }) {
         />
       </ListWrapper>
 
-      <Link
-        style={{ display: "flex" }}
-        to={resolveImportChildBountyRoute(network, bountyIndex)}
-      >
-        <Button block>Import a Child Bounty</Button>
-      </Link>
+      {status === BOUNTY_STATUS.Open && (
+        <Link
+          style={{ display: "flex" }}
+          to={resolveImportChildBountyRoute(network, bountyIndex)}
+        >
+          <Button block>Import a Child Bounty</Button>
+        </Link>
+      )}
     </Collapse>
   );
 }

@@ -20,10 +20,14 @@ const Wrapper = styled.div`
   gap: 20px;
 `;
 
-export default function BountyDetail({ bountyDetail, loading = false }) {
+export default function BountyDetail({
+  bountyDetail,
+  isLoading = false,
+  reloadData,
+}) {
   return (
     <Wrapper>
-      <Meta type="Bounty" bountyDetail={bountyDetail} />
+      <Meta type="Bounty" bountyDetail={bountyDetail} reloadData={reloadData} />
       <ChildBounties bountyDetail={bountyDetail} />
       <Discussions
         network={bountyDetail?.network}

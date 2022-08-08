@@ -5,10 +5,10 @@ import Background from "components/Background";
 import { Container } from "@osn/common-ui";
 import Breadcrumb from "../components/Breadcrumb";
 import Detail from "../components/Bounty/Detail";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import serverApi from "services/serverApi";
-import { useIsMounted } from "@osn/common/src";
 import { capitalize } from "utils";
+import { useAsyncState } from "@osn/common";
 
 const Wrapper = styled.div`
   position: relative;
@@ -27,29 +27,33 @@ export default function BountyDetail() {
 
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
-  const [bountyDetail, setBountyDetail] = useState(null);
-  const isMounted = useIsMounted();
-
-  useEffect(() => {
-    setLoading(true);
-    serverApi
-      .fetch(`network/${network}/bounties/${bountyId}`)
-      .then(({ result }) => {
-        if (result) {
-          if (isMounted.current) {
-            setBountyDetail(result);
+  const {
+    state: bountyDetail,
+    execute,
+    isLoading,
+  } = useAsyncState(
+    () =>
+      serverApi
+        .fetch(`network/${network}/bounties/${bountyId}`)
+        .then(({ result, error }) => {
+          if (result) {
+            return result;
           }
-        } else {
-          navigate("/404");
-        }
-      })
-      .finally(() => {
-        if (isMounted.current) {
-          setLoading(false);
-        }
-      });
-  }, [network, bountyId, isMounted, navigate]);
+          if (error) {
+            return Promise.reject(error);
+          }
+        }),
+    null,
+    {
+      immediate: false,
+      onError() {
+        navigate("/404");
+      },
+    },
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(execute, [network, bountyId, navigate]);
 
   return (
     <Wrapper>
@@ -57,7 +61,11 @@ export default function BountyDetail() {
       <Container>
         <ContentWrapper>
           <Breadcrumb value={`${capitalize(network)} #${bountyId}`} />
-          <Detail bountyDetail={bountyDetail} loading={loading} />
+          <Detail
+            bountyDetail={bountyDetail}
+            loading={isLoading}
+            reloadData={execute}
+          />
         </ContentWrapper>
       </Container>
     </Wrapper>
