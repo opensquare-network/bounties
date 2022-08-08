@@ -1,9 +1,7 @@
 import { useAccount } from "hooks/useAccount";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
-import { useHunterApplyAction } from "./hunter/apply";
-import { useCuratorCollectingApplicantAction } from "./curator/collectingApplicant";
-import { useHunterSubmitAction } from "./hunter/submit";
-import { useHunterSubmitedAction } from "./hunter/submitted";
+import { useHunterOpenAction } from "./hunter/open";
+import { useCuratorOpenAction } from "./curator/open";
 import { useCuratorSubmittedAction } from "./curator/submitted";
 import { useCuratorWorkDoneAction } from "./curator/workDone";
 import { useCuratorAssignedAction } from "./curator/assigned";
@@ -17,17 +15,12 @@ export function useAction(childBountyDetail, reloadData) {
 
   const isCurator = curators.includes(account?.encodedAddress);
 
-  const hunterApplyAction = useHunterApplyAction(childBountyDetail, reloadData);
-  const hunterSubmitAction = useHunterSubmitAction();
-  const hunterSubmittedAction = useHunterSubmitedAction();
+  const hunterOpenAction = useHunterOpenAction(childBountyDetail, reloadData);
   const hunterAssignedAction = useHunterAssignedAction(
     childBountyDetail,
     reloadData,
   );
-  const curatorCollectingApplicantAction = useCuratorCollectingApplicantAction(
-    childBountyDetail,
-    reloadData,
-  );
+  const curatorOpenAction = useCuratorOpenAction(childBountyDetail, reloadData);
   const curatorSubmittedAction = useCuratorSubmittedAction();
   const curatorWorkDoneAction = useCuratorWorkDoneAction();
   const curatorAssignedAction = useCuratorAssignedAction(
@@ -42,7 +35,7 @@ export function useAction(childBountyDetail, reloadData) {
   // curator view
   if (isCurator) {
     if (status === CHILD_BOUNTY_STATUS.Open) {
-      return curatorCollectingApplicantAction;
+      return curatorOpenAction;
     } else if (status === CHILD_BOUNTY_STATUS.Assigned) {
       return curatorAssignedAction;
     } else if (status === CHILD_BOUNTY_STATUS.Started) {
@@ -56,13 +49,9 @@ export function useAction(childBountyDetail, reloadData) {
   // hunter view
   else {
     if (status === CHILD_BOUNTY_STATUS.Open) {
-      return hunterApplyAction;
+      return hunterOpenAction;
     } else if (status === CHILD_BOUNTY_STATUS.Assigned) {
       return hunterAssignedAction;
-    } else if (status === CHILD_BOUNTY_STATUS.Started) {
-      return hunterSubmitAction;
-    } else if (status === CHILD_BOUNTY_STATUS.Submitted) {
-      return hunterSubmittedAction;
     }
   }
 

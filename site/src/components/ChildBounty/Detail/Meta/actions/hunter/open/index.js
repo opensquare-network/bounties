@@ -19,7 +19,7 @@ import {
 } from "../../styled";
 import { useHunterCancelButton } from "../useCancelButton";
 
-export function useHunterApplyAction(childBountyDetail, reloadData) {
+export function useHunterOpenAction(childBountyDetail, reloadData) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
 
@@ -29,9 +29,14 @@ export function useHunterApplyAction(childBountyDetail, reloadData) {
 
   const { cancelButton } = useHunterCancelButton(childBountyDetail);
 
-  const isApplied = applications.some((i) => i.address === account?.address);
+  const appliedApplicant = applications.find(
+    (i) => i.address === account?.encodedAddress,
+  );
 
-  const { applyService } = useWorkflowActionService(childBountyDetail, reloadData);
+  const { applyService } = useWorkflowActionService(
+    childBountyDetail,
+    reloadData,
+  );
 
   function handleSubmit() {
     applyService({ content });
@@ -68,7 +73,7 @@ export function useHunterApplyAction(childBountyDetail, reloadData) {
           <FlexCenter>
             <ButtonText>Applied</ButtonText>
             <Dot />
-            <Time time={new Date()} />
+            <Time time={appliedApplicant?.updatedAt} />
           </FlexCenter>
         </Button>
 
@@ -77,5 +82,5 @@ export function useHunterApplyAction(childBountyDetail, reloadData) {
     </ButtonGroup>
   );
 
-  return isApplied ? isAppliedEl : applyEl;
+  return appliedApplicant ? isAppliedEl : applyEl;
 }

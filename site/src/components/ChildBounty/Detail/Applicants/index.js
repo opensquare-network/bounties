@@ -12,7 +12,7 @@ import StatusLabel from "components/Bounty/StatusLabel";
 import { useAccount } from "hooks/useAccount";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { APPLICATION_STATUS } from "utils/constants";
-import { findAssignedApplicant } from "../Meta/actions/utils";
+import { findUnassignableApplicant } from "../Meta/actions/utils";
 import {
   DescriptionWrapper,
   IdentityUserWrapper,
@@ -22,15 +22,21 @@ import {
   ActionTimeWrapper,
 } from "./styled";
 
-export default function ChildBountyApplicants({ childBountyDetail, reloadData }) {
+export default function ChildBountyApplicants({
+  childBountyDetail,
+  reloadData,
+}) {
   const { applications = [], childBounty } = childBountyDetail ?? {};
   const { curators = [] } = childBounty ?? {};
   const account = useAccount();
 
   const isCurator = curators.includes(account?.encodedAddress);
-  const { assignService } = useWorkflowActionService(childBountyDetail, reloadData);
+  const { assignService } = useWorkflowActionService(
+    childBountyDetail,
+    reloadData,
+  );
 
-  const assignedApplicant = findAssignedApplicant(applications);
+  const unassignableApplicant = findUnassignableApplicant(applications);
 
   function handleAssign(applicantAddress, applicantNetwork) {
     assignService({ applicantAddress, applicantNetwork });
@@ -84,7 +90,7 @@ export default function ChildBountyApplicants({ childBountyDetail, reloadData })
                 <DescriptionWrapper>{description}</DescriptionWrapper>
 
                 <ActionWrapper>
-                  {isCurator && !assignedApplicant ? (
+                  {isCurator && !unassignableApplicant ? (
                     <Button
                       onClick={() =>
                         handleAssign(address, bountyIndexer?.network)
