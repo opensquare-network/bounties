@@ -21,6 +21,10 @@ export function findStartedApplicant(applicants = []) {
   return findApplicantByStatus(applicants, APPLICATION_STATUS.Started);
 }
 
+export function findSubmittedApplicant(applicants = []) {
+  return findApplicantByStatus(applicants, APPLICATION_STATUS.Submitted);
+}
+
 function findApplicantByStatus(applicants = [], status = "") {
   return applicants.find((i) => i.status === status);
 }
