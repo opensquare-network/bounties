@@ -31,7 +31,7 @@ export default function ChildBounties({ bountyDetail = {} }) {
           data={childBounties}
           noDataMessage="No current bounties"
           noDataProps={{ bordered: false, shadow: false }}
-          loading={!childBounties.length}
+          loading={!bountyDetail}
           loadingComponent={
             <FlexCenter>
               <LoadingIcon />
@@ -56,7 +56,7 @@ export default function ChildBounties({ bountyDetail = {} }) {
                     </div>
                     {item.status !== "open" && (
                       <TimeWrapper>
-                        <Time time={item.createdAt} />
+                        <Time time={item.updatedAt} />
                       </TimeWrapper>
                     )}
                   </Status>
