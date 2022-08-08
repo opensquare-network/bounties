@@ -17,7 +17,7 @@ export function useAction(childBountyDetail, reloadData) {
 
   const isCurator = curators.includes(account?.encodedAddress);
 
-  const hunterApplyAction = useHunterOpenAction(childBountyDetail, reloadData);
+  const hunterOpenAction = useHunterOpenAction(childBountyDetail, reloadData);
   const hunterSubmitAction = useHunterSubmitAction();
   const hunterSubmittedAction = useHunterSubmitedAction();
   const hunterAssignedAction = useHunterAssignedAction(
@@ -53,7 +53,7 @@ export function useAction(childBountyDetail, reloadData) {
   // hunter view
   else {
     if (status === CHILD_BOUNTY_STATUS.Open) {
-      return hunterApplyAction;
+      return hunterOpenAction;
     } else if (status === CHILD_BOUNTY_STATUS.Assigned) {
       return hunterAssignedAction;
     } else if (status === CHILD_BOUNTY_STATUS.Started) {
