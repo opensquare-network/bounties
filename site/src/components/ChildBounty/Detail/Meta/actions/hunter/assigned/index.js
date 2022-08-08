@@ -6,11 +6,11 @@ import { ButtonGroup } from "../../styled";
 import { findAssignedApplicant } from "../../utils";
 import { useHunterCancelButton } from "../useCancelButton";
 
-export function useHunterAssignedAction(childBountyDetail) {
+export function useHunterAssignedAction(childBountyDetail, reloadData) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
   const { cancelButton } = useHunterCancelButton();
-  const { acceptService } = useWorkflowActionService(childBountyDetail);
+  const { acceptService } = useWorkflowActionService(childBountyDetail, reloadData);
 
   const assignedApplicant = findAssignedApplicant(applications);
 

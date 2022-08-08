@@ -3,7 +3,7 @@ import { useAccount } from "hooks/useAccount";
 import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";
 
-export function useWorkflowActionService(childBountyDetail) {
+export function useWorkflowActionService(childBountyDetail, reloadData) {
   const { network, parentBountyIndex, index } = childBountyDetail ?? {};
   const account = useAccount();
 
@@ -22,6 +22,10 @@ export function useWorkflowActionService(childBountyDetail) {
 
     try {
       const res = await serverApi.post("/applications", signedData);
+
+      if (res.result) {
+        reloadData && reloadData();
+      }
 
       // TODO: error toast
       if (res.error) {
@@ -42,6 +46,10 @@ export function useWorkflowActionService(childBountyDetail) {
     try {
       const res = await serverApi.patch("/application", signedData);
 
+      if (res.result) {
+        reloadData && reloadData();
+      }
+
       // TODO: error toast
       if (res.error) {
       }
@@ -61,6 +69,10 @@ export function useWorkflowActionService(childBountyDetail) {
     try {
       const res = await serverApi.patch("/application", signedData);
 
+      if (res.result) {
+        reloadData && reloadData();
+      }
+
       // TODO: error toast
       if (res.error) {
       }
@@ -79,6 +91,10 @@ export function useWorkflowActionService(childBountyDetail) {
 
     try {
       const res = await serverApi.patch("/application", signedData);
+
+      if (res.result) {
+        reloadData && reloadData();
+      }
 
       // TODO: error toast
       if (res.error) {

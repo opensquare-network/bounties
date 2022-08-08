@@ -22,13 +22,13 @@ import {
   ActionTimeWrapper,
 } from "./styled";
 
-export default function ChildBountyApplicants({ childBountyDetail }) {
+export default function ChildBountyApplicants({ childBountyDetail, reloadData }) {
   const { applications = [], childBounty } = childBountyDetail ?? {};
   const { curators = [] } = childBounty ?? {};
   const account = useAccount();
 
   const isCurator = curators.includes(account?.encodedAddress);
-  const { assignService } = useWorkflowActionService(childBountyDetail);
+  const { assignService } = useWorkflowActionService(childBountyDetail, reloadData);
 
   const assignedApplicant = findAssignedApplicant(applications);
 
