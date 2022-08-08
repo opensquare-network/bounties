@@ -158,7 +158,7 @@ const assertType = (t = [], expect) => t.includes(expect);
 const getItemDate = (t = [], data) => {
   const value = {
     type: "",
-    amout: "",
+    amout: "", // fixme: typo, it should be `amount`.
     content: "",
     title: "",
     link: "",

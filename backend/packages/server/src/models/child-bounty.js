@@ -18,6 +18,7 @@ const ChildBountySchema = new mongoose.Schema(
     status: {
       type: String,
       enum: [
+        // fixme: clean child bounty status. Check https://hackmd.io/s/Sk4Booupq#Child-bounty%E7%8A%B6%E6%80%81.
         ChildBountyStatus.Open,
         ChildBountyStatus.Apply,
         ChildBountyStatus.Assigned,
