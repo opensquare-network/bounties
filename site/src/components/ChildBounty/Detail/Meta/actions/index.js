@@ -9,7 +9,7 @@ import { useCuratorWorkDoneAction } from "./curator/workDone";
 import { useCuratorAssignedAction } from "./curator/assigned";
 import { useHunterAssignedAction } from "./hunter/assigned";
 
-export function useAction(childBountyDetail) {
+export function useAction(childBountyDetail, reloadData) {
   const { status, childBounty } = childBountyDetail ?? {};
   const { curators = [] } = childBounty ?? {};
   const account = useAccount();
@@ -24,7 +24,10 @@ export function useAction(childBountyDetail) {
     useCuratorCollectingApplicantAction();
   const curatorSubmittedAction = useCuratorSubmittedAction();
   const curatorWorkDoneAction = useCuratorWorkDoneAction();
-  const curatorAssignedAction = useCuratorAssignedAction(childBountyDetail);
+  const curatorAssignedAction = useCuratorAssignedAction(
+    childBountyDetail,
+    reloadData,
+  );
 
   // curator view
   if (isCurator) {

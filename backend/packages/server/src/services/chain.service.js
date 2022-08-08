@@ -57,7 +57,7 @@ async function getChildBounty(network, parentBountyIndex, index) {
   );
 
   if (!meta) {
-    throw new HttpError(404, `Child bounty does not found on chain`);
+    return null;
   }
 
   let curators = [];

@@ -76,7 +76,10 @@ export default function PageChildBountyDetail() {
             backButtonRender={(button) => <Link to="/">{button}</Link>}
             routes={routes}
           />
-          <ChildBountyDetail childBountyDetail={childBountyDetail} />
+          <ChildBountyDetail
+            childBountyDetail={childBountyDetail}
+            reloadData={execute}
+          />
         </ContentWrapper>
       </Container>
     </Wrapper>

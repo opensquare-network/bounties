@@ -33,6 +33,9 @@ export const FormLabelTip = styled.span`
 `;
 
 export const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   button + button {
     margin-left: 20px;
   }
