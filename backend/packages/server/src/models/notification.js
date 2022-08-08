@@ -13,7 +13,7 @@ const NotificationSchema = new mongoose.Schema(
         NotificationType.Unassigned,
         NotificationType.Accepted,
         NotificationType.Submitted,
-        NotificationType.Cancelled,
+        NotificationType.Canceled,
         NotificationType.Reply,
         NotificationType.Mention,
       ],

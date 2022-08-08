@@ -231,7 +231,7 @@ async function cancelApplication(
 
   const updatedApplication = await Application.findOneAndUpdate(
     { _id: application._id },
-    { status: ApplicationStatus.Cancelled },
+    { status: ApplicationStatus.Canceled },
     { new: true },
   );
 
@@ -247,7 +247,7 @@ async function cancelApplication(
   const notificationOwner = toPublicKey(childBounty.address);
   await Notification.create({
     owner: notificationOwner,
-    type: [NotificationType.Cancelled],
+    type: [NotificationType.Canceled],
     read: false,
     data: {
       byWho: {

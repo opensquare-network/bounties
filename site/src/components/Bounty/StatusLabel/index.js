@@ -14,7 +14,7 @@ const COLOR_MAP = {
   [APPLICATION_STATUS.Assigned]: primary_purple_500,
   [APPLICATION_STATUS.Started]: primary_purple_500,
   [APPLICATION_STATUS.Submitted]: primary_purple_500,
-  [APPLICATION_STATUS.Cancelled]: text_dark_accessory,
+  [APPLICATION_STATUS.Canceled]: text_dark_accessory,
 };
 
 /**

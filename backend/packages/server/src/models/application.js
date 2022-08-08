@@ -24,7 +24,7 @@ const ApplicationSchema = new mongoose.Schema(
         ApplicationStatus.Assigned,
         ApplicationStatus.Started,
         ApplicationStatus.Submitted,
-        ApplicationStatus.Cancelled, // fixme: change to canceled
+        ApplicationStatus.Canceled,
       ],
     },
   },

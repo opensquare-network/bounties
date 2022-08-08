@@ -176,8 +176,8 @@ const getItemDate = (t = [], data) => {
     value.type = "accepted";
   } else if (assertType(t, "submitted")) {
     value.type = "submitted";
-  } else if (assertType(t, "cancelled")) {
-    value.type = "cancelled";
+  } else if (assertType(t, "canceled")) {
+    value.type = "canceled";
   } else if (assertType(t, "mention")) {
     value.type = "mentioned";
   } else if (assertType(t, "reply")) {
