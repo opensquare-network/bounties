@@ -14,10 +14,7 @@ import { signApiData } from "utils/signature";
 import { ButtonGroup, ButtonText } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
 
-export function useCuratorCollectingApplicantAction(
-  childBountyDetail,
-  reloadData,
-) {
+export function useCuratorOpenAction(childBountyDetail, reloadData) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const api = useApi();
