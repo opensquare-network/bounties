@@ -1,29 +1,43 @@
 import { ButtonText } from "../../styled";
-import { Button, Dot, FlexCenter, Time } from "@osn/common-ui";
+import { Button, Dot, FlexCenter, noop, Time } from "@osn/common-ui";
 import { useSubmitModal } from "./useSubmitModal";
+import { useWorkflowActionService } from "hooks/useWorkflowActionService";
+import { findSubmittedApplicant } from "../../utils";
 
-// FIXME: submitted action has default content and link
-export function useHunterSubmittedAction() {
-  const { toggle, modal } = useSubmitModal({
-    // FIXME: submitted action submit
+export function useHunterSubmittedAction(childBountyDetail, reloadData = noop) {
+  const { applications = [] } = childBountyDetail ?? {};
+  const { submitWorkService } = useWorkflowActionService(
+    childBountyDetail,
+    reloadData,
+  );
+
+  const submittedApplicant = findSubmittedApplicant(applications);
+
+  const { show, hide, modal } = useSubmitModal({
     onConfirm(v) {
-      // eslint-disable-next-line
       const { content, link } = v;
+
+      submitWorkService({
+        applicantAddress: submittedApplicant.address,
+        applicantNetwork: submittedApplicant.bountyIndexer.network,
+        description: content,
+        link,
+      }).then(hide);
     },
   });
 
   return (
     <>
+      {modal}
+
       <Button block primary disabled>
         <FlexCenter>
           <ButtonText>Submitted</ButtonText>
-          <Dot /> <Time time={new Date()} />
+          <Dot /> <Time time={submittedApplicant?.updatedAt} />
         </FlexCenter>
       </Button>
 
-      <Button onClick={toggle}>Update</Button>
-
-      {modal}
+      <Button onClick={show}>Update</Button>
     </>
   );
 }
