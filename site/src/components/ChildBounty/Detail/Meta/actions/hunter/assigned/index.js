@@ -3,23 +3,27 @@ import { useAccount } from "hooks/useAccount";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import AssignedToButton from "../../components/AssignedToButton";
 import { ButtonGroup } from "../../styled";
-import { findAssignedApplicant } from "../../utils";
+import { findUnassignableApplicant } from "../../utils";
 import { useHunterCancelButton } from "../useCancelButton";
 
 export function useHunterAssignedAction(childBountyDetail, reloadData) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
   const { cancelButton } = useHunterCancelButton();
-  const { acceptService } = useWorkflowActionService(childBountyDetail, reloadData);
+  const { acceptService } = useWorkflowActionService(
+    childBountyDetail,
+    reloadData,
+  );
 
-  const assignedApplicant = findAssignedApplicant(applications);
+  const unassignedApplicant = findUnassignableApplicant(applications);
 
-  const isAssignedToMe = account?.encodedAddress === assignedApplicant?.address;
+  const isAssignedToMe =
+    account?.encodedAddress === unassignedApplicant?.address;
 
   function handleAcceptAndStart() {
     acceptService({
-      applicantAddress: assignedApplicant.address,
-      applicantNetwork: assignedApplicant.bountyIndexer.network,
+      applicantAddress: unassignedApplicant.address,
+      applicantNetwork: unassignedApplicant.bountyIndexer.network,
     });
   }
 
@@ -39,7 +43,7 @@ export function useHunterAssignedAction(childBountyDetail, reloadData) {
         {isAssignedToMe ? (
           acceptAndStartEl
         ) : (
-          <AssignedToButton assignedApplicant={assignedApplicant} />
+          <AssignedToButton assignedApplicant={unassignedApplicant} />
         )}
       </Flex>
     </ButtonGroup>
