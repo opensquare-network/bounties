@@ -16,10 +16,10 @@ export function useAction(childBountyDetail, reloadData) {
 
   const isCurator = curators.includes(account?.encodedAddress);
 
-  const hunterApplyAction = useHunterApplyAction(childBountyDetail);
+  const hunterApplyAction = useHunterApplyAction(childBountyDetail, reloadData);
   const hunterSubmitAction = useHunterSubmitAction();
   const hunterSubmittedAction = useHunterSubmitedAction();
-  const hunterAssignedAction = useHunterAssignedAction(childBountyDetail);
+  const hunterAssignedAction = useHunterAssignedAction(childBountyDetail, reloadData);
   const curatorCollectingApplicantAction =
     useCuratorCollectingApplicantAction();
   const curatorSubmittedAction = useCuratorSubmittedAction();

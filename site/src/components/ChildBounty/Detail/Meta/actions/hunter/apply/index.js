@@ -19,7 +19,7 @@ import {
 } from "../../styled";
 import { useHunterCancelButton } from "../useCancelButton";
 
-export function useHunterApplyAction(childBountyDetail) {
+export function useHunterApplyAction(childBountyDetail, reloadData) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
 
@@ -31,7 +31,7 @@ export function useHunterApplyAction(childBountyDetail) {
 
   const isApplied = applications.some((i) => i.address === account?.address);
 
-  const { applyService } = useWorkflowActionService(childBountyDetail);
+  const { applyService } = useWorkflowActionService(childBountyDetail, reloadData);
 
   function handleSubmit() {
     applyService({ content });

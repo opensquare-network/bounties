@@ -38,7 +38,7 @@ export function useCuratorAssignedAction(childBountyDetail, reloadData) {
   );
   const signer = encodeNetworkAddress(account?.address, account?.network);
 
-  const { unassignService } = useWorkflowActionService(childBountyDetail);
+  const { unassignService } = useWorkflowActionService(childBountyDetail, reloadData);
 
   function handleUnassign() {
     unassignService({

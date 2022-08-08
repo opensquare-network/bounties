@@ -27,7 +27,10 @@ export default function ChildBountyDetail({ childBountyDetail, reloadData }) {
         childBountyDetail={childBountyDetail}
         reloadData={reloadData}
       />
-      <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
+      <ChildBountyDetailApplicants
+        childBountyDetail={childBountyDetail}
+        reloadData={reloadData}
+      />
 
       <Discussions
         network={childBountyDetail?.network}
