@@ -1,7 +1,7 @@
 import { Button, noop } from "@osn/common-ui";
 import { useSubmitModal } from "./useSubmitModal";
 
-export function useHunterSubmitAction(childBountyDetail, reloadData = noop) {
+export function useHunterStartedAction(childBountyDetail, reloadData = noop) {
   const { toggle, modal } = useSubmitModal({
     // FIXME: submit action submit
     onConfirm(v) {
