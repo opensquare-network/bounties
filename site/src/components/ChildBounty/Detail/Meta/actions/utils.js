@@ -12,3 +12,15 @@ export function findUnassignableApplicant(applicants = []) {
     ].includes(i.status);
   });
 }
+
+export function findAssignedApplicant(applicants = []) {
+  return findApplicantByStatus(applicants, APPLICATION_STATUS.Assigned);
+}
+
+export function findStartedApplicant(applicants = []) {
+  return findApplicantByStatus(applicants, APPLICATION_STATUS.Started);
+}
+
+function findApplicantByStatus(applicants = [], status = "") {
+  return applicants.find((i) => i.status === status);
+}
