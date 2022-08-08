@@ -1,47 +1,42 @@
-import { Flex, Button } from "@osn/common-ui";
+import { Flex } from "@osn/common-ui";
 import { useAccount } from "hooks/useAccount";
-import { useWorkflowActionService } from "hooks/useWorkflowActionService";
+import { APPLICATION_STATUS } from "utils/constants";
 import AssignedToButton from "../../components/AssignedToButton";
 import { ButtonGroup } from "../../styled";
 import { findUnassignableApplicant } from "../../utils";
 import { useHunterCancelButton } from "../useCancelButton";
+import { useHunterAcceptAndStart } from "./acceptAndStart";
 
 export function useHunterAssignedAction(childBountyDetail, reloadData) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
   const { cancelButton } = useHunterCancelButton();
-  const { acceptService } = useWorkflowActionService(
-    childBountyDetail,
-    reloadData,
+
+  const myApplicantInfo = applications.find(
+    (i) => i.address === account?.encodedAddress,
   );
+
+  const acceptAndWork = useHunterAcceptAndStart(childBountyDetail, reloadData);
 
   const unassignedApplicant = findUnassignableApplicant(applications);
 
-  const isAssignedToMe =
-    account?.encodedAddress === unassignedApplicant?.address;
-
-  function handleAcceptAndStart() {
-    acceptService({
-      applicantAddress: unassignedApplicant.address,
-      applicantNetwork: unassignedApplicant.bountyIndexer.network,
-    });
+  let actionEl = null;
+  if (myApplicantInfo?.status === APPLICATION_STATUS.Assigned) {
+    actionEl = acceptAndWork;
+  } else if (myApplicantInfo?.status === APPLICATION_STATUS.Started) {
+    actionEl = "submit work";
+  } else if (myApplicantInfo?.status === APPLICATION_STATUS.Submitted) {
+    actionEl = "submitted";
   }
-
-  const acceptAndStartEl = (
-    <>
-      <Button primary block onClick={handleAcceptAndStart}>
-        Accept and Start
-      </Button>
-
-      {cancelButton}
-    </>
-  );
 
   return (
     <ButtonGroup>
       <Flex>
-        {isAssignedToMe ? (
-          acceptAndStartEl
+        {myApplicantInfo ? (
+          <>
+            {actionEl}
+            {cancelButton}
+          </>
         ) : (
           <AssignedToButton assignedApplicant={unassignedApplicant} />
         )}
