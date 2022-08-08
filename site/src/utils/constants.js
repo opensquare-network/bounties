@@ -79,11 +79,8 @@ export const SKILLS = [
 // TODO: should shared via common
 export const CHILD_BOUNTY_STATUS = {
   Open: "open",
-  Apply: "apply",
   Assigned: "assigned",
-  Started: "started",
-  Submitted: "submitted",
-  WorkDone: "workDone",
+  Closed: "closed",
   Awarded: "awarded",
 };
 

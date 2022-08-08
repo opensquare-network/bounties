@@ -8,7 +8,8 @@ import {
   Time,
 } from "@osn/common-ui";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
-import { ButtonGroup, ButtonText, Gap } from "../../styled";
+import AssignedToButton from "../../components/AssignedToButton";
+import { ButtonGroup } from "../../styled";
 import { findAssignedApplicant } from "../../utils";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useApi } from "utils/hooks";
@@ -47,7 +48,10 @@ export function useCuratorAssignedAction(childBountyDetail, reloadData) {
   const { unassignService } = useWorkflowActionService(childBountyDetail);
 
   function handleUnassign() {
-    unassignService({ applicantAddress: assignedApplicant.address });
+    unassignService({
+      applicantAddress: assignedApplicant.address,
+      applicantNetwork: assignedApplicant.bountyIndexer.network,
+    });
   }
 
   const showErrorToast = (message) => {
@@ -119,20 +123,7 @@ export function useCuratorAssignedAction(childBountyDetail, reloadData) {
   return (
     <ButtonGroup>
       <Flex>
-        <Button block primary disabled>
-          <FlexCenter>
-            <ButtonText>
-              Assigned to
-              <Gap />
-              <IdentityUser
-                address={assignedApplicant?.address}
-                network={assignedApplicant?.network}
-              />
-            </ButtonText>
-            <Dot />
-            <Time time={assignedApplicant?.updatedAt} />
-          </FlexCenter>
-        </Button>
+        <AssignedToButton assignedApplicant={assignedApplicant} />
 
         <Button onClick={handleUnassign}>Unassign</Button>
       </Flex>
