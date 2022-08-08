@@ -3,7 +3,7 @@ const ApplicationStatus = {
   Assigned: "assigned",
   Started: "started",
   Submitted: "submitted",
-  Cancelled: "cancelled",
+  Canceled: "canceled",
 };
 
 const ChildBountyStatus = {
@@ -22,7 +22,7 @@ const NotificationType = {
   Applied: "applied",
   Assigned: "assigned",
   Unassigned: "unassigned",
-  Cancelled: "cancelled",
+  Canceled: "canceled",
   Accepted: "accepted",
   Submitted: "submitted",
   Reply: "reply",
