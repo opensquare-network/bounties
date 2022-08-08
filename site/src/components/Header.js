@@ -5,7 +5,7 @@ import { Flex, FlexBetween, Header } from "@osn/common-ui";
 import NotificationBell from "./NotificationBell";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { ConnectWalletModal, ConnectWalletButton } from "./ConnectWallet";
-// import NodeSelect from "./NodeSelect";
+import NodeSelect from "./NodeSelect";
 import { useSelector } from "react-redux";
 import ConnectedAccount from "./User/ConnectedAccount";
 import { useOnClickOutside, useWindowSize } from "@osn/common/src/utils/hooks";
@@ -64,7 +64,7 @@ export default function PageHeader() {
                   showNetwork
                   setConnectWalletModalVisible={setConnectWalletModalVisible}
                 />
-                {/* <NodeSelect small chain={account?.network} /> */}
+                <NodeSelect small chain={account?.network} />
               </>
             ) : (
               <ConnectWalletButton setVisible={setConnectWalletModalVisible} />

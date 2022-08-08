@@ -19,12 +19,13 @@ const Wrapper = styled.div`
   gap: 20px;
 `;
 
-export default function ChildBountyDetail({ childBountyDetail }) {
+export default function ChildBountyDetail({ childBountyDetail, reloadData }) {
   return (
     <Wrapper>
       <ChildBountyDetailMeta
         type="Child Bounty"
         childBountyDetail={childBountyDetail}
+        reloadData={reloadData}
       />
       <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
 

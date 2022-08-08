@@ -211,6 +211,16 @@ async function resolveChildBounty(
     throw new HttpError(403, "Only the curator can resolve");
   }
 
+  const onchainChildBounty = await chainService.getChildBounty(
+    childBounty.network,
+    childBounty.parentBountyIndex,
+    childBounty.index,
+  );
+
+  if (onchainChildBounty && !onchainChildBounty.meta?.status?.pendingPayout) {
+    throw new HttpError(400, `The child bounty is not awarded`);
+  }
+
   const updatedChildBounty = await ChildBounty.findOneAndUpdate(
     { _id: childBounty._id },
     { status: ChildBountyStatus.Awarded },

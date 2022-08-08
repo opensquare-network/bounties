@@ -10,8 +10,12 @@ import { useAction } from "./actions";
 import Info from "./Info";
 import { Group } from "./styled";
 
-export default function ChildBountyDetailMeta({ childBountyDetail, type }) {
-  const action = useAction(childBountyDetail);
+export default function ChildBountyDetailMeta({
+  childBountyDetail,
+  type,
+  reloadData,
+}) {
+  const action = useAction(childBountyDetail, reloadData);
 
   if (!childBountyDetail) {
     return <Card head={metaLoading}>{descriptionLoading}</Card>;
