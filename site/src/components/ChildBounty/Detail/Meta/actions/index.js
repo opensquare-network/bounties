@@ -2,8 +2,6 @@ import { useAccount } from "hooks/useAccount";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useHunterOpenAction } from "./hunter/open";
 import { useCuratorOpenAction } from "./curator/open";
-import { useHunterSubmitAction } from "./hunter/submit";
-import { useHunterSubmitedAction } from "./hunter/submitted";
 import { useCuratorSubmittedAction } from "./curator/submitted";
 import { useCuratorWorkDoneAction } from "./curator/workDone";
 import { useCuratorAssignedAction } from "./curator/assigned";
@@ -18,8 +16,6 @@ export function useAction(childBountyDetail, reloadData) {
   const isCurator = curators.includes(account?.encodedAddress);
 
   const hunterOpenAction = useHunterOpenAction(childBountyDetail, reloadData);
-  const hunterSubmitAction = useHunterSubmitAction();
-  const hunterSubmittedAction = useHunterSubmitedAction();
   const hunterAssignedAction = useHunterAssignedAction(
     childBountyDetail,
     reloadData,
@@ -56,10 +52,6 @@ export function useAction(childBountyDetail, reloadData) {
       return hunterOpenAction;
     } else if (status === CHILD_BOUNTY_STATUS.Assigned) {
       return hunterAssignedAction;
-    } else if (status === CHILD_BOUNTY_STATUS.Started) {
-      return hunterSubmitAction;
-    } else if (status === CHILD_BOUNTY_STATUS.Submitted) {
-      return hunterSubmittedAction;
     }
   }
 
