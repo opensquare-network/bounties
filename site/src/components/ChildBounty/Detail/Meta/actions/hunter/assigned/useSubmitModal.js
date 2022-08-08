@@ -10,16 +10,17 @@ import {
 export function useSubmitModal(options) {
   const {
     onConfirm = noop,
-    content: _content = "",
-    link: _link = "",
+    content: defaultContent = "",
+    link: defaultLink = "",
   } = options ?? {};
 
   const [open, setOpen] = useState(false);
-  const [content, setContent] = useState(_content);
+  const [content, setContent] = useState(defaultContent);
   const [errorMsg, setErrorMsg] = useState("");
-  const [link, setLink] = useState(_link);
+  const [link, setLink] = useState(defaultLink);
 
-  const toggle = () => setOpen((v) => !v);
+  const hide = () => setOpen(false);
+  const show = () => setOpen(true);
 
   function validateForm() {
     if (!content) {
@@ -74,6 +75,7 @@ export function useSubmitModal(options) {
 
   return {
     modal,
-    toggle,
+    hide,
+    show,
   };
 }
