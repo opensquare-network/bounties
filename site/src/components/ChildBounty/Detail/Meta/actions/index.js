@@ -8,6 +8,7 @@ import { useCuratorSubmittedAction } from "./curator/submitted";
 import { useCuratorWorkDoneAction } from "./curator/workDone";
 import { useCuratorAssignedAction } from "./curator/assigned";
 import { useHunterAssignedAction } from "./hunter/assigned";
+import { useCuratorClosedChildBountyAction } from "./curator/closed";
 
 export function useAction(childBountyDetail, reloadData) {
   const { status, childBounty } = childBountyDetail ?? {};
@@ -19,12 +20,21 @@ export function useAction(childBountyDetail, reloadData) {
   const hunterApplyAction = useHunterApplyAction(childBountyDetail, reloadData);
   const hunterSubmitAction = useHunterSubmitAction();
   const hunterSubmittedAction = useHunterSubmitedAction();
-  const hunterAssignedAction = useHunterAssignedAction(childBountyDetail, reloadData);
-  const curatorCollectingApplicantAction =
-    useCuratorCollectingApplicantAction();
+  const hunterAssignedAction = useHunterAssignedAction(
+    childBountyDetail,
+    reloadData,
+  );
+  const curatorCollectingApplicantAction = useCuratorCollectingApplicantAction(
+    childBountyDetail,
+    reloadData,
+  );
   const curatorSubmittedAction = useCuratorSubmittedAction();
   const curatorWorkDoneAction = useCuratorWorkDoneAction();
   const curatorAssignedAction = useCuratorAssignedAction(
+    childBountyDetail,
+    reloadData,
+  );
+  const curatorClosedChildBountyAction = useCuratorClosedChildBountyAction(
     childBountyDetail,
     reloadData,
   );
@@ -39,6 +49,8 @@ export function useAction(childBountyDetail, reloadData) {
       return curatorSubmittedAction;
     } else if (status === CHILD_BOUNTY_STATUS.WorkDone) {
       return curatorWorkDoneAction;
+    } else if (status === CHILD_BOUNTY_STATUS.Closed) {
+      return curatorClosedChildBountyAction;
     }
   }
   // hunter view

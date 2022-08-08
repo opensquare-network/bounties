@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Flex } from "@osn/common-ui";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
-import AssignedToButton from "../../components/AssignedToButton";
 import { ButtonGroup } from "../../styled";
 import { findAssignedApplicant } from "../../utils";
 import { accountSelector } from "store/reducers/accountSlice";
@@ -38,7 +37,10 @@ export function useCuratorAssignedAction(childBountyDetail, reloadData) {
   );
   const signer = encodeNetworkAddress(account?.address, account?.network);
 
-  const { unassignService } = useWorkflowActionService(childBountyDetail, reloadData);
+  const { unassignService } = useWorkflowActionService(
+    childBountyDetail,
+    reloadData,
+  );
 
   function handleUnassign() {
     unassignService({
@@ -97,7 +99,6 @@ export function useCuratorAssignedAction(childBountyDetail, reloadData) {
       if (result) {
         dispatch(newSuccessToast("Awarded"));
 
-        // After fund is added, update the UI
         if (isMounted.current) {
           reloadData && reloadData();
         }
@@ -116,15 +117,11 @@ export function useCuratorAssignedAction(childBountyDetail, reloadData) {
   return (
     <ButtonGroup>
       <Flex>
-        <AssignedToButton assignedApplicant={assignedApplicant} />
-
-        <Button onClick={handleUnassign}>Unassign</Button>
-      </Flex>
-
-      <Flex>
         <Button primary block onClick={handleAward}>
           Award
         </Button>
+
+        <Button onClick={handleUnassign}>Unassign</Button>
       </Flex>
     </ButtonGroup>
   );
