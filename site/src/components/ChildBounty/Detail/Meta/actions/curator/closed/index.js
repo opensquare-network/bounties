@@ -14,7 +14,7 @@ import { signApiData } from "utils/signature";
 import { ButtonGroup, ButtonText } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
 
-export function useCuratorCollectingApplicantAction(
+export function useCuratorClosedChildBountyAction(
   childBountyDetail,
   reloadData,
 ) {
@@ -31,7 +31,7 @@ export function useCuratorCollectingApplicantAction(
     dispatch(newErrorToast(message));
   };
 
-  async function handleClose() {
+  async function handleReopen() {
     if (!account) {
       return showErrorToast("Please connect wallet");
     }
@@ -46,7 +46,7 @@ export function useCuratorCollectingApplicantAction(
     try {
       const payload = await signApiData(
         {
-          action: "closeChildBounty",
+          action: "reopenChildBounty",
           network: account.network,
           parentBountyIndex,
           index,
@@ -56,7 +56,7 @@ export function useCuratorCollectingApplicantAction(
 
       const { result, error } = await serverApi.patch(`/child-bounty`, payload);
       if (result) {
-        dispatch(newSuccessToast("Closed"));
+        dispatch(newSuccessToast("Re-opened"));
 
         if (isMounted.current) {
           reloadData && reloadData();
@@ -67,7 +67,7 @@ export function useCuratorCollectingApplicantAction(
         dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(newErrorToast(`Failed to close. ${e.message}`));
+      dispatch(newErrorToast(`Failed to reopen. ${e.message}`));
     } finally {
       dispatch(removeToast(toastId));
     }
@@ -77,10 +77,10 @@ export function useCuratorCollectingApplicantAction(
     <ButtonGroup>
       <Flex>
         <Button disabled primary block>
-          <ButtonText>Collecting Applications</ButtonText>
+          <ButtonText>Closed</ButtonText>
         </Button>
 
-        <Button onClick={handleClose}>Close</Button>
+        <Button onClick={handleReopen}>Reopen</Button>
       </Flex>
     </ButtonGroup>
   );

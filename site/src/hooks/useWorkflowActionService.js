@@ -2,8 +2,11 @@ import { encodeNetworkAddress } from "@osn/common/src";
 import { useAccount } from "hooks/useAccount";
 import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";
+import { useDispatch } from "react-redux";
+import { newErrorToast } from "store/reducers/toastSlice";
 
 export function useWorkflowActionService(childBountyDetail, reloadData) {
+  const dispatch = useDispatch();
   const { network, parentBountyIndex, index } = childBountyDetail ?? {};
   const account = useAccount();
 
@@ -12,6 +15,10 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
     network,
     parentBountyIndex,
     index,
+  };
+
+  const showErrorToast = (message) => {
+    dispatch(newErrorToast(message));
   };
 
   async function applyService(value) {
@@ -27,8 +34,8 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
         reloadData && reloadData();
       }
 
-      // TODO: error toast
       if (res.error) {
+        return showErrorToast(res.error.message);
       }
 
       return res;
@@ -50,8 +57,8 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
         reloadData && reloadData();
       }
 
-      // TODO: error toast
       if (res.error) {
+        return showErrorToast(res.error.message);
       }
 
       return res;
@@ -73,8 +80,8 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
         reloadData && reloadData();
       }
 
-      // TODO: error toast
       if (res.error) {
+        return showErrorToast(res.error.message);
       }
 
       return res;
@@ -96,8 +103,8 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
         reloadData && reloadData();
       }
 
-      // TODO: error toast
       if (res.error) {
+        return showErrorToast(res.error.message);
       }
 
       return res;

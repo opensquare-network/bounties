@@ -266,7 +266,10 @@ async function reopenChildBounty(
     childBounty.index,
   );
   if (!onchainChildBounty) {
-    throw new HttpError(404, `Can not find child bounty ${index} on chain`);
+    throw new HttpError(
+      404,
+      `Can not find child bounty ${childBounty.index} on chain`,
+    );
   }
 
   if (!onchainChildBounty.meta?.status?.active) {
