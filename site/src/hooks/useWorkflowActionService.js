@@ -111,10 +111,36 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
     } catch {}
   }
 
+  async function submitWorkService(value = {}) {
+    data.action = "submitWork";
+    data.applicantAddress = encodeNetworkAddress(
+      value.applicantAddress,
+      value.applicantNetwork,
+    );
+    data.description = value.description;
+    data.link = value.link;
+    const signedData = await signApiData(data, account?.encodedAddress);
+
+    try {
+      const res = await serverApi.patch("/application", signedData);
+
+      if (res.result) {
+        reloadData && reloadData();
+      }
+
+      if (res.error) {
+        return showErrorToast(res.error.message);
+      }
+
+      return res;
+    } catch {}
+  }
+
   return {
     applyService,
     assignService,
     unassignService,
     acceptService,
+    submitWorkService,
   };
 }
