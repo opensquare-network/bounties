@@ -1,3 +1,4 @@
+import { encodeNetworkAddress } from "@osn/common/src";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import { BOUNTY_STATUS } from "utils/constants";
@@ -15,7 +16,12 @@ export default function Action({ bountyDetail, reloadData }) {
     status,
     bounty: { curators },
   } = bountyDetail || {};
-  const isCurator = curators?.includes(account?.address);
+
+  let isCurator = false;
+  if (account) {
+    const signer = encodeNetworkAddress(account?.address, account?.network);
+    isCurator = curators?.includes(signer);
+  }
 
   if (status === BOUNTY_STATUS.Open && isCurator) {
     return (

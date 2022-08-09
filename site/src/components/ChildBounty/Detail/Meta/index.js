@@ -1,7 +1,7 @@
 import { Card, Divider } from "@osn/common-ui";
 import Description from "components/Bounty/Detail/Meta/Description";
 import Share from "components/Bounty/Detail/Meta/Share";
-import Title from "components/Bounty/Detail/Meta/Title";
+import Title from "./Title";
 import {
   descriptionLoading,
   metaLoading,
@@ -28,7 +28,7 @@ export default function ChildBountyDetailMeta({
       head={
         <Title
           type={type}
-          bountyDetail={{ ...childBountyDetail, bounty: childBounty }}
+          childBountyDetail={childBountyDetail}
         />
       }
     >

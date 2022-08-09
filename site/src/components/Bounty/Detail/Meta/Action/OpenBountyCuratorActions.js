@@ -13,6 +13,7 @@ import {
 import { signApiData } from "utils/signature";
 import { ButtonGroup } from "../../../../Common/Detail/styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
+import { CHILD_BOUNTY_STATUS } from "utils/constants";
 
 export default function OpenBountyCuratorActions({ bountyDetail, reloadData }) {
   const dispatch = useDispatch();
@@ -20,7 +21,13 @@ export default function OpenBountyCuratorActions({ bountyDetail, reloadData }) {
   const api = useApi();
   const isMounted = useIsMounted();
 
-  const { bountyIndex } = bountyDetail ?? {};
+  const { bountyIndex, childBounties } = bountyDetail ?? {};
+
+  const hasIncompleteChildBounties = childBounties
+    ?.map((cb) => cb.status)
+    .some((status) =>
+      [CHILD_BOUNTY_STATUS.Open, CHILD_BOUNTY_STATUS.Assigned].includes(status),
+    );
 
   const signer = encodeNetworkAddress(account?.address, account?.network);
 
@@ -72,9 +79,11 @@ export default function OpenBountyCuratorActions({ bountyDetail, reloadData }) {
   return (
     <ButtonGroup>
       <Flex>
-        <Button primary block onClick={handleClose}>
-          Close
-        </Button>
+        {!hasIncompleteChildBounties && (
+          <Button primary block onClick={handleClose}>
+            Close
+          </Button>
+        )}
       </Flex>
     </ButtonGroup>
   );
