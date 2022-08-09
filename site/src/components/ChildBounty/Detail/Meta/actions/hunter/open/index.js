@@ -38,7 +38,7 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
     reloadData,
   );
 
-  function handleSubmit() {
+  function handleApply() {
     applyService({ description: content });
   }
 
@@ -60,7 +60,7 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
           content={content}
           setContent={setContent}
           submitButtonText="Confirm"
-          onSubmit={handleSubmit}
+          onSubmit={handleApply}
         />
       </Modal>
     </>
