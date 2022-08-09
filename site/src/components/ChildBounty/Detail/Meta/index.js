@@ -21,17 +21,8 @@ export default function ChildBountyDetailMeta({
     return <Card head={metaLoading}>{descriptionLoading}</Card>;
   }
 
-  const { childBounty } = childBountyDetail ?? {};
-
   return (
-    <Card
-      head={
-        <Title
-          type={type}
-          childBountyDetail={childBountyDetail}
-        />
-      }
-    >
+    <Card head={<Title type={type} childBountyDetail={childBountyDetail} />}>
       <Info childBountyDetail={childBountyDetail} />
 
       <Divider />
