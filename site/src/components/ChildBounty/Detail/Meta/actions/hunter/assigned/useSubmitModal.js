@@ -8,16 +8,12 @@ import {
 } from "../../styled";
 
 export function useSubmitModal(options) {
-  const {
-    onConfirm = noop,
-    content: defaultContent = "",
-    link: defaultLink = "",
-  } = options ?? {};
+  const { onConfirm = noop } = options ?? {};
 
   const [open, setOpen] = useState(false);
-  const [content, setContent] = useState(defaultContent);
+  const [content, setContent] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [link, setLink] = useState(defaultLink);
+  const [link, setLink] = useState("");
 
   const hide = () => setOpen(false);
   const show = () => setOpen(true);
