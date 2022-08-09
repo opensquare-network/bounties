@@ -9,18 +9,18 @@ import { useHunterAcceptAndStart } from "./acceptAndStart";
 import { useHunterStartedAction } from "./started";
 import { useHunterSubmittedAction } from "./submitted";
 
-export function useHunterAssignedAction(childBountyDetail, reloadData) {
+export function useHunterAssignedAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
-  const { cancelButton } = useHunterCancelButton(childBountyDetail, reloadData);
+  const { cancelButton } = useHunterCancelButton(childBountyDetail);
 
   const myApplicantInfo = applications.find(
     (i) => i.address === account?.encodedAddress,
   );
 
-  const acceptAndWork = useHunterAcceptAndStart(childBountyDetail, reloadData);
-  const started = useHunterStartedAction(childBountyDetail, reloadData);
-  const submitted = useHunterSubmittedAction(childBountyDetail, reloadData);
+  const acceptAndWork = useHunterAcceptAndStart(childBountyDetail);
+  const started = useHunterStartedAction(childBountyDetail);
+  const submitted = useHunterSubmittedAction(childBountyDetail);
 
   const unassignedApplicant = findUnassignableApplicant(applications);
 

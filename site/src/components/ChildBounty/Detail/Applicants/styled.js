@@ -4,12 +4,14 @@ import styled from "styled-components";
 
 export const Wrapper = styled(FlexBetween)`
   align-items: center;
+  height: 56px;
 `;
 
 export const IdentityUserWrapper = styled(Flex)`
   max-width: 232px;
   flex: 1;
   a {
+    display: inline-flex;
     cursor: pointer;
     :hover {
       text-decoration: underline;

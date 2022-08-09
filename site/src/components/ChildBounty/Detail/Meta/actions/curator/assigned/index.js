@@ -17,12 +17,14 @@ import {
 } from "store/reducers/toastSlice";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
 import { signApiData } from "utils/signature";
+import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 
-export function useCuratorAssignedAction(childBountyDetail, reloadData) {
+export function useCuratorAssignedAction(childBountyDetail) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const api = useApi();
   const isMounted = useIsMounted();
+  const { fetchChildBountyDetail } = useFetchChildBountyDetail();
 
   const {
     parentBountyIndex,
@@ -37,10 +39,7 @@ export function useCuratorAssignedAction(childBountyDetail, reloadData) {
   );
   const signer = encodeNetworkAddress(account?.address, account?.network);
 
-  const { unassignService } = useWorkflowActionService(
-    childBountyDetail,
-    reloadData,
-  );
+  const { unassignService } = useWorkflowActionService(childBountyDetail);
 
   function handleUnassign() {
     unassignService({ applicant: unassignedApplicant });
@@ -97,7 +96,7 @@ export function useCuratorAssignedAction(childBountyDetail, reloadData) {
         dispatch(newSuccessToast("Awarded"));
 
         if (isMounted.current) {
-          reloadData && reloadData();
+          dispatch(fetchChildBountyDetail());
         }
       }
 

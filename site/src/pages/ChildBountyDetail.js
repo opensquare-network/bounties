@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import Background from "components/Background";
 import { Container, Breadcrumb } from "@osn/common-ui";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { capitalize } from "utils";
-import { useAsyncState } from "@osn/common";
-import serverApi from "services/serverApi";
 import { useEffect } from "react";
 import ChildBountyDetail from "components/ChildBounty/Detail";
 import { resolveBountyDetailRoute } from "utils/route";
+import { useDispatch } from "react-redux";
+import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 
 const Wrapper = styled.div`
   position: relative;
@@ -24,7 +24,13 @@ const ContentWrapper = styled.div`
 
 export default function PageChildBountyDetail() {
   const { network, bountyId, childBountyId } = useParams();
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    childBountyDetail,
+    fetchChildBountyDetail,
+    resetChildBountyDetail,
+    childBountyDetailEffectDeps,
+  } = useFetchChildBountyDetail();
 
   const routes = [
     {
@@ -40,31 +46,10 @@ export default function PageChildBountyDetail() {
     },
   ];
 
-  const { state: childBountyDetail, execute } = useAsyncState(
-    () =>
-      serverApi
-        .fetch(
-          `/network/${network}/child-bounties/${bountyId}_${childBountyId}`,
-        )
-        .then(({ result, error }) => {
-          if (result) {
-            return result;
-          }
-          if (error) {
-            return Promise.reject(error);
-          }
-        }),
-    null,
-    {
-      immediate: false,
-      onError() {
-        navigate("/404");
-      },
-    },
-  );
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(execute, [network, bountyId, childBountyId, navigate]);
+  useEffect(() => {
+    dispatch(fetchChildBountyDetail());
+    return resetChildBountyDetail;
+  }, [dispatch, ...childBountyDetailEffectDeps]);
 
   return (
     <Wrapper>
@@ -76,10 +61,7 @@ export default function PageChildBountyDetail() {
             backButtonRender={(button) => <Link to="/">{button}</Link>}
             routes={routes}
           />
-          <ChildBountyDetail
-            childBountyDetail={childBountyDetail}
-            reloadData={execute}
-          />
+          <ChildBountyDetail childBountyDetail={childBountyDetail} />
         </ContentWrapper>
       </Container>
     </Wrapper>

@@ -4,11 +4,14 @@ import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";
 import { useDispatch } from "react-redux";
 import { newErrorToast } from "store/reducers/toastSlice";
+import { useFetchChildBountyDetail } from "./useFetchChildBountyDetail";
 
-export function useWorkflowActionService(childBountyDetail, reloadData) {
+export function useWorkflowActionService(childBountyDetail) {
   const dispatch = useDispatch();
   const { network, parentBountyIndex, index } = childBountyDetail ?? {};
   const account = useAccount();
+
+  const { fetchChildBountyDetail } = useFetchChildBountyDetail();
 
   const data = {
     network,
@@ -25,7 +28,7 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
       const res = await serverApi[method](endpoint, signedData);
 
       if (res.result) {
-        reloadData && reloadData();
+        dispatch(fetchChildBountyDetail());
       }
 
       if (res.error) {

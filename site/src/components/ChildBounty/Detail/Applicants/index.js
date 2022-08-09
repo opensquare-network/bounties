@@ -22,19 +22,13 @@ import {
   ActionTimeWrapper,
 } from "./styled";
 
-export default function ChildBountyApplicants({
-  childBountyDetail,
-  reloadData,
-}) {
+export default function ChildBountyApplicants({ childBountyDetail }) {
   const { applications = [], childBounty } = childBountyDetail ?? {};
   const { curators = [] } = childBounty ?? {};
   const account = useAccount();
 
   const isCurator = curators.includes(account?.encodedAddress);
-  const { assignService } = useWorkflowActionService(
-    childBountyDetail,
-    reloadData,
-  );
+  const { assignService } = useWorkflowActionService(childBountyDetail);
 
   const unassignableApplicant = findUnassignableApplicant(applications);
 
@@ -54,7 +48,6 @@ export default function ChildBountyApplicants({
     >
       <List
         data={applications}
-        gap={20}
         noDataMessage="No current applicants"
         noDataProps={{ bordered: false, shadow: false }}
         loading={!childBountyDetail}
