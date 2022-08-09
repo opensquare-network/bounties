@@ -20,7 +20,7 @@ import {
 } from "../../styled";
 import { useHunterCancelButton } from "../useCancelButton";
 
-export function useHunterOpenAction(childBountyDetail, reloadData) {
+export function useHunterOpenAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
 
@@ -28,7 +28,7 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
   const [open, setOpen] = useState(false);
   const toggleApplyModal = () => setOpen((v) => !v);
 
-  const { cancelButton } = useHunterCancelButton(childBountyDetail, reloadData);
+  const { cancelButton } = useHunterCancelButton(childBountyDetail);
 
   const appliedApplicant = applications.find(
     (i) =>
@@ -36,10 +36,7 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
       i.status !== APPLICATION_STATUS.Canceled,
   );
 
-  const { applyService } = useWorkflowActionService(
-    childBountyDetail,
-    reloadData,
-  );
+  const { applyService } = useWorkflowActionService(childBountyDetail);
 
   function handleApply() {
     applyService({ description: content });

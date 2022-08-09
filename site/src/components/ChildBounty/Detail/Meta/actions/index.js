@@ -8,29 +8,21 @@ import { useCuratorAssignedAction } from "./curator/assigned";
 import { useHunterAssignedAction } from "./hunter/assigned";
 import { useCuratorClosedChildBountyAction } from "./curator/closed";
 
-export function useAction(childBountyDetail, reloadData) {
+export function useAction(childBountyDetail) {
   const { status, childBounty } = childBountyDetail ?? {};
   const { curators = [] } = childBounty ?? {};
   const account = useAccount();
 
   const isCurator = curators.includes(account?.encodedAddress);
 
-  const hunterOpenAction = useHunterOpenAction(childBountyDetail, reloadData);
-  const hunterAssignedAction = useHunterAssignedAction(
-    childBountyDetail,
-    reloadData,
-  );
-  const curatorOpenAction = useCuratorOpenAction(childBountyDetail, reloadData);
+  const hunterOpenAction = useHunterOpenAction(childBountyDetail);
+  const hunterAssignedAction = useHunterAssignedAction(childBountyDetail);
+  const curatorOpenAction = useCuratorOpenAction(childBountyDetail);
   const curatorSubmittedAction = useCuratorSubmittedAction();
   const curatorWorkDoneAction = useCuratorWorkDoneAction();
-  const curatorAssignedAction = useCuratorAssignedAction(
-    childBountyDetail,
-    reloadData,
-  );
-  const curatorClosedChildBountyAction = useCuratorClosedChildBountyAction(
-    childBountyDetail,
-    reloadData,
-  );
+  const curatorAssignedAction = useCuratorAssignedAction(childBountyDetail);
+  const curatorClosedChildBountyAction =
+    useCuratorClosedChildBountyAction(childBountyDetail);
 
   // curator view
   if (isCurator) {

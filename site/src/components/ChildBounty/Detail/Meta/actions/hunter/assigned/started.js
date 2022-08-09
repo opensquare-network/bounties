@@ -1,14 +1,11 @@
-import { Button, noop } from "@osn/common-ui";
+import { Button } from "@osn/common-ui";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { findStartedApplicant } from "../../utils";
 import { useSubmitModal } from "./useSubmitModal";
 
-export function useHunterStartedAction(childBountyDetail, reloadData = noop) {
+export function useHunterStartedAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
-  const { submitWorkService } = useWorkflowActionService(
-    childBountyDetail,
-    reloadData,
-  );
+  const { submitWorkService } = useWorkflowActionService(childBountyDetail);
 
   const startedApplicant = findStartedApplicant(applications);
 

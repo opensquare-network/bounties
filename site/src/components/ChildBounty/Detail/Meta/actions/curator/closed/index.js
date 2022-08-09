@@ -13,15 +13,14 @@ import {
 import { signApiData } from "utils/signature";
 import { ButtonGroup, ButtonText } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
+import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 
-export function useCuratorClosedChildBountyAction(
-  childBountyDetail,
-  reloadData,
-) {
+export function useCuratorClosedChildBountyAction(childBountyDetail) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const api = useApi();
   const isMounted = useIsMounted();
+  const { fetchChildBountyDetail } = useFetchChildBountyDetail();
 
   const { parentBountyIndex, index } = childBountyDetail ?? {};
 
@@ -59,7 +58,7 @@ export function useCuratorClosedChildBountyAction(
         dispatch(newSuccessToast("Re-opened"));
 
         if (isMounted.current) {
-          reloadData && reloadData();
+          dispatch(fetchChildBountyDetail());
         }
       }
 

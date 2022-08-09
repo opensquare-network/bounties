@@ -1,15 +1,12 @@
 import { ButtonText } from "../../styled";
-import { Button, Dot, FlexCenter, noop, Time } from "@osn/common-ui";
+import { Button, Dot, FlexCenter, Time } from "@osn/common-ui";
 import { useSubmitModal } from "./useSubmitModal";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { findSubmittedApplicant } from "../../utils";
 
-export function useHunterSubmittedAction(childBountyDetail, reloadData = noop) {
+export function useHunterSubmittedAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
-  const { submitWorkService } = useWorkflowActionService(
-    childBountyDetail,
-    reloadData,
-  );
+  const { submitWorkService } = useWorkflowActionService(childBountyDetail);
 
   const submittedApplicant = findSubmittedApplicant(applications);
 
