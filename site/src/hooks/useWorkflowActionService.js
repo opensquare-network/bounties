@@ -106,11 +106,19 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
     });
   }
 
+  async function cancelService(value = {}) {
+    return await makeApplicationService("patch", {
+      action: "cancelApplication",
+      ...value,
+    });
+  }
+
   return {
     applyService,
     assignService,
     unassignService,
     acceptService,
     submitWorkService,
+    cancelService,
   };
 }

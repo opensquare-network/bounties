@@ -12,7 +12,7 @@ import { useHunterSubmittedAction } from "./submitted";
 export function useHunterAssignedAction(childBountyDetail, reloadData) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
-  const { cancelButton } = useHunterCancelButton();
+  const { cancelButton } = useHunterCancelButton(childBountyDetail, reloadData);
 
   const myApplicantInfo = applications.find(
     (i) => i.address === account?.encodedAddress,
