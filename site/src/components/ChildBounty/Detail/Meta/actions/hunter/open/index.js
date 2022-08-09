@@ -28,7 +28,7 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
   const [open, setOpen] = useState(false);
   const toggleApplyModal = () => setOpen((v) => !v);
 
-  const { cancelButton } = useHunterCancelButton(childBountyDetail);
+  const { cancelButton } = useHunterCancelButton(childBountyDetail, reloadData);
 
   const appliedApplicant = applications.find(
     (i) =>
