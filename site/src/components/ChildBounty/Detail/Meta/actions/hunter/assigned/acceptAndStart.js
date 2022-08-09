@@ -12,10 +12,7 @@ export function useHunterAcceptAndStart(childBountyDetail, reloadData = noop) {
   const assignedApplicant = findAssignedApplicant(applications);
 
   function handleAcceptAndStart() {
-    acceptService({
-      applicantAddress: assignedApplicant.address,
-      applicantNetwork: assignedApplicant.bountyIndexer.network,
-    });
+    acceptService({ applicant: assignedApplicant });
   }
 
   return (

@@ -39,7 +39,7 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
   );
 
   function handleSubmit() {
-    applyService({ content });
+    applyService({ description: content });
   }
 
   const applyEl = (

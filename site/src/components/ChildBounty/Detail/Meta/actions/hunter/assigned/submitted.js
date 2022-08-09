@@ -18,8 +18,7 @@ export function useHunterSubmittedAction(childBountyDetail, reloadData = noop) {
       const { content, link } = v;
 
       submitWorkService({
-        applicantAddress: submittedApplicant.address,
-        applicantNetwork: submittedApplicant.bountyIndexer.network,
+        applicant: submittedApplicant,
         description: content,
         link,
       }).then(hide);
