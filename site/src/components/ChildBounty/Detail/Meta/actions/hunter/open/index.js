@@ -10,6 +10,7 @@ import {
 import { useAccount } from "hooks/useAccount";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { useState } from "react";
+import { APPLICATION_STATUS } from "utils/constants";
 import {
   ModalTitle,
   ModalDescription,
@@ -30,7 +31,9 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
   const { cancelButton } = useHunterCancelButton(childBountyDetail);
 
   const appliedApplicant = applications.find(
-    (i) => i.address === account?.encodedAddress,
+    (i) =>
+      i.address === account?.encodedAddress &&
+      i.status !== APPLICATION_STATUS.Canceled,
   );
 
   const { applyService } = useWorkflowActionService(
