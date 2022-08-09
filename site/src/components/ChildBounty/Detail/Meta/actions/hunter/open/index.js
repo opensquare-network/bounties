@@ -10,6 +10,7 @@ import {
 import { useAccount } from "hooks/useAccount";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { useState } from "react";
+import { APPLICATION_STATUS } from "utils/constants";
 import {
   ModalTitle,
   ModalDescription,
@@ -27,10 +28,12 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
   const [open, setOpen] = useState(false);
   const toggleApplyModal = () => setOpen((v) => !v);
 
-  const { cancelButton } = useHunterCancelButton(childBountyDetail);
+  const { cancelButton } = useHunterCancelButton(childBountyDetail, reloadData);
 
   const appliedApplicant = applications.find(
-    (i) => i.address === account?.encodedAddress,
+    (i) =>
+      i.address === account?.encodedAddress &&
+      i.status !== APPLICATION_STATUS.Canceled,
   );
 
   const { applyService } = useWorkflowActionService(
@@ -38,8 +41,8 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
     reloadData,
   );
 
-  function handleSubmit() {
-    applyService({ content });
+  function handleApply() {
+    applyService({ description: content });
   }
 
   const applyEl = (
@@ -60,7 +63,7 @@ export function useHunterOpenAction(childBountyDetail, reloadData) {
           content={content}
           setContent={setContent}
           submitButtonText="Confirm"
-          onSubmit={handleSubmit}
+          onSubmit={handleApply}
         />
       </Modal>
     </>

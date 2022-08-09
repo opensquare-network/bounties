@@ -1,22 +1,36 @@
 import { Button, noop } from "@osn/common-ui";
+import { useWorkflowActionService } from "hooks/useWorkflowActionService";
+import { findStartedApplicant } from "../../utils";
 import { useSubmitModal } from "./useSubmitModal";
 
 export function useHunterStartedAction(childBountyDetail, reloadData = noop) {
-  const { toggle, modal } = useSubmitModal({
-    // FIXME: submit action submit
+  const { applications = [] } = childBountyDetail ?? {};
+  const { submitWorkService } = useWorkflowActionService(
+    childBountyDetail,
+    reloadData,
+  );
+
+  const startedApplicant = findStartedApplicant(applications);
+
+  const { modal, hide, show } = useSubmitModal({
     onConfirm(v) {
-      // eslint-disable-next-line
       const { content, link } = v;
+
+      submitWorkService({
+        applicant: startedApplicant,
+        description: content,
+        link,
+      }).then(hide);
     },
   });
 
   return (
     <>
-      <Button block primary onClick={toggle}>
+      {modal}
+
+      <Button block primary onClick={show}>
         Submit Work
       </Button>
-
-      {modal}
     </>
   );
 }

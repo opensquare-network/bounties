@@ -38,10 +38,6 @@ export default function ChildBountyApplicants({
 
   const unassignableApplicant = findUnassignableApplicant(applications);
 
-  function handleAssign(applicantAddress, applicantNetwork) {
-    assignService({ applicantAddress, applicantNetwork });
-  }
-
   return (
     <Card
       title={
@@ -67,8 +63,8 @@ export default function ChildBountyApplicants({
             <LoadingIcon />
           </FlexCenter>
         }
-        itemRender={(application) => {
-          const { address, bountyIndexer = {}, description } = application;
+        itemRender={(applicant) => {
+          const { address, bountyIndexer = {}, description } = applicant;
 
           return (
             <List.Item>
@@ -91,15 +87,11 @@ export default function ChildBountyApplicants({
 
                 <ActionWrapper>
                   {isCurator && !unassignableApplicant ? (
-                    <Button
-                      onClick={() =>
-                        handleAssign(address, bountyIndexer?.network)
-                      }
-                    >
+                    <Button onClick={() => assignService({ applicant })}>
                       Assign
                     </Button>
                   ) : (
-                    <TimeStatus {...application} />
+                    <TimeStatus {...applicant} />
                   )}
                 </ActionWrapper>
               </Wrapper>

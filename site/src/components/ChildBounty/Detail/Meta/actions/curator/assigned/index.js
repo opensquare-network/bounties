@@ -43,10 +43,7 @@ export function useCuratorAssignedAction(childBountyDetail, reloadData) {
   );
 
   function handleUnassign() {
-    unassignService({
-      applicantAddress: unassignedApplicant.address,
-      applicantNetwork: unassignedApplicant.bountyIndexer.network,
-    });
+    unassignService({ applicant: unassignedApplicant });
   }
 
   const showErrorToast = (message) => {

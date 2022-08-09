@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Modal, RichEditor, Input, noop } from "@osn/common-ui";
+import { Modal, RichEditor, Input, noop, FlexBetween } from "@osn/common-ui";
 import {
   ModalTitle,
   ModalDescription,
@@ -8,18 +8,15 @@ import {
 } from "../../styled";
 
 export function useSubmitModal(options) {
-  const {
-    onConfirm = noop,
-    content: _content = "",
-    link: _link = "",
-  } = options ?? {};
+  const { onConfirm = noop } = options ?? {};
 
   const [open, setOpen] = useState(false);
-  const [content, setContent] = useState(_content);
+  const [content, setContent] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [link, setLink] = useState(_link);
+  const [link, setLink] = useState("");
 
-  const toggle = () => setOpen((v) => !v);
+  const hide = () => setOpen(false);
+  const show = () => setOpen(true);
 
   function validateForm() {
     if (!content) {
@@ -62,7 +59,10 @@ export function useSubmitModal(options) {
       />
 
       <FormLabel>
-        Link <FormLabelTip>Optional</FormLabelTip>
+        <FlexBetween>
+          <span>Link</span>
+          <FormLabelTip>Optional</FormLabelTip>
+        </FlexBetween>
       </FormLabel>
       <Input
         value={link}
@@ -74,6 +74,7 @@ export function useSubmitModal(options) {
 
   return {
     modal,
-    toggle,
+    hide,
+    show,
   };
 }

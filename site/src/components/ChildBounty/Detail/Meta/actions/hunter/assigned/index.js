@@ -6,17 +6,21 @@ import { ButtonGroup } from "../../styled";
 import { findUnassignableApplicant } from "../../utils";
 import { useHunterCancelButton } from "../useCancelButton";
 import { useHunterAcceptAndStart } from "./acceptAndStart";
+import { useHunterStartedAction } from "./started";
+import { useHunterSubmittedAction } from "./submitted";
 
 export function useHunterAssignedAction(childBountyDetail, reloadData) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
-  const { cancelButton } = useHunterCancelButton();
+  const { cancelButton } = useHunterCancelButton(childBountyDetail, reloadData);
 
   const myApplicantInfo = applications.find(
     (i) => i.address === account?.encodedAddress,
   );
 
   const acceptAndWork = useHunterAcceptAndStart(childBountyDetail, reloadData);
+  const started = useHunterStartedAction(childBountyDetail, reloadData);
+  const submitted = useHunterSubmittedAction(childBountyDetail, reloadData);
 
   const unassignedApplicant = findUnassignableApplicant(applications);
 
@@ -24,9 +28,9 @@ export function useHunterAssignedAction(childBountyDetail, reloadData) {
   if (myApplicantInfo?.status === APPLICATION_STATUS.Assigned) {
     actionEl = acceptAndWork;
   } else if (myApplicantInfo?.status === APPLICATION_STATUS.Started) {
-    actionEl = "submit work";
+    actionEl = started;
   } else if (myApplicantInfo?.status === APPLICATION_STATUS.Submitted) {
-    actionEl = "submitted";
+    actionEl = submitted;
   }
 
   return (
