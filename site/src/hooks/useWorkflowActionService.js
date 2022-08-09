@@ -11,7 +11,6 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
   const account = useAccount();
 
   const data = {
-    action: "",
     network,
     parentBountyIndex,
     index,
@@ -21,14 +20,9 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
     dispatch(newErrorToast(message));
   };
 
-  async function applyService(value) {
-    data.action = "applyChildBounty";
-    data.description = value.content;
-    data.applicantNetwork = account?.network;
-    const signedData = await signApiData(data, account?.encodedAddress);
-
+  async function service(endpoint, method, signedData) {
     try {
-      const res = await serverApi.post("/applications", signedData);
+      const res = await serverApi[method](endpoint, signedData);
 
       if (res.result) {
         reloadData && reloadData();
@@ -39,101 +33,77 @@ export function useWorkflowActionService(childBountyDetail, reloadData) {
       }
 
       return res;
-    } catch {}
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function makeApplicationsService(method, value) {
+    const endpoint = "/applications";
+
+    const resolvedData = {
+      ...data,
+      ...value,
+    };
+
+    const signedData = await signApiData(resolvedData, account?.encodedAddress);
+    return await service(endpoint, method, signedData);
+  }
+
+  async function makeApplicationService(method, value) {
+    const endpoint = "/application";
+
+    // omit
+    const { applicant } = value;
+    delete value.applicant;
+
+    const resolvedData = {
+      ...data,
+      ...value,
+      applicantAddress: encodeNetworkAddress(
+        applicant.address,
+        applicant.bountyIndexer.network,
+      ),
+    };
+
+    const signedData = await signApiData(resolvedData, account?.encodedAddress);
+    return await service(endpoint, method, signedData);
+  }
+
+  async function applyService(value) {
+    return await makeApplicationsService("post", {
+      action: "applyChildBounty",
+      applicantNetwork: account?.network,
+      ...value,
+    });
   }
 
   async function assignService(value = {}) {
-    data.action = "assignApplication";
-    data.applicantAddress = encodeNetworkAddress(
-      value.applicantAddress,
-      value.applicantNetwork,
-    );
-    const signedData = await signApiData(data, account?.encodedAddress);
-
-    try {
-      const res = await serverApi.patch("/application", signedData);
-
-      if (res.result) {
-        reloadData && reloadData();
-      }
-
-      if (res.error) {
-        return showErrorToast(res.error.message);
-      }
-
-      return res;
-    } catch {}
+    return await makeApplicationService("patch", {
+      action: "assignApplication",
+      ...value,
+    });
   }
 
   async function unassignService(value = {}) {
-    data.action = "unassignApplication";
-    data.applicantAddress = encodeNetworkAddress(
-      value.applicantAddress,
-      value.applicantNetwork,
-    );
-    const signedData = await signApiData(data, account?.encodedAddress);
-
-    try {
-      const res = await serverApi.patch("/application", signedData);
-
-      if (res.result) {
-        reloadData && reloadData();
-      }
-
-      if (res.error) {
-        return showErrorToast(res.error.message);
-      }
-
-      return res;
-    } catch {}
+    return await makeApplicationService("patch", {
+      action: "unassignApplication",
+      ...value,
+    });
   }
 
   async function acceptService(value = {}) {
-    data.action = "acceptAssignment";
-    data.applicantAddress = encodeNetworkAddress(
-      value.applicantAddress,
-      value.applicantNetwork,
-    );
-    const signedData = await signApiData(data, account?.encodedAddress);
-
-    try {
-      const res = await serverApi.patch("/application", signedData);
-
-      if (res.result) {
-        reloadData && reloadData();
-      }
-
-      if (res.error) {
-        return showErrorToast(res.error.message);
-      }
-
-      return res;
-    } catch {}
+    return await makeApplicationService("patch", {
+      action: "acceptAssignment",
+      ...value,
+    });
   }
 
   async function submitWorkService(value = {}) {
-    data.action = "submitWork";
-    data.applicantAddress = encodeNetworkAddress(
-      value.applicantAddress,
-      value.applicantNetwork,
-    );
-    data.description = value.description;
-    data.link = value.link;
-    const signedData = await signApiData(data, account?.encodedAddress);
-
-    try {
-      const res = await serverApi.patch("/application", signedData);
-
-      if (res.result) {
-        reloadData && reloadData();
-      }
-
-      if (res.error) {
-        return showErrorToast(res.error.message);
-      }
-
-      return res;
-    } catch {}
+    return await makeApplicationService("patch", {
+      action: "submitWork",
+      ...value,
+    });
   }
 
   return {
