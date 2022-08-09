@@ -78,6 +78,8 @@ export default function PageHeader() {
           <ConnectWalletModal
             visible={connectWalletModalVisible}
             setVisible={setConnectWalletModalVisible}
+            defaultChain={account?.network}
+            defaultAddress={account?.address}
           />
         </RightWrapper>
       </ContentWrapper>
