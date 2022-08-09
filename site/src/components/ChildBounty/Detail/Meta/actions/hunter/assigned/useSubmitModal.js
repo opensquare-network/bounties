@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Modal, RichEditor, Input, noop } from "@osn/common-ui";
+import { Modal, RichEditor, Input, noop, FlexBetween } from "@osn/common-ui";
 import {
   ModalTitle,
   ModalDescription,
@@ -63,7 +63,10 @@ export function useSubmitModal(options) {
       />
 
       <FormLabel>
-        Link <FormLabelTip>Optional</FormLabelTip>
+        <FlexBetween>
+          <span>Link</span>
+          <FormLabelTip>Optional</FormLabelTip>
+        </FlexBetween>
       </FormLabel>
       <Input
         value={link}
