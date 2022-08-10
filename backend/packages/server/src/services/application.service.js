@@ -52,19 +52,26 @@ async function apply(
     "bountyIndexer.index": bountyIndexer.index,
     address,
   });
-  if (exists) {
+  if (exists && exists.status !== ApplicationStatus.Canceled) {
     throw new HttpError(400, "Application already exists");
   }
 
-  const application = await Application.create({
-    bountyIndexer,
-    description,
-    applicantNetwork,
-    data,
-    address,
-    signature,
-    status: ApplicationStatus.Apply,
-  });
+  const application = await Application.findOneAndUpdate(
+    {
+      "bountyIndexer.network": bountyIndexer.network,
+      "bountyIndexer.parentBountyIndex": bountyIndexer.parentBountyIndex,
+      "bountyIndexer.index": bountyIndexer.index,
+      address,
+    },
+    {
+      description,
+      applicantNetwork,
+      data,
+      signature,
+      status: ApplicationStatus.Apply,
+    },
+    { upsert: true, new: true }
+  );
 
   const timelineItem = await ApplicationTimeline.create({
     bountyIndexer,
