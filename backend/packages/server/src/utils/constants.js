@@ -32,9 +32,27 @@ const NotificationType = {
   ChildBountyReopen: "childBountyReopen",
 };
 
+const ApplicationActions = {
+  ApplyChildBounty: "applyChildBounty",
+  CancelApplication: "cancelApplication",
+  AssignApplication: "assignApplication",
+  UnassignApplication: "unassignApplication",
+  AcceptAssignment: "acceptAssignment",
+  SubmitWork: "submitWork",
+};
+
+const ChildBountyActions = {
+  ImportChildBounty: "importChildBounty",
+  CloseChildBounty: "closeChildBounty",
+  ReopenChildBounty: "reopenChildBounty",
+  ResolveChildBounty: "resolveChildBounty",
+};
+
 module.exports = {
   ApplicationStatus,
   ChildBountyStatus,
   BountyStatus,
   NotificationType,
+  ApplicationActions,
+  ChildBountyActions,
 };
