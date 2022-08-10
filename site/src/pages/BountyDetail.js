@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import styled from "styled-components";
 
 import Background from "components/Background";
@@ -6,9 +6,9 @@ import { Container } from "@osn/common-ui";
 import Breadcrumb from "../components/Breadcrumb";
 import Detail from "../components/Bounty/Detail";
 import { useEffect } from "react";
-import serverApi from "services/serverApi";
 import { capitalize } from "utils";
-import { useAsyncState } from "@osn/common";
+import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   position: relative;
@@ -24,36 +24,20 @@ const ContentWrapper = styled.div`
 
 export default function BountyDetail() {
   const { network, bountyId } = useParams();
-
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
-    state: bountyDetail,
-    execute,
-    isLoading,
-  } = useAsyncState(
-    () =>
-      serverApi
-        .fetch(`network/${network}/bounties/${bountyId}`)
-        .then(({ result, error }) => {
-          if (result) {
-            return result;
-          }
-          if (error) {
-            return Promise.reject(error);
-          }
-        }),
-    null,
-    {
-      immediate: false,
-      onError() {
-        navigate("/404");
-      },
-    },
-  );
+    bountyDetail,
+    fetchBountyDetail,
+    resetBountyDetail,
+    fetchBountyDetailEffectDeps,
+  } = useFetchBountyDetail();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(execute, [network, bountyId, navigate]);
+  useEffect(() => {
+    dispatch(fetchBountyDetail());
+    return resetBountyDetail;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, ...fetchBountyDetailEffectDeps]);
 
   return (
     <Wrapper>
@@ -61,11 +45,7 @@ export default function BountyDetail() {
       <Container>
         <ContentWrapper>
           <Breadcrumb value={`${capitalize(network)} #${bountyId}`} />
-          <Detail
-            bountyDetail={bountyDetail}
-            loading={isLoading}
-            reloadData={execute}
-          />
+          <Detail bountyDetail={bountyDetail} />
         </ContentWrapper>
       </Container>
     </Wrapper>

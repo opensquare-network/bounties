@@ -7,6 +7,7 @@ import bountyReducer from "./bountySlice";
 import discussionReducer from "./discussionSlice";
 import notificationReducer from "./notificationSlice";
 import childBountyDetailSlice from "./childBountyDetailSlice";
+import bountyDetailSlice from "./bountyDetailSlice";
 
 export default combineReducers({
   account: accountReducer,
@@ -16,4 +17,5 @@ export default combineReducers({
   discussion: discussionReducer,
   notification: notificationReducer,
   childBountyDetail: childBountyDetailSlice,
+  bountyDetail: bountyDetailSlice,
 });

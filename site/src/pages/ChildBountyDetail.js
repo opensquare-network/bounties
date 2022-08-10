@@ -49,6 +49,7 @@ export default function PageChildBountyDetail() {
   useEffect(() => {
     dispatch(fetchChildBountyDetail());
     return resetChildBountyDetail;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, ...childBountyDetailEffectDeps]);
 
   return (
