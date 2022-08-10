@@ -1,5 +1,6 @@
 const { HttpError } = require("../../utils/exc");
 const applicationService = require("../../services/application.service");
+const { ApplicationActions } = require("../../utils/constants");
 
 async function apply(ctx) {
   const { data, address, signature } = ctx.request.body;
@@ -12,7 +13,7 @@ async function apply(ctx) {
     applicantNetwork,
   } = data;
 
-  if (action !== "applyChildBounty") {
+  if (action !== ApplicationActions.ApplyChildBounty) {
     throw new HttpError(400, { action: ["Action must be applyChildBounty"] });
   }
 

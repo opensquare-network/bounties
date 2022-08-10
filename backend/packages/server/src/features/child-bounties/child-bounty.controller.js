@@ -4,6 +4,7 @@ const { extractPage } = require("../../utils/pagination");
 const isNil = require("lodash.isnil");
 const trim = require("lodash.trim");
 const { allChains } = require("../../utils/chain");
+const { ChildBountyActions } = require("../../utils/constants");
 
 async function getChildBounties(ctx) {
   const { page, pageSize } = extractPage(ctx);
@@ -17,7 +18,7 @@ async function importChildBounty(ctx) {
   const { action, network, parentBountyIndex, index, title, content, skills } =
     data || {};
 
-  if (action !== "importChildBounty") {
+  if (action !== ChildBountyActions.ImportChildBounty) {
     throw new HttpError(400, { action: ["Action must be importChildBounty"] });
   }
 
