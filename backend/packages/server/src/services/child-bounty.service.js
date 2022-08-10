@@ -4,16 +4,20 @@ const {
   ChildBountyComment,
   Application,
   Bounty,
+  ChildBountyTimeline,
+  Notification,
 } = require("../models");
 const chainService = require("./chain.service");
 const {
   ChildBountyStatus,
   ApplicationStatus,
   BountyStatus,
+  NotificationType,
 } = require("../utils/constants");
+const { toPublicKey } = require("../utils/address");
 
 async function getChildBounties(page, pageSize) {
-  const q = { deleted: null };
+  const q = {};
   const total = await ChildBounty.countDocuments(q);
   const items = await ChildBounty.find(q)
     .skip((page - 1) * pageSize)
@@ -227,6 +231,49 @@ async function resolveChildBounty(
     { new: true },
   );
 
+  const timelineItem = await ChildBountyTimeline.create({
+    bountyIndexer: {
+      network: childBounty.network,
+      parentBountyIndex: childBounty.parentBountyIndex,
+      index: childBounty.index,
+    },
+    action,
+    data,
+    address,
+    signature,
+  });
+
+  const applications = await Application.find({
+    "bountyIndexer.network": childBounty.network,
+    "bountyIndexer.parentBountyIndex": childBounty.parentBountyIndex,
+    "bountyIndexer.index": childBounty.index,
+    status: {
+      $in: [
+        ApplicationStatus.Assigned,
+        ApplicationStatus.Started,
+        ApplicationStatus.Submitted,
+      ],
+    },
+  });
+
+  const applicants = applications.map((item) => item.address);
+
+  for (const applicant of applicants) {
+    const notificationOwner = toPublicKey(applicant);
+    await Notification.create({
+      owner: notificationOwner,
+      type: [NotificationType.ChildBountyResolved],
+      read: false,
+      data: {
+        byWho: {
+          address,
+          network: childBounty.network,
+        },
+        childBountyTimelineItem: timelineItem._id,
+      },
+    });
+  }
+
   return updatedChildBounty;
 }
 
@@ -245,6 +292,45 @@ async function closeChildBounty(childBounty, action, data, address, signature) {
     { status: ChildBountyStatus.Closed },
     { new: true },
   );
+
+  const timelineItem = await ChildBountyTimeline.create({
+    bountyIndexer: {
+      network: childBounty.network,
+      parentBountyIndex: childBounty.parentBountyIndex,
+      index: childBounty.index,
+    },
+    action,
+    data,
+    address,
+    signature,
+  });
+
+  const applications = await Application.find({
+    "bountyIndexer.network": childBounty.network,
+    "bountyIndexer.parentBountyIndex": childBounty.parentBountyIndex,
+    "bountyIndexer.index": childBounty.index,
+    status: {
+      $nin: [ApplicationStatus.Closed],
+    },
+  });
+
+  const applicants = applications.map((item) => item.address);
+
+  for (const applicant of applicants) {
+    const notificationOwner = toPublicKey(applicant);
+    await Notification.create({
+      owner: notificationOwner,
+      type: [NotificationType.ChildBountyClosed],
+      read: false,
+      data: {
+        byWho: {
+          address,
+          network: childBounty.network,
+        },
+        childBountyTimelineItem: timelineItem._id,
+      },
+    });
+  }
 
   return updatedChildBounty;
 }
@@ -293,6 +379,45 @@ async function reopenChildBounty(
     { status: newStatus },
     { new: true },
   );
+
+  const timelineItem = await ChildBountyTimeline.create({
+    bountyIndexer: {
+      network: childBounty.network,
+      parentBountyIndex: childBounty.parentBountyIndex,
+      index: childBounty.index,
+    },
+    action,
+    data,
+    address,
+    signature,
+  });
+
+  const applications = await Application.find({
+    "bountyIndexer.network": childBounty.network,
+    "bountyIndexer.parentBountyIndex": childBounty.parentBountyIndex,
+    "bountyIndexer.index": childBounty.index,
+    status: {
+      $nin: [ApplicationStatus.Closed],
+    },
+  });
+
+  const applicants = applications.map((item) => item.address);
+
+  for (const applicant of applicants) {
+    const notificationOwner = toPublicKey(applicant);
+    await Notification.create({
+      owner: notificationOwner,
+      type: [NotificationType.ChildBountyReopen],
+      read: false,
+      data: {
+        byWho: {
+          address,
+          network: childBounty.network,
+        },
+        childBountyTimelineItem: timelineItem._id,
+      },
+    });
+  }
 
   return updatedChildBounty;
 }

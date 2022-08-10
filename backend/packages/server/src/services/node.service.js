@@ -14,7 +14,7 @@ async function getBountyInfo(network, bountyIndex) {
     return await api.get(`bounty/${bountyIndex}`);
   } catch (err) {
     console.error(err.message);
-    throw new HttpError(500, "Failed to get bounty");
+    throw new HttpError(500, "Failed to get on-chain bounty infomation");
   }
 }
 
@@ -28,7 +28,7 @@ async function getChildBountyInfo(network, parentBountyIndex, index) {
     return await api.get(`child-bounty/${parentBountyIndex}_${index}`);
   } catch (err) {
     console.error(err.message);
-    throw new HttpError(500, "Failed to get child bounty");
+    throw new HttpError(500, "Failed to get on-chain child bounty infomation");
   }
 }
 

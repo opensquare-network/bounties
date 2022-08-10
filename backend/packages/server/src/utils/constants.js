@@ -27,6 +27,9 @@ const NotificationType = {
   Submitted: "submitted",
   Reply: "reply",
   Mention: "mention",
+  ChildBountyResolved: "childBountyResolved",
+  ChildBountyClosed: "childBountyClosed",
+  ChildBountyReopen: "childBountyReopen",
 };
 
 module.exports = {

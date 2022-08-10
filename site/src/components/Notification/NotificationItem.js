@@ -182,10 +182,17 @@ const getItemDate = (t = [], data) => {
     value.type = "mentioned";
   } else if (assertType(t, "reply")) {
     value.type = "replied";
+  } else if (assertType(t, "childBountyClosed")) {
+    value.type = "closed";
+  } else if (assertType(t, "childBountyReopen")) {
+    value.type = "re-open";
+  } else if (assertType(t, "childBountyResolved")) {
+    value.type = "resolved";
   }
 
   const childBounty =
     data.data.applicationTimelineItem?.childBounty ||
+    data.data.childBountyTimelineItem?.childBounty ||
     data.data.childBountyComment?.childBounty;
   if (childBounty) {
     value.title = childBounty?.title;

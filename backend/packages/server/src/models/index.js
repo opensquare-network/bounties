@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { MONGODB_URI } = require("../env");
 const { Bounty } = require("./bounty");
 const { ChildBounty } = require("./child-bounty");
+const { ChildBountyTimeline } = require("./child-bounty-timeline");
 const { Application } = require("./application");
 const { ApplicationTimeline } = require("./application-timeline");
 const { BountyComment } = require("./bounty-comment");
@@ -19,6 +20,7 @@ mongoose.connection.on("error", () => {
 module.exports = {
   Bounty,
   ChildBounty,
+  ChildBountyTimeline,
   Application,
   ApplicationTimeline,
   BountyComment,

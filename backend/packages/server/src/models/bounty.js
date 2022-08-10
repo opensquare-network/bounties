@@ -49,7 +49,6 @@ BountySchema.virtual("childBountiesCount", {
   foreignField: "parentBountyIndex",
   match: (bounty) => ({
     network: bounty.network,
-    deleted: null,
   }),
   count: true,
 });
@@ -60,7 +59,6 @@ BountySchema.virtual("childBounties", {
   foreignField: "parentBountyIndex",
   match: (bounty) => ({
     network: bounty.network,
-    deleted: null,
   }),
 });
 
