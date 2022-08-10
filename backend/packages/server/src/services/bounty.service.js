@@ -2,10 +2,14 @@ const { HttpError } = require("../utils/exc");
 const { Bounty, BountyComment } = require("../models");
 const chainService = require("./chain.service");
 const { ipfsAddBuffer } = require("./ipfs.service");
-const { BountyStatus } = require("../utils/constants");
+const { BountyStatus, ChildBountyStatus } = require("../utils/constants");
 
 async function getBounties(page, pageSize) {
-  const q = {};
+  const q = {
+    status: {
+      $ne: BountyStatus.Closed
+    }
+  };
   const total = await Bounty.countDocuments(q);
   const items = await Bounty.find(q)
     .skip((page - 1) * pageSize)
@@ -30,7 +34,32 @@ async function getBounty(network, bountyIndex) {
     throw new HttpError(404, "Bounty not found");
   }
 
-  return bounty.toJSON();
+  const bountyData = bounty.toJSON();
+
+  const getSort = (childBounty) => {
+    switch (childBounty.status) {
+      case ChildBountyStatus.Open: {
+        return 1;
+      }
+      case ChildBountyStatus.Assigned: {
+        return 2;
+      }
+      case ChildBountyStatus.Awarded: {
+        return 3;
+      }
+      case ChildBountyStatus.Closed: {
+        return 4;
+      }
+      default: {
+        return 5;
+      }
+    }
+  };
+  bountyData.childBounties.sort((a, b) => {
+    return getSort(a) - getSort(b);
+  });
+
+  return bountyData;
 }
 
 async function pinFile(file) {
