@@ -20,6 +20,8 @@ import {
   Wrapper,
   Count,
   ActionTimeWrapper,
+  TimeStatusWrapper,
+  AssignButtonWrapper,
 } from "./styled";
 
 export default function ChildBountyApplicants({ childBountyDetail }) {
@@ -57,11 +59,21 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
           </FlexCenter>
         }
         itemRender={(applicant) => {
-          const { address, bountyIndexer = {}, description } = applicant;
+          const {
+            address,
+            bountyIndexer = {},
+            description,
+            status,
+          } = applicant;
+
+          const hoverShowAssignButton =
+            isCurator &&
+            !unassignableApplicant &&
+            status !== APPLICATION_STATUS.Canceled;
 
           return (
             <List.Item>
-              <Wrapper>
+              <Wrapper hoverShowAssignButton={hoverShowAssignButton}>
                 <IdentityUserWrapper>
                   <LinkIdentityUser
                     items={[
@@ -79,13 +91,12 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
                 <DescriptionWrapper>{description}</DescriptionWrapper>
 
                 <ActionWrapper>
-                  {isCurator && !unassignableApplicant ? (
+                  <TimeStatus className="time-status" {...applicant} />
+                  <AssignButtonWrapper>
                     <Button onClick={() => assignService({ applicant })}>
                       Assign
                     </Button>
-                  ) : (
-                    <TimeStatus {...applicant} />
-                  )}
+                  </AssignButtonWrapper>
                 </ActionWrapper>
               </Wrapper>
             </List.Item>
@@ -98,7 +109,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
 
 function TimeStatus({ updatedAt, createdAt, status }) {
   return (
-    <div>
+    <TimeStatusWrapper>
       {status !== APPLICATION_STATUS.Apply ? (
         <>
           <StatusLabel>{status}</StatusLabel>
@@ -109,6 +120,6 @@ function TimeStatus({ updatedAt, createdAt, status }) {
       ) : (
         <Time time={createdAt} />
       )}
-    </div>
+    </TimeStatusWrapper>
   );
 }

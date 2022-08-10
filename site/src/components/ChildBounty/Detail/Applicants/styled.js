@@ -1,10 +1,28 @@
 import { FlexBetween, Flex, p_12_normal } from "@osn/common-ui";
 import { text_dark_accessory } from "@osn/common-ui/es/styles/colors";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+export const TimeStatusWrapper = styled.div``;
+export const AssignButtonWrapper = styled.div`
+  display: none;
+`;
 
 export const Wrapper = styled(FlexBetween)`
   align-items: center;
   height: 56px;
+
+  ${(p) =>
+    p.hoverShowAssignButton &&
+    css`
+      &:hover {
+        & ${AssignButtonWrapper} {
+          display: block;
+        }
+        & ${TimeStatusWrapper} {
+          display: none;
+        }
+      }
+    `}
 `;
 
 export const IdentityUserWrapper = styled(Flex)`
