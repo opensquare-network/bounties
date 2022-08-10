@@ -36,13 +36,13 @@ async function importBounty(ctx) {
     throw new HttpError(400, { bountyIndex: ["Bounty index is missing"] });
   }
 
-  const trimTitle = trim(title);
-  if (!trimTitle) {
+  const trimmedTitle = trim(title);
+  if (!trimmedTitle) {
     throw new HttpError(400, { title: ["Title is missing"] });
   }
 
-  const trimContent = trim(content);
-  if (!trimContent) {
+  const trimmedContent = trim(content);
+  if (!trimmedContent) {
     throw new HttpError(400, { content: ["Content is missing"] });
   }
 
@@ -50,8 +50,8 @@ async function importBounty(ctx) {
     network,
     parseInt(bountyIndex),
     logo,
-    trimTitle,
-    trimContent,
+    trimmedTitle,
+    trimmedContent,
     data,
     address,
     signature,
