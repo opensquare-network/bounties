@@ -1,18 +1,18 @@
 import { Title } from "./styled";
-import LoadingInput from "../../LoadingInput";
+import { Input, LoadingIcon } from "@osn/common-ui";
 
 export default function InputTitle({ title, setTitle, isLoading }) {
   return (
     <>
       <Title>Title</Title>
-      <LoadingInput
+      <Input
         value={title}
         onChange={(e) => {
           setTitle(e.target.value);
         }}
         placeholder="Input title here..."
         disabled={isLoading}
-        loading={isLoading}
+        suffix={isLoading && <LoadingIcon />}
       />
     </>
   );
