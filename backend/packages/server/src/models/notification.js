@@ -7,19 +7,7 @@ const NotificationSchema = new mongoose.Schema(
     owner: String, // public key of owner address
     type: {
       type: [String],
-      enum: [
-        NotificationType.Applied,
-        NotificationType.Assigned,
-        NotificationType.Unassigned,
-        NotificationType.Accepted,
-        NotificationType.Submitted,
-        NotificationType.Canceled,
-        NotificationType.Reply,
-        NotificationType.Mention,
-        NotificationType.ChildBountyClosed,
-        NotificationType.ChildBountyReopen,
-        NotificationType.ChildBountyResolved,
-      ],
+      enum: Object.values(NotificationType),
     },
     read: Boolean,
     data: {

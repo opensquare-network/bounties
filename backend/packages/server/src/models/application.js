@@ -19,13 +19,7 @@ const ApplicationSchema = new mongoose.Schema(
     signature: String,
     status: {
       type: String,
-      enum: [
-        ApplicationStatus.Apply,
-        ApplicationStatus.Assigned,
-        ApplicationStatus.Started,
-        ApplicationStatus.Submitted,
-        ApplicationStatus.Canceled,
-      ],
+      enum: Object.values(ApplicationStatus),
     },
   },
   {
