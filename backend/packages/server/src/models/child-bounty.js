@@ -11,7 +11,6 @@ const ChildBountySchema = new mongoose.Schema(
     content: String,
     skills: [String],
     data: mongoose.Schema.Types.Mixed,
-    deleted: mongoose.Schema.Types.Mixed,
     pinHash: String,
     address: String,
     signature: String,

@@ -16,6 +16,9 @@ const NotificationSchema = new mongoose.Schema(
         NotificationType.Canceled,
         NotificationType.Reply,
         NotificationType.Mention,
+        NotificationType.ChildBountyClosed,
+        NotificationType.ChildBountyReopen,
+        NotificationType.ChildBountyResolved,
       ],
     },
     read: Boolean,
@@ -23,6 +26,10 @@ const NotificationSchema = new mongoose.Schema(
       byWho: {
         address: String,
         network: String,
+      },
+      childBountyTimelineItem: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ChildBountyTimeline",
       },
       applicationTimelineItem: {
         type: mongoose.Schema.Types.ObjectId,

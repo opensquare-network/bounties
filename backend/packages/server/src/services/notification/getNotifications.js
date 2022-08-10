@@ -20,6 +20,10 @@ async function getNotifications(network, address, page, pageSize) {
     .populate({
       path: "data.childBountyComment",
       populate: "childBounty",
+    })
+    .populate({
+      path: "data.childBountyTimelineItem",
+      populate: "childBounty",
     });
 
   return {

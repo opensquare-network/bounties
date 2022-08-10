@@ -45,7 +45,7 @@ async function getChildBountyInfo(ctx) {
     if (e.errors.length > 0) {
       ctx.throw(500, e.errors[0].message);
     } else {
-      ctx.throw(500, "Failed to get child bounty info from node");
+      ctx.throw(500, `Child bounty is not found on chain`);
     }
   }
 }

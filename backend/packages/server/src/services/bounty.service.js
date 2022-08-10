@@ -23,7 +23,7 @@ async function getBounty(network, bountyIndex) {
   const bounty = await Bounty.findOne({ network, bountyIndex }).populate({
     path: "childBounties",
     select:
-      "network parentBountyIndex index title status childBounty deleted createdAt updatedAt",
+      "network parentBountyIndex index title status childBounty createdAt updatedAt",
   });
 
   if (!bounty) {
