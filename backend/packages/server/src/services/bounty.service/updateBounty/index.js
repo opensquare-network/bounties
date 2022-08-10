@@ -2,6 +2,7 @@ const { HttpError } = require("../../../utils/exc");
 const { Bounty } = require("../../../models");
 const { closeBounty } = require("./closeBounty");
 const { reopenBounty } = require("./reopenBounty");
+const { BountyActions } = require("../../../utils/constants");
 
 async function updateBounty(
   action,
@@ -20,9 +21,9 @@ async function updateBounty(
   }
 
   let updatedBounty;
-  if (action === "closeBounty") {
+  if (action === BountyActions.CloseBounty) {
     updatedBounty = await closeBounty(bounty, action, data, address, signature);
-  } else if (action === "reopenBounty") {
+  } else if (action === BountyActions.ReopenBounty) {
     updatedBounty = await reopenBounty(
       bounty,
       action,

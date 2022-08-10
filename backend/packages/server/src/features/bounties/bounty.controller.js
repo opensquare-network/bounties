@@ -4,6 +4,7 @@ const { extractPage } = require("../../utils/pagination");
 const isNil = require("lodash.isnil");
 const trim = require("lodash.trim");
 const { allChains } = require("../../utils/chain");
+const { BountyActions } = require("../../utils/constants");
 
 async function getBounties(ctx) {
   const { page, pageSize } = extractPage(ctx);
@@ -24,7 +25,7 @@ async function importBounty(ctx) {
   const { action, network, bountyIndex, title, content } = data || {};
   const logo = ctx.request.file;
 
-  if (action !== "importBounty") {
+  if (action !== BountyActions.ImportBounty) {
     throw new HttpError(400, { action: ["Action must be importBounty"] });
   }
 

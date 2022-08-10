@@ -48,6 +48,12 @@ const ChildBountyActions = {
   ResolveChildBounty: "resolveChildBounty",
 };
 
+const BountyActions = {
+  ImportBounty: "importBounty",
+  CloseBounty: "closeBounty",
+  ReopenBounty: "reopenBounty",
+};
+
 module.exports = {
   ApplicationStatus,
   ChildBountyStatus,
@@ -55,4 +61,5 @@ module.exports = {
   NotificationType,
   ApplicationActions,
   ChildBountyActions,
+  BountyActions,
 };
