@@ -18,7 +18,7 @@ const BottomBar = styled.div`
   justify-content: space-between;
 `;
 
-export default function BountyMeta({ bountyDetail, type, reloadData }) {
+export default function BountyMeta({ bountyDetail, type }) {
   if (!bountyDetail) {
     return <Card head={metaLoading}>{descriptionLoading}</Card>;
   }
@@ -41,7 +41,7 @@ export default function BountyMeta({ bountyDetail, type, reloadData }) {
           {/* <JoinGroupButton /> */}
         </BottomBar>
       </Group>
-      <Action bountyDetail={bountyDetail} reloadData={reloadData} />
+      <Action bountyDetail={bountyDetail} />
     </Card>
   );
 }

@@ -5,7 +5,7 @@ import { BOUNTY_STATUS } from "utils/constants";
 import ClosedBountyCuratorActions from "./ClosedBountyCuratorActions";
 import OpenBountyCuratorActions from "./OpenBountyCuratorActions";
 
-export default function Action({ bountyDetail, reloadData }) {
+export default function Action({ bountyDetail }) {
   const account = useSelector(accountSelector);
 
   if (!bountyDetail) {
@@ -24,19 +24,9 @@ export default function Action({ bountyDetail, reloadData }) {
   }
 
   if (status === BOUNTY_STATUS.Open && isCurator) {
-    return (
-      <OpenBountyCuratorActions
-        bountyDetail={bountyDetail}
-        reloadData={reloadData}
-      />
-    );
+    return <OpenBountyCuratorActions bountyDetail={bountyDetail} />;
   } else if (status === BOUNTY_STATUS.Closed && isCurator) {
-    return (
-      <ClosedBountyCuratorActions
-        bountyDetail={bountyDetail}
-        reloadData={reloadData}
-      />
-    );
+    return <ClosedBountyCuratorActions bountyDetail={bountyDetail} />;
   } else {
     return null;
   }
