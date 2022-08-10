@@ -17,7 +17,14 @@ const {
 const { toPublicKey } = require("../utils/address");
 
 async function getChildBounties(page, pageSize) {
-  const q = {};
+  const q = {
+    status: {
+      $nin: [
+        ChildBountyStatus.Closed,
+        ChildBountyStatus.Awarded,
+      ]
+    }
+  };
   const total = await ChildBounty.countDocuments(q);
   const items = await ChildBounty.find(q)
     .skip((page - 1) * pageSize)
