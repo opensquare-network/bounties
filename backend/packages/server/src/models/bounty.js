@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { BountyStatus, ChildBountyStatus } = require("../utils/constants");
+const { BountyStatus  } = require("../utils/constants");
 const { Decimal128 } = require("./utils");
 
 const IPFS_GATEWAY_URL =
