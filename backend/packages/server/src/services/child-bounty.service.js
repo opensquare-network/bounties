@@ -75,7 +75,7 @@ async function importChildBounty(
     bountyIndex: parentBountyIndex,
   });
   if (!parentBounty) {
-    throw new HttpError(400, "Parent bounty has not imported yet");
+    throw new HttpError(400, "Parent bounty has not been imported yet");
   }
 
   if (parentBounty.status === BountyStatus.Closed) {
