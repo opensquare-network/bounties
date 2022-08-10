@@ -16,12 +16,7 @@ const ChildBountySchema = new mongoose.Schema(
     signature: String,
     status: {
       type: String,
-      enum: [
-        ChildBountyStatus.Open,
-        ChildBountyStatus.Assigned,
-        ChildBountyStatus.Awarded,
-        ChildBountyStatus.Closed,
-      ],
+      enum: Object.values(ChildBountyStatus),
     },
     childBounty: {
       value: Decimal128,

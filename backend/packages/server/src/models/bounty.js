@@ -22,7 +22,7 @@ const BountySchema = new mongoose.Schema(
     signature: String,
     status: {
       type: String,
-      enum: [BountyStatus.Open, BountyStatus.Closed],
+      enum: Object.values(BountyStatus),
     },
     bounty: {
       value: Decimal128,
