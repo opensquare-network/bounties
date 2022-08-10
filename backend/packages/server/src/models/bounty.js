@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { BountyStatus } = require("../utils/constants");
+const { BountyStatus, ChildBountyStatus } = require("../utils/constants");
 const { Decimal128 } = require("./utils");
 
 const IPFS_GATEWAY_URL =
@@ -49,6 +49,7 @@ BountySchema.virtual("childBountiesCount", {
   foreignField: "parentBountyIndex",
   match: (bounty) => ({
     network: bounty.network,
+    status: { $ne: ChildBountyStatus.Closed },
   }),
   count: true,
 });
@@ -59,6 +60,7 @@ BountySchema.virtual("childBounties", {
   foreignField: "parentBountyIndex",
   match: (bounty) => ({
     network: bounty.network,
+    status: { $ne: ChildBountyStatus.Closed },
   }),
 });
 
