@@ -3,11 +3,11 @@ import { MOBILE_SIZE } from "@osn/constants";
 import Discussions from "./Discussions";
 import ChildBountyDetailApplicants from "./Applicants";
 import ChildBountyDetailMeta from "./Meta";
-import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 import ChildBountyDetailMetaEdit from "./MetaEdit";
 import { useState } from "react";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useSelector } from "react-redux";
+import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,8 +47,8 @@ export default function ChildBountyDetail({ childBountyDetail }) {
           onEdit={() => setEditing(true)}
         />
       )}
-
       <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
+
       <Discussions
         network={childBountyDetail?.network}
         parentBountyIndex={childBountyDetail?.parentBountyIndex}
