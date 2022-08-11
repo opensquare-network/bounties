@@ -15,7 +15,6 @@ export default function InputBountyId({
   tooltip,
   bountyId,
   setBountyId,
-  isLoading,
   errorMsg,
 }) {
   return (
@@ -37,7 +36,6 @@ export default function InputBountyId({
             setBountyId(e.target.value);
           }}
           placeholder="0"
-          disabled={isLoading}
         />
         {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
       </InputAndError>
