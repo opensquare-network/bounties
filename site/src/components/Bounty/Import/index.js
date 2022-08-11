@@ -247,7 +247,6 @@ export default function ImportBounty() {
           tooltip={"The bounty ID on-chain"}
           bountyId={bountyId}
           setBountyId={setBountyId}
-          isLoading={loading}
           errorMsg={bountyError}
         />
         <InputTitle title={title} setTitle={setTitle} isLoading={loading} />
