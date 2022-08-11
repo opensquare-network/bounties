@@ -46,12 +46,14 @@ const ChildBountyActions = {
   CloseChildBounty: "closeChildBounty",
   ReopenChildBounty: "reopenChildBounty",
   ResolveChildBounty: "resolveChildBounty",
+  EditChildBounty: "editChildBounty",
 };
 
 const BountyActions = {
   ImportBounty: "importBounty",
   CloseBounty: "closeBounty",
   ReopenBounty: "reopenBounty",
+  EditBounty: "editBounty",
 };
 
 module.exports = {
