@@ -3,6 +3,7 @@ import { MOBILE_SIZE } from "@osn/constants";
 import Discussions from "./Discussions";
 import ChildBountyDetailApplicants from "./Applicants";
 import ChildBountyDetailMeta from "./Meta";
+import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,14 +21,18 @@ const Wrapper = styled.div`
 `;
 
 export default function ChildBountyDetail({ childBountyDetail }) {
+  const { noticeEl, isDifferentNetwork } = useDifferentNetworkNotice(
+    childBountyDetail?.network,
+  );
+
   return (
     <Wrapper>
+      {isDifferentNetwork && noticeEl}
       <ChildBountyDetailMeta
         type="Child Bounty"
         childBountyDetail={childBountyDetail}
       />
       <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
-
       <Discussions
         network={childBountyDetail?.network}
         parentBountyIndex={childBountyDetail?.parentBountyIndex}
