@@ -19,18 +19,25 @@ async function editChildBounty(childBounty, action, data, address, signature) {
     throw new HttpError(403, "Only the curator can edit");
   }
 
-  const { title, content } = data || {};
+  const { title, content, skills } = data || {};
   if (!title) {
-    throw new HttpError(400, "Title is missing");
+    throw new HttpError(400, { title: ["Title is missing"] });
   }
 
   if (!content) {
-    throw new HttpError(400, "Content is missing");
+    throw new HttpError(400, { content: ["Content is missing"] });
+  }
+
+  if (
+    skills &&
+    (!Array.isArray(skills) || skills.some((item) => typeof item !== "string"))
+  ) {
+    throw new HttpError(400, { skills: ["Skills must be array of string"] });
   }
 
   const updatedChildBounty = await ChildBounty.findOneAndUpdate(
     { _id: childBounty._id },
-    { title, content, data },
+    { title, content, skills, data },
     { new: true },
   );
 
