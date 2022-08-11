@@ -6,7 +6,7 @@ export default function InputTitle({ title, setTitle, isLoading }) {
     <>
       <Title>Title</Title>
       <Input
-        value={title}
+        defaultValue={title}
         onChange={(e) => {
           setTitle(e.target.value);
         }}

@@ -10,7 +10,7 @@ import { useAction } from "./actions";
 import Info from "./Info";
 import { Group } from "../../../Common/Detail/styled";
 
-export default function ChildBountyDetailMeta({ childBountyDetail, type }) {
+export default function ChildBountyDetailMeta({ childBountyDetail, type, onEdit }) {
   const action = useAction(childBountyDetail);
 
   if (!childBountyDetail) {
@@ -23,7 +23,7 @@ export default function ChildBountyDetailMeta({ childBountyDetail, type }) {
 
       <Divider />
 
-      <Description bountyDetail={childBountyDetail} />
+      <Description bountyDetail={childBountyDetail} onEdit={onEdit} />
 
       <Divider />
 

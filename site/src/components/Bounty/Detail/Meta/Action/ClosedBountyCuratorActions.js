@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Flex } from "@osn/common-ui";
 import { accountSelector } from "store/reducers/accountSlice";
-import { useApi } from "utils/hooks";
 import serverApi from "services/serverApi";
 import {
   newErrorToast,
@@ -18,7 +17,6 @@ import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 export default function ClosedBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
-  const api = useApi();
   const isMounted = useIsMounted();
   const { fetchBountyDetail } = useFetchBountyDetail();
 
@@ -33,10 +31,6 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
   async function handleClose() {
     if (!account) {
       return showErrorToast("Please connect wallet");
-    }
-
-    if (!api) {
-      return showErrorToast("Network not connected yet");
     }
 
     const toastId = newToastId();

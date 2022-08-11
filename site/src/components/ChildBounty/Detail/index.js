@@ -3,6 +3,10 @@ import { MOBILE_SIZE } from "@osn/constants";
 import Discussions from "./Discussions";
 import ChildBountyDetailApplicants from "./Applicants";
 import ChildBountyDetailMeta from "./Meta";
+import ChildBountyDetailMetaEdit from "./MetaEdit";
+import { useState } from "react";
+import { accountSelector } from "store/reducers/accountSlice";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,12 +24,26 @@ const Wrapper = styled.div`
 `;
 
 export default function ChildBountyDetail({ childBountyDetail }) {
+  const account = useSelector(accountSelector);
+  const [editing, setEditing] = useState(false);
+
   return (
     <Wrapper>
-      <ChildBountyDetailMeta
-        type="Child Bounty"
-        childBountyDetail={childBountyDetail}
-      />
+      {
+        (account && editing) ? (
+          <ChildBountyDetailMetaEdit
+            type="Child Bounty"
+            childBountyDetail={childBountyDetail}
+            onEditEnd={() => setEditing(false)}
+          />
+        ) : (
+          <ChildBountyDetailMeta
+            type="Child Bounty"
+            childBountyDetail={childBountyDetail}
+            onEdit={() => setEditing(true)}
+          />
+        )
+      }
       <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
 
       <Discussions
