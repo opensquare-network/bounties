@@ -12,7 +12,7 @@ export const Wrapper = styled(FlexBetween)`
   height: 56px;
 
   ${(p) =>
-    p.hoverShowAssignButton &&
+    p.hoverShouldShowAssignButton &&
     css`
       &:hover {
         & ${AssignButtonWrapper} {
