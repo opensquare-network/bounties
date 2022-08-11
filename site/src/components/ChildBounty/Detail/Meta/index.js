@@ -9,9 +9,17 @@ import {
 import { useAction } from "./actions";
 import Info from "./Info";
 import { Group } from "../../../Common/Detail/styled";
+import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 
-export default function ChildBountyDetailMeta({ childBountyDetail, type, onEdit }) {
+export default function ChildBountyDetailMeta({
+  childBountyDetail,
+  type,
+  onEdit,
+}) {
   const action = useAction(childBountyDetail);
+  const { isSameNetwork } = useDifferentNetworkNotice(
+    childBountyDetail?.network,
+  );
 
   if (!childBountyDetail) {
     return <Card head={metaLoading}>{descriptionLoading}</Card>;
@@ -31,7 +39,7 @@ export default function ChildBountyDetailMeta({ childBountyDetail, type, onEdit 
         <Share />
       </Group>
 
-      {action}
+      {isSameNetwork && action}
     </Card>
   );
 }
