@@ -1,4 +1,4 @@
-import { Notification } from "@osn/common-ui";
+import { Notification, text_dark_minor } from "@osn/common-ui";
 import { MarkdownPreviewer } from "@osn/previewer";
 import { capitalize } from "lodash";
 import { useEffect, useMemo, useState } from "react";
@@ -7,6 +7,7 @@ import { useAccount } from "./useAccount";
 
 const Message = styled.div`
   ul {
+    color: ${text_dark_minor};
     margin: 0;
   }
 `;
