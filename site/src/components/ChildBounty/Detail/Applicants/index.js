@@ -10,6 +10,7 @@ import {
 } from "@osn/common-ui";
 import StatusLabel from "components/Bounty/StatusLabel";
 import { useAccount } from "hooks/useAccount";
+import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { APPLICATION_STATUS } from "utils/constants";
 import { findUnassignableApplicant } from "../Meta/actions/utils";
@@ -28,6 +29,9 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
   const { applications = [], childBounty } = childBountyDetail ?? {};
   const { curators = [] } = childBounty ?? {};
   const account = useAccount();
+  const { isSameNetwork } = useDifferentNetworkNotice(
+    childBountyDetail?.network,
+  );
 
   const isCurator = curators.includes(account?.encodedAddress);
   const { assignService } = useWorkflowActionService(childBountyDetail);
@@ -66,14 +70,17 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
             status,
           } = applicant;
 
-          const hoverShowAssignButton =
+          const hoverShouldShowAssignButton =
             isCurator &&
+            isSameNetwork &&
             !unassignableApplicant &&
             status !== APPLICATION_STATUS.Canceled;
 
           return (
             <List.Item>
-              <Wrapper hoverShowAssignButton={hoverShowAssignButton}>
+              <Wrapper
+                hoverShouldShowAssignButton={hoverShouldShowAssignButton}
+              >
                 <IdentityUserWrapper>
                   <LinkIdentityUser
                     items={[

@@ -7,6 +7,7 @@ import ChildBountyDetailMetaEdit from "./MetaEdit";
 import { useState } from "react";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useSelector } from "react-redux";
+import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,24 +27,26 @@ const Wrapper = styled.div`
 export default function ChildBountyDetail({ childBountyDetail }) {
   const account = useSelector(accountSelector);
   const [editing, setEditing] = useState(false);
+  const { noticeEl, isDifferentNetwork } = useDifferentNetworkNotice(
+    childBountyDetail?.network,
+  );
 
   return (
     <Wrapper>
-      {
-        (account && editing) ? (
-          <ChildBountyDetailMetaEdit
-            type="Child Bounty"
-            childBountyDetail={childBountyDetail}
-            onEditEnd={() => setEditing(false)}
-          />
-        ) : (
-          <ChildBountyDetailMeta
-            type="Child Bounty"
-            childBountyDetail={childBountyDetail}
-            onEdit={() => setEditing(true)}
-          />
-        )
-      }
+      {isDifferentNetwork && noticeEl}
+      {account && editing ? (
+        <ChildBountyDetailMetaEdit
+          type="Child Bounty"
+          childBountyDetail={childBountyDetail}
+          onEditEnd={() => setEditing(false)}
+        />
+      ) : (
+        <ChildBountyDetailMeta
+          type="Child Bounty"
+          childBountyDetail={childBountyDetail}
+          onEdit={() => setEditing(true)}
+        />
+      )}
       <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
 
       <Discussions
