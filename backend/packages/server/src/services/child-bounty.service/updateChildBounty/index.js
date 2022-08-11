@@ -3,6 +3,7 @@ const { ChildBounty } = require("../../../models");
 const { resolveChildBounty } = require("./resolveChildBounty");
 const { closeChildBounty } = require("./closeChildBounty");
 const { reopenChildBounty } = require("./reopenChildBounty");
+const { editChildBounty } = require("./editChildBounty");
 const { ChildBountyActions } = require("../../../utils/constants");
 
 async function updateChildBounty(
@@ -42,6 +43,14 @@ async function updateChildBounty(
     );
   } else if (action === ChildBountyActions.ReopenChildBounty) {
     updatedChildBounty = await reopenChildBounty(
+      childBounty,
+      action,
+      data,
+      address,
+      signature,
+    );
+  } else if (action === ChildBountyActions.EditChildBounty) {
+    updatedChildBounty = await editChildBounty(
       childBounty,
       action,
       data,

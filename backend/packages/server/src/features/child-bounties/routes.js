@@ -18,12 +18,6 @@ router.patch(
   childBountyController.updateChildBounty,
 );
 
-router.delete(
-  "/child-bounty",
-  requireSignature,
-  childBountyController.deleteChildBounty,
-);
-
 router.get(
   "/network/:network/child-bounties/:parentBountyIndex(\\d+)_:index(\\d+)",
   childBountyController.getChildBounty,
