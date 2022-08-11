@@ -3,7 +3,7 @@ const { BountyStatus  } = require("../utils/constants");
 const { Decimal128 } = require("./utils");
 
 const IPFS_GATEWAY_URL =
-  process.env.IPFS_GATEWAY_URL || "https://ipfs.infura.io/ipfs/";
+  process.env.IPFS_GATEWAY_URL || "https://opensquare.infura-ipfs.io/ipfs/";
 
 function getIpfsUrl(logoCid) {
   return `${IPFS_GATEWAY_URL}${logoCid}`;

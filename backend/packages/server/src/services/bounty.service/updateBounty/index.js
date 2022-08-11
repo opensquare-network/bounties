@@ -2,6 +2,7 @@ const { HttpError } = require("../../../utils/exc");
 const { Bounty } = require("../../../models");
 const { closeBounty } = require("./closeBounty");
 const { reopenBounty } = require("./reopenBounty");
+const { editBounty } = require("./editBounty");
 const { BountyActions } = require("../../../utils/constants");
 
 async function updateBounty(
@@ -31,6 +32,8 @@ async function updateBounty(
       address,
       signature,
     );
+  } else if (action === BountyActions.EditBounty) {
+    updatedBounty = await editBounty(bounty, action, data, address, signature);
   } else {
     throw new HttpError(400, `Unknown action: ${action}`);
   }

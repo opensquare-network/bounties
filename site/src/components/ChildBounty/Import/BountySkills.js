@@ -67,7 +67,7 @@ export default function BountySkills({ setSelectedSkills, selectedSkills }) {
         {SKILLS.map((item) => (
           <SkillItem
             key={item}
-            className={selectedSkills.includes(item) ? "selected" : ""}
+            className={selectedSkills?.includes(item) ? "selected" : ""}
             onClick={() => selectSkill(item)}
           >
             {item}

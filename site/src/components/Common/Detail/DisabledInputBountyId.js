@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Input from "@osn/common-ui/es/styled/Input";
 import Tooltip from "@osn/common-ui/es/Tooltip";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
-import { Title, ErrorMessage } from "./styled";
+import { Title } from "../Import/styled";
 
 const InputAndError = styled.div`
   display: flex;
@@ -10,13 +10,10 @@ const InputAndError = styled.div`
   gap: 8px;
 `;
 
-export default function InputBountyId({
+export default function DisabledInputBountyId({
   title,
   tooltip,
   bountyId,
-  setBountyId,
-  errorMsg,
-  disabled,
 }) {
   return (
     <>
@@ -32,14 +29,10 @@ export default function InputBountyId({
       </Title>
       <InputAndError>
         <Input
-          value={bountyId}
-          onChange={(e) => {
-            setBountyId(e.target.value);
-          }}
+          defaultValue={bountyId}
           placeholder="0"
-          disabled={disabled}
+          style={{ background: "#f0f3f8" }}
         />
-        {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
       </InputAndError>
     </>
   );
