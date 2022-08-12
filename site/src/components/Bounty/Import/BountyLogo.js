@@ -53,9 +53,9 @@ const Info = styled.div`
   color: #a1a8b3;
 `;
 
-export default function BountyLogo({ network, setImageFile }) {
+export default function BountyLogo({ network, imageFile, setImageFile }) {
   const inputEl = useRef();
-  const [imageDataUrl, setImageDataUrl] = useState(null);
+  const [imageDataUrl, setImageDataUrl] = useState(imageFile);
 
   const handleSelectFile = () => {
     inputEl.current.vaule = "";
