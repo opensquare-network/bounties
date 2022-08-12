@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAsyncState } from "@osn/common";
 import { signApiData } from "utils/signature";
 import serverApi from "services/serverApi";
-import { Button, noop, notification, RichEditor } from "@osn/common-ui";
+import { Button, noop, notification } from "@osn/common-ui";
 import InputTitle from "components/Common/Import/InputTitle";
 import InputDescription from "components/Common/Import/InputDescription";
 import { Main } from "components/Bounty/Import/styled";
