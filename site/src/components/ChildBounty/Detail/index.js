@@ -33,7 +33,8 @@ export default function ChildBountyDetail({ childBountyDetail }) {
 
   return (
     <Wrapper>
-      {isDifferentNetwork && noticeEl}
+      {childBountyDetail && isDifferentNetwork && noticeEl}
+
       {account && editing ? (
         <ChildBountyDetailMetaEdit
           type="Child Bounty"
