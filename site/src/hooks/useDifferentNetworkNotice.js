@@ -27,7 +27,7 @@ export function useDifferentNetworkNotice(network = "") {
     [isDifferentNetwork],
   );
 
-  const [displayNotice, setDisplayNotice] = useState(true);
+  const [displayNotice, setDisplayNotice] = useState(false);
 
   useEffect(() => setDisplayNotice(true), [account?.network]);
 
