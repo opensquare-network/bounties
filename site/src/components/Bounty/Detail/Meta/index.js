@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Card, Divider } from "@osn/common-ui";
+import { Card, Divider, noop } from "@osn/common-ui";
 import Title from "./Title";
 import Info from "./Info";
 import Description from "./Description";
@@ -18,7 +18,7 @@ const BottomBar = styled.div`
   justify-content: space-between;
 `;
 
-export default function BountyMeta({ bountyDetail, type }) {
+export default function BountyMeta({ bountyDetail, type, onEdit = noop }) {
   if (!bountyDetail) {
     return <Card head={metaLoading}>{descriptionLoading}</Card>;
   }
@@ -33,7 +33,7 @@ export default function BountyMeta({ bountyDetail, type }) {
         </>
       }
     >
-      <Description bountyDetail={bountyDetail} />
+      <Description bountyDetail={bountyDetail} onEdit={onEdit} />
       <Divider />
       <Group>
         <BottomBar>
