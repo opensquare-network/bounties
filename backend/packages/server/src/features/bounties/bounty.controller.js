@@ -13,11 +13,15 @@ async function getBounties(ctx) {
 }
 
 async function importBounty(ctx) {
-  const { data: msg, address, signature } = ctx.request.body;
+  const { data: objOrMsg, address, signature } = ctx.request.body;
 
   let data;
   try {
-    data = JSON.parse(msg);
+    if (typeof objOrMsg === "string") {
+      data = JSON.parse(objOrMsg);
+    } else {
+      data = objOrMsg;
+    }
   } catch (e) {
     throw new HttpError(400, "Invalid data");
   }
@@ -60,9 +64,21 @@ async function importBounty(ctx) {
 }
 
 async function updateBounty(ctx) {
-  const { data, address, signature } = ctx.request.body;
+  const { data: objOrMsg, address, signature } = ctx.request.body;
+
+  let data;
+  try {
+    if (typeof objOrMsg === "string") {
+      data = JSON.parse(objOrMsg);
+    } else {
+      data = objOrMsg;
+    }
+  } catch (e) {
+    throw new HttpError(400, "Invalid data");
+  }
 
   const { action, network, bountyIndex } = data || {};
+  const logo = ctx.request.file;
 
   if (!action) {
     throw new HttpError(400, "Action is missing");
@@ -83,6 +99,7 @@ async function updateBounty(ctx) {
     data,
     address,
     signature,
+    logo,
   );
 }
 

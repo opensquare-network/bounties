@@ -1,23 +1,8 @@
 const { HttpError } = require("../../utils/exc");
 const { Bounty } = require("../../models");
 const chainService = require("../chain.service");
-const { ipfsAddBuffer } = require("../ipfs.service");
 const { BountyStatus } = require("../../utils/constants");
-
-async function pinFile(file) {
-  const fileData = file.buffer;
-  const Megabyte = 1024 * 1024;
-  if (file.size > 10 * Megabyte) {
-    throw new HttpError(
-      400,
-      "The upload file has exceeded the size limitation",
-    );
-  }
-
-  const result = await ipfsAddBuffer(fileData);
-  const cid = result.path;
-  return cid;
-}
+const { pinFile } = require("./pinFile");
 
 async function importBounty(
   network,

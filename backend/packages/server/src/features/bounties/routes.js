@@ -15,7 +15,12 @@ router.post(
   bountyController.importBounty,
 );
 
-router.patch("/bounty", requireSignature, bountyController.updateBounty);
+router.patch(
+  "/bounty",
+  upload.single("logo"),
+  requireSignature,
+  bountyController.updateBounty,
+);
 
 router.get(
   "/network/:network/bounties/:bountyIndex",

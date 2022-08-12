@@ -12,6 +12,7 @@ async function updateBounty(
   data,
   address,
   signature,
+  logo,
 ) {
   const bounty = await Bounty.findOne({
     network,
@@ -33,7 +34,14 @@ async function updateBounty(
       signature,
     );
   } else if (action === BountyActions.EditBounty) {
-    updatedBounty = await editBounty(bounty, action, data, address, signature);
+    updatedBounty = await editBounty(
+      bounty,
+      action,
+      data,
+      address,
+      signature,
+      logo,
+    );
   } else {
     throw new HttpError(400, `Unknown action: ${action}`);
   }
