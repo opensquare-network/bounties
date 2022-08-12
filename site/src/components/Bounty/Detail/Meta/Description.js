@@ -1,12 +1,17 @@
 import { MarkdownPreviewer } from "@osn/previewer";
 import { Collapse } from "@osn/common-ui";
 import More from "components/Common/Detail/More";
+import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
+import { useIsCurator } from "hooks/useIsCurator";
 
 export default function Description({ bountyDetail, onEdit }) {
+  const { isSameNetwork } = useDifferentNetworkNotice(bountyDetail?.network);
+  const isCurator = useIsCurator(bountyDetail?.childBounty?.curators);
+
   return (
     <Collapse title="Description" ghost>
       <MarkdownPreviewer content={bountyDetail.content} />
-      <More onEditClick={onEdit} />
+      {isSameNetwork && isCurator && <More onEdit={onEdit} />}
     </Collapse>
   );
 }
