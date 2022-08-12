@@ -6,6 +6,7 @@ import { MOBILE_SIZE } from "@osn/constants";
 import ChildBounties from "./ChildBounties";
 import { useState } from "react";
 import BountyMetaEdit from "./MetaEdit";
+import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,9 +25,14 @@ const Wrapper = styled.div`
 
 export default function BountyDetail({ bountyDetail }) {
   const [editing, setEditing] = useState(false);
+  const { noticeEl, isDifferentNetwork } = useDifferentNetworkNotice(
+    bountyDetail?.network,
+  );
 
   return (
     <Wrapper>
+      {bountyDetail && isDifferentNetwork && noticeEl}
+
       {editing ? (
         <BountyMetaEdit
           bountyDetail={bountyDetail}
