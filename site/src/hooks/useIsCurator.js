@@ -9,7 +9,7 @@ export function useIsCurator(curators = []) {
 
   const isCurator = useMemo(
     () => curators.includes(account?.encodedAddress),
-    [account?.encodedAddress],
+    [curators, account?.encodedAddress],
   );
 
   return isCurator;
