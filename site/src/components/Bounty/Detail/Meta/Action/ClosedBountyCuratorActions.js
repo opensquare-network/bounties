@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Flex } from "@osn/common-ui";
+import { Button, Dot, Flex, FlexCenter, Time } from "@osn/common-ui";
 import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
 import {
@@ -13,12 +13,15 @@ import { signApiData } from "utils/signature";
 import { ButtonGroup } from "../../../../Common/Detail/styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
+import { useIsCurator } from "hooks/useIsCurator";
+import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
 
 export default function ClosedBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const isMounted = useIsMounted();
   const { fetchBountyDetail } = useFetchBountyDetail();
+  const isCurator = useIsCurator(bountyDetail?.bounty?.curators);
 
   const { bountyIndex } = bountyDetail ?? {};
 
@@ -68,9 +71,19 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
   return (
     <ButtonGroup>
       <Flex>
-        <Button primary block onClick={handleClose}>
-          Reopen
-        </Button>
+        {isCurator ? (
+          <Button primary block onClick={handleClose}>
+            Reopen
+          </Button>
+        ) : (
+          <Button primary block disabled>
+            <FlexCenter>
+              <ButtonText>Closed</ButtonText>
+              <Dot />
+              <Time time={bountyDetail?.updatedAt} />
+            </FlexCenter>
+          </Button>
+        )}
       </Flex>
     </ButtonGroup>
   );
