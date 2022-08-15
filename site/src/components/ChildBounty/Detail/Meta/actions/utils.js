@@ -1,9 +1,9 @@
 import { APPLICATION_STATUS } from "utils/constants";
 
 /**
- * if an applicant's status is `assigned`, `started` or `submitted`
+ * @description find a working applicant, status is `assigned`, `started` or `submitted`
  */
-export function findUnassignableApplicant(applicants = []) {
+export function findWorkingApplicant(applicants = []) {
   return applicants.find((i) => {
     return [
       APPLICATION_STATUS.Assigned,

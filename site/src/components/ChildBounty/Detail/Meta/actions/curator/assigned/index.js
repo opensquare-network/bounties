@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Flex } from "@osn/common-ui";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { ButtonGroup } from "../../styled";
-import { findUnassignableApplicant } from "../../utils";
+import { findWorkingApplicant } from "../../utils";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useApi } from "utils/hooks";
 import { awardChildBounty } from "services/chainApi";
@@ -32,9 +32,9 @@ export function useCuratorAssignedAction(childBountyDetail) {
     applications = [],
   } = childBountyDetail ?? {};
 
-  const unassignedApplicant = findUnassignableApplicant(applications);
+  const workingApplicant = findWorkingApplicant(applications);
   const beneficiary = encodeNetworkAddress(
-    unassignedApplicant?.address,
+    workingApplicant?.address,
     account?.network,
   );
   const signer = encodeNetworkAddress(account?.address, account?.network);
@@ -42,7 +42,7 @@ export function useCuratorAssignedAction(childBountyDetail) {
   const { unassignService } = useWorkflowActionService(childBountyDetail);
 
   function handleUnassign() {
-    unassignService({ applicant: unassignedApplicant });
+    unassignService({ applicant: workingApplicant });
   }
 
   const showErrorToast = (message) => {
