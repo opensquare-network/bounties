@@ -9,7 +9,7 @@ import {
   Button,
 } from "@osn/common-ui";
 import StatusLabel from "components/Bounty/StatusLabel";
-import { usePermission } from "hooks/usePermission";
+import { useBountyPermission } from "hooks/useBountyPermission";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { APPLICATION_STATUS } from "utils/constants";
 import { findUnassignableApplicant } from "../Meta/actions/utils";
@@ -26,7 +26,7 @@ import {
 
 export default function ChildBountyApplicants({ childBountyDetail }) {
   const { applications = [] } = childBountyDetail ?? {};
-  const { canAssignHunter } = usePermission(childBountyDetail);
+  const { canAssignHunter } = useBountyPermission(childBountyDetail);
 
   const { assignService } = useWorkflowActionService(childBountyDetail);
 

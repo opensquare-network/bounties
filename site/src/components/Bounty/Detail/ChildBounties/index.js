@@ -15,7 +15,7 @@ import {
 } from "utils/route";
 import { Index, Item, ListWrapper, Status, TimeWrapper, Title } from "./styled";
 import { BOUNTY_STATUS } from "utils/constants";
-import { usePermission } from "hooks/usePermission";
+import { useBountyPermission } from "hooks/useBountyPermission";
 
 export default function ChildBounties({ bountyDetail = {} }) {
   const {
@@ -24,7 +24,7 @@ export default function ChildBounties({ bountyDetail = {} }) {
     network,
     bountyIndex,
   } = bountyDetail ?? {};
-  const { canImportChildBounty } = usePermission(bountyDetail);
+  const { canImportChildBounty } = useBountyPermission(bountyDetail);
 
   return (
     <Collapse title="Child Bounties">

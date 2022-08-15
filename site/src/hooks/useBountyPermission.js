@@ -1,11 +1,13 @@
 import { useMemo } from "react";
-import { useAccount } from "./useAccount";
 import { useDifferentNetworkNotice } from "./useDifferentNetworkNotice";
 import { useIsCurator } from "./useIsCurator";
 
-export function usePermission(detail) {
+/**
+ * @param {object} detail
+ * @description given a bounty detail, can be `bountyDetail` or `childBountyDetail`, return current account permissions
+ */
+export function useBountyPermission(detail) {
   const { isSameNetwork } = useDifferentNetworkNotice(detail?.network);
-  const account = useAccount();
   const isCurator = useIsCurator(
     // for bounty
     detail?.bounty?.curators ||

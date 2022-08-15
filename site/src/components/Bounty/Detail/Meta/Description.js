@@ -1,10 +1,10 @@
 import { MarkdownPreviewer } from "@osn/previewer";
 import { Collapse } from "@osn/common-ui";
 import More from "components/Common/Detail/More";
-import { usePermission } from "hooks/usePermission";
+import { useBountyPermission } from "hooks/useBountyPermission";
 
 export default function Description({ bountyDetail, onEdit }) {
-  const { canEditBounty } = usePermission(bountyDetail);
+  const { canEditBounty } = useBountyPermission(bountyDetail);
 
   return (
     <Collapse title="Description" ghost>
