@@ -14,29 +14,28 @@ export function useHunterAssignedAction(childBountyDetail) {
   const account = useAccount();
   const { cancelButton } = useHunterCancelButton(childBountyDetail);
 
-  const myApplicantInfo = applications.find(
-    (i) => i.address === account?.encodedAddress,
-  );
+  const workingApplicant = findWorkingApplicant(applications);
+  const isMyWork = workingApplicant?.address === account?.encodedAddress;
 
   const acceptAndWork = useHunterAcceptAndStart(childBountyDetail);
   const started = useHunterStartedAction(childBountyDetail);
   const submitted = useHunterSubmittedAction(childBountyDetail);
 
-  const workingApplicant = findWorkingApplicant(applications);
-
   let actionEl = null;
-  if (myApplicantInfo?.status === APPLICATION_STATUS.Assigned) {
-    actionEl = acceptAndWork;
-  } else if (myApplicantInfo?.status === APPLICATION_STATUS.Started) {
-    actionEl = started;
-  } else if (myApplicantInfo?.status === APPLICATION_STATUS.Submitted) {
-    actionEl = submitted;
+  if (isMyWork) {
+    if (workingApplicant?.status === APPLICATION_STATUS.Assigned) {
+      actionEl = acceptAndWork;
+    } else if (workingApplicant?.status === APPLICATION_STATUS.Started) {
+      actionEl = started;
+    } else if (workingApplicant?.status === APPLICATION_STATUS.Submitted) {
+      actionEl = submitted;
+    }
   }
 
   return (
     <ButtonGroup>
       <Flex>
-        {myApplicantInfo ? (
+        {isMyWork && workingApplicant ? (
           <>
             {actionEl}
             {cancelButton}
