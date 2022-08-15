@@ -70,7 +70,7 @@ export default function Discussion({ network, parentBountyIndex, index }) {
   const [loading, setLoading] = useState(false);
   const isMounted = useIsMounted();
   const [suggestions, setSuggestions] = useState([]);
-  const { canComment } = useBountyPermission();
+  const { canComment } = useBountyPermission({ network });
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
