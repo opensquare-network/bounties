@@ -14,6 +14,7 @@ import { ButtonGroup } from "../../../../Common/Detail/styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
+import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
 
 export default function OpenBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
@@ -75,7 +76,11 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
   return (
     <ButtonGroup>
       <Flex>
-        {!hasIncompleteChildBounties && (
+        {hasIncompleteChildBounties ? (
+          <Button block primary disabled>
+            <ButtonText>In Progress</ButtonText>
+          </Button>
+        ) : (
           <Button primary block onClick={handleClose}>
             Close
           </Button>
