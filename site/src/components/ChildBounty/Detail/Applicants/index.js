@@ -12,7 +12,7 @@ import StatusLabel from "components/Bounty/StatusLabel";
 import { useBountyPermission } from "hooks/useBountyPermission";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { APPLICATION_STATUS } from "utils/constants";
-import { findUnassignableApplicant } from "../Meta/actions/utils";
+import { findWorkingApplicant } from "../Meta/actions/utils";
 import {
   DescriptionWrapper,
   IdentityUserWrapper,
@@ -30,7 +30,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
 
   const { assignService } = useWorkflowActionService(childBountyDetail);
 
-  const unassignableApplicant = findUnassignableApplicant(applications);
+  const workingApplicant = findWorkingApplicant(applications);
 
   return (
     <Card
@@ -66,7 +66,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
 
           const hoverShouldShowAssignButton =
             canAssignHunter &&
-            !unassignableApplicant &&
+            !workingApplicant &&
             status !== APPLICATION_STATUS.Canceled;
 
           return (
