@@ -9,8 +9,7 @@ import {
   Button,
 } from "@osn/common-ui";
 import StatusLabel from "components/Bounty/StatusLabel";
-import { useAccount } from "hooks/useAccount";
-import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
+import { usePermission } from "hooks/usePermission";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { APPLICATION_STATUS } from "utils/constants";
 import { findUnassignableApplicant } from "../Meta/actions/utils";
@@ -26,14 +25,9 @@ import {
 } from "./styled";
 
 export default function ChildBountyApplicants({ childBountyDetail }) {
-  const { applications = [], childBounty } = childBountyDetail ?? {};
-  const { curators = [] } = childBounty ?? {};
-  const account = useAccount();
-  const { isSameNetwork } = useDifferentNetworkNotice(
-    childBountyDetail?.network,
-  );
+  const { applications = [] } = childBountyDetail ?? {};
+  const { canAssignHunter } = usePermission(childBountyDetail);
 
-  const isCurator = curators.includes(account?.encodedAddress);
   const { assignService } = useWorkflowActionService(childBountyDetail);
 
   const unassignableApplicant = findUnassignableApplicant(applications);
@@ -71,8 +65,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
           } = applicant;
 
           const hoverShouldShowAssignButton =
-            isCurator &&
-            isSameNetwork &&
+            canAssignHunter &&
             !unassignableApplicant &&
             status !== APPLICATION_STATUS.Canceled;
 
