@@ -20,8 +20,14 @@ export function usePermission(detail) {
 
   const canComment = useMemo(() => isSameNetwork, [isSameNetwork]);
 
+  const canImportChildBounty = useMemo(
+    () => isSameNetwork && isCurator,
+    [isSameNetwork, isCurator],
+  );
+
   return {
     canEditBounty,
     canComment,
+    canImportChildBounty,
   };
 }
