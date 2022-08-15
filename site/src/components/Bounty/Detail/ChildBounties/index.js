@@ -15,6 +15,7 @@ import {
 } from "utils/route";
 import { Index, Item, ListWrapper, Status, TimeWrapper, Title } from "./styled";
 import { BOUNTY_STATUS } from "utils/constants";
+import { useBountyPermission } from "hooks/useBountyPermission";
 
 export default function ChildBounties({ bountyDetail = {} }) {
   const {
@@ -23,6 +24,7 @@ export default function ChildBounties({ bountyDetail = {} }) {
     network,
     bountyIndex,
   } = bountyDetail ?? {};
+  const { canImportChildBounty } = useBountyPermission(bountyDetail);
 
   return (
     <Collapse title="Child Bounties">
@@ -81,7 +83,7 @@ export default function ChildBounties({ bountyDetail = {} }) {
         />
       </ListWrapper>
 
-      {status === BOUNTY_STATUS.Open && (
+      {status === BOUNTY_STATUS.Open && canImportChildBounty && (
         <Link
           style={{ display: "flex" }}
           to={resolveImportChildBountyRoute(network, bountyIndex)}

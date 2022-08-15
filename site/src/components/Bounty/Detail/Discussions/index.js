@@ -35,6 +35,7 @@ import { useSearchParams } from "react-router-dom";
 import { identityChainMap } from "@osn/constants";
 import NetworkUser from "components/User/NetworkUser";
 import { MentionIdentityUser } from "@osn/common-ui";
+import { useBountyPermission } from "hooks/useBountyPermission";
 
 const Title = styled.div`
   ${p_16_semibold};
@@ -69,6 +70,7 @@ export default function Discussion({ network, bountyId }) {
   const [loading, setLoading] = useState(false);
   const isMounted = useIsMounted();
   const [suggestions, setSuggestions] = useState([]);
+  const { canComment } = useBountyPermission({ network });
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
@@ -250,7 +252,7 @@ export default function Discussion({ network, bountyId }) {
           setPage={setPage}
         />
       </PaginationWrapper>
-      {!(discussions === null) && (
+      {!(discussions === null) && canComment && (
         <EditorWrapper>
           <RichEditor
             ref={editorRef}
