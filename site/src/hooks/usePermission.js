@@ -25,9 +25,14 @@ export function usePermission(detail) {
     [isSameNetwork, isCurator],
   );
 
+  const canAssignHunter = useMemo(
+    () => isSameNetwork && isCurator,
+    [isSameNetwork, isCurator],
+  );
   return {
     canEditBounty,
     canComment,
     canImportChildBounty,
+    canAssignHunter,
   };
 }
