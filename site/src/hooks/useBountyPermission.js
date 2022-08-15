@@ -3,7 +3,14 @@ import { useDifferentNetworkNotice } from "./useDifferentNetworkNotice";
 import { useIsCurator } from "./useIsCurator";
 
 /**
- * @param {object} detail
+ * @typedef {{
+ *  network: string
+ *  [k: string]: any
+ * }} Detail
+ */
+
+/**
+ * @param {Detail} detail
  * @description given a bounty detail, can be `bountyDetail` or `childBountyDetail`, return current account permissions
  */
 export function useBountyPermission(detail) {
