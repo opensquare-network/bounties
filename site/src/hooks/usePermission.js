@@ -29,10 +29,26 @@ export function usePermission(detail) {
     () => isSameNetwork && isCurator,
     [isSameNetwork, isCurator],
   );
+
   return {
+    /**
+     * for bounty or child bounty
+     */
     canEditBounty,
+
+    /**
+     * for bounty or child bounty
+     */
     canComment,
+
+    /**
+     * for bounty
+     */
     canImportChildBounty,
+
+    /**
+     * for child bounty
+     */
     canAssignHunter,
   };
 }
