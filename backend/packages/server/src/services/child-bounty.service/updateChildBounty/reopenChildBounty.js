@@ -4,12 +4,14 @@ const {
   Application,
   ChildBountyTimeline,
   Notification,
+  Bounty,
 } = require("../../../models");
 const chainService = require("../../chain.service");
 const {
   ChildBountyStatus,
   ApplicationStatus,
   NotificationType,
+  BountyStatus,
 } = require("../../../utils/constants");
 const { toPublicKey } = require("../../../utils/address");
 const { evaluateChildBountyStatus } = require("../evaluateChildBountyStatus");
@@ -21,6 +23,18 @@ async function reopenChildBounty(
   address,
   signature,
 ) {
+  const parentBounty = await Bounty.findOne({
+    network: childBounty.network,
+    bountyIndex: childBounty.parentBountyIndex
+  });
+  if (!parentBounty) {
+    throw new HttpError(400, "Parent bounty not found");
+  }
+
+  if (parentBounty.status === BountyStatus.Closed) {
+    throw new HttpError(400, "Cannot reopen due to the parent bounty is closed");
+  }
+
   if (![ChildBountyStatus.Closed].includes(childBounty.status)) {
     throw new HttpError(400, 'Can reopen child bounty on "closed" status only');
   }
