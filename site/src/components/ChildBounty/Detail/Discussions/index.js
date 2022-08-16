@@ -2,17 +2,16 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { Dot, List, Collapse, LoadingIcon } from "@osn/common-ui";
+import {
+  Dot,
+  List,
+  Collapse,
+  LoadingIcon,
+  notification,
+  noop,
+} from "@osn/common-ui";
 import Item from "components/Discussion/Item";
 import Pagination from "@osn/common-ui/es/styled/Pagination";
-import {
-  newErrorToast,
-  newPendingToast,
-  newSuccessToast,
-  newToastId,
-  removeToast,
-  updatePendingToast,
-} from "store/reducers/toastSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
 import RichEditor from "@osn/common-ui/es/RichEditor";
@@ -72,8 +71,6 @@ export default function Discussion({ network, parentBountyIndex, index }) {
   const [suggestions, setSuggestions] = useState([]);
   const { canComment } = useBountyPermission({ network });
 
-  const showErrorToast = (message) => dispatch(newErrorToast(message));
-
   const resolveMentionFormat = (identity, user) =>
     `[@${identity?.info?.display || addressEllipsis(user.address)}](${
       user.address
@@ -92,11 +89,17 @@ export default function Discussion({ network, parentBountyIndex, index }) {
 
   const onSubmit = async () => {
     if (!account) {
-      return showErrorToast("Please connect wallet");
+      notification.error({
+        message: "Please connect wallet",
+      });
+      return;
     }
 
     if (!content) {
-      return showErrorToast("Content is empty");
+      notification.error({
+        message: "Content is empty",
+      });
+      return;
     }
 
     const data = {
@@ -110,8 +113,11 @@ export default function Discussion({ network, parentBountyIndex, index }) {
     };
     const msg = JSON.stringify(data);
 
-    const toastId = newToastId();
-    dispatch(newPendingToast(toastId, "Waiting for signing..."));
+    let closePendingNotification = noop;
+    closePendingNotification = notification.pending({
+      message: "Signing...",
+      timeout: false,
+    });
 
     try {
       setLoading(true);
@@ -123,23 +129,27 @@ export default function Discussion({ network, parentBountyIndex, index }) {
         signature,
       };
 
-      dispatch(updatePendingToast(toastId, "Posting..."));
-
       const { result, error } = await serverApi.post(`/comments`, payload);
       if (result) {
         setContent("");
-        dispatch(newSuccessToast("Comment posted"));
+        notification.success({
+          message: "Comment posted",
+        });
         dispatch(
           fetchChildBountyDiscussions(network, parentBountyIndex, index, page),
         );
       }
       if (error) {
-        dispatch(newErrorToast(error.message));
+        notification.error({
+          message: error.message,
+        });
       }
     } catch (e) {
-      dispatch(newErrorToast(`Failed to add comment. ${e.message}`));
+      notification.error({
+        message: `Failed to update. ${e.message}`,
+      });
     } finally {
-      dispatch(removeToast(toastId));
+      closePendingNotification();
       if (isMounted.current) {
         setLoading(false);
       }

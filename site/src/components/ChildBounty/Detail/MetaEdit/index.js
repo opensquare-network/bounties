@@ -1,4 +1,4 @@
-import { Button, Card } from "@osn/common-ui";
+import { Button, Card, noop, notification } from "@osn/common-ui";
 import {
   descriptionLoading,
   metaLoading,
@@ -12,7 +12,6 @@ import styled from "styled-components";
 import BountyLogo from "components/Bounty/BountyLogo";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { newErrorToast, newPendingToast, newSuccessToast, newToastId, removeToast } from "store/reducers/toastSlice";
 import { signApiData } from "utils/signature";
 import serverApi from "services/serverApi";
 import { fetchChildBountyDetail } from "store/reducers/childBountyDetailSlice";
@@ -59,7 +58,10 @@ const Actions = styled.div`
   gap: 16px;
 `;
 
-export default function ChildBountyDetailMetaEdit({ childBountyDetail, onEditEnd }) {
+export default function ChildBountyDetailMetaEdit({
+  childBountyDetail,
+  onEditEnd,
+}) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [title, setTitle] = useState();
@@ -74,19 +76,21 @@ export default function ChildBountyDetailMetaEdit({ childBountyDetail, onEditEnd
     setSelectedSkills(childBountyDetail?.skills);
   }, [childBountyDetail]);
 
-  const showErrorToast = (message) => {
-    dispatch(newErrorToast(message));
-  };
-
   const onUpdate = async () => {
     if (!account) {
-      return showErrorToast("Please connect wallet");
+      notification.error({
+        message: "Please connect wallet",
+      });
+      return;
     }
 
     const signer = encodeNetworkAddress(account?.address, account?.network);
 
-    const toastId = newToastId();
-    dispatch(newPendingToast(toastId, "Waiting for signing..."));
+    let closePendingNotification = noop;
+    closePendingNotification = notification.pending({
+      message: "Signing...",
+      timeout: false,
+    });
 
     setIsLoading(true);
     try {
@@ -105,20 +109,32 @@ export default function ChildBountyDetailMetaEdit({ childBountyDetail, onEditEnd
 
       const { result, error } = await serverApi.patch(`/child-bounty`, payload);
       if (result) {
-        dispatch(newSuccessToast("Updated"));
+        notification.success({
+          message: "Updated",
+        });
 
         if (isMounted.current) {
-          dispatch(fetchChildBountyDetail(childBountyDetail.network, childBountyDetail.parentBountyIndex, childBountyDetail.index));
+          dispatch(
+            fetchChildBountyDetail(
+              childBountyDetail.network,
+              childBountyDetail.parentBountyIndex,
+              childBountyDetail.index,
+            ),
+          );
         }
       }
 
       if (error) {
-        dispatch(newErrorToast(error.message));
+        notification.error({
+          message: error.message,
+        });
       }
     } catch (e) {
-      dispatch(newErrorToast(`Failed to update. ${e.message}`));
+      notification.error({
+        message: `Failed to update. ${e.message}`,
+      });
     } finally {
-      dispatch(removeToast(toastId));
+      closePendingNotification();
       setIsLoading(false);
       onEditEnd();
     }
@@ -145,13 +161,12 @@ export default function ChildBountyDetailMetaEdit({ childBountyDetail, onEditEnd
         selectedSkills={selectedSkills}
         setSelectedSkills={setSelectedSkills}
       />
-      <InputDescription
-        content={content}
-        setContent={setContent}
-      />
+      <InputDescription content={content} setContent={setContent} />
       <Actions>
         <Button onClick={onEditEnd}>Cancel</Button>
-        <Button primary isLoading={isLoading} onClick={onUpdate}>Update</Button>
+        <Button primary isLoading={isLoading} onClick={onUpdate}>
+          Update
+        </Button>
       </Actions>
     </Main>
   );

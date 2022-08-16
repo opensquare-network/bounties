@@ -3,8 +3,8 @@ import { useAccount } from "hooks/useAccount";
 import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";
 import { useDispatch } from "react-redux";
-import { newErrorToast } from "store/reducers/toastSlice";
 import { useFetchChildBountyDetail } from "./useFetchChildBountyDetail";
+import { notification } from "@osn/common-ui";
 
 export function useWorkflowActionService(childBountyDetail) {
   const dispatch = useDispatch();
@@ -19,10 +19,6 @@ export function useWorkflowActionService(childBountyDetail) {
     index,
   };
 
-  const showErrorToast = (message) => {
-    dispatch(newErrorToast(message));
-  };
-
   async function service(endpoint, method, signedData) {
     try {
       const res = await serverApi[method](endpoint, signedData);
@@ -32,7 +28,10 @@ export function useWorkflowActionService(childBountyDetail) {
       }
 
       if (res.error) {
-        return showErrorToast(res.error.message);
+        notification.error({
+          message: res.error.message,
+        });
+        return;
       }
 
       return res;

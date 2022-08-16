@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { newErrorToast } from "./toastSlice";
 import serverApi from "services/serverApi";
+import { notification } from "@osn/common-ui";
 
 const discussionSlice = createSlice({
   name: "discussion",
@@ -30,7 +30,9 @@ export const fetchBountyDiscussions =
           dispatch(setDiscussions(result));
         }
         if (error) {
-          dispatch(newErrorToast(error.message));
+          notification.error({
+            message: error.message,
+          });
         }
       });
   };
@@ -47,7 +49,9 @@ export const fetchChildBountyDiscussions =
           dispatch(setDiscussions(result));
         }
         if (error) {
-          dispatch(newErrorToast(error.message));
+          notification.error({
+            message: error.message,
+          });
         }
       });
   };

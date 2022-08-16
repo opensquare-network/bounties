@@ -1,15 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Flex } from "@osn/common-ui";
+import { Button, Flex, noop, notification } from "@osn/common-ui";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useApi } from "utils/hooks";
 import serverApi from "services/serverApi";
-import {
-  newErrorToast,
-  newPendingToast,
-  newSuccessToast,
-  newToastId,
-  removeToast,
-} from "store/reducers/toastSlice";
 import { signApiData } from "utils/signature";
 import { ButtonGroup, ButtonText } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
@@ -26,21 +19,26 @@ export function useCuratorOpenAction(childBountyDetail) {
 
   const signer = encodeNetworkAddress(account?.address, account?.network);
 
-  const showErrorToast = (message) => {
-    dispatch(newErrorToast(message));
-  };
-
   async function handleClose() {
     if (!account) {
-      return showErrorToast("Please connect wallet");
+      notification.error({
+        message: "Please connect wallet",
+      });
+      return;
     }
 
     if (!api) {
-      return showErrorToast("Network not connected yet");
+      notification.error({
+        message: "Network not connected yet",
+      });
+      return;
     }
 
-    const toastId = newToastId();
-    dispatch(newPendingToast(toastId, "Waiting for signing..."));
+    let closePendingNotification = noop;
+    closePendingNotification = notification.pending({
+      message: "Signing...",
+      timeout: false,
+    });
 
     try {
       const payload = await signApiData(
@@ -55,7 +53,9 @@ export function useCuratorOpenAction(childBountyDetail) {
 
       const { result, error } = await serverApi.patch(`/child-bounty`, payload);
       if (result) {
-        dispatch(newSuccessToast("Closed"));
+        notification.success({
+          message: "Closed",
+        });
 
         if (isMounted.current) {
           dispatch(fetchChildBountyDetail());
@@ -63,12 +63,16 @@ export function useCuratorOpenAction(childBountyDetail) {
       }
 
       if (error) {
-        dispatch(newErrorToast(error.message));
+        notification.error({
+          message: error.message,
+        });
       }
     } catch (e) {
-      dispatch(newErrorToast(`Failed to close. ${e.message}`));
+      notification.error({
+        message: `Failed to update. ${e.message}`,
+      });
     } finally {
-      dispatch(removeToast(toastId));
+      closePendingNotification();
     }
   }
 

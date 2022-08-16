@@ -3,16 +3,8 @@ import styled from "styled-components";
 import ConnectWallet from "components/ConnectWallet";
 import Button from "@osn/common-ui/es/styled/Button";
 import { accountSelector } from "store/reducers/accountSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
-import {
-  newErrorToast,
-  newPendingToast,
-  newSuccessToast,
-  newToastId,
-  removeToast,
-  updatePendingToast,
-} from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
 import { useNavigate } from "react-router-dom";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
@@ -27,6 +19,7 @@ import BountyMeta from "components/Common/Import/BountyMeta";
 import BountySkills from "./BountySkills";
 import BountyHeader from "./BountyHeader";
 import { resolveChildBountyDetailRoute } from "utils/route";
+import { noop, notification } from "@osn/common-ui";
 
 const Wrapper = styled.div`
   display: flex;
@@ -89,7 +82,6 @@ const Side = styled.div`
 `;
 
 export default function ImportChildBounty({ network, parentBountyId }) {
-  const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [title, setTitle] = useState("");
   const [childBountyId, setChildBountyId] = useState("");
@@ -110,8 +102,6 @@ export default function ImportChildBounty({ network, parentBountyId }) {
 
   const navigate = useNavigate();
   const isMounted = useIsMounted();
-
-  const showErrorToast = (message) => dispatch(newErrorToast(message));
 
   const fetchChildBountyMeta = useMemo(() => {
     return debounce(async (parentBountyId, index) => {
@@ -168,22 +158,30 @@ export default function ImportChildBounty({ network, parentBountyId }) {
 
   const doImport = async () => {
     if (!parentBountyId) {
-      showErrorToast("Parent bounty ID is required");
+      notification.error({
+        message: "Parent bounty ID is required",
+      });
       return;
     }
 
     if (!childBountyId) {
-      showErrorToast("Child bounty ID is required");
+      notification.error({
+        message: "Child bounty ID is required",
+      });
       return;
     }
 
     if (!title) {
-      showErrorToast("Title is required");
+      notification.error({
+        message: "Title is required",
+      });
       return;
     }
 
     if (!content) {
-      showErrorToast("Content is required");
+      notification.error({
+        message: "Content is required",
+      });
       return;
     }
 
@@ -197,14 +195,14 @@ export default function ImportChildBounty({ network, parentBountyId }) {
       skills: selectedSkills,
     };
 
-    const toastId = newToastId();
-    dispatch(newPendingToast(toastId, "Waiting for signing..."));
+    let closePendingNotification = noop;
+    closePendingNotification = notification.pending({
+      message: "Signing...",
+    });
 
     setSubmitting(true);
     try {
       const signedData = await signApiData(data, encodedAddress);
-
-      dispatch(updatePendingToast(toastId, "Importing..."));
 
       const { result, error } = await serverApi.fetch(
         `child-bounties`,
@@ -220,7 +218,9 @@ export default function ImportChildBounty({ network, parentBountyId }) {
       setSubmitting(false);
 
       if (result) {
-        dispatch(newSuccessToast("Child bounty imported"));
+        notification.success({
+          message: "Child bounty imported",
+        });
         navigate(
           resolveChildBountyDetailRoute(network, parentBountyId, childBountyId),
         );
@@ -228,11 +228,13 @@ export default function ImportChildBounty({ network, parentBountyId }) {
       }
 
       if (error) {
-        showErrorToast(error.message);
+        notification.error({
+          message: error.message,
+        });
         return;
       }
     } finally {
-      dispatch(removeToast(toastId));
+      closePendingNotification();
       if (isMounted.current) {
         setSubmitting(false);
       }
