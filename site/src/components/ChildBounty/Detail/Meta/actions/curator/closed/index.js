@@ -14,6 +14,7 @@ import { signApiData } from "utils/signature";
 import { ButtonGroup, ButtonText } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
+import { BOUNTY_STATUS } from "utils/constants";
 
 export function useCuratorClosedChildBountyAction(childBountyDetail) {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
   const isMounted = useIsMounted();
   const { fetchChildBountyDetail } = useFetchChildBountyDetail();
 
-  const { parentBountyIndex, index } = childBountyDetail ?? {};
+  const { parentBounty, parentBountyIndex, index } = childBountyDetail ?? {};
 
   const signer = encodeNetworkAddress(account?.address, account?.network);
 
@@ -79,7 +80,9 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
           <ButtonText>Closed</ButtonText>
         </Button>
 
-        <Button onClick={handleReopen}>Reopen</Button>
+        {parentBounty?.status !== BOUNTY_STATUS.Closed && (
+          <Button onClick={handleReopen}>Reopen</Button>
+        )}
       </Flex>
     </ButtonGroup>
   );
