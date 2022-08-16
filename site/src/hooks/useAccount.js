@@ -4,13 +4,16 @@ import { accountSelector } from "store/reducers/accountSlice";
 
 export function useAccount() {
   const account = useSelector(accountSelector);
-  const encodedAddress = encodeNetworkAddress(
-    account?.address,
-    account?.network,
-  );
 
-  return {
-    ...account,
-    encodedAddress,
-  };
+  if (account) {
+    const encodedAddress = encodeNetworkAddress(
+      account?.address,
+      account?.network,
+    );
+
+    return {
+      ...account,
+      encodedAddress,
+    };
+  }
 }

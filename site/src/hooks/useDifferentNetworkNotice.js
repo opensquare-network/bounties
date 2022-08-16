@@ -31,7 +31,7 @@ export function useDifferentNetworkNotice(network = "") {
 
   useEffect(() => setDisplayNotice(true), [account?.network]);
 
-  const noticeEl = displayNotice && (
+  const noticeEl = account && displayNotice && (
     <Notification
       type="notice"
       size="large"

@@ -11,7 +11,7 @@ import {
 import StatusLabel from "components/Bounty/StatusLabel";
 import { useBountyPermission } from "hooks/useBountyPermission";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
-import { APPLICATION_STATUS } from "utils/constants";
+import { APPLICATION_STATUS, CHILD_BOUNTY_STATUS } from "utils/constants";
 import { findWorkingApplicant } from "../Meta/actions/utils";
 import {
   DescriptionWrapper,
@@ -67,6 +67,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
           const hoverShouldShowAssignButton =
             canAssignHunter &&
             !workingApplicant &&
+            childBountyDetail?.status !== CHILD_BOUNTY_STATUS.Closed &&
             status !== APPLICATION_STATUS.Canceled;
 
           return (
