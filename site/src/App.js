@@ -5,7 +5,6 @@ import { Footer } from "@osn/common-ui/es";
 import Layout from "@osn/common-ui/es/styled/Layout";
 import Header from "components/Header";
 import Main from "@osn/common-ui/es/styled/Main";
-import Toast from "components/Toast";
 import Home from "pages/Home";
 import ImportBounty from "pages/ImportBounty";
 import ImportChildBounty from "pages/ImportChildBounty";
@@ -44,7 +43,6 @@ function App() {
           </Routes>
         </Main>
         <Footer />
-        <Toast />
       </Layout>
     </HashRouter>
   );
