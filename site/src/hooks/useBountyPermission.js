@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { BOUNTY_STATUS, CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useDifferentNetworkNotice } from "./useDifferentNetworkNotice";
 import { useIsCurator } from "./useIsCurator";
 
@@ -14,6 +15,8 @@ import { useIsCurator } from "./useIsCurator";
  * @description given a bounty detail, can be `bountyDetail` or `childBountyDetail`, return current account permissions
  */
 export function useBountyPermission(detail) {
+  const { status } = detail ?? {};
+
   const { isSameNetwork } = useDifferentNetworkNotice(detail?.network);
   const isCurator = useIsCurator(
     // for bounty
@@ -23,14 +26,28 @@ export function useBountyPermission(detail) {
   );
 
   const canEditBounty = useMemo(
-    () => isSameNetwork && isCurator,
-    [isSameNetwork, isCurator],
+    () =>
+      ![
+        BOUNTY_STATUS.Closed,
+        CHILD_BOUNTY_STATUS.Closed,
+        CHILD_BOUNTY_STATUS.Awarded,
+      ].includes(status) &&
+      isSameNetwork &&
+      isCurator,
+    [isSameNetwork, isCurator, status],
   );
 
   const canComment = useMemo(() => isSameNetwork, [isSameNetwork]);
 
   const canImportChildBounty = useMemo(
-    () => isSameNetwork && isCurator,
+    () =>
+      ![
+        BOUNTY_STATUS.Closed,
+        CHILD_BOUNTY_STATUS.Closed,
+        CHILD_BOUNTY_STATUS.Awarded,
+      ].includes(status) &&
+      isSameNetwork &&
+      isCurator,
     [isSameNetwork, isCurator],
   );
 
