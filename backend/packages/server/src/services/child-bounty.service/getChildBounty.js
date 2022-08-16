@@ -9,7 +9,7 @@ async function getChildBounty(network, parentBountyIndex, index) {
   })
     .populate({
       path: "parentBounty",
-      select: "bountyIndex network title logo logoUrl",
+      select: "bountyIndex network title logo logoUrl status",
     })
     .populate({
       path: "applications",
