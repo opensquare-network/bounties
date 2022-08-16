@@ -48,7 +48,7 @@ export function useBountyPermission(detail) {
       ].includes(status) &&
       isSameNetwork &&
       isCurator,
-    [isSameNetwork, isCurator],
+    [isSameNetwork, isCurator, status],
   );
 
   const canAssignHunter = useMemo(
