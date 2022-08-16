@@ -39,7 +39,10 @@ export function useHunterOpenAction(childBountyDetail) {
   const { applyService } = useWorkflowActionService(childBountyDetail);
 
   function handleApply() {
-    applyService({ description: content });
+    applyService({ description: content }).then(() => {
+      setOpen(false);
+      setContent("");
+    });
   }
 
   const applyEl = (
