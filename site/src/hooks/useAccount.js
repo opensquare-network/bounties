@@ -9,8 +9,10 @@ export function useAccount() {
     account?.network,
   );
 
-  return {
-    ...account,
-    encodedAddress,
-  };
+  if (account) {
+    return {
+      ...account,
+      encodedAddress,
+    };
+  }
 }
