@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Flex } from "@osn/common-ui";
+import { Button, Flex, noop, notification } from "@osn/common-ui";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { ButtonGroup } from "../../styled";
 import { findWorkingApplicant } from "../../utils";
@@ -7,14 +7,6 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { useApi } from "utils/hooks";
 import { awardChildBounty } from "services/chainApi";
 import serverApi from "services/serverApi";
-import {
-  newErrorToast,
-  newPendingToast,
-  newSuccessToast,
-  newToastId,
-  removeToast,
-  updatePendingToast,
-} from "store/reducers/toastSlice";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
 import { signApiData } from "utils/signature";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
@@ -45,21 +37,26 @@ export function useCuratorAssignedAction(childBountyDetail) {
     unassignService({ applicant: workingApplicant });
   }
 
-  const showErrorToast = (message) => {
-    dispatch(newErrorToast(message));
-  };
-
   const handleAward = async () => {
     if (!account) {
-      return showErrorToast("Please connect wallet");
+      notification.error({
+        message: "Please connect wallet",
+      });
+      return;
     }
 
     if (!api) {
-      return showErrorToast("Network not connected yet");
+      notification.error({
+        message: "Network not connected yet",
+      });
+      return;
     }
 
-    const toastId = newToastId();
-    dispatch(newPendingToast(toastId, "Waiting for signing..."));
+    let closePendingNotification = noop;
+    closePendingNotification = notification.pending({
+      message: "Signing...",
+      timeout: false,
+    });
 
     try {
       const childBountyMeta = await api.query.childBounties.childBounties(
@@ -76,7 +73,11 @@ export function useCuratorAssignedAction(childBountyDetail) {
           beneficiary,
           account,
           (status) => {
-            dispatch(updatePendingToast(toastId, status));
+            closePendingNotification();
+            closePendingNotification = notification.pending({
+              message: status,
+              timeout: false,
+            });
           },
         );
       }
@@ -93,7 +94,9 @@ export function useCuratorAssignedAction(childBountyDetail) {
 
       const { result, error } = await serverApi.patch(`/child-bounty`, payload);
       if (result) {
-        dispatch(newSuccessToast("Awarded"));
+        notification.success({
+          message: "Awarded",
+        });
 
         if (isMounted.current) {
           dispatch(fetchChildBountyDetail());
@@ -101,12 +104,16 @@ export function useCuratorAssignedAction(childBountyDetail) {
       }
 
       if (error) {
-        dispatch(newErrorToast(error.message));
+        notification.error({
+          message: error.message,
+        });
       }
     } catch (e) {
-      dispatch(newErrorToast(`Failed to award. ${e.message}`));
+      notification.error({
+        message: `Failed to update. ${e.message}`,
+      });
     } finally {
-      dispatch(removeToast(toastId));
+      closePendingNotification();
     }
   };
 

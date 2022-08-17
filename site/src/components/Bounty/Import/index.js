@@ -1,16 +1,8 @@
 import ConnectWallet from "components/ConnectWallet";
 import Button from "@osn/common-ui/es/styled/Button";
 import { accountSelector } from "store/reducers/accountSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
-import {
-  newErrorToast,
-  newPendingToast,
-  newSuccessToast,
-  newToastId,
-  removeToast,
-  updatePendingToast,
-} from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
 import { useNavigate } from "react-router-dom";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
@@ -25,9 +17,9 @@ import InputBountyId from "components/Common/Import/InputBountyId";
 import BountyMeta from "components/Common/Import/BountyMeta";
 import { resolveBountyDetailRoute } from "utils/route";
 import { Wrapper, Box, Main, Side } from "./styled";
+import { noop, notification } from "@osn/common-ui";
 
 export default function ImportBounty() {
-  const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [title, setTitle] = useState("");
   const [bountyId, setBountyId] = useState("");
@@ -49,8 +41,6 @@ export default function ImportBounty() {
 
   const navigate = useNavigate();
   const isMounted = useIsMounted();
-
-  const showErrorToast = (message) => dispatch(newErrorToast(message));
 
   const fetchBountyMeta = useMemo(() => {
     return debounce(async (bountyId) => {
@@ -102,17 +92,23 @@ export default function ImportBounty() {
 
   const doImport = async () => {
     if (!bountyId) {
-      showErrorToast("Bounty ID is required");
+      notification.error({
+        message: "Bounty ID is required",
+      });
       return;
     }
 
     if (!title) {
-      showErrorToast("Title is required");
+      notification.error({
+        message: "Title is required",
+      });
       return;
     }
 
     if (!content) {
-      showErrorToast("Content is required");
+      notification.error({
+        message: "Content is required",
+      });
       return;
     }
 
@@ -124,14 +120,14 @@ export default function ImportBounty() {
       content,
     };
 
-    const toastId = newToastId();
-    dispatch(newPendingToast(toastId, "Waiting for signing..."));
+    let closePendingNotification = noop;
+    closePendingNotification = notification.pending({
+      message: "Signing...",
+    });
 
     setSubmitting(true);
     try {
       const signedData = await signApiData(data, encodedAddress);
-
-      dispatch(updatePendingToast(toastId, "Importing..."));
 
       const formData = new FormData();
       formData.set("data", JSON.stringify(signedData.data));
@@ -152,17 +148,21 @@ export default function ImportBounty() {
       setSubmitting(false);
 
       if (result) {
-        dispatch(newSuccessToast("Bounty imported"));
+        notification.success({
+          message: "Bounty imported",
+        });
         navigate(resolveBountyDetailRoute(account?.network, bountyId));
         return;
       }
 
       if (error) {
-        showErrorToast(error.message);
+        notification.error({
+          message: error.message,
+        });
         return;
       }
     } finally {
-      dispatch(removeToast(toastId));
+      closePendingNotification();
       if (isMounted.current) {
         setSubmitting(false);
       }

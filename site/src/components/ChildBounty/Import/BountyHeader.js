@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import serverApi from "services/serverApi";
 import BountyLogo from "components/Bounty/BountyLogo";
 import styled from "styled-components";
-import { newErrorToast } from "store/reducers/toastSlice";
 import { ReactComponent as BountyHeaderLoading } from "./BountyHeaderLoading.svg";
+import { notification } from "@osn/common-ui";
 
 const HeaderText = styled.div`
   font-style: normal;
@@ -26,13 +26,15 @@ export default function BountyHeader({ network, bountyIndex }) {
           setBountyDetail(result);
         }
         if (error) {
-          dispatch(newErrorToast(error.message));
+          notification.error({
+            message: error.message,
+          });
         }
       });
   }, [dispatch, network, bountyIndex]);
 
   if (!bountyDetail) {
-    return <BountyHeaderLoading />
+    return <BountyHeaderLoading />;
   }
 
   return (
