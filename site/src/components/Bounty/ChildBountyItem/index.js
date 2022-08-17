@@ -12,9 +12,9 @@ import BountyTag from "../BountyTag";
 import { Link } from "react-router-dom";
 import { Title } from "../styled/bounty";
 import { Mark } from "./styled";
-import SkillList from "./SkillList";
 import StatusLabel from "../StatusLabel";
 import { resolveChildBountyDetailRoute } from "utils/route";
+import SkillList from "components/Skill/List";
 
 export default function ChildBountyItem({ children, ...props } = {}) {
   const {
