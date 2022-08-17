@@ -8,7 +8,8 @@ import { useState } from "react";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useSelector } from "react-redux";
 import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
-import { Main } from "@osn/common-ui";
+import { Card, Main } from "@osn/common-ui";
+import ChildBountyDetailSubmission from "./Submission";
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,6 +24,10 @@ const Wrapper = styled.div`
   }
 
   gap: 20px;
+`;
+
+const Gap = styled.div`
+  margin: 16px 0;
 `;
 
 export default function ChildBountyDetail({ childBountyDetail }) {
@@ -50,7 +55,13 @@ export default function ChildBountyDetail({ childBountyDetail }) {
             onEdit={() => setEditing(true)}
           />
         )}
-        <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
+
+        {/* applicants & submission */}
+        <Card>
+          <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
+          <Gap />
+          <ChildBountyDetailSubmission childBountyDetail={childBountyDetail} />
+        </Card>
 
         <Discussions
           network={childBountyDetail?.network}

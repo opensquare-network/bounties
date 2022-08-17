@@ -7,6 +7,7 @@ import {
   Dot,
   LoadingIcon,
   Button,
+  Divider,
 } from "@osn/common-ui";
 import StatusLabel from "components/Bounty/StatusLabel";
 import { useBountyPermission } from "hooks/useBountyPermission";
@@ -33,19 +34,23 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
   const workingApplicant = findWorkingApplicant(applications);
 
   return (
-    <Card
-      title={
-        <>
-          Applicants
-          {!!applications?.length && (
-            <>
-              <Dot />
-              <Count>{applications.length}</Count>
-            </>
-          )}
-        </>
-      }
-    >
+    <div>
+      <Card.Head
+        title={
+          <>
+            Applicants
+            {!!applications?.length && (
+              <>
+                <Dot />
+                <Count>{applications.length}</Count>
+              </>
+            )}
+          </>
+        }
+      />
+
+      <Divider mb={0} />
+
       <List
         data={applications}
         noDataMessage="No current applicants"
@@ -104,7 +109,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
           );
         }}
       />
-    </Card>
+    </div>
   );
 }
 
