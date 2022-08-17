@@ -11,7 +11,7 @@ export default function NotificationMonitor() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // setSocket(connect());
+    setSocket(connect());
   }, []);
 
   // Fetch unread notifications on websocket push
