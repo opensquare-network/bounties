@@ -1921,10 +1921,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@osn/common-ui@^1.7.1":
-  version "1.7.1"
-  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-1.7.1.tgz#af98211af5f3cba9bf760fbfc3eae3aefabbfe28"
-  integrity sha512-emOTcqE8UKmkynf+j4FQ4nySiV8hvECUXEQqdADkg/T+cTWlXBA12G0q72VC04RA1uSXQ3hm9ShSfrdtHJqJbg==
+"@osn/common-ui@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-1.9.0.tgz#0f61a6325ccd4c9736ec1f62872bcb4182018ce7"
+  integrity sha512-kBXRnialGxks32IRe5pfS2ySsZ3lg9nl2Ny+HnHR4J3u/pUVbaEMKv/aHYhAaSdBdXMePPS/EYR0q7MtgXv9PQ==
   dependencies:
     "@osn/polkadot-react-identicon" "^1.0.8"
     copy-to-clipboard "^3.3.1"
@@ -1967,10 +1967,10 @@
     util "npm:util"
     web-vitals "^2.1.4"
 
-"@osn/previewer@^0.11.3":
-  version "0.11.3"
-  resolved "https://registry.npmjs.org/@osn/previewer/-/previewer-0.11.3.tgz#f6f35b16e28ba2679f7eeee3cdc9bd2c1eabb47c"
-  integrity sha512-2za/QDsTKUFEvtjHoGuRKTzYsExbhSfdfqtVVOVPXSk0j+NVZY1UjvhnMZFtLnLKavnPtnEQi40wFeuwOFWEVw==
+"@osn/previewer@^0.12.2":
+  version "0.12.2"
+  resolved "https://registry.npmjs.org/@osn/previewer/-/previewer-0.12.2.tgz#4ea4a404ddb6e701e34513cc27540dffc907e00a"
+  integrity sha512-kWdVPr/iG53yfW3XBxkfD78NGAXguWoFru0wEHVeMj6MKj+BP7vtodRoULsjSlTcRlT8PCdTNtny6itJGPla+g==
   dependencies:
     marked "^4.0.17"
     prismjs "^1.28.0"

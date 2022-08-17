@@ -35,7 +35,6 @@ export const Box = styled.div`
   background-color: white;
   @media screen and (max-width: 900px) {
     padding: 16px;
-    margin: 0 -16px;
   }
 
   > :not(:first-child) {

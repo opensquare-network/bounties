@@ -1,3 +1,4 @@
+import { MOBILE_SIZE } from "@osn/constants";
 import styled from "styled-components";
 
 export const InfoWrapper = styled.div`
@@ -7,7 +8,15 @@ export const InfoWrapper = styled.div`
   column-gap: 24px;
   row-gap: 20px;
   > div {
-    width: 230px;
+    width: 235px;
+
+    &:last-child {
+      width: auto;
+    }
+
+    @media screen and (max-width: ${MOBILE_SIZE}px) {
+      width: 100%;
+    }
   }
 `;
 

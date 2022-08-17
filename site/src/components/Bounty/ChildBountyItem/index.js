@@ -5,6 +5,8 @@ import {
   FlexBetween,
   ChainIcon,
   Dot,
+  MobileInvisible,
+  MobileVisible,
 } from "@osn/common-ui";
 import BountyTag from "../BountyTag";
 import { Link } from "react-router-dom";
@@ -43,24 +45,32 @@ export default function ChildBountyItem({ children, ...props } = {}) {
         </Title>
       }
       prefix={
-        <div>
+        <MobileInvisible>
           <ChainIcon chainName={network} size={64} />
-        </div>
+        </MobileInvisible>
       }
     >
       <FlexBetween>
         <FlexCenter>
-          <StatusLabel>{status}</StatusLabel>
-          <Dot />
-          <Mark>Curated by</Mark>
-          <IdentityUser network={network} address={address} />
-
-          {!!skills.length && (
-            <>
+          <MobileVisible>
+            <FlexCenter>
+              <ChainIcon chainName={network} size={20} />
               <Dot />
-              <SkillList skills={skills} />
-            </>
-          )}
+            </FlexCenter>
+          </MobileVisible>
+          <StatusLabel>{status}</StatusLabel>
+          <MobileInvisible>
+            <Dot />
+            <Mark>Curated by</Mark>
+            <IdentityUser network={network} address={address} />
+
+            {!!skills.length && (
+              <>
+                <Dot />
+                <SkillList skills={skills} />
+              </>
+            )}
+          </MobileInvisible>
         </FlexCenter>
 
         <BountyTag {...childBounty} />
