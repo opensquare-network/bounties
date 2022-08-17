@@ -7,7 +7,6 @@ import {
   netural_grey_800,
   primary_purple_500,
   p_14_medium,
-  text_dark_accessory,
   text_dark_major,
 } from "@osn/common-ui";
 
@@ -54,7 +53,10 @@ export default function BountySkills({
   selectedSkills,
   max = 3,
 }) {
-  const isMax = useMemo(() => selectedSkills?.length >= max, [selectedSkills]);
+  const isMax = useMemo(
+    () => selectedSkills?.length >= max,
+    [selectedSkills, max],
+  );
 
   const selectSkill = useCallback(
     (skill) => {
