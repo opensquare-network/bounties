@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { p_12_medium, p_14_normal } from "@osn/common-ui/es/styles/textStyles";
 import {
   netural_grey_500,
   text_dark_accessory,
-} from "@osn/common-ui/es/styles/colors";
+  p_12_medium,
+  p_14_normal,
+} from "@osn/common-ui";
 
 export const Mark = styled.span`
   ${p_14_normal};
@@ -23,7 +24,7 @@ export const SkillListWrapper = styled.ul`
 export const SkillTag = styled.li`
   ${p_12_medium};
   color: ${netural_grey_500};
-  border: 1px solid ${netural_grey_500};
+  box-shadow: 0 0 0 1px ${netural_grey_500};
   border-radius: 9999px;
   padding: 2px 8px;
   text-transform: capitalize;
