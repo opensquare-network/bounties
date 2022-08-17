@@ -1,7 +1,15 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Title } from "components/Common/Import/styled";
 import { SKILLS } from "utils/constants";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
+import { SkillTag } from "components/Skill/styled";
+import {
+  netural_grey_800,
+  primary_purple_500,
+  p_14_medium,
+  text_dark_accessory,
+  text_dark_major,
+} from "@osn/common-ui";
 
 const SkillsList = styled.div`
   display: flex;
@@ -9,33 +17,28 @@ const SkillsList = styled.div`
   gap: 8px;
 `;
 
-const SkillItem = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const SkillItem = styled(SkillTag)`
+  ${p_14_medium};
   padding: 2px 12px;
-
-  border: 1px solid #b7c0cc;
-  border-radius: 14px;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  text-align: center;
-  color: #a1a8b3;
-
   cursor: pointer;
 
   &:hover {
-    border-color: #292d36;
-    color: #1e2134;
+    color: ${text_dark_major};
+    box-shadow: 0 0 0 1px ${netural_grey_800};
   }
 
   &.selected {
-    border-color: #6848ff;
-    color: #6848ff;
+    color: ${primary_purple_500};
+    box-shadow: 0 0 0 1px ${primary_purple_500};
   }
+
+  ${(p) =>
+    p.disabled &&
+    css`
+      &:not(.selected) {
+        pointer-events: none;
+      }
+    `}
 `;
 
 const Info = styled.div`
@@ -46,7 +49,13 @@ const Info = styled.div`
   color: #a1a8b3;
 `;
 
-export default function BountySkills({ setSelectedSkills, selectedSkills }) {
+export default function BountySkills({
+  setSelectedSkills,
+  selectedSkills,
+  max = 3,
+}) {
+  const isMax = useMemo(() => selectedSkills?.length >= max, [selectedSkills]);
+
   const selectSkill = useCallback(
     (skill) => {
       const skills = new Set(selectedSkills);
@@ -69,6 +78,7 @@ export default function BountySkills({ setSelectedSkills, selectedSkills }) {
             key={item}
             className={selectedSkills?.includes(item) ? "selected" : ""}
             onClick={() => selectSkill(item)}
+            disabled={isMax}
           >
             {item}
           </SkillItem>
