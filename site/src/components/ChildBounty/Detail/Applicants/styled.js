@@ -40,7 +40,6 @@ export const IdentityUserWrapper = styled(Flex)`
 `;
 export const DescriptionWrapper = styled(Flex)`
   flex: 1;
-  max-width: calc(100% - 232px - 120px);
   padding-right: 24px;
 `;
 export const ActionWrapper = styled(Flex)`
