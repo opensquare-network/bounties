@@ -3,7 +3,7 @@ import { MarkdownPreviewer } from "@osn/previewer";
 import {
   IdentityUserWrapper,
   DescriptionWrapper,
-  Wrapper,
+  ItemWrapper,
   DescriptionLinkWrapper,
   DescriptionInnerWrapper,
 } from "./styled";
@@ -15,7 +15,7 @@ export default function SubmissionItem({
   link,
 }) {
   return (
-    <Wrapper>
+    <ItemWrapper>
       <IdentityUserWrapper>
         <LinkIdentityUser
           items={["avatarIcon", "networkIcon", "identityIcon", "text"]}
@@ -41,6 +41,6 @@ export default function SubmissionItem({
           )}
         </DescriptionInnerWrapper>
       </DescriptionWrapper>
-    </Wrapper>
+    </ItemWrapper>
   );
 }

@@ -10,9 +10,10 @@ export {
   Count,
   IdentityUserWrapper,
   DescriptionWrapper,
+  ListWrapper,
 } from "../Applicants/styled";
 
-export const Wrapper = styled(FlexBetween)`
+export const ItemWrapper = styled(FlexBetween)`
   align-items: flex-start;
 `;
 

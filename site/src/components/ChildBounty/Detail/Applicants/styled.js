@@ -9,8 +9,7 @@ export const AssignButtonWrapper = styled.div`
 
 export const Wrapper = styled(FlexBetween)`
   align-items: flex-start;
-  height: 36px;
-  max-height: 56px;
+  min-height: 42px;
 
   ${(p) =>
     p.hoverShouldShowAssignButton &&
@@ -24,6 +23,10 @@ export const Wrapper = styled(FlexBetween)`
         }
       }
     `}
+`;
+
+export const ListWrapper = styled.div`
+  margin-top: 32px;
 `;
 
 export const IdentityUserWrapper = styled(Flex)`

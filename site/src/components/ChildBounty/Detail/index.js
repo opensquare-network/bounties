@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 `;
 
 const Gap = styled.div`
-  margin: 16px 0;
+  margin: 32px 0;
 `;
 
 export default function ChildBountyDetail({ childBountyDetail }) {

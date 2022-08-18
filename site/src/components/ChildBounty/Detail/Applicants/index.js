@@ -23,6 +23,7 @@ import {
   ActionTimeWrapper,
   TimeStatusWrapper,
   AssignButtonWrapper,
+  ListWrapper,
 } from "./styled";
 
 export default function ChildBountyApplicants({ childBountyDetail }) {
@@ -51,65 +52,67 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
 
       <Divider />
 
-      <List
-        data={applications}
-        gap={20}
-        noDataMessage="No current applicants"
-        noDataProps={{ bordered: false, shadow: false }}
-        loading={!childBountyDetail}
-        loadingComponent={
-          <FlexCenter>
-            <LoadingIcon />
-          </FlexCenter>
-        }
-        itemRender={(applicant) => {
-          const {
-            address,
-            bountyIndexer = {},
-            description,
-            status,
-          } = applicant;
+      <ListWrapper>
+        <List
+          data={applications}
+          gap={32}
+          noDataMessage="No current applicants"
+          noDataProps={{ bordered: false, shadow: false }}
+          loading={!childBountyDetail}
+          loadingComponent={
+            <FlexCenter>
+              <LoadingIcon />
+            </FlexCenter>
+          }
+          itemRender={(applicant) => {
+            const {
+              address,
+              bountyIndexer = {},
+              description,
+              status,
+            } = applicant;
 
-          const hoverShouldShowAssignButton =
-            canAssignHunter &&
-            !workingApplicant &&
-            childBountyDetail?.status !== CHILD_BOUNTY_STATUS.Closed &&
-            status !== APPLICATION_STATUS.Canceled;
+            const hoverShouldShowAssignButton =
+              canAssignHunter &&
+              !workingApplicant &&
+              childBountyDetail?.status !== CHILD_BOUNTY_STATUS.Closed &&
+              status !== APPLICATION_STATUS.Canceled;
 
-          return (
-            <List.Item>
-              <Wrapper
-                hoverShouldShowAssignButton={hoverShouldShowAssignButton}
-              >
-                <IdentityUserWrapper>
-                  <LinkIdentityUser
-                    items={[
-                      "avatarIcon",
-                      "networkIcon",
-                      "identityIcon",
-                      "text",
-                    ]}
-                    explore
-                    network={bountyIndexer?.network}
-                    address={address}
-                  />
-                </IdentityUserWrapper>
+            return (
+              <List.Item>
+                <Wrapper
+                  hoverShouldShowAssignButton={hoverShouldShowAssignButton}
+                >
+                  <IdentityUserWrapper>
+                    <LinkIdentityUser
+                      items={[
+                        "avatarIcon",
+                        "networkIcon",
+                        "identityIcon",
+                        "text",
+                      ]}
+                      explore
+                      network={bountyIndexer?.network}
+                      address={address}
+                    />
+                  </IdentityUserWrapper>
 
-                <DescriptionWrapper>{description}</DescriptionWrapper>
+                  <DescriptionWrapper>{description}</DescriptionWrapper>
 
-                <ActionWrapper>
-                  <TimeStatus className="time-status" {...applicant} />
-                  <AssignButtonWrapper>
-                    <Button onClick={() => assignService({ applicant })}>
-                      Assign
-                    </Button>
-                  </AssignButtonWrapper>
-                </ActionWrapper>
-              </Wrapper>
-            </List.Item>
-          );
-        }}
-      />
+                  <ActionWrapper>
+                    <TimeStatus className="time-status" {...applicant} />
+                    <AssignButtonWrapper>
+                      <Button onClick={() => assignService({ applicant })}>
+                        Assign
+                      </Button>
+                    </AssignButtonWrapper>
+                  </ActionWrapper>
+                </Wrapper>
+              </List.Item>
+            );
+          }}
+        />
+      </ListWrapper>
     </div>
   );
 }
