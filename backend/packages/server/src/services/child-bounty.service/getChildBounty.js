@@ -13,7 +13,7 @@ async function getChildBounty(network, parentBountyIndex, index) {
     })
     .populate({
       path: "applications",
-      select: "bountyIndexer description address status createdAt updatedAt",
+      select: "bountyIndexer description address status submission createdAt updatedAt",
     });
 
   if (!childBounty) {
