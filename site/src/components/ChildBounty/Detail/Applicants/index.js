@@ -7,6 +7,7 @@ import {
   Dot,
   LoadingIcon,
   Button,
+  Divider,
 } from "@osn/common-ui";
 import StatusLabel from "components/Bounty/StatusLabel";
 import { useBountyPermission } from "hooks/useBountyPermission";
@@ -22,6 +23,7 @@ import {
   ActionTimeWrapper,
   TimeStatusWrapper,
   AssignButtonWrapper,
+  ListWrapper,
 } from "./styled";
 
 export default function ChildBountyApplicants({ childBountyDetail }) {
@@ -33,78 +35,85 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
   const workingApplicant = findWorkingApplicant(applications);
 
   return (
-    <Card
-      title={
-        <>
-          Applicants
-          {!!applications?.length && (
-            <>
-              <Dot />
-              <Count>{applications.length}</Count>
-            </>
-          )}
-        </>
-      }
-    >
-      <List
-        data={applications}
-        noDataMessage="No current applicants"
-        noDataProps={{ bordered: false, shadow: false }}
-        loading={!childBountyDetail}
-        loadingComponent={
-          <FlexCenter>
-            <LoadingIcon />
-          </FlexCenter>
+    <div>
+      <Card.Head
+        title={
+          <>
+            Applicants
+            {!!applications?.length && (
+              <>
+                <Dot />
+                <Count>{applications.length}</Count>
+              </>
+            )}
+          </>
         }
-        itemRender={(applicant) => {
-          const {
-            address,
-            bountyIndexer = {},
-            description,
-            status,
-          } = applicant;
-
-          const hoverShouldShowAssignButton =
-            canAssignHunter &&
-            !workingApplicant &&
-            childBountyDetail?.status !== CHILD_BOUNTY_STATUS.Closed &&
-            status !== APPLICATION_STATUS.Canceled;
-
-          return (
-            <List.Item>
-              <Wrapper
-                hoverShouldShowAssignButton={hoverShouldShowAssignButton}
-              >
-                <IdentityUserWrapper>
-                  <LinkIdentityUser
-                    items={[
-                      "avatarIcon",
-                      "networkIcon",
-                      "identityIcon",
-                      "text",
-                    ]}
-                    explore
-                    network={bountyIndexer?.network}
-                    address={address}
-                  />
-                </IdentityUserWrapper>
-
-                <DescriptionWrapper>{description}</DescriptionWrapper>
-
-                <ActionWrapper>
-                  <TimeStatus className="time-status" {...applicant} />
-                  <AssignButtonWrapper>
-                    <Button onClick={() => assignService({ applicant })}>
-                      Assign
-                    </Button>
-                  </AssignButtonWrapper>
-                </ActionWrapper>
-              </Wrapper>
-            </List.Item>
-          );
-        }}
       />
-    </Card>
+
+      <Divider />
+
+      <ListWrapper>
+        <List
+          data={applications}
+          gap={32}
+          noDataMessage="No current applicants"
+          noDataProps={{ bordered: false, shadow: false }}
+          loading={!childBountyDetail}
+          loadingComponent={
+            <FlexCenter>
+              <LoadingIcon />
+            </FlexCenter>
+          }
+          itemRender={(applicant) => {
+            const {
+              address,
+              bountyIndexer = {},
+              description,
+              status,
+            } = applicant;
+
+            const hoverShouldShowAssignButton =
+              canAssignHunter &&
+              !workingApplicant &&
+              childBountyDetail?.status !== CHILD_BOUNTY_STATUS.Closed &&
+              status !== APPLICATION_STATUS.Canceled;
+
+            return (
+              <List.Item>
+                <Wrapper
+                  hoverShouldShowAssignButton={hoverShouldShowAssignButton}
+                >
+                  <IdentityUserWrapper>
+                    <LinkIdentityUser
+                      items={[
+                        "avatarIcon",
+                        "networkIcon",
+                        "identityIcon",
+                        "text",
+                      ]}
+                      explore
+                      network={bountyIndexer?.network}
+                      address={address}
+                    />
+                  </IdentityUserWrapper>
+
+                  <DescriptionWrapper>{description}</DescriptionWrapper>
+
+                  <ActionWrapper>
+                    <TimeStatus className="time-status" {...applicant} />
+                    <AssignButtonWrapper>
+                      <Button onClick={() => assignService({ applicant })}>
+                        Assign
+                      </Button>
+                    </AssignButtonWrapper>
+                  </ActionWrapper>
+                </Wrapper>
+              </List.Item>
+            );
+          }}
+        />
+      </ListWrapper>
+    </div>
   );
 }
 

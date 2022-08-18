@@ -167,7 +167,7 @@ export function useWorkflowActionService(childBountyDetail) {
     });
 
     notification.success({
-      message: "Submitted",
+      message: "Canceled",
     });
 
     return res;

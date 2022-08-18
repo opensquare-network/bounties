@@ -8,8 +8,8 @@ export const AssignButtonWrapper = styled.div`
 `;
 
 export const Wrapper = styled(FlexBetween)`
-  align-items: center;
-  height: 56px;
+  align-items: flex-start;
+  min-height: 42px;
 
   ${(p) =>
     p.hoverShouldShowAssignButton &&
@@ -25,9 +25,14 @@ export const Wrapper = styled(FlexBetween)`
     `}
 `;
 
+export const ListWrapper = styled.div`
+  margin-top: 32px;
+`;
+
 export const IdentityUserWrapper = styled(Flex)`
   max-width: 232px;
   flex: 1;
+  padding-right: 24px;
   a {
     display: inline-flex;
     cursor: pointer;
@@ -38,6 +43,7 @@ export const IdentityUserWrapper = styled(Flex)`
 `;
 export const DescriptionWrapper = styled(Flex)`
   flex: 1;
+  padding-right: 24px;
 `;
 export const ActionWrapper = styled(Flex)`
   max-width: 120px;
