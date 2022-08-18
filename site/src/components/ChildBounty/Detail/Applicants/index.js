@@ -49,10 +49,11 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
         }
       />
 
-      <Divider mb={0} />
+      <Divider />
 
       <List
         data={applications}
+        gap={20}
         noDataMessage="No current applicants"
         noDataProps={{ bordered: false, shadow: false }}
         loading={!childBountyDetail}
