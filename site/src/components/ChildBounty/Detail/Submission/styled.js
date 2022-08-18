@@ -10,7 +10,6 @@ export {
   Count,
   IdentityUserWrapper,
   DescriptionWrapper,
-  ActionWrapper,
 } from "../Applicants/styled";
 
 export const Wrapper = styled(FlexBetween)`

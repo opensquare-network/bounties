@@ -3,7 +3,6 @@ import { MarkdownPreviewer } from "@osn/previewer";
 import {
   IdentityUserWrapper,
   DescriptionWrapper,
-  ActionWrapper,
   Wrapper,
   DescriptionLinkWrapper,
   DescriptionInnerWrapper,
@@ -42,8 +41,6 @@ export default function SubmissionItem({
           )}
         </DescriptionInnerWrapper>
       </DescriptionWrapper>
-
-      <ActionWrapper>{link}</ActionWrapper>
     </Wrapper>
   );
 }
