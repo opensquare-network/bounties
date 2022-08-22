@@ -25,6 +25,7 @@ export const DescriptionWrapper = styled(Flex)`
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     margin-top: 16px;
+    padding-right: 0;
   }
 `;
 
