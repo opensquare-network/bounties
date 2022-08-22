@@ -1,5 +1,6 @@
 import { Dot, ExternalLink, LinkIdentityUser } from "@osn/common-ui";
 import { MarkdownPreviewer } from "@osn/previewer";
+import Ellipsis from "components/Ellipsis";
 import {
   IdentityUserWrapper,
   DescriptionWrapper,
@@ -34,9 +35,13 @@ export default function SubmissionItem({
 
           {link && (
             <DescriptionLinkWrapper>
-              <span>Submission</span>
-              <Dot />
-              <ExternalLink href={link}>{link}</ExternalLink>
+              <Ellipsis>
+                <span>Submission</span>
+                <Dot />
+                <ExternalLink title={link} href={link}>
+                  {link}
+                </ExternalLink>
+              </Ellipsis>
             </DescriptionLinkWrapper>
           )}
         </DescriptionInnerWrapper>

@@ -1,26 +1,34 @@
 import {
+  Flex,
   FlexBetween,
   p_12_normal,
   secondary_blue_500,
   text_dark_accessory,
 } from "@osn/common-ui";
+import { MOBILE_SIZE } from "@osn/constants";
 import styled from "styled-components";
 
-export {
-  Count,
-  IdentityUserWrapper,
-  DescriptionWrapper,
-  ListWrapper,
-} from "../Applicants/styled";
+export { Count, IdentityUserWrapper, ListWrapper } from "../Applicants/styled";
 
 export const ItemWrapper = styled(FlexBetween)`
   align-items: flex-start;
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    display: block;
+  }
+`;
+
+export const DescriptionWrapper = styled(Flex)`
+  flex: 1;
+  padding-right: 24px;
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    margin-top: 16px;
+    padding-right: 0;
+  }
 `;
 
 export const DescriptionLinkWrapper = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   ${p_12_normal};
   margin-top: 8px;
 
