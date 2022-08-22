@@ -18,8 +18,10 @@ export const Item = styled(FlexBetween)`
   min-height: 56px;
 `;
 
-export const Index = styled.div`
+export const IndexWrapper = styled.div`
   min-width: 64px;
+`;
+export const Index = styled.span`
   ${p_14_normal};
   color: ${text_dark_accessory};
 `;
@@ -47,4 +49,8 @@ export const Title = styled.p`
       text-decoration: underline;
     }
   }
+`;
+
+export const MobileTitleGap = styled.div`
+  margin: 10px 0;
 `;
