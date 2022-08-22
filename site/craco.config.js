@@ -57,6 +57,13 @@ module.exports = {
           crypto: false,
         },
       },
+
+      // https://github.com/facebook/create-react-app/pull/11752
+      ignoreWarnings: [
+        {
+          message: /source-map-loader/,
+        },
+      ],
     },
   },
 };
