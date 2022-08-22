@@ -77,10 +77,6 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
     }
   }
 
-  if (!isCurator) {
-    return null;
-  }
-
   return (
     <ButtonGroup>
       <Flex>
@@ -89,9 +85,11 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
             <ButtonText>In Progress</ButtonText>
           </Button>
         ) : (
-          <Button primary block onClick={handleClose}>
-            Close
-          </Button>
+          isCurator && (
+            <Button primary block onClick={handleClose}>
+              Close
+            </Button>
+          )
         )}
       </Flex>
     </ButtonGroup>
