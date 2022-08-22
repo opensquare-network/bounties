@@ -8,6 +8,7 @@ import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
+import { useIsCurator } from "hooks/useIsCurator";
 
 export default function OpenBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
@@ -15,7 +16,9 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
   const isMounted = useIsMounted();
   const { fetchBountyDetail } = useFetchBountyDetail();
 
-  const { bountyIndex, childBounties } = bountyDetail ?? {};
+  const { bountyIndex, childBounties, bounty } = bountyDetail ?? {};
+
+  const isCurator = useIsCurator(bounty?.curators);
 
   const hasIncompleteChildBounties = childBounties
     ?.map((cb) => cb.status)
@@ -72,6 +75,10 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
     } finally {
       closePendingNotification();
     }
+  }
+
+  if (!isCurator) {
+    return null;
   }
 
   return (
