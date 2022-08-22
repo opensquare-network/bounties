@@ -11,6 +11,7 @@ import {
 } from "@osn/common-ui";
 import StatusLabel from "components/Bounty/StatusLabel";
 import { useBountyPermission } from "hooks/useBountyPermission";
+import { useIsScreen } from "hooks/useIsScreen";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { APPLICATION_STATUS, CHILD_BOUNTY_STATUS } from "utils/constants";
 import { findWorkingApplicant } from "../Meta/actions/utils";
@@ -24,6 +25,7 @@ import {
   TimeStatusWrapper,
   AssignButtonWrapper,
   ListWrapper,
+  MobileDescriptionGap,
 } from "./styled";
 
 export default function ChildBountyApplicants({ childBountyDetail }) {
@@ -33,6 +35,8 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
   const { assignService } = useWorkflowActionService(childBountyDetail);
 
   const workingApplicant = findWorkingApplicant(applications);
+
+  const { isDesktop } = useIsScreen();
 
   return (
     <div>
@@ -65,14 +69,8 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
             </FlexCenter>
           }
           itemRender={(applicant) => {
-            const {
-              address,
-              bountyIndexer = {},
-              description,
-              status,
-            } = applicant;
-
-            const hoverShouldShowAssignButton =
+            const { status } = applicant;
+            const shouldShowAssignButton =
               canAssignHunter &&
               !workingApplicant &&
               childBountyDetail?.status !== CHILD_BOUNTY_STATUS.Closed &&
@@ -80,34 +78,25 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
 
             return (
               <List.Item>
-                <Wrapper
-                  hoverShouldShowAssignButton={hoverShouldShowAssignButton}
-                >
-                  <IdentityUserWrapper>
-                    <LinkIdentityUser
-                      items={[
-                        "avatarIcon",
-                        "networkIcon",
-                        "identityIcon",
-                        "text",
-                      ]}
-                      explore
-                      network={bountyIndexer?.network}
-                      address={address}
-                    />
-                  </IdentityUserWrapper>
-
-                  <DescriptionWrapper>{description}</DescriptionWrapper>
-
-                  <ActionWrapper>
-                    <TimeStatus className="time-status" {...applicant} />
-                    <AssignButtonWrapper>
-                      <Button onClick={() => assignService({ applicant })}>
-                        Assign
-                      </Button>
-                    </AssignButtonWrapper>
-                  </ActionWrapper>
-                </Wrapper>
+                {isDesktop ? (
+                  <DesktopListItem
+                    applicant={applicant}
+                    canAssignHunter={canAssignHunter}
+                    assignService={assignService}
+                    workingApplicant={workingApplicant}
+                    childrenBountyDetail={childBountyDetail}
+                    shouldShowAssignButton={shouldShowAssignButton}
+                  />
+                ) : (
+                  <MobileListItem
+                    applicant={applicant}
+                    canAssignHunter={canAssignHunter}
+                    assignService={assignService}
+                    workingApplicant={workingApplicant}
+                    childrenBountyDetail={childBountyDetail}
+                    shouldShowAssignButton={shouldShowAssignButton}
+                  />
+                )}
               </List.Item>
             );
           }}
@@ -131,5 +120,74 @@ function TimeStatus({ updatedAt, createdAt, status }) {
         <Time time={createdAt} />
       )}
     </TimeStatusWrapper>
+  );
+}
+
+function DesktopListItem({ applicant, assignService, shouldShowAssignButton }) {
+  const { address, bountyIndexer = {}, description } = applicant;
+
+  return (
+    <Wrapper hoverShouldShowAssignButton={shouldShowAssignButton}>
+      <IdentityUserWrapper>
+        <LinkIdentityUser
+          items={["avatarIcon", "networkIcon", "identityIcon", "text"]}
+          explore
+          network={bountyIndexer?.network}
+          address={address}
+        />
+      </IdentityUserWrapper>
+
+      <DescriptionWrapper>{description}</DescriptionWrapper>
+
+      <ActionWrapper>
+        <TimeStatus className="time-status" {...applicant} />
+        <AssignButtonWrapper>
+          <Button onClick={() => assignService({ applicant })}>Assign</Button>
+        </AssignButtonWrapper>
+      </ActionWrapper>
+    </Wrapper>
+  );
+}
+
+function MobileListItem({ applicant, assignService, shouldShowAssignButton }) {
+  const {
+    address,
+    bountyIndexer = {},
+    description,
+    status,
+    updatedAt,
+  } = applicant;
+
+  return (
+    <div>
+      <IdentityUserWrapper>
+        <LinkIdentityUser
+          items={["avatarIcon", "networkIcon", "identityIcon", "text"]}
+          explore
+          network={bountyIndexer?.network}
+          address={address}
+        />
+        {status !== APPLICATION_STATUS.Apply && (
+          <>
+            <Dot />
+            <StatusLabel>{status}</StatusLabel>
+          </>
+        )}
+        <Dot />
+        <Time time={updatedAt} />
+      </IdentityUserWrapper>
+
+      <MobileDescriptionGap />
+
+      <DescriptionWrapper>{description}</DescriptionWrapper>
+
+      <MobileDescriptionGap />
+
+      {shouldShowAssignButton && (
+        <Button block onClick={() => assignService({ applicant })}>
+          Assign
+        </Button>
+      )}
+    </div>
   );
 }
