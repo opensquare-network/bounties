@@ -11,7 +11,6 @@ import styled from "styled-components";
 export { Count, IdentityUserWrapper, ListWrapper } from "../Applicants/styled";
 
 export const ItemWrapper = styled(FlexBetween)`
-  max-width: 100%;
   align-items: flex-start;
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
