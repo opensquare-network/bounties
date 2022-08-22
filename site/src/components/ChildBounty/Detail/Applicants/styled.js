@@ -31,7 +31,6 @@ export const ListWrapper = styled.div`
 
 export const IdentityUserWrapper = styled(Flex)`
   max-width: 232px;
-  flex: 1;
   padding-right: 24px;
   a {
     display: inline-flex;
