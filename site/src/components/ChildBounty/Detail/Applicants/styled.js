@@ -58,3 +58,7 @@ export const ActionTimeWrapper = styled.div`
     ${p_12_normal};
   }
 `;
+
+export const MobileDescriptionGap = styled.div`
+  margin: 8px 0;
+`;
