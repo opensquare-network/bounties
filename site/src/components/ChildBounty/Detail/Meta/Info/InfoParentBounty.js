@@ -3,6 +3,7 @@ import {
   InfoContent,
   InfoHeader,
 } from "components/Bounty/Detail/Meta/Info/styled";
+import Ellipsis from "components/Ellipsis";
 import { Link } from "react-router-dom";
 import { resolveBountyDetailRoute } from "utils/route";
 
@@ -22,9 +23,14 @@ export default function InfoParentBounty({ childBountyDetail }) {
       }
       content={
         <InfoContent>
-          <Link to={resolveBountyDetailRoute(network, parentBountyIndex)}>
-            {parentBounty.title}
-          </Link>
+          <Ellipsis>
+            <Link
+              title={parentBounty.title}
+              to={resolveBountyDetailRoute(network, parentBountyIndex)}
+            >
+              {parentBounty.title}
+            </Link>
+          </Ellipsis>
         </InfoContent>
       }
     />

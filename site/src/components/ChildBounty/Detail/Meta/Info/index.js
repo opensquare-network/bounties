@@ -32,8 +32,8 @@ export default function Info({ childBountyDetail }) {
         dotreasuryUrlPath="child-bounties"
         polkassemblyUrlPath="child_bounty"
       />
-      <InfoSkills childBountyDetail={childBountyDetail} />
       <InfoParentBounty childBountyDetail={childBountyDetail} />
+      <InfoSkills childBountyDetail={childBountyDetail} />
     </InfoWrapper>
   );
 }
