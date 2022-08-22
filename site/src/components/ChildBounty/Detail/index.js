@@ -8,7 +8,7 @@ import { useState } from "react";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useSelector } from "react-redux";
 import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
-import { Card, Main } from "@osn/common-ui";
+import { Card } from "@osn/common-ui";
 import ChildBountyDetailSubmission from "./Submission";
 
 const Wrapper = styled.div`
@@ -38,37 +38,35 @@ export default function ChildBountyDetail({ childBountyDetail }) {
   );
 
   return (
-    <Main>
-      <Wrapper>
-        {childBountyDetail && isDifferentNetwork && noticeEl}
+    <Wrapper>
+      {childBountyDetail && isDifferentNetwork && noticeEl}
 
-        {account && editing ? (
-          <ChildBountyDetailMetaEdit
-            type="Child Bounty"
-            childBountyDetail={childBountyDetail}
-            onEditEnd={() => setEditing(false)}
-          />
-        ) : (
-          <ChildBountyDetailMeta
-            type="Child Bounty"
-            childBountyDetail={childBountyDetail}
-            onEdit={() => setEditing(true)}
-          />
-        )}
-
-        {/* applicants & submission */}
-        <Card>
-          <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
-          <Gap />
-          <ChildBountyDetailSubmission childBountyDetail={childBountyDetail} />
-        </Card>
-
-        <Discussions
-          network={childBountyDetail?.network}
-          parentBountyIndex={childBountyDetail?.parentBountyIndex}
-          index={childBountyDetail?.index}
+      {account && editing ? (
+        <ChildBountyDetailMetaEdit
+          type="Child Bounty"
+          childBountyDetail={childBountyDetail}
+          onEditEnd={() => setEditing(false)}
         />
-      </Wrapper>
-    </Main>
+      ) : (
+        <ChildBountyDetailMeta
+          type="Child Bounty"
+          childBountyDetail={childBountyDetail}
+          onEdit={() => setEditing(true)}
+        />
+      )}
+
+      {/* applicants & submission */}
+      <Card>
+        <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
+        <Gap />
+        <ChildBountyDetailSubmission childBountyDetail={childBountyDetail} />
+      </Card>
+
+      <Discussions
+        network={childBountyDetail?.network}
+        parentBountyIndex={childBountyDetail?.parentBountyIndex}
+        index={childBountyDetail?.index}
+      />
+    </Wrapper>
   );
 }
