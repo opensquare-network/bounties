@@ -7,7 +7,6 @@ import ChildBounties from "./ChildBounties";
 import { useState } from "react";
 import BountyMetaEdit from "./MetaEdit";
 import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
-import { Main } from "@osn/common-ui";
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,28 +30,26 @@ export default function BountyDetail({ bountyDetail }) {
   );
 
   return (
-    <Main>
-      <Wrapper>
-        {bountyDetail && isDifferentNetwork && noticeEl}
+    <Wrapper>
+      {bountyDetail && isDifferentNetwork && noticeEl}
 
-        {editing ? (
-          <BountyMetaEdit
-            bountyDetail={bountyDetail}
-            onEditEnd={() => setEditing(false)}
-          />
-        ) : (
-          <Meta
-            type="Bounty"
-            bountyDetail={bountyDetail}
-            onEdit={() => setEditing(true)}
-          />
-        )}
-        <ChildBounties bountyDetail={bountyDetail} />
-        <Discussions
-          network={bountyDetail?.network}
-          bountyId={bountyDetail?.bountyIndex}
+      {editing ? (
+        <BountyMetaEdit
+          bountyDetail={bountyDetail}
+          onEditEnd={() => setEditing(false)}
         />
-      </Wrapper>
-    </Main>
+      ) : (
+        <Meta
+          type="Bounty"
+          bountyDetail={bountyDetail}
+          onEdit={() => setEditing(true)}
+        />
+      )}
+      <ChildBounties bountyDetail={bountyDetail} />
+      <Discussions
+        network={bountyDetail?.network}
+        bountyId={bountyDetail?.bountyIndex}
+      />
+    </Wrapper>
   );
 }
