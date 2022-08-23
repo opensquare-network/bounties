@@ -1,5 +1,6 @@
 import { FlexBetween, Flex, p_12_normal } from "@osn/common-ui";
 import { text_dark_accessory } from "@osn/common-ui/es/styles/colors";
+import { MOBILE_SIZE } from "@osn/constants";
 import styled, { css } from "styled-components";
 
 export const TimeStatusWrapper = styled.div``;
@@ -38,6 +39,10 @@ export const IdentityUserWrapper = styled(Flex)`
     :hover {
       text-decoration: underline;
     }
+  }
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    max-width: 100%;
   }
 `;
 export const DescriptionWrapper = styled(Flex)`
