@@ -1,15 +1,14 @@
 import styled from "styled-components";
 import Background from "components/Background";
-import { Container, Breadcrumb } from "@osn/common-ui";
+import { Container } from "@osn/common-ui";
+import Breadcrumb from "../components/Breadcrumb";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
 import { capitalize } from "utils";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import ChildBountyDetail from "components/ChildBounty/Detail";
 import { resolveBountyDetailRoute } from "utils/route";
 import { useDispatch } from "react-redux";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
-import { useIsScreen } from "@osn/common";
 
 const Wrapper = styled.div`
   position: relative;
@@ -33,30 +32,6 @@ export default function PageChildBountyDetail() {
     childBountyDetailEffectDeps,
   } = useFetchChildBountyDetail();
 
-  const { isMobile } = useIsScreen();
-
-  const routes = useMemo(() => {
-    const items = [
-      {
-        link: "/",
-        name: "Explore",
-      },
-      {
-        link: resolveBountyDetailRoute(network, bountyId),
-        name: `${capitalize(network)} #${bountyId}`,
-      },
-      {
-        name: `Child #${childBountyId}`,
-      },
-    ];
-
-    if (isMobile) {
-      return [items[items.length - 1]];
-    }
-
-    return items;
-  }, [isMobile, network, bountyId, childBountyId]);
-
   useEffect(() => {
     dispatch(fetchChildBountyDetail());
     return resetChildBountyDetail;
@@ -70,8 +45,13 @@ export default function PageChildBountyDetail() {
       <Container>
         <ContentWrapper>
           <Breadcrumb
-            backButtonRender={(button) => <Link to="/">{button}</Link>}
-            routes={routes}
+            path={[
+              {
+                title: `${capitalize(network)} #${bountyId}`,
+                href: resolveBountyDetailRoute(network, bountyId),
+              },
+            ]}
+            value={`Child #${childBountyId}`}
           />
           <ChildBountyDetail childBountyDetail={childBountyDetail} />
         </ContentWrapper>
