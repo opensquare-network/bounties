@@ -55,7 +55,7 @@ export default function PageChildBountyDetail() {
     }
 
     return items;
-  }, [isMobile]);
+  }, [isMobile, network, bountyId, childBountyId]);
 
   useEffect(() => {
     dispatch(fetchChildBountyDetail());
