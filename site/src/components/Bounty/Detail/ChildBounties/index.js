@@ -28,7 +28,7 @@ import {
 } from "./styled";
 import { BOUNTY_STATUS } from "utils/constants";
 import { useBountyPermission } from "hooks/useBountyPermission";
-import { useIsScreen } from "hooks/useIsScreen";
+import { useIsScreen } from "@osn/common";
 
 export default function ChildBounties({ bountyDetail = {} }) {
   const {

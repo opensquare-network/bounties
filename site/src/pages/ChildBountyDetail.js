@@ -9,7 +9,7 @@ import ChildBountyDetail from "components/ChildBounty/Detail";
 import { resolveBountyDetailRoute } from "utils/route";
 import { useDispatch } from "react-redux";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
-import { useIsScreen } from "hooks/useIsScreen";
+import { useIsScreen } from "@osn/common";
 
 const Wrapper = styled.div`
   position: relative;
