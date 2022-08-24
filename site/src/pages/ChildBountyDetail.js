@@ -4,11 +4,12 @@ import { Container, Breadcrumb } from "@osn/common-ui";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { capitalize } from "utils";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import ChildBountyDetail from "components/ChildBounty/Detail";
 import { resolveBountyDetailRoute } from "utils/route";
 import { useDispatch } from "react-redux";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
+import { useIsScreen } from "hooks/useIsScreen";
 
 const Wrapper = styled.div`
   position: relative;
@@ -32,19 +33,29 @@ export default function PageChildBountyDetail() {
     childBountyDetailEffectDeps,
   } = useFetchChildBountyDetail();
 
-  const routes = [
-    {
-      link: "/",
-      name: "Explore",
-    },
-    {
-      link: resolveBountyDetailRoute(network, bountyId),
-      name: `${capitalize(network)} #${bountyId}`,
-    },
-    {
-      name: `Child #${childBountyId}`,
-    },
-  ];
+  const { isMobile } = useIsScreen();
+
+  const routes = useMemo(() => {
+    const items = [
+      {
+        link: "/",
+        name: "Explore",
+      },
+      {
+        link: resolveBountyDetailRoute(network, bountyId),
+        name: `${capitalize(network)} #${bountyId}`,
+      },
+      {
+        name: `Child #${childBountyId}`,
+      },
+    ];
+
+    if (isMobile) {
+      return [items[items.length - 1]];
+    }
+
+    return items;
+  }, [isMobile]);
 
   useEffect(() => {
     dispatch(fetchChildBountyDetail());
