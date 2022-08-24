@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import getApi from "@osn/common/src/services/chain/api";
+import getApi from "@osn/common/es/services/chain/api";
 import {
   chainNodesSelector,
   activeChainNodeSelector,

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
-import getApi from "@osn/common/src/services/chain/api";
+import getApi from "@osn/common/es/services/chain/api";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
 import { PROJECT_NAME } from "./constants";
-import { encodeNetworkAddress } from "@osn/common/src";
+import { encodeNetworkAddress } from "@osn/common/es";
 
 export function useApi() {
   const account = useSelector(accountSelector);

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import { FlexBetween } from "@osn/common-ui";
-import { useOnClickOutside } from "@osn/common/src/utils/hooks";
+import { useOnClickOutside } from "@osn/common/es/utils/hooks";
 import MoreButton from "./MoreButton";
 
 const Wrapper = styled.div`

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import { p_14_normal } from "@osn/common-ui/es/styles/textStyles";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
-import { useOnClickOutside } from "@osn/common/src/utils/hooks";
+import { useOnClickOutside } from "@osn/common/es/utils/hooks";
 
 const Wrapper = styled.div`
   position: relative;

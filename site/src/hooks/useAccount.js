@@ -1,4 +1,4 @@
-import { encodeNetworkAddress } from "@osn/common/src";
+import { encodeNetworkAddress } from "@osn/common/es";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 
