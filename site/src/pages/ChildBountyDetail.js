@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import Background from "components/Background";
-import { Container, Breadcrumb } from "@osn/common-ui";
+import { Container } from "@osn/common-ui";
+import Breadcrumb from "../components/Breadcrumb";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
 import { capitalize } from "utils";
 import { useEffect } from "react";
 import ChildBountyDetail from "components/ChildBounty/Detail";
@@ -32,20 +32,6 @@ export default function PageChildBountyDetail() {
     childBountyDetailEffectDeps,
   } = useFetchChildBountyDetail();
 
-  const routes = [
-    {
-      link: "/",
-      name: "Explore",
-    },
-    {
-      link: resolveBountyDetailRoute(network, bountyId),
-      name: `${capitalize(network)} #${bountyId}`,
-    },
-    {
-      name: `Child #${childBountyId}`,
-    },
-  ];
-
   useEffect(() => {
     dispatch(fetchChildBountyDetail());
     return resetChildBountyDetail;
@@ -59,8 +45,13 @@ export default function PageChildBountyDetail() {
       <Container>
         <ContentWrapper>
           <Breadcrumb
-            backButtonRender={(button) => <Link to="/">{button}</Link>}
-            routes={routes}
+            path={[
+              {
+                title: `${capitalize(network)} #${bountyId}`,
+                href: resolveBountyDetailRoute(network, bountyId),
+              },
+            ]}
+            value={`Child #${childBountyId}`}
           />
           <ChildBountyDetail childBountyDetail={childBountyDetail} />
         </ContentWrapper>
