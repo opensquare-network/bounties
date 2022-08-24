@@ -2,11 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import debounce from "lodash.debounce";
 import { hexToString } from "@polkadot/util";
 import { useApi } from "../utils/hooks";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/es/utils/hooks";
 import styled from "styled-components";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
-import { getSymbolMetaByChain } from "@osn/common/src/utils/tokenValue";
+import { getSymbolMetaByChain } from "@osn/common/es/utils/tokenValue";
 import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
 import { LoadingIcon } from "@osn/common-ui";
 

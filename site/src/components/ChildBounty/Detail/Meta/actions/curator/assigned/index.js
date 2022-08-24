@@ -7,7 +7,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { useApi } from "utils/hooks";
 import { awardChildBounty } from "services/chainApi";
 import serverApi from "services/serverApi";
-import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
+import { encodeNetworkAddress, useIsMounted } from "@osn/common/es";
 import { signApiData } from "utils/signature";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 

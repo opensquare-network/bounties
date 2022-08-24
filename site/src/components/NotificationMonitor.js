@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUnread, fetchUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import { connect } from "services/websocket";
-import { toPublicKey } from "@osn/common/src/utils/address";
+import { toPublicKey } from "@osn/common/es/utils/address";
 
 export default function NotificationMonitor() {
   const dispatch = useDispatch();

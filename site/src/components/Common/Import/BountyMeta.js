@@ -14,7 +14,7 @@ import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { LinkIdentityUser, LoadingIcon } from "@osn/common-ui";
 import { ErrorMessage } from "./styled";
 import BigNumber from "bignumber.js";
-import { encodeNetworkAddress } from "@osn/common/src";
+import { encodeNetworkAddress } from "@osn/common/es";
 
 const StyledText = styled.p`
   ${p_16_semibold};
