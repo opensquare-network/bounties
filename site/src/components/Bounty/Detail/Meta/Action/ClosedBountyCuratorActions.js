@@ -12,7 +12,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";
 import { ButtonGroup } from "../../../../Common/Detail/styled";
-import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
+import { encodeNetworkAddress, useIsMounted } from "@osn/common/es";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { useIsCurator } from "hooks/useIsCurator";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";

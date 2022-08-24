@@ -4,7 +4,7 @@ import {
   setCookie,
   getCookie,
   clearCookie,
-} from "@osn/common/src/utils/cookie";
+} from "@osn/common/es/utils/cookie";
 import { encodeAddress } from "@polkadot/util-crypto";
 import { AVAILABLE_NETWORKS } from "@osn/constants";
 

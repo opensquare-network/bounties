@@ -5,7 +5,7 @@ import { useApi } from "utils/hooks";
 import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";
 import { ButtonGroup, ButtonText } from "../../styled";
-import { encodeNetworkAddress, useIsMounted } from "@osn/common/src";
+import { encodeNetworkAddress, useIsMounted } from "@osn/common/es";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 import { BOUNTY_STATUS } from "utils/constants";
 

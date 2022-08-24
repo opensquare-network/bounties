@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/es/utils/hooks";
 import { isWeb3Injected, web3Enable } from "@polkadot/extension-dapp";
 import { PROJECT_NAME } from "../utils/constants";
-import { polkadotWeb3Accounts } from "@osn/common/src/extension";
+import { polkadotWeb3Accounts } from "@osn/common/es/extension";
 
 export default function usePolkadotExtension() {
   const isMounted = useIsMounted();

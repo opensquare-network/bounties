@@ -24,10 +24,10 @@ import {
 import {
   addressEllipsis,
   encodeNetworkAddress,
-} from "@osn/common/src/utils/address";
-import { fetchIdentity } from "@osn/common/src/services/identity";
+} from "@osn/common/es/utils/address";
+import { fetchIdentity } from "@osn/common/es/services/identity";
 import uniqWith from "lodash.uniqwith";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/es/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import { useSearchParams } from "react-router-dom";
