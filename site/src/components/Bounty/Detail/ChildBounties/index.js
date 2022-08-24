@@ -9,6 +9,8 @@ import {
   Dot,
   Flex,
   FlexBetween,
+  OnlyDesktop,
+  OnlyMobile,
 } from "@osn/common-ui";
 import BountyTag from "components/Bounty/BountyTag";
 import StatusLabel from "components/Bounty/StatusLabel";
@@ -28,7 +30,6 @@ import {
 } from "./styled";
 import { BOUNTY_STATUS } from "utils/constants";
 import { useBountyPermission } from "hooks/useBountyPermission";
-import { useIsScreen } from "@osn/common";
 
 export default function ChildBounties({ bountyDetail = {} }) {
   const {
@@ -38,8 +39,6 @@ export default function ChildBounties({ bountyDetail = {} }) {
     bountyIndex,
   } = bountyDetail ?? {};
   const { canImportChildBounty } = useBountyPermission(bountyDetail);
-
-  const { isDesktop } = useIsScreen();
 
   return (
     <Collapse title="Child Bounties">
@@ -59,11 +58,12 @@ export default function ChildBounties({ bountyDetail = {} }) {
 
             return (
               <List.Item>
-                {isDesktop ? (
+                <OnlyDesktop>
                   <DesktopListItem item={item} i={i} />
-                ) : (
+                </OnlyDesktop>
+                <OnlyMobile>
                   <MobileListItem item={item} i={i} />
-                )}
+                </OnlyMobile>
               </List.Item>
             );
           }}

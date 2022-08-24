@@ -8,10 +8,11 @@ import {
   LoadingIcon,
   Button,
   Divider,
+  OnlyDesktop,
+  OnlyMobile,
 } from "@osn/common-ui";
 import StatusLabel from "components/Bounty/StatusLabel";
 import { useBountyPermission } from "hooks/useBountyPermission";
-import { useIsScreen } from "@osn/common";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { APPLICATION_STATUS, CHILD_BOUNTY_STATUS } from "utils/constants";
 import { findWorkingApplicant } from "../Meta/actions/utils";
@@ -35,8 +36,6 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
   const { assignService } = useWorkflowActionService(childBountyDetail);
 
   const workingApplicant = findWorkingApplicant(applications);
-
-  const { isDesktop } = useIsScreen();
 
   return (
     <div>
@@ -78,7 +77,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
 
             return (
               <List.Item>
-                {isDesktop ? (
+                <OnlyDesktop>
                   <DesktopListItem
                     applicant={applicant}
                     canAssignHunter={canAssignHunter}
@@ -87,7 +86,8 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
                     childrenBountyDetail={childBountyDetail}
                     shouldShowAssignButton={shouldShowAssignButton}
                   />
-                ) : (
+                </OnlyDesktop>
+                <OnlyMobile>
                   <MobileListItem
                     applicant={applicant}
                     canAssignHunter={canAssignHunter}
@@ -96,7 +96,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
                     childrenBountyDetail={childBountyDetail}
                     shouldShowAssignButton={shouldShowAssignButton}
                   />
-                )}
+                </OnlyMobile>
               </List.Item>
             );
           }}
