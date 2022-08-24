@@ -1933,10 +1933,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@osn/common-ui@^1.10.0":
-  version "1.10.0"
-  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-1.10.0.tgz#89dca39a706ed6381e5482c57df5a218722c80d3"
-  integrity sha512-I2D89otKWpVCmUClXKciz8ukwfBs1K3OHKda1S/w8LjId6367MNx6HlpN01LSkTPGwrHyNN3dXcAs+2STqobYA==
+"@osn/common-ui@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-1.12.0.tgz#ae6645967a771b30565c2d2bb78bac5bce27aa71"
+  integrity sha512-Se2nXGx4XpcuMRBkQOGHH8+tWI7S9lbEZ8ZS9PoaRsL2c6n3q3JrREF8pOOvSMkVSW1TsP8lONxhVgHV6glQfg==
   dependencies:
     "@osn/polkadot-react-identicon" "^1.0.8"
     copy-to-clipboard "^3.3.1"
