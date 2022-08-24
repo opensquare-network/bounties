@@ -1944,23 +1944,19 @@
     ethereum-blockies-base64 "^1.0.2"
     ethers "^5.6.9"
 
-"@osn/common@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.npmjs.org/@osn/common/-/common-0.0.20.tgz#85bd8307c37d339062cc060394b5302c195f6776"
-  integrity sha512-Jrzi9Q5DSo0hZLOiaTUckXOqpdy7DOYargcITu1GQ7SttB0wS6mjAF+dWcxqF8myG6yozHf7AwTMkA+FqDrqGw==
+"@osn/common@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@osn/common/-/common-1.1.0.tgz#4368eda6487d7d543dfcb3749092a8b1b76c16a3"
+  integrity sha512-pMQFnBDhUxRqS+7te0d4a+BaKTCUG1asBbr1rh9lMgT4kq46Hf93w4tvl+DSfE3Su+Qr7uMXwsBbhvCWddKitw==
   dependencies:
-    "@osn/constants" "^1.1.2"
     "@osn/provider-options" "^1.0.2"
+    bignumber.js "^9.1.0"
+    lodash.debounce "^4.0.8"
 
 "@osn/constants@^1.1.0":
   version "1.1.0"
   resolved "https://registry.npmjs.org/@osn/constants/-/constants-1.1.0.tgz#e098c43b7d34b5f4ae9c63772521457d4d480c95"
   integrity sha512-Rc1LxlVvZ4OrHn+zfXe3KbZpoCJrLloxvLlHzN6nWcsw4SDOBNDguYfZPoKgR24rH8BQebgEDqu+8w0GaFAKgg==
-
-"@osn/constants@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmjs.org/@osn/constants/-/constants-1.1.2.tgz#6b8bf547b066800949fdb8232e3ff5913ea60659"
-  integrity sha512-jHKIDY4FQK/m40O11nPUeZ9HIgXrfi4ZkfU4hDGkwtl3FbIQ9jynqj5H/6BQm/nAVFUYR/II+sd0PEnWMtwRaw==
 
 "@osn/polkadot-react-identicon@^1.0.8":
   version "1.0.8"
@@ -1989,9 +1985,9 @@
     sanitize-html "^2.7.0"
 
 "@osn/provider-options@^1.0.2":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@osn/provider-options/-/provider-options-1.0.7.tgz#bd7fce7426b44c370812376704aa9092ca6cc216"
-  integrity sha512-8P45Pc/N9FrFJz4R922J47w2u8ZCQ8e7/UpMpUmRKayCgQ3oCSH1xtsKYNozbSUsuGNsWJ+UZaap2AfIJIrgjA==
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@osn/provider-options/-/provider-options-1.0.10.tgz#843fee24ebcce7d0d6a1e87b02ba3a81acf32bb3"
+  integrity sha512-R+WPASW/qmg4JCLcCLjn5pBDBSdBtJz9IHBV0eQc9X49ZzkTuoEtfszs/QVB64BthLix0qtolMyMs0Ysy2Jl7w==
 
 "@osn/rich-text-editor@^0.1.52":
   version "0.1.52"
@@ -3992,6 +3988,11 @@ bignumber.js@^9.0.2:
   version "9.0.2"
   resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.2.tgz#71c6c6bed38de64e24a65ebe16cfcf23ae693673"
   integrity sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw==
+
+bignumber.js@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.1.0.tgz#8d340146107fe3a6cb8d40699643c302e8773b62"
+  integrity sha512-4LwHK4nfDOraBCtst+wOWIHbu1vhvAPJK8g8nROd4iuc3PSEjWif/qwbkh8jwCJz6yDBvtU4KPynETgrfh7y3A==
 
 binary-extensions@^2.0.0:
   version "2.2.0"
