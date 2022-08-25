@@ -1306,15 +1306,6 @@
     eventemitter3 "^4.0.7"
     rxjs "^7.5.6"
 
-"@polkadot/keyring@10.1.5":
-  version "10.1.5"
-  resolved "https://registry.npmjs.org/@polkadot/keyring/-/keyring-10.1.5.tgz#267be8abe7eede87c85ce94d7e14804d31d1268f"
-  integrity sha512-5uRnjtSWMsqUO4GFxi3NtpkE8OEXTmJB+1RvL8P+8bv+LWKfpA5Hz87d76e+P65CrMABE5QiOtTqg4wK75ixMg==
-  dependencies:
-    "@babel/runtime" "^7.18.9"
-    "@polkadot/util" "10.1.5"
-    "@polkadot/util-crypto" "10.1.5"
-
 "@polkadot/keyring@^10.1.5":
   version "10.1.6"
   resolved "https://registry.npmjs.org/@polkadot/keyring/-/keyring-10.1.6.tgz#973b20a1af6bf4efc460e20e13ef419f8da1fcc8"
