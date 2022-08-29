@@ -1315,15 +1315,6 @@
     "@polkadot/util" "10.1.6"
     "@polkadot/util-crypto" "10.1.6"
 
-"@polkadot/networks@10.1.5":
-  version "10.1.5"
-  resolved "https://registry.npmjs.org/@polkadot/networks/-/networks-10.1.5.tgz#d4569fe5fadfc271e410d5e116e7990495d072dc"
-  integrity sha512-H1hxoc417Hm68DY0jqaCTGeTvlb9sGEzJocRacBMQz6AQdu5aY2t9T6Antl+Ig0bV/dHtm8Zw67XBpJn6Q+4Ag==
-  dependencies:
-    "@babel/runtime" "^7.18.9"
-    "@polkadot/util" "10.1.5"
-    "@substrate/ss58-registry" "^1.25.0"
-
 "@polkadot/networks@10.1.6", "@polkadot/networks@^10.1.5":
   version "10.1.6"
   resolved "https://registry.npmjs.org/@polkadot/networks/-/networks-10.1.6.tgz#32749dc6d39a9dd0cbd3af7fea11b1da4a4a63a0"
@@ -1436,23 +1427,6 @@
     "@polkadot/util" "^10.1.5"
     "@polkadot/util-crypto" "^10.1.5"
     rxjs "^7.5.6"
-
-"@polkadot/util-crypto@10.1.5":
-  version "10.1.5"
-  resolved "https://registry.npmjs.org/@polkadot/util-crypto/-/util-crypto-10.1.5.tgz#e12b34718a43cd7d6941113ff4ec05d01db1cff5"
-  integrity sha512-jaRBLczk0ehAHTQxxb5DRnATYXAHlr17fsh0A+iOtXwsggenClfZ3IXgXmm5bTL5fL8iTLr1DZoVqcK+WYQKxQ==
-  dependencies:
-    "@babel/runtime" "^7.18.9"
-    "@noble/hashes" "1.1.2"
-    "@noble/secp256k1" "1.6.3"
-    "@polkadot/networks" "10.1.5"
-    "@polkadot/util" "10.1.5"
-    "@polkadot/wasm-crypto" "^6.3.1"
-    "@polkadot/x-bigint" "10.1.5"
-    "@polkadot/x-randomvalues" "10.1.5"
-    "@scure/base" "1.1.1"
-    ed2curve "^0.3.0"
-    tweetnacl "^1.0.3"
 
 "@polkadot/util-crypto@10.1.6", "@polkadot/util-crypto@^10.1.5":
   version "10.1.6"
@@ -1587,14 +1561,6 @@
   integrity sha512-/nraYZg0hdSjbczhDBAsHlEqeZLs0u0xa8HJrfH2lq8+HOIYkQpJPHOqiQIvEe/VFRq7Xnbij+4uffV+otzB/w==
   dependencies:
     "@babel/runtime" "^7.18.9"
-
-"@polkadot/x-randomvalues@10.1.5":
-  version "10.1.5"
-  resolved "https://registry.npmjs.org/@polkadot/x-randomvalues/-/x-randomvalues-10.1.5.tgz#ae189adb6b0924dd66120e125746946e77aeac4d"
-  integrity sha512-B9C3Rkwc+1R2P8M31VRtEkEOjSq16ObQ85+vxDiY7J5taRpdNY8G5tHEYvhDyQxZGibBEJ2ZCcIljmMGZfQI1w==
-  dependencies:
-    "@babel/runtime" "^7.18.9"
-    "@polkadot/x-global" "10.1.5"
 
 "@polkadot/x-randomvalues@10.1.6":
   version "10.1.6"
@@ -1749,7 +1715,7 @@
     pako "^2.0.4"
     ws "^8.8.1"
 
-"@substrate/ss58-registry@^1.25.0", "@substrate/ss58-registry@^1.28.0":
+"@substrate/ss58-registry@^1.28.0":
   version "1.28.0"
   resolved "https://registry.npmjs.org/@substrate/ss58-registry/-/ss58-registry-1.28.0.tgz#39b7fa355d9b97bcb30ef1eedb47b10c3fddcf03"
   integrity sha512-XPSwSq4CThLyg+OnZ5/LHh3SPDQjRdGS3Ux5ClgWhRCQamlU86FCT1LBwQ/i+ximbdBfqKRRzVhm1ql3AJ9FKQ==
