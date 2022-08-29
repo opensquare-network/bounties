@@ -12,8 +12,8 @@
   "scripts": {},
   "dependencies": {
     "@koa/cors": "^3.1.0",
-    "@osn/polkadot-api-container": "1.0.7",
-    "@polkadot/util": "10.1.5",
+    "@osn/polkadot-api-container": "1.0.9",
+    "@polkadot/util": "10.1.6",
     "dotenv": "^10.0.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
