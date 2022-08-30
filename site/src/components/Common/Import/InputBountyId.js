@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import Input from "@osn/common-ui/es/styled/Input";
+import { Input, FlexCenter, LoadingIcon } from "@osn/common-ui";
 import Tooltip from "@osn/common-ui/es/Tooltip";
-import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import { Title, ErrorMessage } from "./styled";
 
 const InputAndError = styled.div`
@@ -17,6 +16,7 @@ export default function InputBountyId({
   setBountyId,
   errorMsg,
   disabled,
+  isLoading,
 }) {
   return (
     <>
@@ -38,6 +38,7 @@ export default function InputBountyId({
           }}
           placeholder="0"
           disabled={disabled}
+          suffix={isLoading && <LoadingIcon />}
         />
         {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
       </InputAndError>
