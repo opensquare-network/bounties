@@ -187,6 +187,7 @@ export default function ImportBounty() {
           bountyId={bountyId}
           setBountyId={setBountyId}
           errorMsg={bountyError}
+          isLoading={loading}
         />
         <InputTitle title={title} setTitle={setTitle} isLoading={loading} />
         <InputDescription

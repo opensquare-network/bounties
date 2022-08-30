@@ -10,10 +10,6 @@ import {
 } from "@osn/common-ui/es/styles/textStyles";
 import styled from "styled-components";
 
-export const ListWrapper = styled.div`
-  margin-bottom: 16px;
-`;
-
 export const Item = styled(FlexBetween)`
   min-height: 56px;
 `;
