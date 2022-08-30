@@ -11,6 +11,7 @@ import {
   FlexBetween,
   OnlyDesktop,
   OnlyMobile,
+  Gap,
 } from "@osn/common-ui";
 import BountyTag from "components/Bounty/BountyTag";
 import StatusLabel from "components/Bounty/StatusLabel";
@@ -22,7 +23,6 @@ import {
   Index,
   IndexWrapper,
   Item,
-  ListWrapper,
   MobileTitleGap,
   Status,
   TimeWrapper,
@@ -42,41 +42,43 @@ export default function ChildBounties({ bountyDetail = {} }) {
 
   return (
     <Collapse title="Child Bounties">
-      <ListWrapper>
-        <List
-          data={childBounties}
-          noDataMessage="No current bounties"
-          noDataProps={{ bordered: false, shadow: false }}
-          loading={!bountyDetail}
-          loadingComponent={
-            <FlexCenter>
-              <LoadingIcon />
-            </FlexCenter>
-          }
-          itemRender={(item, idx) => {
-            const i = idx + 1;
+      <List
+        data={childBounties}
+        noDataMessage="No current bounties"
+        noDataProps={{ bordered: false, shadow: false }}
+        loading={!bountyDetail}
+        loadingComponent={
+          <FlexCenter>
+            <LoadingIcon />
+          </FlexCenter>
+        }
+        itemRender={(item, idx) => {
+          const i = idx + 1;
 
-            return (
-              <List.Item>
-                <OnlyDesktop>
-                  <DesktopListItem item={item} i={i} />
-                </OnlyDesktop>
-                <OnlyMobile>
-                  <MobileListItem item={item} i={i} />
-                </OnlyMobile>
-              </List.Item>
-            );
-          }}
-        />
-      </ListWrapper>
+          return (
+            <List.Item>
+              <OnlyDesktop>
+                <DesktopListItem item={item} i={i} />
+              </OnlyDesktop>
+              <OnlyMobile>
+                <MobileListItem item={item} i={i} />
+              </OnlyMobile>
+            </List.Item>
+          );
+        }}
+      />
 
       {status === BOUNTY_STATUS.Open && canImportChildBounty && (
-        <Link
-          style={{ display: "flex" }}
-          to={resolveImportChildBountyRoute(network, bountyIndex)}
-        >
-          <Button block>Import a Child Bounty</Button>
-        </Link>
+        <>
+          {!!childBounties?.length && <Gap mt={16} />}
+
+          <Link
+            style={{ display: "flex" }}
+            to={resolveImportChildBountyRoute(network, bountyIndex)}
+          >
+            <Button block>Import a Child Bounty</Button>
+          </Link>
+        </>
       )}
     </Collapse>
   );
