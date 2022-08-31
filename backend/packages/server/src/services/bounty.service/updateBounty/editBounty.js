@@ -24,7 +24,11 @@ async function editBounty(bounty, action, data, address, signature, logo) {
 
   let logoCid;
   if (logo) {
-    logoCid = await pinFile(logo);
+    try {
+      logoCid = await pinFile(logo);
+    } catch (e) {
+      throw new HttpError(500, "Failed to pin logo to IPFS");
+    }
   }
 
   const updatedBounty = await Bounty.findOneAndUpdate(
