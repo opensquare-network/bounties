@@ -94,5 +94,6 @@ export const APPLICATION_STATUS = {
   Assigned: "assigned",
   Started: "started",
   Submitted: "submitted",
+  Awarded: "awarded",
   Canceled: "canceled",
 };

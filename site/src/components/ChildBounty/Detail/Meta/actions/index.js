@@ -5,6 +5,7 @@ import { useCuratorOpenAction } from "./curator/open";
 import { useCuratorAssignedAction } from "./curator/assigned";
 import { useHunterAssignedAction } from "./hunter/assigned";
 import { useCuratorClosedChildBountyAction } from "./curator/closed";
+import { useAwardedAction } from "./awarded";
 
 export function useAction(childBountyDetail) {
   const { status, childBounty } = childBountyDetail ?? {};
@@ -19,6 +20,7 @@ export function useAction(childBountyDetail) {
   const curatorAssignedAction = useCuratorAssignedAction(childBountyDetail);
   const curatorClosedChildBountyAction =
     useCuratorClosedChildBountyAction(childBountyDetail);
+  const awardedAction = useAwardedAction(childBountyDetail);
 
   // curator view
   if (isCurator) {
@@ -37,6 +39,11 @@ export function useAction(childBountyDetail) {
     } else if (status === CHILD_BOUNTY_STATUS.Assigned) {
       return hunterAssignedAction;
     }
+  }
+
+  // curator, hunter both view
+  if (status === CHILD_BOUNTY_STATUS.Awarded) {
+    return awardedAction;
   }
 
   return null;
