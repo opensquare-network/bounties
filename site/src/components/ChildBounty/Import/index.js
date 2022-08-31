@@ -20,6 +20,7 @@ import BountySkills from "./BountySkills";
 import BountyHeader from "./BountyHeader";
 import { resolveChildBountyDetailRoute } from "utils/route";
 import { noop, notification } from "@osn/common-ui";
+import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -245,29 +246,37 @@ export default function ImportChildBounty({ network, parentBountyId }) {
 
   const canImport = isCurator && title && content && loaded && !submitting;
 
+  const { importNoticeEl, isDifferentNetwork } =
+    useDifferentNetworkNotice(network);
+
   return (
     <Wrapper>
-      <Main>
-        <BountyHeader network={network} bountyIndex={parentBountyId} />
-        <InputBountyId
-          title={"Child bounty ID"}
-          tooltip={"The child bounty ID on-chain"}
-          bountyId={childBountyId}
-          setBountyId={setChildBountyId}
-          isLoading={loading}
-          errorMsg={bountyError}
-        />
-        <InputTitle title={title} setTitle={setTitle} isLoading={loading} />
-        <BountySkills
-          selectedSkills={selectedSkills}
-          setSelectedSkills={setSelectedSkills}
-        />
-        <InputDescription
-          content={content}
-          setContent={setContent}
-          isLoading={loading}
-        />
-      </Main>
+      <div>
+        {isDifferentNetwork && importNoticeEl}
+
+        <Main>
+          <BountyHeader network={network} bountyIndex={parentBountyId} />
+          <InputBountyId
+            title={"Child bounty ID"}
+            tooltip={"The child bounty ID on-chain"}
+            bountyId={childBountyId}
+            setBountyId={setChildBountyId}
+            isLoading={loading}
+            errorMsg={bountyError}
+          />
+          <InputTitle title={title} setTitle={setTitle} isLoading={loading} />
+          <BountySkills
+            selectedSkills={selectedSkills}
+            setSelectedSkills={setSelectedSkills}
+          />
+          <InputDescription
+            content={content}
+            setContent={setContent}
+            isLoading={loading}
+          />
+        </Main>
+      </div>
+
       <Side>
         {account ? (
           <Box>

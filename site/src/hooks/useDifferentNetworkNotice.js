@@ -39,9 +39,33 @@ export function useDifferentNetworkNotice(network = "") {
       message={
         <Message>
           <MarkdownPreviewer
-            content={`- You are currently on [${capitalize(
-              account?.network || "",
-            )}] network.\n- Switch to right network if you want to manage this bounty.`}
+            content={[
+              `- You are currently on [${capitalize(
+                account?.network || "",
+              )}] network.`,
+              `- Switch to right network if you want to manage this bounty.`,
+            ].join("\n")}
+          />
+        </Message>
+      }
+    />
+  );
+
+  const importNoticeEl = account && displayNotice && (
+    <Notification
+      type="notice"
+      size="large"
+      onClose={() => setDisplayNotice(false)}
+      message={
+        <Message>
+          <MarkdownPreviewer
+            content={[
+              `- You are currently on [${capitalize(
+                account?.network || "",
+              )}] network.`,
+              `- Switch to other network if you want to import bounties on it.`,
+              `- Only bounty curators can import bounties`,
+            ].join("\n")}
           />
         </Message>
       }
@@ -52,5 +76,6 @@ export function useDifferentNetworkNotice(network = "") {
     isDifferentNetwork,
     isSameNetwork,
     noticeEl,
+    importNoticeEl,
   };
 }
