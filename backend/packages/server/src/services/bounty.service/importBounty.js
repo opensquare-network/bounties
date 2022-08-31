@@ -38,7 +38,11 @@ async function importBounty(
 
   let logoCid;
   if (logo) {
-    logoCid = await pinFile(logo);
+    try {
+      logoCid = await pinFile(logo);
+    } catch (e) {
+      throw new HttpError(500, "Failed to pin logo to IPFS");
+    }
   }
 
   return await Bounty.create({
