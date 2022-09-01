@@ -35,13 +35,22 @@ async function resolveChildBounty(
     childBounty.index,
   );
 
-  if (onchainChildBounty && !onchainChildBounty.meta?.status?.pendingPayout) {
+  if (!onchainChildBounty) {
+    throw new HttpError(400, `The child bounty is not found on chain`);
+  }
+
+  if (!onchainChildBounty.meta?.status?.pendingPayout) {
     throw new HttpError(400, `The child bounty is not awarded`);
   }
 
+  const beneficiary = onchainChildBounty.meta?.status?.pendingPayout?.beneficiary;
+
   const updatedChildBounty = await ChildBounty.findOneAndUpdate(
     { _id: childBounty._id },
-    { status: ChildBountyStatus.Awarded },
+    {
+      status: ChildBountyStatus.Awarded,
+      beneficiary,
+    },
     { new: true },
   );
 

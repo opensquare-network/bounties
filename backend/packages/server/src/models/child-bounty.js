@@ -26,6 +26,7 @@ const ChildBountySchema = new mongoose.Schema(
       description: String,
       meta: mongoose.Schema.Types.Mixed,
     },
+    beneficiary: String,
   },
   {
     timestamps: true,
