@@ -1,4 +1,4 @@
-import { Card, FlexCenter, List } from "@osn/common-ui";
+import { Card, FlexCenter, Gap, List, OnlyDesktop } from "@osn/common-ui";
 import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
 import Tooltip from "@osn/common-ui/es/Tooltip";
 import { Link } from "react-router-dom";
@@ -16,10 +16,11 @@ function BountyItem(props) {
     {
       label: (
         <>
-          <div style={{ marginRight: 5 }}>
-            <span className="hide-in-mobile">Child </span>
+          <div>
+            <OnlyDesktop>Child </OnlyDesktop>
             Bounties
           </div>
+          <Gap mr={5} />
           <Tooltip
             content={`${childBountiesCount} open child bounties`}
             size="fit"
@@ -37,7 +38,7 @@ function BountyItem(props) {
     {
       label: (
         <div>
-          <span className="hide-in-mobile">Total </span>
+          <OnlyDesktop>Total </OnlyDesktop>
           Rewards
         </div>
       ),
@@ -50,7 +51,10 @@ function BountyItem(props) {
       size="small"
       head={
         <Head>
-          <BountyLogo network={network} logoUrl={logoUrl} />
+          <Link to={resolveBountyDetailRoute(network, bountyIndex)}>
+            <BountyLogo network={network} logoUrl={logoUrl} />
+          </Link>
+
           <Title title={title}>
             <Link to={resolveBountyDetailRoute(network, bountyIndex)}>
               {title}

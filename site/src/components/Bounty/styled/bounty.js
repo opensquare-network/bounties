@@ -40,12 +40,6 @@ export const SubTitle = styled.p`
 
 export const Detail = styled(FlexBetween)`
   color: ${text_dark_minor};
-
-  @media screen and (max-width: ${MOBILE_SIZE}px) {
-    .hide-in-mobile {
-      display: none;
-    }
-  }
 `;
 
 export const BountyWrapper = styled.div`
