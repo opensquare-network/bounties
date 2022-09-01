@@ -2,11 +2,10 @@ import { useAccount } from "hooks/useAccount";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useHunterOpenAction } from "./hunter/open";
 import { useCuratorOpenAction } from "./curator/open";
-import { useCuratorSubmittedAction } from "./curator/submitted";
-import { useCuratorWorkDoneAction } from "./curator/workDone";
 import { useCuratorAssignedAction } from "./curator/assigned";
 import { useHunterAssignedAction } from "./hunter/assigned";
 import { useCuratorClosedChildBountyAction } from "./curator/closed";
+import { useAwardedAction } from "./awarded";
 
 export function useAction(childBountyDetail) {
   const { status, childBounty } = childBountyDetail ?? {};
@@ -18,11 +17,10 @@ export function useAction(childBountyDetail) {
   const hunterOpenAction = useHunterOpenAction(childBountyDetail);
   const hunterAssignedAction = useHunterAssignedAction(childBountyDetail);
   const curatorOpenAction = useCuratorOpenAction(childBountyDetail);
-  const curatorSubmittedAction = useCuratorSubmittedAction();
-  const curatorWorkDoneAction = useCuratorWorkDoneAction();
   const curatorAssignedAction = useCuratorAssignedAction(childBountyDetail);
   const curatorClosedChildBountyAction =
     useCuratorClosedChildBountyAction(childBountyDetail);
+  const awardedAction = useAwardedAction(childBountyDetail);
 
   // curator view
   if (isCurator) {
@@ -30,10 +28,6 @@ export function useAction(childBountyDetail) {
       return curatorOpenAction;
     } else if (status === CHILD_BOUNTY_STATUS.Assigned) {
       return curatorAssignedAction;
-    } else if (status === CHILD_BOUNTY_STATUS.Started) {
-      return curatorSubmittedAction;
-    } else if (status === CHILD_BOUNTY_STATUS.WorkDone) {
-      return curatorWorkDoneAction;
     } else if (status === CHILD_BOUNTY_STATUS.Closed) {
       return curatorClosedChildBountyAction;
     }
@@ -47,6 +41,10 @@ export function useAction(childBountyDetail) {
     }
   }
 
-  // WorkDone
+  // curator, hunter both view
+  if (status === CHILD_BOUNTY_STATUS.Awarded) {
+    return awardedAction;
+  }
+
   return null;
 }

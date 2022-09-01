@@ -25,6 +25,10 @@ export function findSubmittedApplicant(applicants = []) {
   return findApplicantByStatus(applicants, APPLICATION_STATUS.Submitted);
 }
 
+export function findAwardedApplicant(applicants = []) {
+  return findApplicantByStatus(applicants, APPLICATION_STATUS.Awarded);
+}
+
 function findApplicantByStatus(applicants = [], status = "") {
   return applicants.find((i) => i.status === status);
 }
