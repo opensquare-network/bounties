@@ -1,8 +1,8 @@
-import { Card, Divider, Dot, List } from "@osn/common-ui";
+import { Collapse, Dot, List } from "@osn/common-ui";
 import { Count, ListWrapper } from "./styled";
 import SubmissionItem from "./SubmissionItem";
 
-export default function ChildBountyDetailSubmission({ childBountyDetail }) {
+export default function ChildBountyDetailSubmissions({ childBountyDetail }) {
   const { applications = [] } = childBountyDetail ?? {};
   const submissions = applications
     .filter((i) => i.submission)
@@ -17,23 +17,19 @@ export default function ChildBountyDetailSubmission({ childBountyDetail }) {
   }
 
   return (
-    <div>
-      <Card.Head
-        title={
-          <>
-            Submission
-            {!!submissions?.length && (
-              <>
-                <Dot />
-                <Count>{submissions.length}</Count>
-              </>
-            )}
-          </>
-        }
-      />
-
-      <Divider />
-
+    <Collapse
+      title={
+        <>
+          Submissions
+          {!!submissions?.length && (
+            <>
+              <Dot />
+              <Count>{submissions.length}</Count>
+            </>
+          )}
+        </>
+      }
+    >
       {!!submissions?.length && (
         <ListWrapper>
           <List
@@ -47,6 +43,6 @@ export default function ChildBountyDetailSubmission({ childBountyDetail }) {
           />
         </ListWrapper>
       )}
-    </div>
+    </Collapse>
   );
 }
