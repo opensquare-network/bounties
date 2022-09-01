@@ -32,4 +32,7 @@ export const fetchBountyDetail = (network, bountyId) => async (dispatch) => {
     });
 };
 
+export const resetBountyDetail = () => (dispatch) =>
+  dispatch(setBountyDetail(null));
+
 export default bountyDetailSlice.reducer;

@@ -25,18 +25,14 @@ const ContentWrapper = styled.div`
 export default function PageChildBountyDetail() {
   const { network, bountyId, childBountyId } = useParams();
   const dispatch = useDispatch();
-  const {
-    childBountyDetail,
-    fetchChildBountyDetail,
-    resetChildBountyDetail,
-    childBountyDetailEffectDeps,
-  } = useFetchChildBountyDetail();
+
+  const { childBountyDetail, fetchChildBountyDetail, resetChildBountyDetail } =
+    useFetchChildBountyDetail();
 
   useEffect(() => {
     dispatch(fetchChildBountyDetail());
-    return resetChildBountyDetail;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, ...childBountyDetailEffectDeps]);
+    return () => dispatch(resetChildBountyDetail());
+  }, [dispatch, fetchChildBountyDetail, resetChildBountyDetail]);
 
   return (
     <Wrapper>
