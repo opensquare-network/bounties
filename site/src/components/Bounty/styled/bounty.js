@@ -15,6 +15,14 @@ export const Head = styled(FlexCenter)`
   flex-direction: column;
 `;
 
+export const HeadLogo = styled.div`
+  display: flex;
+  a {
+    display: inline-flex;
+    cursor: pointer;
+  }
+`;
+
 export const HeadTitle = styled.h4`
   ${p_16_semibold};
   color: ${text_dark_major};

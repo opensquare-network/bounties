@@ -51,9 +51,11 @@ function BountyItem(props) {
       size="small"
       head={
         <Head>
-          <Link to={resolveBountyDetailRoute(network, bountyIndex)}>
-            <BountyLogo network={network} logoUrl={logoUrl} />
-          </Link>
+          <HeadLogo>
+            <Link to={resolveBountyDetailRoute(network, bountyIndex)}>
+              <BountyLogo network={network} logoUrl={logoUrl} />
+            </Link>
+          </HeadLogo>
 
           <HeadTitle title={title}>
             <Link to={resolveBountyDetailRoute(network, bountyIndex)}>
