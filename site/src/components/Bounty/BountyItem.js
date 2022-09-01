@@ -2,7 +2,7 @@ import { Card, FlexCenter, Gap, List, OnlyDesktop } from "@osn/common-ui";
 import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
 import Tooltip from "@osn/common-ui/es/Tooltip";
 import { Link } from "react-router-dom";
-import { Detail, Head, SubTitle, Title } from "./styled/bounty";
+import { Detail, Head, HeadLogo, SubTitle, HeadTitle } from "./styled/bounty";
 import { detailLoading, headLoading } from "./styled/bountyLoading";
 import BountyLogo from "./BountyLogo";
 import { capitalize } from "utils";
@@ -55,11 +55,11 @@ function BountyItem(props) {
             <BountyLogo network={network} logoUrl={logoUrl} />
           </Link>
 
-          <Title title={title}>
+          <HeadTitle title={title}>
             <Link to={resolveBountyDetailRoute(network, bountyIndex)}>
               {title}
             </Link>
-          </Title>
+          </HeadTitle>
           <SubTitle>{capitalize(network)} Network</SubTitle>
         </Head>
       }

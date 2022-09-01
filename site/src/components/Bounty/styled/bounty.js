@@ -15,7 +15,7 @@ export const Head = styled(FlexCenter)`
   flex-direction: column;
 `;
 
-export const Title = styled.h4`
+export const HeadTitle = styled.h4`
   ${p_16_semibold};
   color: ${text_dark_major};
   margin-top: 20px;
