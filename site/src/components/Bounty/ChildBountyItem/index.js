@@ -10,7 +10,7 @@ import {
 } from "@osn/common-ui";
 import BountyTag from "../BountyTag";
 import { Link } from "react-router-dom";
-import { Title } from "../styled/bounty";
+import { HeadTitle } from "../styled/bounty";
 import { Mark } from "./styled";
 import StatusLabel from "../StatusLabel";
 import { resolveChildBountyDetailRoute } from "utils/route";
@@ -32,7 +32,7 @@ export default function ChildBountyItem({ children, ...props } = {}) {
     <Card
       size="small"
       title={
-        <Title>
+        <HeadTitle>
           <Link
             to={resolveChildBountyDetailRoute(
               network,
@@ -42,7 +42,7 @@ export default function ChildBountyItem({ children, ...props } = {}) {
           >
             {title}
           </Link>
-        </Title>
+        </HeadTitle>
       }
       prefix={
         <MobileInvisible>

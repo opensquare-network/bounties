@@ -15,7 +15,15 @@ export const Head = styled(FlexCenter)`
   flex-direction: column;
 `;
 
-export const Title = styled.h4`
+export const HeadLogo = styled.div`
+  display: flex;
+  a {
+    display: inline-flex;
+    cursor: pointer;
+  }
+`;
+
+export const HeadTitle = styled.h4`
   ${p_16_semibold};
   color: ${text_dark_major};
   margin-top: 20px;
@@ -40,12 +48,6 @@ export const SubTitle = styled.p`
 
 export const Detail = styled(FlexBetween)`
   color: ${text_dark_minor};
-
-  @media screen and (max-width: ${MOBILE_SIZE}px) {
-    .hide-in-mobile {
-      display: none;
-    }
-  }
 `;
 
 export const BountyWrapper = styled.div`
