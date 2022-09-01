@@ -26,18 +26,13 @@ export default function BountyDetail() {
   const { network, bountyId } = useParams();
   const dispatch = useDispatch();
 
-  const {
-    bountyDetail,
-    fetchBountyDetail,
-    resetBountyDetail,
-    fetchBountyDetailEffectDeps,
-  } = useFetchBountyDetail();
+  const { bountyDetail, fetchBountyDetail, resetBountyDetail } =
+    useFetchBountyDetail();
 
   useEffect(() => {
     dispatch(fetchBountyDetail());
-    return resetBountyDetail;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, ...fetchBountyDetailEffectDeps]);
+    return () => dispatch(resetBountyDetail());
+  }, [dispatch, fetchBountyDetail, resetBountyDetail]);
 
   return (
     <Wrapper>
