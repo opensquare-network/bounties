@@ -65,22 +65,28 @@ export function useCuratorAssignedAction(childBountyDetail) {
       );
       const meta = childBountyMeta?.toJSON();
 
-      if (meta && meta.status?.active) {
-        await awardChildBounty(
-          api,
-          parentBountyIndex,
-          index,
-          beneficiary,
-          account,
-          (status) => {
-            closePendingNotification();
-            closePendingNotification = notification.pending({
-              message: status,
-              timeout: false,
-            });
-          },
-        );
+      if (!meta || !meta.status?.active) {
+        notification.error({
+          message: `The child bounty is not active anymore. ` +
+            `If it was closed/awarded by other tools, the status will be automatically updated later.`,
+        });
+        return;
       }
+
+      await awardChildBounty(
+        api,
+        parentBountyIndex,
+        index,
+        beneficiary,
+        account,
+        (status) => {
+          closePendingNotification();
+          closePendingNotification = notification.pending({
+            message: status,
+            timeout: false,
+          });
+        },
+      );
 
       const payload = await signApiData(
         {
