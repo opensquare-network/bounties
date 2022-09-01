@@ -1,5 +1,4 @@
 import {
-  Card,
   LinkIdentityUser,
   List,
   Time,
@@ -7,9 +6,9 @@ import {
   Dot,
   LoadingIcon,
   Button,
-  Divider,
   OnlyDesktop,
   OnlyMobile,
+  Collapse,
 } from "@osn/common-ui";
 import StatusLabel from "components/Bounty/StatusLabel";
 import { useBountyPermission } from "hooks/useBountyPermission";
@@ -38,23 +37,19 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
   const workingApplicant = findWorkingApplicant(applications);
 
   return (
-    <div>
-      <Card.Head
-        title={
-          <>
-            Applicants
-            {!!applications?.length && (
-              <>
-                <Dot />
-                <Count>{applications.length}</Count>
-              </>
-            )}
-          </>
-        }
-      />
-
-      <Divider />
-
+    <Collapse
+      title={
+        <>
+          Applicants
+          {!!applications?.length && (
+            <>
+              <Dot />
+              <Count>{applications.length}</Count>
+            </>
+          )}
+        </>
+      }
+    >
       <ListWrapper>
         <List
           data={applications}
@@ -102,7 +97,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
           }}
         />
       </ListWrapper>
-    </div>
+    </Collapse>
   );
 }
 
