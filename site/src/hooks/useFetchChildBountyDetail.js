@@ -1,10 +1,11 @@
 import { noop } from "@osn/common-ui";
+import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import {
   childBountyDetailSelector,
   fetchChildBountyDetail,
-  setChildBountyDetail,
+  resetChildBountyDetail,
 } from "store/reducers/childBountyDetailSlice";
 
 /**
@@ -14,22 +15,17 @@ export function useFetchChildBountyDetail() {
   const childBountyDetail = useSelector(childBountyDetailSelector);
   const { network, bountyId, childBountyId } = useParams();
 
-  function $fetchChildBountyDetail() {
+  const $fetchChildBountyDetail = useCallback(() => {
     if (network && bountyId && childBountyId) {
       return fetchChildBountyDetail(network, bountyId, childBountyId);
     }
 
     return noop;
-  }
-
-  function resetChildBountyDetail() {
-    setChildBountyDetail(null);
-  }
+  }, [network, bountyId, childBountyId]);
 
   return {
     childBountyDetail,
     resetChildBountyDetail,
     fetchChildBountyDetail: $fetchChildBountyDetail,
-    childBountyDetailEffectDeps: [network, bountyId, childBountyId],
   };
 }

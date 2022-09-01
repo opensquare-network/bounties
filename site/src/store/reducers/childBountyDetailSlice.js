@@ -34,4 +34,7 @@ export const fetchChildBountyDetail =
       });
   };
 
+export const resetChildBountyDetail = () => (dispatch) =>
+  dispatch(setChildBountyDetail(null));
+
 export default childBountyDetailSlice.reducer;
