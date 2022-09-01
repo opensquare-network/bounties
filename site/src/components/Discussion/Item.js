@@ -4,7 +4,7 @@ import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
 import Time from "@osn/common-ui/es/Time";
 import IpfsSquare from "@osn/common-ui/es/IpfsSquare";
 import NetworkUser from "components/User/NetworkUser";
-import { encodeNetworkAddress } from "@osn/common/es/utils/address";
+import { encodeNetworkAddress } from "@osn/common";
 import { p_14_normal } from "@osn/common-ui/es/styles/textStyles";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import {
