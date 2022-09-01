@@ -1,10 +1,7 @@
 import styled, { css } from "styled-components";
 import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  useWindowSize,
-  useOnClickOutside,
-} from "@osn/common/es/utils/hooks.js";
+import { useWindowSize, useOnClickOutside } from "@osn/common";
 import {
   setCurrentNode,
   chainNodesSelector,

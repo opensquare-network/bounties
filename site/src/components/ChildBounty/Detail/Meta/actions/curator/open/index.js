@@ -5,7 +5,7 @@ import { useApi } from "utils/hooks";
 import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";
 import { ButtonGroup, ButtonText } from "../../styled";
-import { encodeNetworkAddress, useIsMounted } from "@osn/common/es";
+import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 
 export function useCuratorOpenAction(childBountyDetail) {

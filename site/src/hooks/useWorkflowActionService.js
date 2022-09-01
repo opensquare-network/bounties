@@ -1,4 +1,4 @@
-import { encodeNetworkAddress } from "@osn/common/es";
+import { encodeNetworkAddress } from "@osn/common";
 import { useAccount } from "hooks/useAccount";
 import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";

@@ -8,7 +8,7 @@ import { ConnectWalletModal, ConnectWalletButton } from "./ConnectWallet";
 import NodeSelect from "./NodeSelect";
 import { useSelector } from "react-redux";
 import ConnectedAccount from "./User/ConnectedAccount";
-import { useOnClickOutside, useWindowSize } from "@osn/common/es/utils/hooks";
+import { useOnClickOutside, useWindowSize } from "@osn/common";
 import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";

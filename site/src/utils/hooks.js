@@ -5,7 +5,7 @@ import getApi from "@osn/common/es/services/chain/api";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
 import { PROJECT_NAME } from "./constants";
-import { encodeNetworkAddress } from "@osn/common/es";
+import { encodeNetworkAddress } from "@osn/common";
 
 export function useApi() {
   const account = useSelector(accountSelector);

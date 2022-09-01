@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signApiData } from "utils/signature";
 import serverApi from "services/serverApi";
 import { fetchChildBountyDetail } from "store/reducers/childBountyDetailSlice";
-import { encodeNetworkAddress, useIsMounted } from "@osn/common/es";
+import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 
 const Box = styled.div`
   box-shadow: 0px 4px 31px rgba(26, 33, 44, 0.04),

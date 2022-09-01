@@ -5,7 +5,7 @@ import { ReactComponent as ExitIcon } from "@osn/common-ui/es/Account/exit.svg";
 import { ReactComponent as CircleIcon } from "@osn/common-ui/es/Account/circle.svg";
 import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 import NetworkUser from "./NetworkUser";
-import { encodeNetworkAddress } from "@osn/common/es/utils/address";
+import { encodeNetworkAddress } from "@osn/common";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 
 const Wrapper = styled.div`

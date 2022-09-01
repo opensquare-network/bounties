@@ -1,4 +1,4 @@
-import { useIsMounted } from "@osn/common/es/utils/hooks";
+import { useIsMounted } from "@osn/common";
 import { useEffect, useState } from "react";
 import { fetchIdentity } from "@osn/common/es/services/identity";
 import styled, { css } from "styled-components";
@@ -6,7 +6,7 @@ import IdentityIcon from "@osn/common-ui/es/User/IdentityIcon";
 import {
   addressEllipsis,
   encodeNetworkAddress,
-} from "@osn/common/es/utils/address";
+} from "@osn/common";
 import { identityChainMap } from "@osn/constants";
 
 const IdentityWrapper = styled.a`
