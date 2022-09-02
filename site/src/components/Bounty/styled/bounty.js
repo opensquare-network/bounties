@@ -1,13 +1,12 @@
-import { FlexCenter, FlexBetween } from "@osn/common-ui";
 import {
+  FlexCenter,
+  FlexBetween,
+  p_14_normal,
+  p_18_semibold,
   text_dark_accessory,
   text_dark_major,
   text_dark_minor,
-} from "@osn/common-ui/es/styles/colors";
-import {
-  p_14_normal,
-  p_16_semibold,
-} from "@osn/common-ui/es/styles/textStyles";
+} from "@osn/common-ui";
 import styled from "styled-components";
 import { MOBILE_SIZE } from "@osn/constants";
 
@@ -24,7 +23,7 @@ export const HeadLogo = styled.div`
 `;
 
 export const HeadTitle = styled.h4`
-  ${p_16_semibold};
+  ${p_18_semibold};
   color: ${text_dark_major};
   margin-top: 20px;
   margin-bottom: 0;
