@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     flex-grow: 1;
 
     > :not(:first-child) {
-      margin-top: 20px;
+      margin-top: 16px;
     }
   }
 

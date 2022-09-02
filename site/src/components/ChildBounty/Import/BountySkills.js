@@ -7,6 +7,8 @@ import {
   netural_grey_800,
   primary_purple_500,
   p_14_medium,
+  p_14_normal,
+  text_dark_accessory,
   text_dark_major,
 } from "@osn/common-ui";
 
@@ -14,6 +16,7 @@ const SkillsList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: 16px;
 `;
 
 const SkillItem = styled(SkillTag)`
@@ -41,11 +44,9 @@ const SkillItem = styled(SkillTag)`
 `;
 
 const Info = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-  color: #a1a8b3;
+  ${p_14_normal};
+  color: ${text_dark_accessory};
+  margin-top: 8px;
 `;
 
 export default function BountySkills({
@@ -72,8 +73,9 @@ export default function BountySkills({
   );
 
   return (
-    <>
+    <div>
       <Title>Skill</Title>
+
       <SkillsList>
         {SKILLS.map((item) => (
           <SkillItem
@@ -86,10 +88,11 @@ export default function BountySkills({
           </SkillItem>
         ))}
       </SkillsList>
+
       <Info>
         Select up to 3 required tags for this bounty to get the right
         contributors
       </Info>
-    </>
+    </div>
   );
 }

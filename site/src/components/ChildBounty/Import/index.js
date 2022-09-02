@@ -33,7 +33,7 @@ const Wrapper = styled.div`
     flex-grow: 1;
 
     > :not(:first-child) {
-      margin-top: 20px;
+      margin-top: 16px;
     }
   }
 
@@ -61,10 +61,6 @@ const Box = styled.div`
 
   > :not(:first-child) {
     margin-top: 20px;
-  }
-
-  > :nth-child(5) {
-    margin-top: 8px;
   }
 `;
 
