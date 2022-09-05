@@ -49,6 +49,7 @@ function BountyItem(props) {
   return (
     <Card
       size="small"
+      hoverable
       head={
         <Head>
           <HeadLogo>
