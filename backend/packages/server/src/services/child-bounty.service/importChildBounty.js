@@ -45,7 +45,7 @@ async function importChildBounty(
   }
 
   if (!childBounty.meta?.status?.active) {
-    throw new HttpError(400, `Can import active child bounty only`);
+    throw new HttpError(400, `Only active child bounty can be imported`);
   }
 
   if (childBounty.curators.length === 0) {
