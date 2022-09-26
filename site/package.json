@@ -18,7 +18,7 @@
     "@osn/polkadot-react-identicon": "^1.0.8",
     "@osn/previewer": "^0.12.2",
     "@osn/rich-text-editor": "^0.1.52",
-    "@polkadot/api": "^9.2.3",
+    "@polkadot/api": "9.4.2",
     "@polkadot/extension-dapp": "^0.44.6",
     "@polkadot/react-identicon": "^2.9.6",
     "@reduxjs/toolkit": "^1.8.0",
