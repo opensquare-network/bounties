@@ -1,4 +1,4 @@
-import { Collapse, Dot, List } from "@osn/common-ui";
+import { Collapse, Dot, FlexCenter, List, LoadingIcon } from "@osn/common-ui";
 import { Count, ListWrapper } from "./styled";
 import SubmissionItem from "./SubmissionItem";
 
@@ -11,10 +11,6 @@ export default function ChildBountyDetailSubmissions({ childBountyDetail }) {
       address: i.address,
       network: i.bountyIndexer.network,
     }));
-
-  if (!childBountyDetail) {
-    return null;
-  }
 
   return (
     <Collapse
@@ -30,19 +26,25 @@ export default function ChildBountyDetailSubmissions({ childBountyDetail }) {
         </>
       }
     >
-      {!!submissions?.length && (
-        <ListWrapper>
-          <List
-            gap={32}
-            data={submissions}
-            itemRender={(submission) => (
-              <List.Item>
-                <SubmissionItem {...submission} />
-              </List.Item>
-            )}
-          />
-        </ListWrapper>
-      )}
+      <ListWrapper>
+        <List
+          gap={32}
+          data={submissions}
+          itemRender={(submission) => (
+            <List.Item>
+              <SubmissionItem {...submission} />
+            </List.Item>
+          )}
+          noDataMessage="No current submissions"
+          noDataProps={{ bordered: false, shadow: false }}
+          loading={!childBountyDetail}
+          loadingComponent={
+            <FlexCenter>
+              <LoadingIcon />
+            </FlexCenter>
+          }
+        />
+      </ListWrapper>
     </Collapse>
   );
 }

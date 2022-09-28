@@ -27,6 +27,7 @@ export default function BountyDetail({ bountyDetail }) {
   const [editing, setEditing] = useState(false);
   const { noticeEl, isDifferentNetwork } = useDifferentNetworkNotice(
     bountyDetail?.network,
+    bountyDetail?.bounty?.curators,
   );
 
   return (

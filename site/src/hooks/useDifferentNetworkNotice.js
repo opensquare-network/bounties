@@ -1,3 +1,4 @@
+import { isSamePublicKey } from "@osn/common";
 import { Notification, text_dark_minor } from "@osn/common-ui";
 import { MarkdownPreviewer } from "@osn/previewer";
 import { capitalize } from "lodash";
@@ -15,7 +16,7 @@ const Message = styled.div`
 /**
  * @description To check a network is same as current account network
  */
-export function useDifferentNetworkNotice(network = "") {
+export function useDifferentNetworkNotice(network = "", curators = []) {
   const account = useAccount();
 
   const isDifferentNetwork = useMemo(
@@ -29,6 +30,8 @@ export function useDifferentNetworkNotice(network = "") {
 
   const [displayNotice, setDisplayNotice] = useState(false);
 
+  const isCurator = curators.some(curator => isSamePublicKey(curator, account.address));
+
   useEffect(() => setDisplayNotice(true), [account?.network]);
 
   const noticeEl = account && displayNotice && (
@@ -40,10 +43,10 @@ export function useDifferentNetworkNotice(network = "") {
         <Message>
           <MarkdownPreviewer
             content={[
-              `- You are currently on [${capitalize(
+              `- You are currently on ${capitalize(
                 account?.network || "",
-              )}] network.`,
-              `- Switch to right network if you want to manage this bounty.`,
+              )} network.`,
+              `- Switch to right network if you want to ${isCurator ? "manage" : "apply"} this bounty.`,
             ].join("\n")}
           />
         </Message>
@@ -60,9 +63,9 @@ export function useDifferentNetworkNotice(network = "") {
         <Message>
           <MarkdownPreviewer
             content={[
-              `- You are currently on [${capitalize(
+              `- You are currently on ${capitalize(
                 account?.network || "",
-              )}] network.`,
+              )} network.`,
               `- Switch to other network if you want to import bounties on it.`,
               `- Only bounty curators can import bounties`,
             ].join("\n")}
