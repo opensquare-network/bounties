@@ -3,14 +3,13 @@ const {
   ChildBounty,
   Application,
   ChildBountyTimeline,
-  Notification,
 } = require("../../../models");
 const {
   ChildBountyStatus,
   ApplicationStatus,
   NotificationType,
 } = require("../../../utils/constants");
-const { toPublicKey } = require("../../../utils/address");
+const { createNotification } = require("../../notification");
 
 async function closeChildBounty(childBounty, action, data, address, signature) {
   if (![ChildBountyStatus.Open].includes(childBounty.status)) {
@@ -52,19 +51,17 @@ async function closeChildBounty(childBounty, action, data, address, signature) {
   const applicants = applications.map((item) => item.address);
 
   for (const applicant of applicants) {
-    const notificationOwner = toPublicKey(applicant);
-    await Notification.create({
-      owner: notificationOwner,
-      type: [NotificationType.ChildBountyClosed],
-      read: false,
-      data: {
+    await createNotification(
+      applicant,
+      NotificationType.ChildBountyClosed,
+      {
         byWho: {
           address,
           network: childBounty.network,
         },
         childBountyTimelineItem: timelineItem._id,
-      },
-    });
+      }
+    );
   }
 
   return updatedChildBounty;

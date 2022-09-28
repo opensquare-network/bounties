@@ -1,7 +1,9 @@
 const { HttpError } = require("../utils/exc");
-const { BountyComment, Bounty, Notification } = require("../models");
+const { BountyComment, Bounty } = require("../models");
 const { extractMentions } = require("../utils/mention");
-const { toPublicKey, isSamePublicKey } = require("../utils/address");
+const { isSamePublicKey } = require("../utils/address");
+const { createNotification } = require("./notification");
+const { NotificationType } = require("../utils/constants");
 
 async function createCommentNotification(comment) {
   const bountyIndexer = comment.bountyIndexer;
@@ -10,42 +12,28 @@ async function createCommentNotification(comment) {
     bountyIndexer: bountyIndexer.bountyIndexer,
   });
 
+  const mentions = extractMentions(comment.content);
+  const notifications = mentions.map(item => ({ receiver: item.address, type: NotificationType.Mention }));
   if (!isSamePublicKey(bounty.address, comment.address)) {
-    const owner = toPublicKey(bounty.address);
-    await Notification.create({
-      owner,
-      type: ["reply"],
-      read: false,
-      data: {
+    const item = notifications.find(item => item.receiver === bounty.address);
+    if (item) {
+      item.type = [NotificationType.Reply, NotificationType.Mention];
+    } else {
+      notifications.push({ receiver: bounty.address, type: NotificationType.Reply });
+    }
+  }
+
+  for (const { receiver, type } of notifications) {
+    await createNotification(
+      receiver,
+      type,
+      {
         bountyComment: comment._id,
         byWho: {
           address: comment.address,
           network: comment.commenterNetwork,
         },
-      },
-    });
-  }
-
-  const mentions = extractMentions(comment.content);
-  for (const mention of mentions) {
-    const owner = toPublicKey(mention.address);
-    await Notification.updateOne(
-      {
-        owner,
-        "data.bountyComment": comment._id,
-      },
-      {
-        $addToSet: {
-          type: "mention",
-        },
-        $set: {
-          "data.byWho": {
-            address: comment.address,
-            network: comment.commenterNetwork,
-          },
-        },
-      },
-      { upsert: true },
+      }
     );
   }
 }
