@@ -17,6 +17,7 @@ import BountyMeta from "components/Common/Import/BountyMeta";
 import { resolveBountyDetailRoute } from "utils/route";
 import { Wrapper, Box, Main, Side } from "./styled";
 import { noop, notification } from "@osn/common-ui";
+import { delayPromise } from "../../../utils/delay";
 
 export default function ImportBounty() {
   const account = useSelector(accountSelector);
@@ -136,14 +137,10 @@ export default function ImportBounty() {
         formData.set("logo", imageFile);
       }
 
-      const { result, error } = await serverApi.fetch(
-        `bounties`,
-        {},
-        {
-          method: "POST",
-          body: formData,
-        },
-      );
+      const { result, error } = await delayPromise(serverApi.fetch(`bounties`, {}, {
+        method: "POST",
+        body: formData,
+      }))
       setSubmitting(false);
 
       if (result) {
@@ -158,7 +155,6 @@ export default function ImportBounty() {
         notification.error({
           message: error.message,
         });
-        return;
       }
     } finally {
       closePendingNotification();
