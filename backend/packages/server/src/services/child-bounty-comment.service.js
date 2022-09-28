@@ -1,9 +1,7 @@
 const { HttpError } = require("../utils/exc");
 const { ChildBountyComment, ChildBounty } = require("../models");
-const { extractMentions } = require("../utils/mention");
-const { isSamePublicKey } = require("../utils/address");
 const { createNotification } = require("./notification");
-const { NotificationType } = require("../utils/constants");
+const { getCommentNotifications } = require("./common");
 
 async function createCommentNotification(comment) {
   const bountyIndexer = comment.bountyIndexer;
@@ -13,17 +11,7 @@ async function createCommentNotification(comment) {
     index: bountyIndexer.index,
   });
 
-  const mentions = extractMentions(comment.content);
-  const notifications = mentions.map(item => ({ receiver: item.address, type: NotificationType.Mention }));
-  if (!isSamePublicKey(childBounty.address, comment.address)) {
-    const item = notifications.find(item => item.receiver === childBounty.address);
-    if (item) {
-      item.type = [NotificationType.Reply, NotificationType.Mention];
-    } else {
-      notifications.push({ receiver: childBounty.address, type: NotificationType.Reply });
-    }
-  }
-
+  const notifications = getCommentNotifications(childBounty.address, comment);
   for (const { receiver, type } of notifications) {
     await createNotification(
       receiver,
