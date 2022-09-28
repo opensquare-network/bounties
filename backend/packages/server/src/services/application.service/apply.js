@@ -10,6 +10,7 @@ const {
   NotificationType,
   ApplicationActions,
 } = require("../../utils/constants");
+const { createNotification } = require("../notification");
 
 async function apply(
   bountyIndexer,
