@@ -30,6 +30,7 @@ export default function ChildBountyDetail({ childBountyDetail }) {
   const [editing, setEditing] = useState(false);
   const { noticeEl, isDifferentNetwork } = useDifferentNetworkNotice(
     childBountyDetail?.network,
+    childBountyDetail?.childBounty?.curators,
   );
 
   return (

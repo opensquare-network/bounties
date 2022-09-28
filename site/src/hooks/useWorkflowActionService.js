@@ -34,7 +34,7 @@ export function useWorkflowActionService(childBountyDetail) {
         message: e.message,
       });
 
-      return e;
+      throw e;
     } finally {
       closePending();
     }
@@ -56,7 +56,7 @@ export function useWorkflowActionService(childBountyDetail) {
         message: e.message,
       });
 
-      return e;
+      throw e;
     }
   }
 
@@ -68,9 +68,7 @@ export function useWorkflowActionService(childBountyDetail) {
       ...value,
     };
 
-    try {
-      return await service(endpoint, method, resolvedData);
-    } catch {}
+    return await service(endpoint, method, resolvedData);
   }
 
   async function makeApplicationService(method, value) {
@@ -89,88 +87,110 @@ export function useWorkflowActionService(childBountyDetail) {
       ),
     };
 
-    try {
-      return await service(endpoint, method, resolvedData);
-    } catch {}
+    return await service(endpoint, method, resolvedData);
   }
 
   async function applyService(value) {
-    const res = await makeApplicationsService("post", {
-      action: "applyChildBounty",
-      applicantNetwork: account?.network,
-      ...value,
-    });
+    try {
+      const res = await makeApplicationsService("post", {
+        action: "applyChildBounty",
+        applicantNetwork: account?.network,
+        ...value,
+      });
 
-    notification.success({
-      message: "Applied",
-    });
+      notification.success({
+        message: "Applied",
+      });
 
-    return res;
+      return res;
+    } catch (e) {
+      // ignore
+    }
   }
 
   async function assignService(value = {}) {
-    const res = await makeApplicationService("patch", {
-      action: "assignApplication",
-      ...value,
-    });
+    try {
+      const res = await makeApplicationService("patch", {
+        action: "assignApplication",
+        ...value,
+      });
 
-    notification.success({
-      message: "Assigned",
-    });
+      notification.success({
+        message: "Assigned",
+      });
 
-    return res;
+      return res;
+    } catch (e) {
+      // ignore
+    }
   }
 
   async function unassignService(value = {}) {
-    const res = await makeApplicationService("patch", {
-      action: "unassignApplication",
-      ...value,
-    });
+    try {
+      const res = await makeApplicationService("patch", {
+        action: "unassignApplication",
+        ...value,
+      });
 
-    notification.success({
-      message: "Unassigned",
-    });
+      notification.success({
+        message: "Unassigned",
+      });
 
-    return res;
+      return res;
+    } catch (e) {
+      // ignore
+    }
   }
 
   async function acceptService(value = {}) {
-    const res = await makeApplicationService("patch", {
-      action: "acceptAssignment",
-      ...value,
-    });
+    try {
+      const res = await makeApplicationService("patch", {
+        action: "acceptAssignment",
+        ...value,
+      });
 
-    notification.success({
-      message: "Accepted",
-    });
+      notification.success({
+        message: "Accepted",
+      });
 
-    return res;
+      return res;
+    } catch (e) {
+      // ignore
+    }
   }
 
   async function submitWorkService(value = {}) {
-    const res = await makeApplicationService("patch", {
-      action: "submitWork",
-      ...value,
-    });
+    try {
+      const res = await makeApplicationService("patch", {
+        action: "submitWork",
+        ...value,
+      });
 
-    notification.success({
-      message: "Submitted",
-    });
+      notification.success({
+        message: "Submitted",
+      });
 
-    return res;
+      return res;
+    } catch (e) {
+      // ignore
+    }
   }
 
   async function cancelService(value = {}) {
-    const res = await makeApplicationService("patch", {
-      action: "cancelApplication",
-      ...value,
-    });
+    try {
+      const res = await makeApplicationService("patch", {
+        action: "cancelApplication",
+        ...value,
+      });
 
-    notification.success({
-      message: "Canceled",
-    });
+      notification.success({
+        message: "Canceled",
+      });
 
-    return res;
+      return res;
+    } catch (e) {
+      // ignore
+    }
   }
 
   return {

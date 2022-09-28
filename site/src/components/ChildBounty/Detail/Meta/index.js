@@ -19,6 +19,7 @@ export default function ChildBountyDetailMeta({
   const action = useAction(childBountyDetail);
   const { isSameNetwork } = useDifferentNetworkNotice(
     childBountyDetail?.network,
+    childBountyDetail?.childBounty?.curators,
   );
 
   if (!childBountyDetail) {
