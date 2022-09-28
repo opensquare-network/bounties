@@ -129,7 +129,7 @@ export default function Discussion({ network, parentBountyIndex, index }) {
         signature,
       };
 
-      const { result, error } = await serverApi.post(`/comments`, payload);
+      const { result, error } = await serverApi.post(`/network/${network}/child-bounties/${parentBountyIndex}_${index}/comments`, payload);
       if (result) {
         setContent("");
         notification.success({
