@@ -126,7 +126,7 @@ export default function Discussion({ network, bountyId }) {
         signature,
       };
 
-      const { result, error } = await serverApi.post(`/comments`, payload);
+      const { result, error } = await serverApi.post(`/network/${network}/bounties/${bountyId}/comments`, payload);
       if (result) {
         setContent("");
         notification.success({

@@ -1,4 +1,5 @@
 const childBountyService = require("../../services/child-bounty.service");
+const childBountyCommentService = require("../../services/child-bounty-comment.service");
 const { HttpError } = require("../../utils/exc");
 const { extractPage } = require("../../utils/pagination");
 const isNil = require("lodash.isnil");
@@ -145,10 +146,77 @@ async function getChildBountyComments(ctx) {
   );
 }
 
+async function postChildBountyComment(ctx) {
+  const { data, address, signature } = ctx.request.body;
+  const {
+    action,
+    type,
+    network,
+    parentBountyIndex,
+    index,
+    content,
+    commenterNetwork,
+  } = data;
+
+  if (action !== "comment") {
+    throw new HttpError(400, { action: ["Action must be comment"] });
+  }
+
+  if (!commenterNetwork) {
+    throw new HttpError(400, {
+      commenterNetwork: ["Commenter network is missing"],
+    });
+  }
+
+  if (!content) {
+    throw new HttpError(400, { content: ["Comment content is missing"] });
+  }
+
+  if (type !== "childBounty") {
+    throw new HttpError(400, { type: ["Type must be childBounty"] });
+  }
+
+  if (!network) {
+    throw new HttpError(400, { network: ["Network is missing"] });
+  }
+
+  if (network !== ctx.params.network) {
+    throw new HttpError(400, { network: ["Network does not match the router"] });
+  }
+
+  if (parentBountyIndex === undefined) {
+    throw new HttpError(400, { parentBountyIndex: ["Parent bounty index is missing"] });
+  }
+
+  if (parentBountyIndex !== parseInt(ctx.params.parentBountyIndex)) {
+    throw new HttpError(400, { parentBountyIndex: ["Parent bounty index does not match the router"] });
+  }
+
+  if (index === undefined) {
+    throw new HttpError(400, { index: ["Index is missing"] });
+  }
+
+  if (index !== parseInt(ctx.params.index)) {
+    throw new HttpError(400, { index: ["Index does not match the router"] });
+  }
+
+  ctx.body = await childBountyCommentService.postChildBountyComment(
+    network,
+    parentBountyIndex,
+    index,
+    content,
+    commenterNetwork,
+    data,
+    address,
+    signature,
+  );
+}
+
 module.exports = {
   getChildBounty,
   updateChildBounty,
   getChildBounties,
   importChildBounty,
   getChildBountyComments,
+  postChildBountyComment,
 };

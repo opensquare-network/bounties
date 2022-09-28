@@ -1,4 +1,5 @@
 const bountyService = require("../../services/bounty.service");
+const bountyCommentService = require("../../services/bounty-comment.service");
 const { HttpError } = require("../../utils/exc");
 const { extractPage } = require("../../utils/pagination");
 const isNil = require("lodash.isnil");
@@ -137,10 +138,67 @@ async function getBountyComments(ctx) {
   );
 }
 
+async function postBountyComment(ctx) {
+  const { data, address, signature } = ctx.request.body;
+  const {
+    action,
+    type,
+    network,
+    bountyIndex,
+    content,
+    commenterNetwork,
+  } = data;
+
+  if (action !== "comment") {
+    throw new HttpError(400, { action: ["Action must be comment"] });
+  }
+
+  if (!commenterNetwork) {
+    throw new HttpError(400, {
+      commenterNetwork: ["Commenter network is missing"],
+    });
+  }
+
+  if (!content) {
+    throw new HttpError(400, { content: ["Comment content is missing"] });
+  }
+
+  if (type !== "bounty") {
+    throw new HttpError(400, { type: ["Type must be bounty"] });
+  }
+
+  if (!network) {
+    throw new HttpError(400, { network: ["Network is missing"] });
+  }
+
+  if (network !== ctx.params.network) {
+    throw new HttpError(400, { network: ["Network does not match the router"] });
+  }
+
+  if (bountyIndex === undefined) {
+    throw new HttpError(400, { bountyIndex: ["Bounty index is missing"] });
+  }
+
+  if (bountyIndex !== parseInt(ctx.params.bountyIndex)) {
+    throw new HttpError(400, { bountyIndex: ["Bounty index does not match the router"] });
+  }
+
+  ctx.body = await bountyCommentService.postBountyComment(
+    network,
+    bountyIndex,
+    content,
+    commenterNetwork,
+    data,
+    address,
+    signature,
+  );
+}
+
 module.exports = {
   getBounty,
   getBounties,
   importBounty,
   updateBounty,
   getBountyComments,
+  postBountyComment,
 };
