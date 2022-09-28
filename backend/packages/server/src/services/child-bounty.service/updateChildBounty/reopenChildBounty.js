@@ -3,7 +3,6 @@ const {
   ChildBounty,
   Application,
   ChildBountyTimeline,
-  Notification,
   Bounty,
 } = require("../../../models");
 const chainService = require("../../chain.service");
@@ -13,8 +12,8 @@ const {
   NotificationType,
   BountyStatus,
 } = require("../../../utils/constants");
-const { toPublicKey } = require("../../../utils/address");
 const { evaluateChildBountyStatus } = require("../evaluateChildBountyStatus");
+const { createNotification } = require("../../notification");
 
 async function reopenChildBounty(
   childBounty,
@@ -97,19 +96,17 @@ async function reopenChildBounty(
   const applicants = applications.map((item) => item.address);
 
   for (const applicant of applicants) {
-    const notificationOwner = toPublicKey(applicant);
-    await Notification.create({
-      owner: notificationOwner,
-      type: [NotificationType.ChildBountyReopen],
-      read: false,
-      data: {
+    await createNotification(
+      applicant,
+      NotificationType.ChildBountyReopen,
+      {
         byWho: {
           address,
           network: childBounty.network,
         },
         childBountyTimelineItem: timelineItem._id,
-      },
-    });
+      }
+    );
   }
 
   return updatedChildBounty;

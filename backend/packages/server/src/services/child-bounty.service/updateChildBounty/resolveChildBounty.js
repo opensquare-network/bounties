@@ -3,7 +3,6 @@ const {
   ChildBounty,
   Application,
   ChildBountyTimeline,
-  Notification,
 } = require("../../../models");
 const chainService = require("../../chain.service");
 const {
@@ -11,7 +10,7 @@ const {
   ApplicationStatus,
   NotificationType,
 } = require("../../../utils/constants");
-const { toPublicKey } = require("../../../utils/address");
+const { createNotification } = require("../../notification");
 
 async function resolveChildBounty(
   childBounty,
@@ -82,19 +81,17 @@ async function resolveChildBounty(
   const applicants = applications.map((item) => item.address);
 
   for (const applicant of applicants) {
-    const notificationOwner = toPublicKey(applicant);
-    await Notification.create({
-      owner: notificationOwner,
-      type: [NotificationType.ChildBountyResolved],
-      read: false,
-      data: {
+    await createNotification(
+      applicant,
+      NotificationType.ChildBountyResolved,
+      {
         byWho: {
           address,
           network: childBounty.network,
         },
         childBountyTimelineItem: timelineItem._id,
-      },
-    });
+      }
+    );
   }
 
   return updatedChildBounty;

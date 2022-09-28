@@ -3,7 +3,6 @@ const {
   ChildBounty,
   Application,
   ApplicationTimeline,
-  Notification,
 } = require("../../models");
 const {
   ApplicationStatus,
@@ -11,7 +10,6 @@ const {
   NotificationType,
   ApplicationActions,
 } = require("../../utils/constants");
-const { toPublicKey } = require("../../utils/address");
 
 async function apply(
   bountyIndexer,
@@ -82,19 +80,17 @@ async function apply(
     signature,
   });
 
-  const notificationOwner = toPublicKey(childBounty.address);
-  await Notification.create({
-    owner: notificationOwner,
-    type: [NotificationType.Applied],
-    read: false,
-    data: {
+  await createNotification(
+    childBounty.address,
+    NotificationType.Applied,
+    {
       byWho: {
         address,
         network: applicantNetwork,
       },
       applicationTimelineItem: timelineItem._id,
-    },
-  });
+    }
+  );
 
   return application;
 }

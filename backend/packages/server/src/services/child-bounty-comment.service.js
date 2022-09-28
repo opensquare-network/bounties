@@ -1,7 +1,7 @@
 const { HttpError } = require("../utils/exc");
-const { ChildBountyComment, ChildBounty, Notification } = require("../models");
-const { extractMentions } = require("../utils/mention");
-const { toPublicKey, isSamePublicKey } = require("../utils/address");
+const { ChildBountyComment, ChildBounty } = require("../models");
+const { createNotification } = require("./notification");
+const { getCommentNotifications } = require("./common");
 
 async function createCommentNotification(comment) {
   const bountyIndexer = comment.bountyIndexer;
@@ -11,42 +11,18 @@ async function createCommentNotification(comment) {
     index: bountyIndexer.index,
   });
 
-  if (!isSamePublicKey(childBounty.address, comment.address)) {
-    const owner = toPublicKey(childBounty.address);
-    await Notification.create({
-      owner,
-      type: ["reply"],
-      read: false,
-      data: {
+  const notifications = getCommentNotifications(childBounty.address, comment);
+  for (const { receiver, type } of notifications) {
+    await createNotification(
+      receiver,
+      type,
+      {
         childBountyComment: comment._id,
         byWho: {
           address: comment.address,
           network: comment.commenterNetwork,
         },
-      },
-    });
-  }
-
-  const mentions = extractMentions(comment.content);
-  for (const mention of mentions) {
-    const owner = toPublicKey(mention.address);
-    await Notification.updateOne(
-      {
-        owner,
-        "data.childBountyComment": comment._id,
-      },
-      {
-        $addToSet: {
-          type: "mention",
-        },
-        $set: {
-          "data.byWho": {
-            address: comment.address,
-            network: comment.commenterNetwork,
-          },
-        },
-      },
-      { upsert: true },
+      }
     );
   }
 }
