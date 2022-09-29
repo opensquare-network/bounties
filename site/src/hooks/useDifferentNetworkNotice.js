@@ -30,7 +30,7 @@ export function useDifferentNetworkNotice(network = "", curators = []) {
 
   const [displayNotice, setDisplayNotice] = useState(false);
 
-  const isCurator = curators.some(curator => isSamePublicKey(curator, account.address));
+  const isCurator = account && curators.some(curator => isSamePublicKey(curator, account.address));
 
   useEffect(() => setDisplayNotice(true), [account?.network]);
 
