@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { capitalize } from "utils";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   position: relative;
@@ -25,14 +26,24 @@ const ContentWrapper = styled.div`
 export default function BountyDetail() {
   const { network, bountyId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { bountyDetail, fetchBountyDetail, resetBountyDetail } =
-    useFetchBountyDetail();
+  const {
+    bountyDetail,
+    bountyDetailLoaded,
+    fetchBountyDetail,
+    resetBountyDetail
+  } = useFetchBountyDetail();
 
   useEffect(() => {
     dispatch(fetchBountyDetail());
     return () => dispatch(resetBountyDetail());
   }, [dispatch, fetchBountyDetail, resetBountyDetail]);
+
+  if (!bountyDetail && bountyDetailLoaded) {
+    navigate("/404", { replace: true });
+    return null;
+  }
 
   return (
     <Wrapper>

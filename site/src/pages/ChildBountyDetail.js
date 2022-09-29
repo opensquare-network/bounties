@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Background from "components/Background";
 import { Container } from "@osn/common-ui";
 import Breadcrumb from "../components/Breadcrumb";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { capitalize } from "utils";
 import { useEffect } from "react";
 import ChildBountyDetail from "components/ChildBounty/Detail";
@@ -25,14 +25,24 @@ const ContentWrapper = styled.div`
 export default function PageChildBountyDetail() {
   const { network, bountyId, childBountyId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { childBountyDetail, fetchChildBountyDetail, resetChildBountyDetail } =
-    useFetchChildBountyDetail();
+  const {
+    childBountyDetail,
+    childBountyDetailLoaded,
+    fetchChildBountyDetail,
+    resetChildBountyDetail
+  } = useFetchChildBountyDetail();
 
   useEffect(() => {
     dispatch(fetchChildBountyDetail());
     return () => dispatch(resetChildBountyDetail());
   }, [dispatch, fetchChildBountyDetail, resetChildBountyDetail]);
+
+  if (!childBountyDetail && childBountyDetailLoaded) {
+    navigate("/404", { replace: true });
+    return null;
+  }
 
   return (
     <Wrapper>

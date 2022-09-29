@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import {
+  childBountyDetailLoadedSelector,
   childBountyDetailSelector,
   fetchChildBountyDetail,
   resetChildBountyDetail,
@@ -13,6 +14,7 @@ import {
  */
 export function useFetchChildBountyDetail() {
   const childBountyDetail = useSelector(childBountyDetailSelector);
+  const childBountyDetailLoaded = useSelector(childBountyDetailLoadedSelector);
   const { network, bountyId, childBountyId } = useParams();
 
   const $fetchChildBountyDetail = useCallback(() => {
@@ -25,6 +27,7 @@ export function useFetchChildBountyDetail() {
 
   return {
     childBountyDetail,
+    childBountyDetailLoaded,
     resetChildBountyDetail,
     fetchChildBountyDetail: $fetchChildBountyDetail,
   };
