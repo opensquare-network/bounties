@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import {
+  bountyDetailLoadedSelector,
   bountyDetailSelector,
   fetchBountyDetail,
   resetBountyDetail,
@@ -13,6 +14,7 @@ import {
  */
 export function useFetchBountyDetail() {
   const bountyDetail = useSelector(bountyDetailSelector);
+  const bountyDetailLoaded = useSelector(bountyDetailLoadedSelector);
   const { network, bountyId } = useParams();
 
   const $fetchBountyDetail = useCallback(() => {
@@ -25,6 +27,7 @@ export function useFetchBountyDetail() {
 
   return {
     bountyDetail,
+    bountyDetailLoaded,
     fetchBountyDetail: $fetchBountyDetail,
     resetBountyDetail,
   };

@@ -6,31 +6,40 @@ const childBountyDetailSlice = createSlice({
   name: "childBountyDetail",
   initialState: {
     detail: null,
+    loaded: false,
   },
   reducers: {
     setChildBountyDetail(state, { payload }) {
       state.detail = payload;
     },
+    setChildBountyDetailLoaded(state, { payload }) {
+      state.loaded = payload;
+    }
   },
 });
 
-export const { setChildBountyDetail } = childBountyDetailSlice.actions;
+export const { setChildBountyDetail, setChildBountyDetailLoaded } = childBountyDetailSlice.actions;
 
 export const childBountyDetailSelector = (state) =>
   state.childBountyDetail.detail;
 
+export const childBountyDetailLoadedSelector = (state) => state.childBountyDetail.loaded;
+
 export const fetchChildBountyDetail =
   (network, bountyId, childBountyId) => async (dispatch) => {
+    dispatch(setChildBountyDetailLoaded(false));
     return serverApi
       .fetch(`/network/${network}/child-bounties/${bountyId}_${childBountyId}`)
       .then(({ result, error }) => {
         if (result) {
-          return dispatch(setChildBountyDetail(result));
+          dispatch(setChildBountyDetail(result));
         }
 
         if (error) {
-          return Promise.reject(error.message);
+          dispatch(setChildBountyDetail(null));
         }
+
+        dispatch(setChildBountyDetailLoaded(true));
       });
   };
 
