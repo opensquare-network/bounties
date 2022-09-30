@@ -40,3 +40,6 @@ globalConfig.json
 
 log/
 .husky
+
+.yalc
+yalc.lock
