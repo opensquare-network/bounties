@@ -36,7 +36,7 @@ export function useDifferentNetworkNotice(network = "", curators = []) {
 
   const noticeEl = account && displayNotice && (
     <Notification
-      type="notice"
+      type="warning"
       size="large"
       onClose={() => setDisplayNotice(false)}
       message={
@@ -56,7 +56,7 @@ export function useDifferentNetworkNotice(network = "", curators = []) {
 
   const importNoticeEl = account && displayNotice && (
     <Notification
-      type="notice"
+      type="warning"
       size="large"
       onClose={() => setDisplayNotice(false)}
       message={
