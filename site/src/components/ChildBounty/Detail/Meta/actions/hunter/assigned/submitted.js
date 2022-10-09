@@ -3,10 +3,14 @@ import { Button, Dot, FlexCenter, Time } from "@osn/common-ui";
 import { useSubmitModal } from "./useSubmitModal";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { findSubmittedApplicant } from "../../utils";
+import { useAccount } from "hooks/useAccount";
 
 export function useHunterSubmittedAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
   const { submitWorkService } = useWorkflowActionService(childBountyDetail);
+
+  const account = useAccount();
+  const isDifferentNetwork = account?.network !== childBountyDetail?.network;
 
   const submittedApplicant = findSubmittedApplicant(applications);
 
@@ -33,7 +37,7 @@ export function useHunterSubmittedAction(childBountyDetail) {
         </FlexCenter>
       </Button>
 
-      <Button onClick={show}>Update</Button>
+      <Button onClick={show} disabled={isDifferentNetwork}>Update</Button>
     </>
   );
 }

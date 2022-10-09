@@ -19,6 +19,8 @@ export function useCuratorOpenAction(childBountyDetail) {
 
   const signer = encodeNetworkAddress(account?.address, account?.network);
 
+  const isDifferentNetwork = account?.network !== childBountyDetail?.network;
+
   async function handleClose() {
     if (!account) {
       notification.error({
@@ -83,7 +85,7 @@ export function useCuratorOpenAction(childBountyDetail) {
           <ButtonText>Collecting Applications</ButtonText>
         </Button>
 
-        <Button onClick={handleClose}>Close</Button>
+        <Button onClick={handleClose} disabled={isDifferentNetwork}>Close</Button>
       </Flex>
     </ButtonGroup>
   );

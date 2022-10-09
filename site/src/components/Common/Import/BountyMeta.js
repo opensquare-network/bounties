@@ -136,7 +136,7 @@ export default function BountyMeta({
 }) {
   const account = useSelector(accountSelector);
   const encodedAddress =
-    account?.address && encodeNetworkAddress(account?.address, network);
+    account?.address && encodeNetworkAddress(account?.address, account?.network);
   const multisigCurators = curators.slice(1);
 
   const isCurator = encodedAddress && curators.includes(encodedAddress);

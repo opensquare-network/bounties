@@ -19,6 +19,7 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
   const { bountyIndex, childBounties, bounty } = bountyDetail ?? {};
 
   const isCurator = useIsCurator(bounty?.curators);
+  const isDifferentNetwork = account?.network !== bountyDetail?.network;
 
   const hasIncompleteChildBounties = childBounties
     ?.map((cb) => cb.status)
@@ -86,7 +87,7 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
           </Button>
         ) : (
           isCurator && (
-            <Button primary block onClick={handleClose}>
+            <Button primary block onClick={handleClose} disabled={isDifferentNetwork}>
               Close
             </Button>
           )

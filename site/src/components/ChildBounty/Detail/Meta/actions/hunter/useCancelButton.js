@@ -7,6 +7,8 @@ export function useHunterCancelButton(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
   const { cancelService } = useWorkflowActionService(childBountyDetail);
 
+  const isDifferentNetwork = account?.network !== childBountyDetail?.network;
+
   const applicant = applications.find(
     (i) => i.address === account?.encodedAddress,
   );
@@ -15,7 +17,7 @@ export function useHunterCancelButton(childBountyDetail) {
     cancelService({ applicant });
   }
 
-  const cancelButton = <Button onClick={handleCancel}>Cancel</Button>;
+  const cancelButton = <Button onClick={handleCancel} disabled={isDifferentNetwork}>Cancel</Button>;
 
   return {
     cancelButton,

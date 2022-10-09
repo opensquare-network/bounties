@@ -25,14 +25,14 @@ const Wrapper = styled.div`
 
 export default function BountyDetail({ bountyDetail }) {
   const [editing, setEditing] = useState(false);
-  const { noticeEl, isDifferentNetwork } = useDifferentNetworkNotice(
+  const { noticeEl, isDifferentNetwork, isCurator } = useDifferentNetworkNotice(
     bountyDetail?.network,
     bountyDetail?.bounty?.curators,
   );
 
   return (
     <Wrapper>
-      {bountyDetail && isDifferentNetwork && noticeEl}
+      {bountyDetail && isDifferentNetwork && isCurator && noticeEl}
 
       {editing ? (
         <BountyMetaEdit

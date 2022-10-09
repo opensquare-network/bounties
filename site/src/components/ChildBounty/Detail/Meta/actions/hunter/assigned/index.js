@@ -1,3 +1,4 @@
+import { encodeNetworkAddress } from "@osn/common";
 import { Flex } from "@osn/common-ui";
 import { useAccount } from "hooks/useAccount";
 import { APPLICATION_STATUS } from "utils/constants";
@@ -15,7 +16,9 @@ export function useHunterAssignedAction(childBountyDetail) {
   const { cancelButton } = useHunterCancelButton(childBountyDetail);
 
   const workingApplicant = findWorkingApplicant(applications);
-  const isMyWork = workingApplicant?.address === account?.encodedAddress;
+
+  const maybeHunterAddress = encodeNetworkAddress(account?.address, childBountyDetail?.network);
+  const isMyWork = workingApplicant?.address === maybeHunterAddress;
 
   const acceptAndWork = useHunterAcceptAndStart(childBountyDetail);
   const started = useHunterStartedAction(childBountyDetail);
