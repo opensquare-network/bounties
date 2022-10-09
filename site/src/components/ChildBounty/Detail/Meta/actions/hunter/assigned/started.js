@@ -1,4 +1,5 @@
 import { Button } from "@osn/common-ui";
+import { useAccount } from "hooks/useAccount";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { findStartedApplicant } from "../../utils";
 import { useSubmitModal } from "./useSubmitModal";
@@ -6,6 +7,9 @@ import { useSubmitModal } from "./useSubmitModal";
 export function useHunterStartedAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
   const { submitWorkService } = useWorkflowActionService(childBountyDetail);
+
+  const account = useAccount();
+  const isDifferentNetwork = account?.network !== childBountyDetail?.network;
 
   const startedApplicant = findStartedApplicant(applications);
 
@@ -25,7 +29,7 @@ export function useHunterStartedAction(childBountyDetail) {
     <>
       {modal}
 
-      <Button block primary onClick={show}>
+      <Button block primary onClick={show} disabled={isDifferentNetwork}>
         Submit Work
       </Button>
     </>

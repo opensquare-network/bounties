@@ -24,6 +24,8 @@ export function useCuratorAssignedAction(childBountyDetail) {
     applications = [],
   } = childBountyDetail ?? {};
 
+  const isDifferentNetwork = account?.network !== childBountyDetail?.network;
+
   const workingApplicant = findWorkingApplicant(applications);
   const beneficiary = encodeNetworkAddress(
     workingApplicant?.address,
@@ -126,11 +128,11 @@ export function useCuratorAssignedAction(childBountyDetail) {
   return (
     <ButtonGroup>
       <Flex>
-        <Button primary block onClick={handleAward}>
+        <Button primary block onClick={handleAward} disabled={isDifferentNetwork}>
           Award
         </Button>
 
-        <Button onClick={handleUnassign}>Unassign</Button>
+        <Button onClick={handleUnassign} disabled={isDifferentNetwork}>Unassign</Button>
       </Flex>
     </ButtonGroup>
   );

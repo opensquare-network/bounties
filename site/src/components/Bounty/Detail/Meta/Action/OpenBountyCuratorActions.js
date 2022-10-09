@@ -8,7 +8,6 @@ import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
-import { useIsCurator } from "hooks/useIsCurator";
 
 export default function OpenBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
@@ -18,7 +17,9 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
 
   const { bountyIndex, childBounties, bounty } = bountyDetail ?? {};
 
-  const isCurator = useIsCurator(bounty?.curators);
+  const maybeCuratorAddress = encodeNetworkAddress(account?.address, bountyDetail?.network);
+  const isCurator = bounty?.curators.includes(maybeCuratorAddress);
+  const isDifferentNetwork = account?.network !== bountyDetail?.network;
 
   const hasIncompleteChildBounties = childBounties
     ?.map((cb) => cb.status)
@@ -86,7 +87,7 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
           </Button>
         ) : (
           isCurator && (
-            <Button primary block onClick={handleClose}>
+            <Button primary block onClick={handleClose} disabled={isDifferentNetwork}>
               Close
             </Button>
           )

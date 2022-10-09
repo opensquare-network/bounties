@@ -19,6 +19,7 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
   const { parentBounty, parentBountyIndex, index } = childBountyDetail ?? {};
 
   const signer = encodeNetworkAddress(account?.address, account?.network);
+  const isDifferentNetwork = account?.network !== childBountyDetail?.network;
 
   async function handleReopen() {
     if (!account) {
@@ -85,7 +86,7 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
         </Button>
 
         {parentBounty?.status !== BOUNTY_STATUS.Closed && (
-          <Button onClick={handleReopen}>Reopen</Button>
+          <Button onClick={handleReopen} isDifferentNetwork={isDifferentNetwork}>Reopen</Button>
         )}
       </Flex>
     </ButtonGroup>

@@ -46,7 +46,7 @@ export function useDifferentNetworkNotice(network = "", curators = []) {
               `- You are currently on ${capitalize(
                 account?.network || "",
               )} network.`,
-              `- Switch to right network if you want to ${isCurator ? "manage" : "apply"} this bounty.`,
+              `- Switch to right network if you want to manage ${isCurator ? "this bounty" : "your application"}.`,
             ].join("\n")}
           />
         </Message>
@@ -78,6 +78,7 @@ export function useDifferentNetworkNotice(network = "", curators = []) {
   return {
     isDifferentNetwork,
     isSameNetwork,
+    isCurator,
     noticeEl,
     importNoticeEl,
   };

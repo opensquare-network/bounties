@@ -14,7 +14,6 @@ import { signApiData } from "utils/signature";
 import { ButtonGroup } from "../../../../Common/Detail/styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
-import { useIsCurator } from "hooks/useIsCurator";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
 
 export default function ClosedBountyCuratorActions({ bountyDetail }) {
@@ -22,9 +21,12 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
   const account = useSelector(accountSelector);
   const isMounted = useIsMounted();
   const { fetchBountyDetail } = useFetchBountyDetail();
-  const isCurator = useIsCurator(bountyDetail?.bounty?.curators);
 
   const { bountyIndex } = bountyDetail ?? {};
+
+  const maybeCuratorAddress = encodeNetworkAddress(account?.address, bountyDetail?.network);
+  const isCurator = bountyDetail?.bounty?.curators.includes(maybeCuratorAddress);
+  const isDifferentNetwork = account?.network !== bountyDetail?.network;
 
   const signer = encodeNetworkAddress(account?.address, account?.network);
 
@@ -80,7 +82,7 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
     <ButtonGroup>
       <Flex>
         {isCurator ? (
-          <Button primary block onClick={handleClose}>
+          <Button primary block onClick={handleClose} disabled={isDifferentNetwork}>
             Reopen
           </Button>
         ) : (

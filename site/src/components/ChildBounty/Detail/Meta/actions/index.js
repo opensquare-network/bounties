@@ -6,13 +6,15 @@ import { useCuratorAssignedAction } from "./curator/assigned";
 import { useHunterAssignedAction } from "./hunter/assigned";
 import { useCuratorClosedChildBountyAction } from "./curator/closed";
 import { useAwardedAction } from "./awarded";
+import { encodeNetworkAddress } from "@osn/common";
 
 export function useAction(childBountyDetail) {
   const { status, childBounty } = childBountyDetail ?? {};
   const { curators = [] } = childBounty ?? {};
   const account = useAccount();
 
-  const isCurator = curators.includes(account?.encodedAddress);
+  const maybeCuratorAddress = encodeNetworkAddress(account?.address, childBountyDetail?.network);
+  const isCurator = curators.includes(maybeCuratorAddress);
 
   const hunterOpenAction = useHunterOpenAction(childBountyDetail);
   const hunterAssignedAction = useHunterAssignedAction(childBountyDetail);

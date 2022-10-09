@@ -1,3 +1,4 @@
+import { encodeNetworkAddress } from "@osn/common";
 import {
   Button,
   RichEditor,
@@ -24,15 +25,18 @@ export function useHunterOpenAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
 
+  const isDifferentNetwork = account?.network !== childBountyDetail?.network;
+
   const [content, setContent] = useState("");
   const [open, setOpen] = useState(false);
   const toggleApplyModal = () => setOpen((v) => !v);
 
   const { cancelButton } = useHunterCancelButton(childBountyDetail);
 
+  const maybeHunterAddress = encodeNetworkAddress(account?.address, childBountyDetail?.network);
   const appliedApplicant = applications.find(
     (i) =>
-      i.address === account?.encodedAddress &&
+      i.address === maybeHunterAddress &&
       i.status !== APPLICATION_STATUS.Canceled,
   );
 
@@ -47,7 +51,7 @@ export function useHunterOpenAction(childBountyDetail) {
 
   const applyEl = (
     <>
-      <Button block onClick={toggleApplyModal}>
+      <Button block onClick={toggleApplyModal} disabled={isDifferentNetwork}>
         Apply
       </Button>
 
