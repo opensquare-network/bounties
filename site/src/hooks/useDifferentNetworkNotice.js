@@ -1,10 +1,10 @@
-import { isSamePublicKey } from "@osn/common";
 import { Notification, text_dark_minor } from "@osn/common-ui";
 import { MarkdownPreviewer } from "@osn/previewer";
 import { capitalize } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useAccount } from "./useAccount";
+import { useIsCurator } from "./useIsCurator";
 
 const Message = styled.div`
   ul {
@@ -30,7 +30,7 @@ export function useDifferentNetworkNotice(network = "", curators = []) {
 
   const [displayNotice, setDisplayNotice] = useState(false);
 
-  const isCurator = account && curators.some(curator => isSamePublicKey(curator, account.address));
+  const isCurator = useIsCurator(curators);
 
   useEffect(() => setDisplayNotice(true), [account?.network]);
 

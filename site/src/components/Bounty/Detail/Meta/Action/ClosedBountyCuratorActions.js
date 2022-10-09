@@ -15,6 +15,7 @@ import { ButtonGroup } from "../../../../Common/Detail/styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
+import { useIsCurator } from "hooks/useIsCurator";
 
 export default function ClosedBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
@@ -22,10 +23,9 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
   const isMounted = useIsMounted();
   const { fetchBountyDetail } = useFetchBountyDetail();
 
-  const { bountyIndex } = bountyDetail ?? {};
+  const { bountyIndex, bounty } = bountyDetail ?? {};
 
-  const maybeCuratorAddress = encodeNetworkAddress(account?.address, bountyDetail?.network);
-  const isCurator = bountyDetail?.bounty?.curators.includes(maybeCuratorAddress);
+  const isCurator = useIsCurator(bounty?.curators);
   const isDifferentNetwork = account?.network !== bountyDetail?.network;
 
   const signer = encodeNetworkAddress(account?.address, account?.network);

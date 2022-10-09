@@ -95,7 +95,7 @@ export default function ImportChildBounty({ network, parentBountyId }) {
 
   const asset = ASSETS.find((item) => item.id === network);
   const encodedAddress =
-    account?.address && encodeNetworkAddress(account?.address, network);
+    account?.address && encodeNetworkAddress(account?.address, account?.network);
 
   const navigate = useNavigate();
   const isMounted = useIsMounted();

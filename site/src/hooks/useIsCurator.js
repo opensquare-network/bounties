@@ -1,3 +1,4 @@
+import { isSamePublicKey } from "@osn/common";
 import { useMemo } from "react";
 import { useAccount } from "./useAccount";
 
@@ -8,8 +9,8 @@ export function useIsCurator(curators = []) {
   const account = useAccount();
 
   const isCurator = useMemo(
-    () => curators.includes(account?.encodedAddress),
-    [curators, account?.encodedAddress],
+    () => account?.address && curators.some(curator => isSamePublicKey(curator, account?.address)),
+    [curators, account?.address],
   );
 
   return isCurator;
