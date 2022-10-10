@@ -9,6 +9,7 @@ import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 import { BOUNTY_STATUS } from "utils/constants";
 import { handleSigningError } from "utils/exceptionHandle";
+import { useIsActionLoading, useSetIsActionLoading } from "context/ActionLoadingContext";
 
 export function useCuratorClosedChildBountyAction(childBountyDetail) {
   const dispatch = useDispatch();
@@ -16,6 +17,8 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
   const api = useApi();
   const isMounted = useIsMounted();
   const { fetchChildBountyDetail } = useFetchChildBountyDetail();
+  const isLoading = useIsActionLoading();
+  const setIsLoading = useSetIsActionLoading();
 
   const { parentBounty, parentBountyIndex, index } = childBountyDetail ?? {};
 
@@ -42,6 +45,8 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
       message: "Signing...",
       timeout: false,
     });
+
+    setIsLoading(true);
 
     try {
       const payload = await signApiData(
@@ -74,6 +79,7 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
       handleSigningError(e, "Failed to re-open");
     } finally {
       closePendingNotification();
+      setIsLoading(false);
     }
   }
 
@@ -85,7 +91,7 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
         </Button>
 
         {parentBounty?.status !== BOUNTY_STATUS.Closed && (
-          <Button onClick={handleReopen} isDifferentNetwork={isDifferentNetwork}>Reopen</Button>
+          <Button onClick={handleReopen} isDifferentNetwork={isLoading || isDifferentNetwork}>Reopen</Button>
         )}
       </Flex>
     </ButtonGroup>

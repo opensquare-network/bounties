@@ -10,11 +10,13 @@ import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
 import { useIsCurator } from "hooks/useIsCurator";
 import { handleSigningError } from "utils/exceptionHandle";
+import { useState } from "react";
 
 export default function OpenBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const isMounted = useIsMounted();
+  const [isLoading, setIsLoading] = useState(false);
   const { fetchBountyDetail } = useFetchBountyDetail();
 
   const { bountyIndex, childBounties, bounty } = bountyDetail ?? {};
@@ -43,6 +45,8 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
       message: "Signing...",
       timeout: false,
     });
+
+    setIsLoading(true);
 
     try {
       const payload = await signApiData(
@@ -74,6 +78,7 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
       handleSigningError(e, "Failed to close");
     } finally {
       closePendingNotification();
+      setIsLoading(false);
     }
   }
 
@@ -86,7 +91,7 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
           </Button>
         ) : (
           isCurator && (
-            <Button primary block onClick={handleClose} disabled={isDifferentNetwork}>
+            <Button primary block onClick={handleClose} disabled={isLoading || isDifferentNetwork}>
               Close
             </Button>
           )

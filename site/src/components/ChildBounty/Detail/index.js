@@ -9,6 +9,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { useSelector } from "react-redux";
 import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 import ChildBountyDetailSubmissions from "./Submissions";
+import { ActionLoadingProvider } from "context/ActionLoadingContext";
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,32 +35,34 @@ export default function ChildBountyDetail({ childBountyDetail }) {
   );
 
   return (
-    <Wrapper>
-      {childBountyDetail && isDifferentNetwork && noticeEl}
+    <ActionLoadingProvider>
+      <Wrapper>
+        {childBountyDetail && isDifferentNetwork && noticeEl}
 
-      {account && editing ? (
-        <ChildBountyDetailMetaEdit
-          type="Child Bounty"
-          childBountyDetail={childBountyDetail}
-          onEditEnd={() => setEditing(false)}
+        {account && editing ? (
+          <ChildBountyDetailMetaEdit
+            type="Child Bounty"
+            childBountyDetail={childBountyDetail}
+            onEditEnd={() => setEditing(false)}
+          />
+        ) : (
+          <ChildBountyDetailMeta
+            type="Child Bounty"
+            childBountyDetail={childBountyDetail}
+            onEdit={() => setEditing(true)}
+          />
+        )}
+
+        <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
+
+        <ChildBountyDetailSubmissions childBountyDetail={childBountyDetail} />
+
+        <Discussions
+          network={childBountyDetail?.network}
+          parentBountyIndex={childBountyDetail?.parentBountyIndex}
+          index={childBountyDetail?.index}
         />
-      ) : (
-        <ChildBountyDetailMeta
-          type="Child Bounty"
-          childBountyDetail={childBountyDetail}
-          onEdit={() => setEditing(true)}
-        />
-      )}
-
-      <ChildBountyDetailApplicants childBountyDetail={childBountyDetail} />
-
-      <ChildBountyDetailSubmissions childBountyDetail={childBountyDetail} />
-
-      <Discussions
-        network={childBountyDetail?.network}
-        parentBountyIndex={childBountyDetail?.parentBountyIndex}
-        index={childBountyDetail?.index}
-      />
-    </Wrapper>
+      </Wrapper>
+    </ActionLoadingProvider>
   );
 }

@@ -8,6 +8,7 @@ import { ButtonGroup, ButtonText } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 import { handleSigningError } from "utils/exceptionHandle";
+import { useIsActionLoading, useSetIsActionLoading } from "context/ActionLoadingContext";
 
 export function useCuratorOpenAction(childBountyDetail) {
   const dispatch = useDispatch();
@@ -15,6 +16,8 @@ export function useCuratorOpenAction(childBountyDetail) {
   const api = useApi();
   const isMounted = useIsMounted();
   const { fetchChildBountyDetail } = useFetchChildBountyDetail();
+  const isLoading = useIsActionLoading();
+  const setIsLoading = useSetIsActionLoading();
 
   const { parentBountyIndex, index } = childBountyDetail ?? {};
 
@@ -42,6 +45,8 @@ export function useCuratorOpenAction(childBountyDetail) {
       message: "Signing...",
       timeout: false,
     });
+
+    setIsLoading(true);
 
     try {
       const payload = await signApiData(
@@ -74,6 +79,7 @@ export function useCuratorOpenAction(childBountyDetail) {
       handleSigningError(e, "Failed to update");
     } finally {
       closePendingNotification();
+      setIsLoading(false);
     }
   }
 
@@ -84,7 +90,7 @@ export function useCuratorOpenAction(childBountyDetail) {
           <ButtonText>Collecting Applications</ButtonText>
         </Button>
 
-        <Button onClick={handleClose} disabled={isDifferentNetwork}>Close</Button>
+        <Button onClick={handleClose} disabled={isLoading || isDifferentNetwork}>Close</Button>
       </Flex>
     </ButtonGroup>
   );

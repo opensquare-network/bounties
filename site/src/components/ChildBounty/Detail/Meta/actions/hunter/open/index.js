@@ -8,6 +8,7 @@ import {
   Time,
   FlexCenter,
 } from "@osn/common-ui";
+import { useIsActionLoading } from "context/ActionLoadingContext";
 import { useAccount } from "hooks/useAccount";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { useState } from "react";
@@ -41,9 +42,13 @@ export function useHunterOpenAction(childBountyDetail) {
   );
 
   const { applyService } = useWorkflowActionService(childBountyDetail);
+  const isLoading = useIsActionLoading();
 
   function handleApply() {
-    applyService({ description: content }).then(() => {
+    applyService({ description: content }).then((res) => {
+      if (!res || res.error) {
+        return;
+      }
       setOpen(false);
       setContent("");
     });
@@ -51,7 +56,7 @@ export function useHunterOpenAction(childBountyDetail) {
 
   const applyEl = (
     <>
-      <Button block onClick={toggleApplyModal} disabled={isDifferentNetwork}>
+      <Button block onClick={toggleApplyModal} disabled={isLoading || isDifferentNetwork}>
         Apply
       </Button>
 
@@ -68,6 +73,7 @@ export function useHunterOpenAction(childBountyDetail) {
           setContent={setContent}
           submitButtonText="Confirm"
           onSubmit={handleApply}
+          submitting={isLoading}
         />
       </Modal>
     </>
