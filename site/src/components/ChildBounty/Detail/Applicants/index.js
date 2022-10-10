@@ -11,6 +11,7 @@ import {
   Collapse,
 } from "@osn/common-ui";
 import StatusLabel from "components/Bounty/StatusLabel";
+import { useIsActionLoading } from "context/ActionLoadingContext";
 import { useBountyPermission } from "hooks/useBountyPermission";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { APPLICATION_STATUS, CHILD_BOUNTY_STATUS } from "utils/constants";
@@ -120,6 +121,7 @@ function TimeStatus({ updatedAt, createdAt, status }) {
 
 function DesktopListItem({ applicant, assignService, shouldShowAssignButton }) {
   const { address, bountyIndexer = {}, description } = applicant;
+  const isLoading = useIsActionLoading();
 
   return (
     <Wrapper hoverShouldShowAssignButton={shouldShowAssignButton}>
@@ -137,7 +139,7 @@ function DesktopListItem({ applicant, assignService, shouldShowAssignButton }) {
       <ActionWrapper>
         <TimeStatus className="time-status" {...applicant} />
         <AssignButtonWrapper>
-          <Button onClick={() => assignService({ applicant })}>Assign</Button>
+          <Button onClick={() => assignService({ applicant })} disabled={isLoading}>Assign</Button>
         </AssignButtonWrapper>
       </ActionWrapper>
     </Wrapper>
@@ -152,6 +154,7 @@ function MobileListItem({ applicant, assignService, shouldShowAssignButton }) {
     status,
     updatedAt,
   } = applicant;
+  const isLoading = useIsActionLoading();
 
   return (
     <div>
@@ -179,7 +182,7 @@ function MobileListItem({ applicant, assignService, shouldShowAssignButton }) {
       <MobileDescriptionGap />
 
       {shouldShowAssignButton && (
-        <Button block onClick={() => assignService({ applicant })}>
+        <Button block onClick={() => assignService({ applicant })} disabled={isLoading}>
           Assign
         </Button>
       )}

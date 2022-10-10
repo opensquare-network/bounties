@@ -6,11 +6,13 @@ import { useDispatch } from "react-redux";
 import { useFetchChildBountyDetail } from "./useFetchChildBountyDetail";
 import { notification } from "@osn/common-ui";
 import { handleSigningError } from "utils/exceptionHandle";
+import { useSetIsActionLoading } from "context/ActionLoadingContext";
 
 export function useWorkflowActionService(childBountyDetail) {
   const dispatch = useDispatch();
   const { network, parentBountyIndex, index } = childBountyDetail ?? {};
   const account = useAccount();
+  const setIsLoading = useSetIsActionLoading();
 
   const { fetchChildBountyDetail } = useFetchChildBountyDetail();
 
@@ -28,16 +30,10 @@ export function useWorkflowActionService(childBountyDetail) {
 
     let signedData;
 
+    setIsLoading(true);
     try {
       signedData = await signApiData(data, account?.encodedAddress);
-    } catch (e) {
-      handleSigningError(e);
-      throw e;
-    } finally {
-      closePending();
-    }
 
-    try {
       const res = await serverApi[method](endpoint, signedData);
 
       if (res.result) {
@@ -50,11 +46,11 @@ export function useWorkflowActionService(childBountyDetail) {
 
       return res;
     } catch (e) {
-      notification.error({
-        message: e.message,
-      });
-
+      handleSigningError(e);
       throw e;
+    } finally {
+      closePending();
+      setIsLoading(false);
     }
   }
 

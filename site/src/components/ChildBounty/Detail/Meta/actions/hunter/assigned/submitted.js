@@ -4,10 +4,12 @@ import { useSubmitModal } from "./useSubmitModal";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { findSubmittedApplicant } from "../../utils";
 import { useAccount } from "hooks/useAccount";
+import { useIsActionLoading } from "context/ActionLoadingContext";
 
 export function useHunterSubmittedAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
   const { submitWorkService } = useWorkflowActionService(childBountyDetail);
+  const isLoading = useIsActionLoading();
 
   const account = useAccount();
   const isDifferentNetwork = account?.network !== childBountyDetail?.network;
@@ -22,7 +24,12 @@ export function useHunterSubmittedAction(childBountyDetail) {
         applicant: submittedApplicant,
         description: content,
         link,
-      }).then(hide);
+      }).then((res) => {
+        if (!res || res.error) {
+          return;
+        }
+        hide();
+      });
     },
   });
 
@@ -37,7 +44,7 @@ export function useHunterSubmittedAction(childBountyDetail) {
         </FlexCenter>
       </Button>
 
-      <Button onClick={show} disabled={isDifferentNetwork}>Update</Button>
+      <Button onClick={show} disabled={isLoading || isDifferentNetwork}>Update</Button>
     </>
   );
 }

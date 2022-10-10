@@ -11,6 +11,7 @@ import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { signApiData } from "utils/signature";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 import { handleSigningError } from "utils/exceptionHandle";
+import { useIsActionLoading, useSetIsActionLoading } from "context/ActionLoadingContext";
 
 export function useCuratorAssignedAction(childBountyDetail) {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export function useCuratorAssignedAction(childBountyDetail) {
   const api = useApi();
   const isMounted = useIsMounted();
   const { fetchChildBountyDetail } = useFetchChildBountyDetail();
+  const setIsActionLoading = useSetIsActionLoading();
 
   const {
     parentBountyIndex,
@@ -35,6 +37,7 @@ export function useCuratorAssignedAction(childBountyDetail) {
   const signer = encodeNetworkAddress(account?.address, account?.network);
 
   const { unassignService } = useWorkflowActionService(childBountyDetail);
+  const isLoading = useIsActionLoading();
 
   function handleUnassign() {
     unassignService({ applicant: workingApplicant });
@@ -60,6 +63,8 @@ export function useCuratorAssignedAction(childBountyDetail) {
       message: "Signing...",
       timeout: false,
     });
+
+    setIsActionLoading(true);
 
     try {
       const childBountyMeta = await api.query.childBounties.childBounties(
@@ -121,17 +126,18 @@ export function useCuratorAssignedAction(childBountyDetail) {
       handleSigningError(e, "Failed to update");
     } finally {
       closePendingNotification();
+      setIsActionLoading(false);
     }
   };
 
   return (
     <ButtonGroup>
       <Flex>
-        <Button primary block onClick={handleAward} disabled={isDifferentNetwork}>
+        <Button primary block onClick={handleAward} disabled={isLoading || isDifferentNetwork}>
           Award
         </Button>
 
-        <Button onClick={handleUnassign} disabled={isDifferentNetwork}>Unassign</Button>
+        <Button onClick={handleUnassign} disabled={isLoading || isDifferentNetwork}>Unassign</Button>
       </Flex>
     </ButtonGroup>
   );

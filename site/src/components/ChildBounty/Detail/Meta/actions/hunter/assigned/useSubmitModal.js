@@ -6,6 +6,7 @@ import {
   FormLabel,
   FormLabelTip,
 } from "../../styled";
+import { useIsActionLoading } from "context/ActionLoadingContext";
 
 export function useSubmitModal(options) {
   const { onConfirm = noop } = options ?? {};
@@ -14,6 +15,7 @@ export function useSubmitModal(options) {
   const [content, setContent] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [link, setLink] = useState("");
+  const isLoading = useIsActionLoading();
 
   const hide = () => setOpen(false);
   const show = () => setOpen(true);
@@ -43,6 +45,7 @@ export function useSubmitModal(options) {
       setOpen={setOpen}
       okText="Confirm"
       onOk={handleSubmit}
+      disableButton={isLoading}
       width={640}
     >
       <ModalTitle>Submit Work</ModalTitle>

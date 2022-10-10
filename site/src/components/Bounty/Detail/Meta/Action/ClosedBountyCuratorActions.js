@@ -17,12 +17,14 @@ import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
 import { useIsCurator } from "hooks/useIsCurator";
 import { handleSigningError } from "utils/exceptionHandle";
+import { useState } from "react";
 
 export default function ClosedBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const isMounted = useIsMounted();
   const { fetchBountyDetail } = useFetchBountyDetail();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { bountyIndex, bounty } = bountyDetail ?? {};
 
@@ -43,6 +45,8 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
     closePendingNotification = notification.pending({
       message: "Signing...",
     });
+
+    setIsLoading(true);
 
     try {
       const payload = await signApiData(
@@ -74,6 +78,7 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
       handleSigningError(e, "Failed to re-open");
     } finally {
       closePendingNotification();
+      setIsLoading(false);
     }
   }
 
@@ -81,7 +86,7 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
     <ButtonGroup>
       <Flex>
         {isCurator ? (
-          <Button primary block onClick={handleClose} disabled={isDifferentNetwork}>
+          <Button primary block onClick={handleClose} disabled={isLoading || isDifferentNetwork}>
             Reopen
           </Button>
         ) : (

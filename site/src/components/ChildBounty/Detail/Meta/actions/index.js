@@ -21,29 +21,31 @@ export function useAction(childBountyDetail) {
     useCuratorClosedChildBountyAction(childBountyDetail);
   const awardedAction = useAwardedAction(childBountyDetail);
 
+  let actions = null;
+
   // curator view
   if (isCurator) {
     if (status === CHILD_BOUNTY_STATUS.Open) {
-      return curatorOpenAction;
+      actions = curatorOpenAction;
     } else if (status === CHILD_BOUNTY_STATUS.Assigned) {
-      return curatorAssignedAction;
+      actions = curatorAssignedAction;
     } else if (status === CHILD_BOUNTY_STATUS.Closed) {
-      return curatorClosedChildBountyAction;
+      actions = curatorClosedChildBountyAction;
     }
   }
   // hunter view
   else {
     if (status === CHILD_BOUNTY_STATUS.Open) {
-      return hunterOpenAction;
+      actions = hunterOpenAction;
     } else if (status === CHILD_BOUNTY_STATUS.Assigned) {
-      return hunterAssignedAction;
+      actions = hunterAssignedAction;
     }
   }
 
   // curator, hunter both view
   if (status === CHILD_BOUNTY_STATUS.Awarded) {
-    return awardedAction;
+    actions = awardedAction;
   }
 
-  return null;
+  return actions;
 }
