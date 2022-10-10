@@ -10,6 +10,7 @@ import serverApi from "services/serverApi";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { signApiData } from "utils/signature";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
+import { handleSigningError } from "utils/exceptionHandle";
 
 export function useCuratorAssignedAction(childBountyDetail) {
   const dispatch = useDispatch();
@@ -117,16 +118,7 @@ export function useCuratorAssignedAction(childBountyDetail) {
         });
       }
     } catch (e) {
-      if (e.message === "Cancelled") {
-        notification.warning({
-          message: `Cancelled`,
-        });
-        return;
-      }
-
-      notification.error({
-        message: `Failed to update. ${e.message}`,
-      });
+      handleSigningError(e, "Failed to update");
     } finally {
       closePendingNotification();
     }

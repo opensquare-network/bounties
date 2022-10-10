@@ -5,6 +5,7 @@ import { signApiData } from "utils/signature";
 import { useDispatch } from "react-redux";
 import { useFetchChildBountyDetail } from "./useFetchChildBountyDetail";
 import { notification } from "@osn/common-ui";
+import { handleSigningError } from "utils/exceptionHandle";
 
 export function useWorkflowActionService(childBountyDetail) {
   const dispatch = useDispatch();
@@ -30,16 +31,7 @@ export function useWorkflowActionService(childBountyDetail) {
     try {
       signedData = await signApiData(data, account?.encodedAddress);
     } catch (e) {
-      if (e.message === "Cancelled") {
-        notification.warning({
-          message: `Cancelled`,
-        });
-      } else {
-        notification.error({
-          message: e.message,
-        });
-      }
-
+      handleSigningError(e);
       throw e;
     } finally {
       closePending();

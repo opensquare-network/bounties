@@ -16,6 +16,7 @@ import { signApiData } from "utils/signature";
 import serverApi from "services/serverApi";
 import { fetchChildBountyDetail } from "store/reducers/childBountyDetailSlice";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
+import { handleSigningError } from "utils/exceptionHandle";
 
 const Box = styled.div`
   box-shadow: 0px 4px 31px rgba(26, 33, 44, 0.04),
@@ -129,16 +130,7 @@ export default function ChildBountyDetailMetaEdit({
         });
       }
     } catch (e) {
-      if (e.message === "Cancelled") {
-        notification.warning({
-          message: `Cancelled`,
-        });
-        return;
-      }
-
-      notification.error({
-        message: `Failed to update. ${e.message}`,
-      });
+      handleSigningError(e, "Failed to update");
     } finally {
       closePendingNotification();
       setIsLoading(false);

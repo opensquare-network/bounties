@@ -16,6 +16,7 @@ import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
 import { useIsCurator } from "hooks/useIsCurator";
+import { handleSigningError } from "utils/exceptionHandle";
 
 export default function ClosedBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
@@ -70,16 +71,7 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
         });
       }
     } catch (e) {
-      if (e.message === "Cancelled") {
-        notification.warning({
-          message: `Cancelled`,
-        });
-        return;
-      }
-
-      notification.error({
-        message: `Failed to re-open. ${e.message}`,
-      });
+      handleSigningError(e, "Failed to re-open");
     } finally {
       closePendingNotification();
     }

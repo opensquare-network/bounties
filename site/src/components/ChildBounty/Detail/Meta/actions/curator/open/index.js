@@ -7,6 +7,7 @@ import { signApiData } from "utils/signature";
 import { ButtonGroup, ButtonText } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
+import { handleSigningError } from "utils/exceptionHandle";
 
 export function useCuratorOpenAction(childBountyDetail) {
   const dispatch = useDispatch();
@@ -70,16 +71,7 @@ export function useCuratorOpenAction(childBountyDetail) {
         });
       }
     } catch (e) {
-      if (e.message === "Cancelled") {
-        notification.warning({
-          message: `Cancelled`,
-        });
-        return;
-      }
-
-      notification.error({
-        message: `Failed to update. ${e.message}`,
-      });
+      handleSigningError(e, "Failed to update");
     } finally {
       closePendingNotification();
     }
