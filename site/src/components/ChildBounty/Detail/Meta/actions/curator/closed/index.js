@@ -8,6 +8,7 @@ import { ButtonGroup, ButtonText } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 import { BOUNTY_STATUS } from "utils/constants";
+import { handleSigningError } from "utils/exceptionHandle";
 
 export function useCuratorClosedChildBountyAction(childBountyDetail) {
   const dispatch = useDispatch();
@@ -70,9 +71,7 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
         });
       }
     } catch (e) {
-      notification.error({
-        message: `Failed to re-open. ${e.message}`,
-      });
+      handleSigningError(e, "Failed to re-open");
     } finally {
       closePendingNotification();
     }

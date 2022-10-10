@@ -9,6 +9,7 @@ import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
 import { useIsCurator } from "hooks/useIsCurator";
+import { handleSigningError } from "utils/exceptionHandle";
 
 export default function OpenBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
@@ -70,9 +71,7 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
         });
       }
     } catch (e) {
-      notification.error({
-        message: `Failed to close. ${e.message}`,
-      });
+      handleSigningError(e, "Failed to close");
     } finally {
       closePendingNotification();
     }

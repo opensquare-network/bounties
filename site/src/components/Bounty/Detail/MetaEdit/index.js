@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAsyncState } from "@osn/common";
 import { signApiData } from "utils/signature";
 import serverApi from "services/serverApi";
-import { Button, noop, notification } from "@osn/common-ui";
+import { Button, noop } from "@osn/common-ui";
 import InputTitle from "components/Common/Import/InputTitle";
 import InputDescription from "components/Common/Import/InputDescription";
 import { Main } from "components/Bounty/Import/styled";
@@ -11,6 +11,7 @@ import InputBountyId from "components/Common/Import/InputBountyId";
 import BountyLogo from "components/Bounty/Import/BountyLogo";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { useDispatch } from "react-redux";
+import { handleSigningError } from "utils/exceptionHandle";
 
 export default function BountyMetaEdit({ bountyDetail, onEditEnd = noop }) {
   const account = useAccount();
@@ -64,7 +65,7 @@ export default function BountyMetaEdit({ bountyDetail, onEditEnd = noop }) {
     {
       immediate: false,
       onError(e) {
-        notification.error({ message: e.message });
+        handleSigningError(e);
       },
     },
   );

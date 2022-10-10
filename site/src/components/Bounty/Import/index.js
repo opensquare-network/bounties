@@ -18,6 +18,7 @@ import { resolveBountyDetailRoute } from "utils/route";
 import { Wrapper, Box, Main, Side } from "./styled";
 import { noop, notification } from "@osn/common-ui";
 import { delayPromise } from "../../../utils/delay";
+import { handleSigningError } from "utils/exceptionHandle";
 
 export default function ImportBounty() {
   const account = useSelector(accountSelector);
@@ -156,6 +157,8 @@ export default function ImportBounty() {
           message: error.message,
         });
       }
+    } catch (e) {
+      handleSigningError(e, "Failed to close");
     } finally {
       closePendingNotification();
       if (isMounted.current) {

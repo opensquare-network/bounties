@@ -35,6 +35,7 @@ import { identityChainMap } from "@osn/constants";
 import NetworkUser from "components/User/NetworkUser";
 import { MentionIdentityUser } from "@osn/common-ui";
 import { useBountyPermission } from "hooks/useBountyPermission";
+import { handleSigningError } from "utils/exceptionHandle";
 
 const Title = styled.div`
   ${p_16_semibold};
@@ -140,9 +141,7 @@ export default function Discussion({ network, bountyId }) {
         });
       }
     } catch (e) {
-      notification.error({
-        message: `Failed to update. ${e.message}`,
-      });
+      handleSigningError(e, "Failed to update");
     } finally {
       closePendingNotification();
       if (isMounted.current) {

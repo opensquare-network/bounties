@@ -21,6 +21,7 @@ import { resolveChildBountyDetailRoute } from "utils/route";
 import { notification } from "@osn/common-ui";
 import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 import { delayPromise } from "../../../utils/delay";
+import { handleSigningError } from "utils/exceptionHandle";
 
 const Wrapper = styled.div`
   display: flex;
@@ -224,6 +225,8 @@ export default function ImportChildBounty({ network, parentBountyId }) {
           message: error.message,
         });
       }
+    } catch (e) {
+      handleSigningError(e, "Failed to close");
     } finally {
       closePendingNotification();
       if (isMounted.current) {
