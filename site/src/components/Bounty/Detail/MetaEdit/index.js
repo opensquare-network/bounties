@@ -64,6 +64,13 @@ export default function BountyMetaEdit({ bountyDetail, onEditEnd = noop }) {
     {
       immediate: false,
       onError(e) {
+        if (e.message === "Cancelled") {
+          notification.warning({
+            message: `Cancelled`,
+          });
+          return;
+        }
+
         notification.error({ message: e.message });
       },
     },

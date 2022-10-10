@@ -30,9 +30,15 @@ export function useWorkflowActionService(childBountyDetail) {
     try {
       signedData = await signApiData(data, account?.encodedAddress);
     } catch (e) {
-      notification.error({
-        message: e.message,
-      });
+      if (e.message === "Cancelled") {
+        notification.warning({
+          message: `Cancelled`,
+        });
+      } else {
+        notification.error({
+          message: e.message,
+        });
+      }
 
       throw e;
     } finally {

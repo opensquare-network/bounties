@@ -70,6 +70,13 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
         });
       }
     } catch (e) {
+      if (e.message === "Cancelled") {
+        notification.warning({
+          message: `Cancelled`,
+        });
+        return;
+      }
+
       notification.error({
         message: `Failed to close. ${e.message}`,
       });

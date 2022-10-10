@@ -224,6 +224,17 @@ export default function ImportChildBounty({ network, parentBountyId }) {
           message: error.message,
         });
       }
+    } catch (e) {
+      if (e.message === "Cancelled") {
+        notification.warning({
+          message: `Cancelled`,
+        });
+        return;
+      }
+
+      notification.error({
+        message: `Failed to close. ${e.message}`,
+      });
     } finally {
       closePendingNotification();
       if (isMounted.current) {

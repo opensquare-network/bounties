@@ -140,6 +140,13 @@ export default function Discussion({ network, bountyId }) {
         });
       }
     } catch (e) {
+      if (e.message === "Cancelled") {
+        notification.warning({
+          message: `Cancelled`,
+        });
+        return;
+      }
+
       notification.error({
         message: `Failed to update. ${e.message}`,
       });
