@@ -56,22 +56,12 @@ export async function awardChildBounty(
     index,
     beneficiary,
   );
-  const { blockHash, extrinsicIndex } = await signAndSendTx(
+
+  await signAndSendTx(
     tx,
     account,
     callback,
   );
-
-  const block = await api.rpc.chain.getBlock(blockHash);
-  const blockHeight = block.block.header.number.toNumber();
-  const blockTime = extractBlockTime(block.block.extrinsics);
-
-  return {
-    blockHash,
-    extrinsicIndex,
-    blockHeight,
-    blockTime,
-  };
 }
 
 function signAndSendTx(tx, account, callback = () => {}) {
