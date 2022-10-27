@@ -15,6 +15,7 @@ import { Mark } from "./styled";
 import StatusLabel from "../StatusLabel";
 import { resolveChildBountyDetailRoute } from "utils/route";
 import SkillList from "components/Skill/List";
+import BountyLogo from "../BountyLogo";
 
 export default function ChildBountyItem({ children, ...props } = {}) {
   const {
@@ -23,6 +24,7 @@ export default function ChildBountyItem({ children, ...props } = {}) {
     title,
     childBounty,
     parentBountyIndex,
+    parentBounty,
     index,
     skills = [],
     status,
@@ -46,7 +48,7 @@ export default function ChildBountyItem({ children, ...props } = {}) {
       }
       prefix={
         <MobileInvisible>
-          <ChainIcon chainName={network} size={64} />
+          <BountyLogo network={network} logoUrl={parentBounty?.logoUrl} />
         </MobileInvisible>
       }
     >

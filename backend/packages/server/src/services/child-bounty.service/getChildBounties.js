@@ -9,6 +9,7 @@ async function getChildBounties(page, pageSize) {
   };
   const total = await ChildBounty.countDocuments(q);
   const items = await ChildBounty.find(q)
+    .populate("parentBounty")
     .skip((page - 1) * pageSize)
     .limit(pageSize);
   return {
