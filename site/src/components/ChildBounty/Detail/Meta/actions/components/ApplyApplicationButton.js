@@ -42,7 +42,7 @@ export default function ApplyApplicationButton({ childBountyDetail }) {
 
   return (
     <Wrapper>
-      <Button block onClick={toggleApplyModal} disabled={!account || isLoading || isDifferentNetwork}>
+      <Button block onClick={toggleApplyModal} disabled={isLoading || isDifferentNetwork}>
         Apply
       </Button>
 
