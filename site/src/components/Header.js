@@ -43,6 +43,15 @@ export default function PageHeader() {
   const account = useSelector(accountSelector);
   useUpdateNodesDelay(account?.network);
 
+  let defaultChain = account?.network;
+  let defaultAddress = account?.address;
+  if ((!defaultChain || !defaultAddress) && typeof window !== "undefined") {
+    const lastLoginAddress = localStorage.getItem("lastLoginAddress");
+    if (lastLoginAddress) {
+      [defaultChain, defaultAddress] = lastLoginAddress.split("/");
+    }
+  }
+
   return (
     <Header
       logoRender={(logo) => (
@@ -78,8 +87,8 @@ export default function PageHeader() {
           <ConnectWalletModal
             visible={connectWalletModalVisible}
             setVisible={setConnectWalletModalVisible}
-            defaultChain={account?.network}
-            defaultAddress={account?.address}
+            defaultChain={defaultChain}
+            defaultAddress={defaultAddress}
           />
         </RightWrapper>
       </ContentWrapper>
