@@ -13,11 +13,16 @@ const accountSlice = createSlice({
     setAccount: (state, { payload }) => {
       if (payload) {
         state.account = payload;
+        if (typeof window !== "undefined") {
+          const data = `${payload.network}/${payload.address}`;
+          setCookie("address", data, 7);
+          localStorage.setItem("lastLoginAddress", data);
+        }
       } else {
         state.account = null;
-      }
-      if (typeof window !== "undefined") {
-        setCookie("address", `${payload.network}/${payload.address}`, 7);
+        if (typeof window !== "undefined") {
+          clearCookie();
+        }
       }
     },
   },
@@ -26,10 +31,7 @@ const accountSlice = createSlice({
 export const { setAccount } = accountSlice.actions;
 
 export const logout = () => async (dispatch) => {
-  if (typeof window !== "undefined") {
-    clearCookie();
-  }
-  dispatch(setAccount(""));
+  dispatch(setAccount(null));
 };
 
 export const accountSelector = (state) => {
