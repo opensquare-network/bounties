@@ -1,22 +1,15 @@
 import { encodeNetworkAddress } from "@osn/common";
 import {
   Button,
-  RichEditor,
-  Modal,
   Flex,
   Dot,
   Time,
   FlexCenter,
 } from "@osn/common-ui";
-import { useIsActionLoading } from "context/ActionLoadingContext";
 import { useAccount } from "hooks/useAccount";
-import { useWorkflowActionService } from "hooks/useWorkflowActionService";
-import { useState } from "react";
 import { APPLICATION_STATUS } from "utils/constants";
+import ApplyApplicationButton from "../../components/ApplyApplicationButton";
 import {
-  ModalTitle,
-  ModalDescription,
-  FormLabel,
   ButtonText,
   ButtonGroup,
 } from "../../styled";
@@ -25,12 +18,6 @@ import { useHunterCancelButton } from "../useCancelButton";
 export function useHunterOpenAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
   const account = useAccount();
-
-  const isDifferentNetwork = account?.network !== childBountyDetail?.network;
-
-  const [content, setContent] = useState("");
-  const [open, setOpen] = useState(false);
-  const toggleApplyModal = () => setOpen((v) => !v);
 
   const { cancelButton } = useHunterCancelButton(childBountyDetail);
 
@@ -41,43 +28,7 @@ export function useHunterOpenAction(childBountyDetail) {
       i.status !== APPLICATION_STATUS.Canceled,
   );
 
-  const { applyService } = useWorkflowActionService(childBountyDetail);
-  const isLoading = useIsActionLoading();
-
-  function handleApply() {
-    applyService({ description: content }).then((res) => {
-      if (!res || res.error) {
-        return;
-      }
-      setOpen(false);
-      setContent("");
-    });
-  }
-
-  const applyEl = (
-    <>
-      <Button block onClick={toggleApplyModal} disabled={isLoading || isDifferentNetwork}>
-        Apply
-      </Button>
-
-      <Modal open={open} setOpen={setOpen} footer={false} width={640}>
-        <ModalTitle>Apply Bounty</ModalTitle>
-        <ModalDescription>
-          Provide an action work plan and any initial questions you have for
-          this bounty.
-        </ModalDescription>
-
-        <FormLabel>Work Plan</FormLabel>
-        <RichEditor
-          content={content}
-          setContent={setContent}
-          submitButtonText="Confirm"
-          onSubmit={handleApply}
-          submitting={isLoading}
-        />
-      </Modal>
-    </>
-  );
+  const applyEl = <ApplyApplicationButton childBountyDetail={childBountyDetail} />;
 
   const isAppliedEl = (
     <ButtonGroup>

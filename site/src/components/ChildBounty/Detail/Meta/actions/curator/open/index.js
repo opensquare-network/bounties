@@ -4,11 +4,17 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { useApi } from "utils/hooks";
 import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";
-import { ButtonGroup, ButtonText } from "../../styled";
+import { ButtonGroup } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 import { handleSigningError } from "utils/exceptionHandle";
 import { useIsActionLoading, useSetIsActionLoading } from "context/ActionLoadingContext";
+import ApplyApplicationButton from "../../components/ApplyApplicationButton";
+import styled from "styled-components";
+
+const FlexGap = styled(Flex)`
+  gap: 20px;
+`;
 
 export function useCuratorOpenAction(childBountyDetail) {
   const dispatch = useDispatch();
@@ -85,13 +91,10 @@ export function useCuratorOpenAction(childBountyDetail) {
 
   return (
     <ButtonGroup>
-      <Flex>
-        <Button disabled primary block>
-          <ButtonText>Collecting Applications</ButtonText>
-        </Button>
-
+      <FlexGap>
+        <ApplyApplicationButton childBountyDetail={childBountyDetail} />
         <Button onClick={handleClose} disabled={isLoading || isDifferentNetwork}>Close</Button>
-      </Flex>
+      </FlexGap>
     </ButtonGroup>
   );
 }
