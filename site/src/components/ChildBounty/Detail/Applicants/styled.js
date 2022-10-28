@@ -31,8 +31,10 @@ export const ListWrapper = styled.div`
 `;
 
 export const IdentityUserWrapper = styled(Flex)`
+  width: 232px;
   max-width: 232px;
-  padding-right: 24px;
+  margin-right: 24px;
+
   a {
     display: inline-flex;
     cursor: pointer;
@@ -42,16 +44,32 @@ export const IdentityUserWrapper = styled(Flex)`
   }
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
+    width: 100%;
     max-width: 100%;
+    margin-right: 0;
   }
 `;
 export const DescriptionWrapper = styled(Flex)`
   flex: 1;
-  padding-right: 24px;
+  width: 616px;
+  max-width: 616px;
+  margin-right: 24px;
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+  }
 `;
 export const ActionWrapper = styled(Flex)`
+  width: 120px;
   max-width: 120px;
   flex: 1;
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    width: 100%;
+    max-width: 100%;
+  }
 `;
 
 export const Count = styled.span`
