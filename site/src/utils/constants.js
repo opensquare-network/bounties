@@ -97,3 +97,9 @@ export const APPLICATION_STATUS = {
   Awarded: "awarded",
   Canceled: "canceled",
 };
+
+export const CHILD_BOUNTY_CURATOR_VIEW_KEY = "childBountyView";
+export const CHILD_BOUNTY_CURATOR_VIEWS = {
+  CuratorView: "Curator view",
+  HunterView: "Hunter view",
+};

@@ -1,4 +1,8 @@
 import serverApi from "services/serverApi";
+import {
+  CHILD_BOUNTY_CURATOR_VIEWS,
+  CHILD_BOUNTY_CURATOR_VIEW_KEY,
+} from "utils/constants";
 
 const { createSlice } = require("@reduxjs/toolkit");
 
@@ -7,6 +11,9 @@ const childBountyDetailSlice = createSlice({
   initialState: {
     detail: null,
     loaded: false,
+    curatorView:
+      localStorage.getItem(CHILD_BOUNTY_CURATOR_VIEW_KEY) ??
+      CHILD_BOUNTY_CURATOR_VIEWS.CuratorView,
   },
   reducers: {
     setChildBountyDetail(state, { payload }) {
@@ -14,16 +21,28 @@ const childBountyDetailSlice = createSlice({
     },
     setChildBountyDetailLoaded(state, { payload }) {
       state.loaded = payload;
-    }
+    },
+    setChildBountyDetailCuratorView(state, { payload }) {
+      localStorage.setItem(CHILD_BOUNTY_CURATOR_VIEW_KEY, payload);
+      state.curatorView = payload;
+    },
   },
 });
 
-export const { setChildBountyDetail, setChildBountyDetailLoaded } = childBountyDetailSlice.actions;
+export const {
+  setChildBountyDetail,
+  setChildBountyDetailLoaded,
+  setChildBountyDetailCuratorView,
+} = childBountyDetailSlice.actions;
 
 export const childBountyDetailSelector = (state) =>
   state.childBountyDetail.detail;
 
-export const childBountyDetailLoadedSelector = (state) => state.childBountyDetail.loaded;
+export const childBountyDetailLoadedSelector = (state) =>
+  state.childBountyDetail.loaded;
+
+export const childBountyDetailCuratorViewSelector = (state) =>
+  state.childBountyDetail.curatorView;
 
 export const fetchChildBountyDetail =
   (network, bountyId, childBountyId) => async (dispatch) => {
