@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Modal, RichEditor, Input, noop, FlexBetween } from "@osn/common-ui";
 import {
   ModalTitle,
   ModalDescription,
   FormLabel,
   FormLabelTip,
+  FormLabelWrapper,
+  TextEditorWrapper,
 } from "../../styled";
 import { useIsActionLoading } from "context/ActionLoadingContext";
+
+const contentMaxLength = 200;
 
 export function useSubmitModal(options) {
   const { onConfirm = noop } = options ?? {};
@@ -16,6 +20,10 @@ export function useSubmitModal(options) {
   const [errorMsg, setErrorMsg] = useState("");
   const [link, setLink] = useState("");
   const isLoading = useIsActionLoading();
+  const isContentOverflow = useMemo(
+    () => content.length >= contentMaxLength,
+    [content],
+  );
 
   const hide = () => setOpen(false);
   const show = () => setOpen(true);
@@ -53,13 +61,24 @@ export function useSubmitModal(options) {
         Submit your work, and make sure all of the required work is done.
       </ModalDescription>
 
-      <FormLabel>Description</FormLabel>
-      <RichEditor
-        content={content}
-        setContent={setContent}
-        showButtons={false}
-        errorMsg={errorMsg}
-      />
+      <FormLabelWrapper>
+        <FlexBetween>
+          <FormLabel>Description</FormLabel>
+          <FormLabelTip error={isContentOverflow}>
+            {content.length}/{contentMaxLength}
+          </FormLabelTip>
+        </FlexBetween>
+      </FormLabelWrapper>
+      <TextEditorWrapper>
+        <RichEditor
+          content={content}
+          setContent={(value) => {
+            setContent(value.slice(0, contentMaxLength));
+          }}
+          showButtons={false}
+          errorMsg={errorMsg}
+        />
+      </TextEditorWrapper>
 
       <FormLabel>
         <FlexBetween>
