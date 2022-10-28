@@ -31,6 +31,13 @@ export const FormLabelTip = styled.span`
   ${p_14_normal};
   color: ${text_dark_accessory};
 `;
+export const FormLabelWrapper = styled.div`
+  margin-top: 20px;
+  margin-bottom: 8px;
+  ${FormLabel} {
+    margin: 0;
+  }
+`;
 
 export const ButtonGroup = styled.div`
   display: flex;
@@ -49,4 +56,25 @@ export const ButtonText = styled.span`
 
 export const Gap = styled.span`
   margin: 0 4px;
+`;
+
+/**
+ * NOTE: hack way to hide features
+ */
+export const ApplyBountyEditorWrapper = styled.div`
+  & .rich-editor {
+    & .editor-toolbar {
+      /* write/preview buttons */
+      div:first-child {
+        /* preview button */
+        button:last-child {
+          display: none;
+        }
+      }
+      /* toolbar buttons */
+      div:last-child {
+        display: none;
+      }
+    }
+  }
 `;
