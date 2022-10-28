@@ -1,4 +1,6 @@
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { childBountyDetailIsCuratorViewSelector } from "store/reducers/childBountyDetailSlice";
 import { BOUNTY_STATUS, CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useDifferentNetworkNotice } from "./useDifferentNetworkNotice";
 import { useIsCurator } from "./useIsCurator";
@@ -24,6 +26,7 @@ export function useBountyPermission(detail) {
       // for child bounty
       detail?.childBounty?.curators,
   );
+  const isCuratorView = useSelector(childBountyDetailIsCuratorViewSelector);
 
   const canEditBounty = useMemo(
     () =>
@@ -33,8 +36,9 @@ export function useBountyPermission(detail) {
         CHILD_BOUNTY_STATUS.Awarded,
       ].includes(status) &&
       isSameNetwork &&
-      isCurator,
-    [isSameNetwork, isCurator, status],
+      isCurator &&
+      isCuratorView,
+    [isSameNetwork, isCurator, status, isCuratorView],
   );
 
   const canComment = useMemo(() => isSameNetwork, [isSameNetwork]);
@@ -47,13 +51,14 @@ export function useBountyPermission(detail) {
         CHILD_BOUNTY_STATUS.Awarded,
       ].includes(status) &&
       isSameNetwork &&
-      isCurator,
-    [isSameNetwork, isCurator, status],
+      isCurator &&
+      isCuratorView,
+    [isSameNetwork, isCurator, status, isCuratorView],
   );
 
   const canAssignHunter = useMemo(
-    () => isSameNetwork && isCurator,
-    [isSameNetwork, isCurator],
+    () => isSameNetwork && isCurator && isCuratorView,
+    [isSameNetwork, isCurator, isCuratorView],
   );
 
   return {
