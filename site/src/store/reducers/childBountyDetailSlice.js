@@ -43,6 +43,9 @@ export const childBountyDetailLoadedSelector = (state) =>
 
 export const childBountyDetailCuratorViewSelector = (state) =>
   state.childBountyDetail.curatorView;
+export const childBountyDetailIsCuratorViewSelector = (state) =>
+  state.childBountyDetail.curatorView ===
+  CHILD_BOUNTY_CURATOR_VIEWS.CuratorView;
 
 export const fetchChildBountyDetail =
   (network, bountyId, childBountyId) => async (dispatch) => {
