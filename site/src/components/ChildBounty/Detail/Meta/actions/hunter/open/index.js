@@ -20,7 +20,7 @@ import {
   FormLabel,
   ButtonText,
   ButtonGroup,
-  ApplyBountyEditorWrapper,
+  TextEditorWrapper,
   FormLabelWrapper,
   FormLabelTip,
 } from "../../styled";
@@ -92,7 +92,7 @@ export function useHunterOpenAction(childBountyDetail) {
             </FormLabelTip>
           </FlexBetween>
         </FormLabelWrapper>
-        <ApplyBountyEditorWrapper>
+        <TextEditorWrapper>
           <RichEditor
             content={content}
             setContent={(value) => {
@@ -103,7 +103,7 @@ export function useHunterOpenAction(childBountyDetail) {
             submitting={isLoading}
             submitButtonProps={{ disabled: true }}
           />
-        </ApplyBountyEditorWrapper>
+        </TextEditorWrapper>
       </Modal>
     </>
   );
