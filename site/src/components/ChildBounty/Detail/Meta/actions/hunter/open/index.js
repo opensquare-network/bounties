@@ -7,11 +7,12 @@ import {
   Dot,
   Time,
   FlexCenter,
+  FlexBetween,
 } from "@osn/common-ui";
 import { useIsActionLoading } from "context/ActionLoadingContext";
 import { useAccount } from "hooks/useAccount";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { APPLICATION_STATUS } from "utils/constants";
 import {
   ModalTitle,
@@ -19,8 +20,13 @@ import {
   FormLabel,
   ButtonText,
   ButtonGroup,
+  ApplyBountyEditorWrapper,
+  FormLabelWrapper,
+  FormLabelTip,
 } from "../../styled";
 import { useHunterCancelButton } from "../useCancelButton";
+
+const contentMaxLength = 200;
 
 export function useHunterOpenAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};
@@ -31,10 +37,17 @@ export function useHunterOpenAction(childBountyDetail) {
   const [content, setContent] = useState("");
   const [open, setOpen] = useState(false);
   const toggleApplyModal = () => setOpen((v) => !v);
+  const isContentOverflow = useMemo(
+    () => content.length >= contentMaxLength,
+    [content],
+  );
 
   const { cancelButton } = useHunterCancelButton(childBountyDetail);
 
-  const maybeHunterAddress = encodeNetworkAddress(account?.address, childBountyDetail?.network);
+  const maybeHunterAddress = encodeNetworkAddress(
+    account?.address,
+    childBountyDetail?.network,
+  );
   const appliedApplicant = applications.find(
     (i) =>
       i.address === maybeHunterAddress &&
@@ -56,7 +69,11 @@ export function useHunterOpenAction(childBountyDetail) {
 
   const applyEl = (
     <>
-      <Button block onClick={toggleApplyModal} disabled={isLoading || isDifferentNetwork}>
+      <Button
+        block
+        onClick={toggleApplyModal}
+        disabled={isLoading || isDifferentNetwork}
+      >
         Apply
       </Button>
 
@@ -67,14 +84,26 @@ export function useHunterOpenAction(childBountyDetail) {
           this bounty.
         </ModalDescription>
 
-        <FormLabel>Work Plan</FormLabel>
-        <RichEditor
-          content={content}
-          setContent={setContent}
-          submitButtonText="Confirm"
-          onSubmit={handleApply}
-          submitting={isLoading}
-        />
+        <FormLabelWrapper>
+          <FlexBetween>
+            <FormLabel>Work Plan</FormLabel>
+            <FormLabelTip error={isContentOverflow}>
+              {content.length}/{contentMaxLength}
+            </FormLabelTip>
+          </FlexBetween>
+        </FormLabelWrapper>
+        <ApplyBountyEditorWrapper>
+          <RichEditor
+            content={content}
+            setContent={(value) => {
+              setContent(value.slice(0, contentMaxLength));
+            }}
+            submitButtonText="Confirm"
+            onSubmit={handleApply}
+            submitting={isLoading}
+            submitButtonProps={{ disabled: true }}
+          />
+        </ApplyBountyEditorWrapper>
       </Modal>
     </>
   );

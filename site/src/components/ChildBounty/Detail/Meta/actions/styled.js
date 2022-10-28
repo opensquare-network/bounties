@@ -1,9 +1,10 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   p_14_medium,
   p_14_normal,
   p_16_semibold,
   p_20_semibold,
+  secondary_red_500,
   text_dark_accessory,
   text_dark_major,
   text_dark_minor,
@@ -30,6 +31,19 @@ export const FormLabel = styled.h4`
 export const FormLabelTip = styled.span`
   ${p_14_normal};
   color: ${text_dark_accessory};
+
+  ${(p) =>
+    p.error &&
+    css`
+      color: ${secondary_red_500};
+    `}
+`;
+export const FormLabelWrapper = styled.div`
+  margin-top: 20px;
+  margin-bottom: 8px;
+  ${FormLabel} {
+    margin: 0;
+  }
 `;
 
 export const ButtonGroup = styled.div`
@@ -49,4 +63,25 @@ export const ButtonText = styled.span`
 
 export const Gap = styled.span`
   margin: 0 4px;
+`;
+
+/**
+ * NOTE: hack way to hide features
+ */
+export const ApplyBountyEditorWrapper = styled.div`
+  & .rich-editor {
+    & .editor-toolbar {
+      /* write/preview buttons */
+      div:first-child {
+        /* preview button */
+        button:last-child {
+          display: none;
+        }
+      }
+      /* toolbar buttons */
+      div:last-child {
+        display: none;
+      }
+    }
+  }
 `;
