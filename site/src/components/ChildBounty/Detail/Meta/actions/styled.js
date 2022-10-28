@@ -68,7 +68,7 @@ export const Gap = styled.span`
 /**
  * NOTE: hack way to hide features
  */
-export const ApplyBountyEditorWrapper = styled.div`
+export const TextEditorWrapper = styled.div`
   & .rich-editor {
     & .editor-toolbar {
       /* write/preview buttons */
