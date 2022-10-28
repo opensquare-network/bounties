@@ -35,7 +35,7 @@ async function updateChildBountyStatus(childBounty) {
     childBounty.index
   );
 
-  if (["Awarded", "Claimed"].includes(state)) {
+  if (["Awarded", "PendingPayout", "Claimed"].includes(state)) {
     return await updateChildBountyToAwarded(childBounty, beneficiary);
   }
 
@@ -66,4 +66,3 @@ async function main() {
 main()
   .catch(console.error)
   .finally(() => process.exit());
-
