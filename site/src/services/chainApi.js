@@ -56,6 +56,10 @@ export async function awardChildBounty(
 
 function signAndSendTx(tx, account, callback = () => {}) {
   return new Promise(async (resolve, reject) => {
+    const timeoutId = setTimeout(() => {
+      reject(new Error("Timeout"));
+    }, 15*1000);
+
     try {
       const signer = await getSigner(account.address);
       const unsub = await tx.signAndSend(
@@ -63,6 +67,7 @@ function signAndSendTx(tx, account, callback = () => {}) {
         { signer },
         ({ events = [], status }) => {
           if (status.isInBlock) {
+            clearTimeout(timeoutId);
             unsub();
 
             for (const {
