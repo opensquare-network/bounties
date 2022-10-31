@@ -19,6 +19,7 @@ import NotificationTabs from "../components/Notification/NotificationTabs";
 import { text_dark_minor } from "@osn/common-ui/es/styles/colors";
 import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 import { useNotifications } from "utils/useNotifications";
+import { ReactComponent as ReadedIcon } from "@osn/common-ui/imgs/icons/readed.svg";
 
 const Wrapper = styled.div`
   position: relative;
@@ -86,11 +87,7 @@ export default function Notifications() {
               onClick={handleMarkAllAsRead}
               disabled={clearingAll}
             >
-              {clearingAll ? (
-                <LoadingIcon />
-              ) : (
-                <img src="imgs/icons/readed.svg" alt="readed" />
-              )}
+              {clearingAll ? <LoadingIcon /> : <ReadedIcon />}
               <span style={{ marginLeft: 8 }}>Mark all as read</span>
             </ReadAllButton>
           )
