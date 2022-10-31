@@ -1,15 +1,21 @@
 // Copied from qa
 
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import { Pagination, Container, List, Flex } from "@osn/common-ui";
+import {
+  Pagination,
+  Container,
+  List,
+  Flex,
+  LoadingIcon,
+  text_dark_accessory,
+} from "@osn/common-ui";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import NotificationItem from "../components/Notification/NotificationItem";
 import NotificationTabs from "../components/Notification/NotificationTabs";
-import { ReactComponent as CheckUnderline } from "@osn/common-ui/es/imgs/icons/check-underline.svg";
 import { text_dark_minor } from "@osn/common-ui/es/styles/colors";
 import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 import { useNotifications } from "utils/useNotifications";
@@ -28,6 +34,13 @@ const ReadAllButton = styled(Flex)`
   color: ${text_dark_minor};
   ${p_14_medium};
   cursor: pointer;
+
+  ${(p) =>
+    p.disabled &&
+    css`
+      color: ${text_dark_accessory};
+      cursor: default;
+    `}
 `;
 
 export default function Notifications() {
@@ -43,6 +56,21 @@ export default function Notifications() {
     setPage,
   );
 
+  const [clearingAll, setClearingAll] = useState(false);
+
+  function handleMarkAllAsRead() {
+    setClearingAll(true);
+
+    dispatch(clearUnread(account.network, account.address))
+      .then(() => {
+        // do refresh
+        refresh();
+      })
+      .finally(() => {
+        setClearingAll(false);
+      });
+  }
+
   return (
     <Wrapper>
       <NotificationTabs
@@ -53,14 +81,15 @@ export default function Notifications() {
           notifications?.items?.length > 0 && (
             <ReadAllButton
               role="button"
-              onClick={() => {
-                dispatch(clearUnread(account.network, account.address));
-                // do refresh
-                refresh();
-              }}
+              onClick={handleMarkAllAsRead}
+              disabled={clearingAll}
             >
-              <CheckUnderline style={{ marginRight: 11 }} />
-              Mark all as read
+              {clearingAll ? (
+                <LoadingIcon />
+              ) : (
+                <img src="imgs/icons/readed.svg" alt="readed" />
+              )}
+              <span style={{ marginLeft: 8 }}>Mark all as read</span>
             </ReadAllButton>
           )
         }
@@ -76,16 +105,7 @@ export default function Notifications() {
             itemKey={(item) => `${item._id}_${item.read}`}
             itemRender={(item) => (
               <List.Item>
-                <NotificationItem
-                  data={item}
-                  onMarkAsRead={(data) => {
-                    dispatch(
-                      clearUnread(account.network, account.address, {
-                        items: [data._id],
-                      }),
-                    );
-                  }}
-                />
+                <NotificationItem data={item} />
               </List.Item>
             )}
           />
