@@ -10,6 +10,7 @@ import {
   MentionIdentityUser,
   LinkIdentityUser,
   Dot,
+  LoadingIcon,
 } from "@osn/common-ui";
 import {
   MarkdownPreviewer,
@@ -24,6 +25,9 @@ import { ReactComponent as CheckIcon } from "@osn/common-ui/es/imgs/icons/check.
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/constants";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUnread } from "store/reducers/notificationSlice";
+import { accountSelector } from "store/reducers/accountSlice";
 
 const NotificationItemWrapper = styled.div`
   &:hover {
@@ -134,6 +138,10 @@ const MarkAsReadButton = styled.button`
     display: none;
   }
 
+  .loading-icon {
+    display: none;
+  }
+
   &:hover {
     .unread-dot {
       display: none;
@@ -210,23 +218,39 @@ const getItemDate = (t = [], data) => {
   return value;
 };
 
-export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
+export default function NotificationItem({ data }) {
   const {
     type: origType,
     read: origRead,
     data: { byWho },
+    _id: id,
   } = data;
 
+  const dispatch = useDispatch();
+  const account = useSelector(accountSelector);
+
   const [read, setRead] = useState(origRead);
+  const [clearing, setClearing] = useState(false);
 
   const { type, amount, title, content, link, time } = getItemDate(
     origType,
     data,
   );
 
-  function handleMarkAsRead(data) {
-    onMarkAsRead(data);
-    setRead(true);
+  function handleMarkAsRead() {
+    setClearing(true);
+
+    dispatch(
+      clearUnread(account.network, account.address, {
+        items: [id],
+      }),
+    )
+      .then(() => {
+        setRead(true);
+      })
+      .finally(() => {
+        setClearing(false);
+      });
   }
 
   let titlePrefix;
@@ -271,10 +295,13 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
               </TimeWrapper>
 
               <StatusWrapper>
-                {!read ? (
-                  <MarkAsReadButton onClick={() => handleMarkAsRead(data)}>
+                {clearing ? (
+                  <LoadingIcon />
+                ) : !read ? (
+                  <MarkAsReadButton onClick={handleMarkAsRead}>
                     <UnreadDot className="unread-dot" />
                     <CheckIcon className="check-icon" />
+                    <LoadingIcon className="loading-icon" />
                   </MarkAsReadButton>
                 ) : (
                   <div />
