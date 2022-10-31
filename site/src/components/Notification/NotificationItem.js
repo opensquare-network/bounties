@@ -138,10 +138,6 @@ const MarkAsReadButton = styled.button`
     display: none;
   }
 
-  .loading-icon {
-    display: none;
-  }
-
   &:hover {
     .unread-dot {
       display: none;
@@ -301,7 +297,6 @@ export default function NotificationItem({ data }) {
                   <MarkAsReadButton onClick={handleMarkAsRead}>
                     <UnreadDot className="unread-dot" />
                     <CheckIcon className="check-icon" />
-                    <LoadingIcon className="loading-icon" />
                   </MarkAsReadButton>
                 ) : (
                   <div />
