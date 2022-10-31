@@ -12,7 +12,7 @@ import {
   text_dark_accessory,
 } from "@osn/common-ui";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUnread } from "store/reducers/notificationSlice";
+import { clearUnread, unreadSelector } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import NotificationItem from "../components/Notification/NotificationItem";
 import NotificationTabs from "../components/Notification/NotificationTabs";
@@ -55,6 +55,7 @@ export default function Notifications() {
     tab,
     setPage,
   );
+  const unread = useSelector(unreadSelector);
 
   const [clearingAll, setClearingAll] = useState(false);
 
@@ -78,7 +79,8 @@ export default function Notifications() {
         value={tab}
         setValue={setTab}
         extra={
-          notifications?.items?.length > 0 && (
+          notifications?.items?.length > 0 &&
+          !!unread && (
             <ReadAllButton
               role="button"
               onClick={handleMarkAllAsRead}
