@@ -64,32 +64,32 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
             </FlexCenter>
           }
           itemRender={(applicant) => {
-            const { status } = applicant;
+            const { address, status } = applicant;
             const shouldShowAssignButton =
               canAssignHunter &&
               !workingApplicant &&
               childBountyDetail?.status !== CHILD_BOUNTY_STATUS.Closed &&
               status !== APPLICATION_STATUS.Canceled;
 
+            const isBeneficiary =
+              childBountyDetail?.status === CHILD_BOUNTY_STATUS.Awarded &&
+              childBountyDetail?.beneficiary === address;
+
             return (
               <List.Item>
                 <OnlyDesktop>
                   <DesktopListItem
+                    isBeneficiary={isBeneficiary}
                     applicant={applicant}
-                    canAssignHunter={canAssignHunter}
                     assignService={assignService}
-                    workingApplicant={workingApplicant}
-                    childrenBountyDetail={childBountyDetail}
                     shouldShowAssignButton={shouldShowAssignButton}
                   />
                 </OnlyDesktop>
                 <OnlyMobile>
                   <MobileListItem
+                    isBeneficiary={isBeneficiary}
                     applicant={applicant}
-                    canAssignHunter={canAssignHunter}
                     assignService={assignService}
-                    workingApplicant={workingApplicant}
-                    childrenBountyDetail={childBountyDetail}
                     shouldShowAssignButton={shouldShowAssignButton}
                   />
                 </OnlyMobile>
@@ -119,7 +119,12 @@ function TimeStatus({ updatedAt, createdAt, status }) {
   );
 }
 
-function DesktopListItem({ applicant, assignService, shouldShowAssignButton }) {
+function DesktopListItem({
+  isBeneficiary,
+  applicant,
+  assignService,
+  shouldShowAssignButton,
+}) {
   const { address, bountyIndexer = {}, description } = applicant;
   const isLoading = useIsActionLoading();
 
@@ -137,16 +142,30 @@ function DesktopListItem({ applicant, assignService, shouldShowAssignButton }) {
       <DescriptionWrapper>{description}</DescriptionWrapper>
 
       <ActionWrapper>
-        <TimeStatus className="time-status" {...applicant} />
+        <TimeStatus
+          className="time-status"
+          {...applicant}
+          status={isBeneficiary ? "awarded" : applicant.status}
+        />
         <AssignButtonWrapper>
-          <Button onClick={() => assignService({ applicant })} disabled={isLoading}>Assign</Button>
+          <Button
+            onClick={() => assignService({ applicant })}
+            disabled={isLoading}
+          >
+            Assign
+          </Button>
         </AssignButtonWrapper>
       </ActionWrapper>
     </Wrapper>
   );
 }
 
-function MobileListItem({ applicant, assignService, shouldShowAssignButton }) {
+function MobileListItem({
+  isBeneficiary,
+  applicant,
+  assignService,
+  shouldShowAssignButton,
+}) {
   const {
     address,
     bountyIndexer = {},
@@ -168,7 +187,7 @@ function MobileListItem({ applicant, assignService, shouldShowAssignButton }) {
         {status !== APPLICATION_STATUS.Apply && (
           <>
             <Dot />
-            <StatusLabel>{status}</StatusLabel>
+            <StatusLabel>{isBeneficiary ? "awarded" : status}</StatusLabel>
           </>
         )}
         <Dot />
@@ -182,7 +201,11 @@ function MobileListItem({ applicant, assignService, shouldShowAssignButton }) {
       <MobileDescriptionGap />
 
       {shouldShowAssignButton && (
-        <Button block onClick={() => assignService({ applicant })} disabled={isLoading}>
+        <Button
+          block
+          onClick={() => assignService({ applicant })}
+          disabled={isLoading}
+        >
           Assign
         </Button>
       )}
