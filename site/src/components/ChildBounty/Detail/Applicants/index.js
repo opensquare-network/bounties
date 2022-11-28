@@ -64,34 +64,32 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
             </FlexCenter>
           }
           itemRender={(applicant) => {
-            const { status } = applicant;
+            const { address, status } = applicant;
             const shouldShowAssignButton =
               canAssignHunter &&
               !workingApplicant &&
               childBountyDetail?.status !== CHILD_BOUNTY_STATUS.Closed &&
               status !== APPLICATION_STATUS.Canceled;
 
+            const isBeneficiary =
+              childBountyDetail?.status === CHILD_BOUNTY_STATUS.Awarded &&
+              childBountyDetail?.beneficiary === address;
+
             return (
               <List.Item>
                 <OnlyDesktop>
                   <DesktopListItem
-                    childBountyDetail={childBountyDetail}
+                    isBeneficiary={isBeneficiary}
                     applicant={applicant}
-                    canAssignHunter={canAssignHunter}
                     assignService={assignService}
-                    workingApplicant={workingApplicant}
-                    childrenBountyDetail={childBountyDetail}
                     shouldShowAssignButton={shouldShowAssignButton}
                   />
                 </OnlyDesktop>
                 <OnlyMobile>
                   <MobileListItem
-                    childBountyDetail={childBountyDetail}
+                    isBeneficiary={isBeneficiary}
                     applicant={applicant}
-                    canAssignHunter={canAssignHunter}
                     assignService={assignService}
-                    workingApplicant={workingApplicant}
-                    childrenBountyDetail={childBountyDetail}
                     shouldShowAssignButton={shouldShowAssignButton}
                   />
                 </OnlyMobile>
@@ -122,17 +120,13 @@ function TimeStatus({ updatedAt, createdAt, status }) {
 }
 
 function DesktopListItem({
-  childBountyDetail,
+  isBeneficiary,
   applicant,
   assignService,
   shouldShowAssignButton,
 }) {
   const { address, bountyIndexer = {}, description } = applicant;
   const isLoading = useIsActionLoading();
-
-  const isBeneficiary =
-    childBountyDetail?.status === CHILD_BOUNTY_STATUS.Awarded &&
-    childBountyDetail?.beneficiary === address;
 
   return (
     <Wrapper hoverShouldShowAssignButton={shouldShowAssignButton}>
@@ -167,7 +161,7 @@ function DesktopListItem({
 }
 
 function MobileListItem({
-  childBountyDetail,
+  isBeneficiary,
   applicant,
   assignService,
   shouldShowAssignButton,
@@ -180,10 +174,6 @@ function MobileListItem({
     updatedAt,
   } = applicant;
   const isLoading = useIsActionLoading();
-
-  const isBeneficiary =
-    childBountyDetail?.status === CHILD_BOUNTY_STATUS.Awarded &&
-    childBountyDetail?.beneficiary === address;
 
   return (
     <div>
