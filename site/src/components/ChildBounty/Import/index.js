@@ -87,6 +87,8 @@ export default function ImportChildBounty({ network, parentBountyId }) {
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [bountyError, setBountyError] = useState("");
+  const [titleError, setTitleError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
   const [curators, setCurators] = useState([]);
   const [value, setValue] = useState(0);
   const [submitting, setSubmitting] = useState(false);
@@ -100,6 +102,22 @@ export default function ImportChildBounty({ network, parentBountyId }) {
 
   const navigate = useNavigate();
   const isMounted = useIsMounted();
+
+  useEffect(() => {
+    setTitleError("");
+    setDescriptionError("");
+
+    if (!loaded) {
+      return;
+    }
+
+    if (!title) {
+      setTitleError("Title can't be empty");
+    }
+    if (!content) {
+      setDescriptionError("Description can't be empty");
+    }
+  }, [childBountyId, title, content, loaded]);
 
   const fetchChildBountyMeta = useMemo(() => {
     return debounce(async (parentBountyId, index) => {
@@ -257,7 +275,7 @@ export default function ImportChildBounty({ network, parentBountyId }) {
             isLoading={ loading }
             errorMsg={ bountyError }
           />
-          <InputTitle title={ title } setTitle={ setTitle } isLoading={ loading } />
+          <InputTitle title={ title } setTitle={ setTitle } isLoading={ loading } errorMsg={titleError} />
           <BountySkills
             selectedSkills={ selectedSkills }
             setSelectedSkills={ setSelectedSkills }
@@ -266,6 +284,7 @@ export default function ImportChildBounty({ network, parentBountyId }) {
             content={ content }
             setContent={ setContent }
             isLoading={ loading }
+            errorMsg={descriptionError}
           />
         </Main>
       </div>
