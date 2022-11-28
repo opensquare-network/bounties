@@ -75,6 +75,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
               <List.Item>
                 <OnlyDesktop>
                   <DesktopListItem
+                    childBountyDetail={childBountyDetail}
                     applicant={applicant}
                     canAssignHunter={canAssignHunter}
                     assignService={assignService}
@@ -85,6 +86,7 @@ export default function ChildBountyApplicants({ childBountyDetail }) {
                 </OnlyDesktop>
                 <OnlyMobile>
                   <MobileListItem
+                    childBountyDetail={childBountyDetail}
                     applicant={applicant}
                     canAssignHunter={canAssignHunter}
                     assignService={assignService}
@@ -119,9 +121,18 @@ function TimeStatus({ updatedAt, createdAt, status }) {
   );
 }
 
-function DesktopListItem({ applicant, assignService, shouldShowAssignButton }) {
+function DesktopListItem({
+  childBountyDetail,
+  applicant,
+  assignService,
+  shouldShowAssignButton,
+}) {
   const { address, bountyIndexer = {}, description } = applicant;
   const isLoading = useIsActionLoading();
+
+  const isBeneficiary =
+    childBountyDetail?.status === CHILD_BOUNTY_STATUS.Awarded &&
+    childBountyDetail?.beneficiary === address;
 
   return (
     <Wrapper hoverShouldShowAssignButton={shouldShowAssignButton}>
@@ -137,16 +148,30 @@ function DesktopListItem({ applicant, assignService, shouldShowAssignButton }) {
       <DescriptionWrapper>{description}</DescriptionWrapper>
 
       <ActionWrapper>
-        <TimeStatus className="time-status" {...applicant} />
+        <TimeStatus
+          className="time-status"
+          {...applicant}
+          status={isBeneficiary ? "awarded" : applicant.status}
+        />
         <AssignButtonWrapper>
-          <Button onClick={() => assignService({ applicant })} disabled={isLoading}>Assign</Button>
+          <Button
+            onClick={() => assignService({ applicant })}
+            disabled={isLoading}
+          >
+            Assign
+          </Button>
         </AssignButtonWrapper>
       </ActionWrapper>
     </Wrapper>
   );
 }
 
-function MobileListItem({ applicant, assignService, shouldShowAssignButton }) {
+function MobileListItem({
+  childBountyDetail,
+  applicant,
+  assignService,
+  shouldShowAssignButton,
+}) {
   const {
     address,
     bountyIndexer = {},
@@ -155,6 +180,10 @@ function MobileListItem({ applicant, assignService, shouldShowAssignButton }) {
     updatedAt,
   } = applicant;
   const isLoading = useIsActionLoading();
+
+  const isBeneficiary =
+    childBountyDetail?.status === CHILD_BOUNTY_STATUS.Awarded &&
+    childBountyDetail?.beneficiary === address;
 
   return (
     <div>
@@ -168,7 +197,7 @@ function MobileListItem({ applicant, assignService, shouldShowAssignButton }) {
         {status !== APPLICATION_STATUS.Apply && (
           <>
             <Dot />
-            <StatusLabel>{status}</StatusLabel>
+            <StatusLabel>{isBeneficiary ? "awarded" : status}</StatusLabel>
           </>
         )}
         <Dot />
@@ -182,7 +211,11 @@ function MobileListItem({ applicant, assignService, shouldShowAssignButton }) {
       <MobileDescriptionGap />
 
       {shouldShowAssignButton && (
-        <Button block onClick={() => assignService({ applicant })} disabled={isLoading}>
+        <Button
+          block
+          onClick={() => assignService({ applicant })}
+          disabled={isLoading}
+        >
           Assign
         </Button>
       )}
