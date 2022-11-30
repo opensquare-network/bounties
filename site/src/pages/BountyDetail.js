@@ -10,6 +10,7 @@ import { capitalize } from "utils";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import SEO from "components/SEO";
 
 const Wrapper = styled.div`
   position: relative;
@@ -32,7 +33,7 @@ export default function BountyDetail() {
     bountyDetail,
     bountyDetailLoaded,
     fetchBountyDetail,
-    resetBountyDetail
+    resetBountyDetail,
   } = useFetchBountyDetail();
 
   useEffect(() => {
@@ -47,6 +48,8 @@ export default function BountyDetail() {
 
   return (
     <Wrapper>
+      <SEO title={bountyDetail?.title} />
+
       <Background />
       <Container>
         <ContentWrapper>
