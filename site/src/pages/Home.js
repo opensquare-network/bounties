@@ -21,6 +21,7 @@ import {
 import { useAsyncState } from "@osn/common";
 import { useMemo } from "react";
 import { EmptyList } from "utils/constants";
+import SEO from "components/SEO";
 
 const Wrapper = styled.div`
   position: relative;
@@ -89,6 +90,8 @@ export default function Home() {
 
   return (
     <Wrapper>
+      <SEO />
+
       {(bountyListLoading || !!bountyList.length) && <Background />}
 
       <BountiesWrapper bg={!bountyListLoading && !bountyList.length}>

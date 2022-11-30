@@ -9,6 +9,7 @@ import ChildBountyDetail from "components/ChildBounty/Detail";
 import { resolveBountyDetailRoute } from "utils/route";
 import { useDispatch } from "react-redux";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
+import SEO from "components/SEO";
 
 const Wrapper = styled.div`
   position: relative;
@@ -31,7 +32,7 @@ export default function PageChildBountyDetail() {
     childBountyDetail,
     childBountyDetailLoaded,
     fetchChildBountyDetail,
-    resetChildBountyDetail
+    resetChildBountyDetail,
   } = useFetchChildBountyDetail();
 
   useEffect(() => {
@@ -46,6 +47,8 @@ export default function PageChildBountyDetail() {
 
   return (
     <Wrapper>
+      <SEO title={childBountyDetail?.title} />
+
       <Background />
 
       <Container>
