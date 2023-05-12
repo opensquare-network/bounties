@@ -16,5 +16,6 @@
   },
   "scripts": {
     "prepare": "husky install && husky set .husky/pre-commit \"pretty-quick --staged\""
-  }
+  },
+  "packageManager": "yarn@3.5.1"
 }
