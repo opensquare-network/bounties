@@ -11,7 +11,7 @@ import InputBountyId from "components/Common/Import/InputBountyId";
 import BountyLogo from "components/Bounty/Import/BountyLogo";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { useDispatch } from "react-redux";
-import { handleSigningError } from "utils/exceptionHandle";
+import { useHandleSigningError } from "hooks/useHandleSigningError";
 
 export default function BountyMetaEdit({ bountyDetail, onEditEnd = noop }) {
   const account = useAccount();
@@ -21,6 +21,7 @@ export default function BountyMetaEdit({ bountyDetail, onEditEnd = noop }) {
   const [title, setTitle] = useState(bountyDetail.title);
   const [content, setContent] = useState(bountyDetail.content);
   const [imageFile, setImageFile] = useState();
+  const handleSigningError = useHandleSigningError();
 
   const { isLoading, execute } = useAsyncState(
     async () => {

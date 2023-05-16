@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Flex, noop, notification } from "@osn/common-ui";
+import { Button, Flex, noop, useNotification } from "@osn/common-ui";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useApi } from "utils/hooks";
 import serverApi from "services/serverApi";
@@ -8,8 +8,11 @@ import { ButtonGroup, ButtonText } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
 import { BOUNTY_STATUS } from "utils/constants";
-import { handleSigningError } from "utils/exceptionHandle";
-import { useIsActionLoading, useSetIsActionLoading } from "context/ActionLoadingContext";
+import {
+  useIsActionLoading,
+  useSetIsActionLoading,
+} from "context/ActionLoadingContext";
+import { useHandleSigningError } from "hooks/useHandleSigningError";
 
 export function useCuratorClosedChildBountyAction(childBountyDetail) {
   const dispatch = useDispatch();
@@ -19,6 +22,8 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
   const { fetchChildBountyDetail } = useFetchChildBountyDetail();
   const isLoading = useIsActionLoading();
   const setIsLoading = useSetIsActionLoading();
+  const notification = useNotification();
+  const handleSigningError = useHandleSigningError();
 
   const { parentBounty, parentBountyIndex, index } = childBountyDetail ?? {};
 
@@ -91,7 +96,12 @@ export function useCuratorClosedChildBountyAction(childBountyDetail) {
         </Button>
 
         {parentBounty?.status !== BOUNTY_STATUS.Closed && (
-          <Button onClick={handleReopen} isDifferentNetwork={isLoading || isDifferentNetwork}>Reopen</Button>
+          <Button
+            onClick={handleReopen}
+            isDifferentNetwork={isLoading || isDifferentNetwork}
+          >
+            Reopen
+          </Button>
         )}
       </Flex>
     </ButtonGroup>

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Flex, noop, notification } from "@osn/common-ui";
+import { Button, Flex, noop, useNotification } from "@osn/common-ui";
 import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
 import { signApiData } from "utils/signature";
@@ -9,8 +9,8 @@ import { CHILD_BOUNTY_STATUS } from "utils/constants";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
 import { useIsCurator } from "hooks/useIsCurator";
-import { handleSigningError } from "utils/exceptionHandle";
 import { useState } from "react";
+import { useHandleSigningError } from "hooks/useHandleSigningError";
 
 export default function OpenBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
@@ -18,6 +18,8 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
   const isMounted = useIsMounted();
   const [isLoading, setIsLoading] = useState(false);
   const { fetchBountyDetail } = useFetchBountyDetail();
+  const notification = useNotification();
+  const handleSigningError = useHandleSigningError();
 
   const { bountyIndex, childBounties, bounty } = bountyDetail ?? {};
 
@@ -91,7 +93,12 @@ export default function OpenBountyCuratorActions({ bountyDetail }) {
           </Button>
         ) : (
           isCurator && (
-            <Button primary block onClick={handleClose} disabled={isLoading || isDifferentNetwork}>
+            <Button
+              primary
+              block
+              onClick={handleClose}
+              disabled={isLoading || isDifferentNetwork}
+            >
               Close
             </Button>
           )

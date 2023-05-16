@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Flex, noop, notification } from "@osn/common-ui";
+import { Button, Flex, noop, useNotification } from "@osn/common-ui";
 import { useWorkflowActionService } from "hooks/useWorkflowActionService";
 import { ButtonGroup } from "../../styled";
 import { findWorkingApplicant } from "../../utils";
@@ -10,8 +10,11 @@ import serverApi from "services/serverApi";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { signApiData } from "utils/signature";
 import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
-import { handleSigningError } from "utils/exceptionHandle";
-import { useIsActionLoading, useSetIsActionLoading } from "context/ActionLoadingContext";
+import {
+  useIsActionLoading,
+  useSetIsActionLoading,
+} from "context/ActionLoadingContext";
+import { useHandleSigningError } from "hooks/useHandleSigningError";
 
 export function useCuratorAssignedAction(childBountyDetail) {
   const dispatch = useDispatch();
@@ -20,6 +23,8 @@ export function useCuratorAssignedAction(childBountyDetail) {
   const isMounted = useIsMounted();
   const { fetchChildBountyDetail } = useFetchChildBountyDetail();
   const setIsActionLoading = useSetIsActionLoading();
+  const notification = useNotification();
+  const handleSigningError = useHandleSigningError();
 
   const {
     parentBountyIndex,
@@ -75,7 +80,8 @@ export function useCuratorAssignedAction(childBountyDetail) {
 
       if (!meta || !meta.status?.active) {
         notification.error({
-          message: `The child bounty is not active anymore. ` +
+          message:
+            `The child bounty is not active anymore. ` +
             `If it was closed/awarded by other tools, the status will be automatically updated later.`,
         });
         return;
@@ -133,11 +139,21 @@ export function useCuratorAssignedAction(childBountyDetail) {
   return (
     <ButtonGroup>
       <Flex>
-        <Button primary block onClick={handleAward} disabled={isLoading || isDifferentNetwork}>
+        <Button
+          primary
+          block
+          onClick={handleAward}
+          disabled={isLoading || isDifferentNetwork}
+        >
           Award
         </Button>
 
-        <Button onClick={handleUnassign} disabled={isLoading || isDifferentNetwork}>Unassign</Button>
+        <Button
+          onClick={handleUnassign}
+          disabled={isLoading || isDifferentNetwork}
+        >
+          Unassign
+        </Button>
       </Flex>
     </ButtonGroup>
   );

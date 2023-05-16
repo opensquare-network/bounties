@@ -7,7 +7,7 @@ import {
   List,
   Collapse,
   LoadingIcon,
-  notification,
+  useNotification,
   noop,
 } from "@osn/common-ui";
 import Item from "components/Discussion/Item";
@@ -35,7 +35,7 @@ import { identityChainMap } from "@osn/constants";
 import NetworkUser from "components/User/NetworkUser";
 import { MentionIdentityUser } from "@osn/common-ui";
 import { useBountyPermission } from "hooks/useBountyPermission";
-import { handleSigningError } from "utils/exceptionHandle";
+import { useHandleSigningError } from "hooks/useHandleSigningError";
 
 const Title = styled.div`
   ${p_16_semibold};
@@ -71,6 +71,8 @@ export default function Discussion({ network, bountyId }) {
   const isMounted = useIsMounted();
   const [suggestions, setSuggestions] = useState([]);
   const { canComment } = useBountyPermission({ network });
+  const notification = useNotification();
+  const handleSigningError = useHandleSigningError();
 
   const resolveMentionFormat = (identity, user) =>
     `[@${identity?.info?.display || addressEllipsis(user.address)}](${
@@ -79,12 +81,18 @@ export default function Discussion({ network, bountyId }) {
 
   useEffect(() => {
     if (network && bountyId) {
-      dispatch(fetchBountyDiscussions(network, bountyId, page));
+      dispatch(fetchBountyDiscussions(network, bountyId, page)).then(
+        ({ error }) => {
+          if (error) {
+            notification.error({ message: error.message });
+          }
+        },
+      );
     }
     return () => {
       dispatch(setDiscussions(null));
     };
-  }, [dispatch, network, bountyId, page]);
+  }, [dispatch, network, bountyId, page, notification]);
 
   const onSubmit = async () => {
     if (!account) {
@@ -127,7 +135,10 @@ export default function Discussion({ network, bountyId }) {
         signature,
       };
 
-      const { result, error } = await serverApi.post(`/network/${network}/bounties/${bountyId}/comments`, payload);
+      const { result, error } = await serverApi.post(
+        `/network/${network}/bounties/${bountyId}/comments`,
+        payload,
+      );
       if (result) {
         setContent("");
         notification.success({

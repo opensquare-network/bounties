@@ -1,4 +1,4 @@
-import { Button, Card, noop, notification } from "@osn/common-ui";
+import { Button, Card, noop, useNotification } from "@osn/common-ui";
 import {
   descriptionLoading,
   metaLoading,
@@ -16,7 +16,7 @@ import { signApiData } from "utils/signature";
 import serverApi from "services/serverApi";
 import { fetchChildBountyDetail } from "store/reducers/childBountyDetailSlice";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
-import { handleSigningError } from "utils/exceptionHandle";
+import { useHandleSigningError } from "hooks/useHandleSigningError";
 
 const Box = styled.div`
   box-shadow: 0px 4px 31px rgba(26, 33, 44, 0.04),
@@ -69,6 +69,8 @@ export default function ChildBountyDetailMetaEdit({
   const [selectedSkills, setSelectedSkills] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useIsMounted();
+  const notification = useNotification();
+  const handleSigningError = useHandleSigningError();
 
   useEffect(() => {
     setTitle(childBountyDetail?.title);

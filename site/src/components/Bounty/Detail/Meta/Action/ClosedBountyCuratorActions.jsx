@@ -5,7 +5,7 @@ import {
   Flex,
   FlexCenter,
   noop,
-  notification,
+  useNotification,
   Time,
 } from "@osn/common-ui";
 import { accountSelector } from "store/reducers/accountSlice";
@@ -16,8 +16,8 @@ import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
 import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
 import { useIsCurator } from "hooks/useIsCurator";
-import { handleSigningError } from "utils/exceptionHandle";
 import { useState } from "react";
+import { useHandleSigningError } from "hooks/useHandleSigningError";
 
 export default function ClosedBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();
@@ -25,6 +25,8 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
   const isMounted = useIsMounted();
   const { fetchBountyDetail } = useFetchBountyDetail();
   const [isLoading, setIsLoading] = useState(false);
+  const notification = useNotification();
+  const handleSigningError = useHandleSigningError();
 
   const { bountyIndex, bounty } = bountyDetail ?? {};
 
@@ -86,7 +88,12 @@ export default function ClosedBountyCuratorActions({ bountyDetail }) {
     <ButtonGroup>
       <Flex>
         {isCurator ? (
-          <Button primary block onClick={handleClose} disabled={isLoading || isDifferentNetwork}>
+          <Button
+            primary
+            block
+            onClick={handleClose}
+            disabled={isLoading || isDifferentNetwork}
+          >
             Reopen
           </Button>
         ) : (

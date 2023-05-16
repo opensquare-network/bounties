@@ -18,10 +18,10 @@ import BountyMeta from "components/Common/Import/BountyMeta";
 import BountySkills from "./BountySkills";
 import BountyHeader from "./BountyHeader";
 import { resolveChildBountyDetailRoute } from "utils/route";
-import { notification, Button } from "@osn/common-ui";
+import { useNotification, Button } from "@osn/common-ui";
 import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 import { delayPromise } from "../../../utils/delay";
-import { handleSigningError } from "utils/exceptionHandle";
+import { useHandleSigningError } from "hooks/useHandleSigningError";
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,7 +52,7 @@ const Wrapper = styled.div`
 
 const Box = styled.div`
   box-shadow: 0px 4px 31px rgba(26, 33, 44, 0.04),
-  0px 0.751293px 3.88168px rgba(26, 33, 44, 0.03);
+    0px 0.751293px 3.88168px rgba(26, 33, 44, 0.03);
   border: 1px solid #f0f3f8;
   padding: 32px;
   background-color: white;
@@ -98,10 +98,13 @@ export default function ImportChildBounty({ network, parentBountyId }) {
 
   const asset = ASSETS.find((item) => item.id === network);
   const encodedAddress =
-    account?.address && encodeNetworkAddress(account?.address, account?.network);
+    account?.address &&
+    encodeNetworkAddress(account?.address, account?.network);
 
   const navigate = useNavigate();
   const isMounted = useIsMounted();
+  const notification = useNotification();
+  const handleSigningError = useHandleSigningError();
 
   useEffect(() => {
     setTitleError("");
@@ -137,7 +140,7 @@ export default function ImportChildBounty({ network, parentBountyId }) {
 
       setLoading(true);
       serverApi
-        .fetch(`chain/${ network }/child-bounty/${ parentBountyId }_${ index }`)
+        .fetch(`chain/${network}/child-bounty/${parentBountyId}_${index}`)
         .then(({ result, error }) => {
           if (result) {
             if (isMounted.current) {
@@ -219,13 +222,19 @@ export default function ImportChildBounty({ network, parentBountyId }) {
     try {
       const signedData = await signApiData(data, encodedAddress);
 
-      const { result, error } = await delayPromise(serverApi.fetch(`child-bounties`, {}, {
-        method: "POST",
-        body: JSON.stringify(signedData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }))
+      const { result, error } = await delayPromise(
+        serverApi.fetch(
+          `child-bounties`,
+          {},
+          {
+            method: "POST",
+            body: JSON.stringify(signedData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        ),
+      );
       setSubmitting(false);
 
       if (result) {
@@ -263,55 +272,60 @@ export default function ImportChildBounty({ network, parentBountyId }) {
   return (
     <Wrapper>
       <div>
-        { isDifferentNetwork && importNoticeEl }
+        {isDifferentNetwork && importNoticeEl}
 
         <Main>
-          <BountyHeader network={ network } bountyIndex={ parentBountyId } />
+          <BountyHeader network={network} bountyIndex={parentBountyId} />
           <InputBountyId
-            title={ "Child bounty ID" }
-            tooltip={ "The child bounty ID on-chain" }
-            bountyId={ childBountyId }
-            setBountyId={ setChildBountyId }
-            isLoading={ loading }
-            errorMsg={ bountyError }
+            title={"Child bounty ID"}
+            tooltip={"The child bounty ID on-chain"}
+            bountyId={childBountyId}
+            setBountyId={setChildBountyId}
+            isLoading={loading}
+            errorMsg={bountyError}
           />
-          <InputTitle title={ title } setTitle={ setTitle } isLoading={ loading } errorMsg={titleError} />
+          <InputTitle
+            title={title}
+            setTitle={setTitle}
+            isLoading={loading}
+            errorMsg={titleError}
+          />
           <BountySkills
-            selectedSkills={ selectedSkills }
-            setSelectedSkills={ setSelectedSkills }
+            selectedSkills={selectedSkills}
+            setSelectedSkills={setSelectedSkills}
           />
           <InputDescription
-            content={ content }
-            setContent={ setContent }
-            isLoading={ loading }
+            content={content}
+            setContent={setContent}
+            isLoading={loading}
             errorMsg={descriptionError}
           />
         </Main>
       </div>
 
       <Side>
-        { account ? (
+        {account ? (
           <Box>
             <BountyMeta
-              network={ network }
-              curators={ curators }
-              symbol={ asset?.symbol }
-              decimals={ asset?.decimals }
-              value={ value }
-              loading={ loading }
+              network={network}
+              curators={curators}
+              symbol={asset?.symbol}
+              decimals={asset?.decimals}
+              value={value}
+              loading={loading}
             />
-            <Button primary block disabled={ !canImport } onClick={ doImport }>
+            <Button primary block disabled={!canImport} onClick={doImport}>
               Publish
             </Button>
           </Box>
         ) : (
           <Box>
             <ConnectWallet
-              visible={ connectWalletModalVisible }
-              setVisible={ setConnectWalletModalVisible }
+              visible={connectWalletModalVisible}
+              setVisible={setConnectWalletModalVisible}
             />
           </Box>
-        ) }
+        )}
       </Side>
     </Wrapper>
   );

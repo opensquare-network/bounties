@@ -16,9 +16,9 @@ import InputBountyId from "components/Common/Import/InputBountyId";
 import BountyMeta from "components/Common/Import/BountyMeta";
 import { resolveBountyDetailRoute } from "utils/route";
 import { Wrapper, Box, Main, Side } from "./styled";
-import { noop, notification, Button } from "@osn/common-ui";
+import { noop, useNotification, Button } from "@osn/common-ui";
 import { delayPromise } from "../../../utils/delay";
-import { handleSigningError } from "utils/exceptionHandle";
+import { useHandleSigningError } from "hooks/useHandleSigningError";
 
 export default function ImportBounty() {
   const account = useSelector(accountSelector);
@@ -44,6 +44,8 @@ export default function ImportBounty() {
 
   const navigate = useNavigate();
   const isMounted = useIsMounted();
+  const notification = useNotification();
+  const handleSigningError = useHandleSigningError();
 
   useEffect(() => {
     setTitleError("");
@@ -156,10 +158,16 @@ export default function ImportBounty() {
         formData.set("logo", imageFile);
       }
 
-      const { result, error } = await delayPromise(serverApi.fetch(`bounties`, {}, {
-        method: "POST",
-        body: formData,
-      }))
+      const { result, error } = await delayPromise(
+        serverApi.fetch(
+          `bounties`,
+          {},
+          {
+            method: "POST",
+            body: formData,
+          },
+        ),
+      );
       setSubmitting(false);
 
       if (result) {
@@ -205,7 +213,12 @@ export default function ImportBounty() {
           errorMsg={bountyError}
           isLoading={loading}
         />
-        <InputTitle title={title} setTitle={setTitle} isLoading={loading} errorMsg={titleError} />
+        <InputTitle
+          title={title}
+          setTitle={setTitle}
+          isLoading={loading}
+          errorMsg={titleError}
+        />
         <InputDescription
           content={content}
           setContent={setContent}

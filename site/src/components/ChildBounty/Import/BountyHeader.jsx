@@ -4,7 +4,7 @@ import serverApi from "services/serverApi";
 import BountyLogo from "components/Bounty/BountyLogo";
 import styled from "styled-components";
 import { ReactComponent as BountyHeaderLoading } from "./BountyHeaderLoading.svg";
-import { notification } from "@osn/common-ui";
+import { useNotification } from "@osn/common-ui";
 
 const HeaderText = styled.div`
   font-style: normal;
@@ -17,6 +17,7 @@ const HeaderText = styled.div`
 export default function BountyHeader({ network, bountyIndex }) {
   const dispatch = useDispatch();
   const [bountyDetail, setBountyDetail] = useState();
+  const notification = useNotification();
 
   useEffect(() => {
     serverApi
@@ -31,7 +32,7 @@ export default function BountyHeader({ network, bountyIndex }) {
           });
         }
       });
-  }, [dispatch, network, bountyIndex]);
+  }, [dispatch, network, bountyIndex, notification]);
 
   if (!bountyDetail) {
     return <BountyHeaderLoading />;
