@@ -81,13 +81,11 @@ export default function Discussion({ network, bountyId }) {
 
   useEffect(() => {
     if (network && bountyId) {
-      dispatch(fetchBountyDiscussions(network, bountyId, page)).then(
-        ({ error }) => {
-          if (error) {
-            notification.error({ message: error.message });
-          }
-        },
-      );
+      dispatch(fetchBountyDiscussions(network, bountyId, page)).then((resp) => {
+        if (resp?.error) {
+          notification.error({ message: resp.error.message });
+        }
+      });
     }
     return () => {
       dispatch(setDiscussions(null));

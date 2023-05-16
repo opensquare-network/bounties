@@ -24,10 +24,12 @@ export const fetchBountyDiscussions =
         page,
         pageSize: 50,
       })
-      .then(({ result }) => {
-        if (result) {
-          dispatch(setDiscussions(result));
+      .then((resp) => {
+        if (resp?.result) {
+          dispatch(setDiscussions(resp.result));
         }
+
+        return resp;
       });
   };
 
@@ -38,10 +40,12 @@ export const fetchChildBountyDiscussions =
         `/network/${network}/child-bounties/${parentBountyId}_${index}/comments`,
         { page, pageSize: 50 },
       )
-      .then(({ result }) => {
-        if (result) {
-          dispatch(setDiscussions(result));
+      .then((resp) => {
+        if (resp?.result) {
+          dispatch(setDiscussions(resp.result));
         }
+
+        return resp;
       });
   };
 

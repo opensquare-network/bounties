@@ -83,9 +83,9 @@ export default function Discussion({ network, parentBountyIndex, index }) {
     if (network && parentBountyIndex !== undefined && index !== undefined) {
       dispatch(
         fetchChildBountyDiscussions(network, parentBountyIndex, index, page),
-      ).then(({ error }) => {
-        if (error) {
-          notification.error({ message: error.message });
+      ).then((resp) => {
+        if (resp?.error) {
+          notification.error({ message: resp.error.message });
         }
       });
     }
