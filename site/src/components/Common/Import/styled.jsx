@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
+import { p_16_semibold } from "@osn/common-ui";
 
 export const Title = styled.div`
   display: flex;

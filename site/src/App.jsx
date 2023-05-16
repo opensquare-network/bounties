@@ -1,10 +1,10 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
 
-import { Footer } from "@osn/common-ui/es";
+import { Footer, Layout, Main, NotificationContainer } from "@osn/common-ui";
 
-import Layout from "@osn/common-ui/es/styled/Layout";
+// import Layout from "@osn/common-ui/es/styled/Layout";
 import Header from "components/Header";
-import Main from "@osn/common-ui/es/styled/Main";
+// import Main from "@osn/common-ui/es/styled/Main";
 import Home from "pages/Home";
 import ImportBounty from "pages/ImportBounty";
 import ImportChildBounty from "pages/ImportChildBounty";
@@ -20,6 +20,7 @@ function App() {
     <HashRouter>
       <Layout>
         <NotificationMonitor />
+        <NotificationContainer />
         <Header />
         <ScrollToTop />
         <Main>

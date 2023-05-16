@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import ConnectWallet from "components/ConnectWallet";
-import Button from "@osn/common-ui/es/styled/Button";
+// import Button from "@osn/common-ui/es/styled/Button";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
@@ -18,7 +18,7 @@ import BountyMeta from "components/Common/Import/BountyMeta";
 import BountySkills from "./BountySkills";
 import BountyHeader from "./BountyHeader";
 import { resolveChildBountyDetailRoute } from "utils/route";
-import { notification } from "@osn/common-ui";
+import { notification, Button } from "@osn/common-ui";
 import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
 import { delayPromise } from "../../../utils/delay";
 import { handleSigningError } from "utils/exceptionHandle";

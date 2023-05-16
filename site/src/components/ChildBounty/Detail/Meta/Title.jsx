@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import BountyTag from "components/Bounty/BountyTag";
-import { p_18_semibold } from "@osn/common-ui/es/styles/textStyles";
+import { p_18_semibold } from "@osn/common-ui";
 import BountyLogo from "components/Bounty/BountyLogo";
 import { Dot, FlexBetween, p_14_medium, Select } from "@osn/common-ui";
 import StatusLabel from "components/Bounty/StatusLabel";

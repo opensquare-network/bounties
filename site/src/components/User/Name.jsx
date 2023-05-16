@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { ChainIcon } from "@osn/common-ui/es";
+import { ChainIcon } from "@osn/common-ui";
 import IdentityOrAddr from "./IdentityOrAddr";
-import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
+import { p_14_medium } from "@osn/common-ui";
 import Flex from "@osn/common-ui/es/styled/Flex";
 
 const Wrapper = styled(Flex)`

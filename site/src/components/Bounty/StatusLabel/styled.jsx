@@ -1,4 +1,4 @@
-import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
+import { p_14_medium } from "@osn/common-ui";
 import styled, { css } from "styled-components";
 
 export const Wrapper = styled.span`

@@ -1,5 +1,5 @@
 import ConnectWallet from "components/ConnectWallet";
-import Button from "@osn/common-ui/es/styled/Button";
+// import Button from "@osn/common-ui/es/styled/Button";
 import { accountSelector } from "store/reducers/accountSlice";
 import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
@@ -16,7 +16,7 @@ import InputBountyId from "components/Common/Import/InputBountyId";
 import BountyMeta from "components/Common/Import/BountyMeta";
 import { resolveBountyDetailRoute } from "utils/route";
 import { Wrapper, Box, Main, Side } from "./styled";
-import { noop, notification } from "@osn/common-ui";
+import { noop, notification, Button } from "@osn/common-ui";
 import { delayPromise } from "../../../utils/delay";
 import { handleSigningError } from "utils/exceptionHandle";
 

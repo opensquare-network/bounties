@@ -7,7 +7,7 @@ import {
   p_12_normal,
   p_14_medium,
   p_14_normal,
-} from "@osn/common-ui/es/styles/textStyles";
+} from "@osn/common-ui";
 import styled from "styled-components";
 
 export const Item = styled(FlexBetween)`

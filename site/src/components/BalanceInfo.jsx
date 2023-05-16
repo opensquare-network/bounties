@@ -5,7 +5,7 @@ import { useApi } from "../utils/hooks";
 import { useIsMounted, getSymbolMetaByChain } from "@osn/common";
 import styled from "styled-components";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
-import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
+import { p_14_medium } from "@osn/common-ui";
 import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
 import { LoadingIcon } from "@osn/common-ui";
 

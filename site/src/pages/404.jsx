@@ -3,7 +3,7 @@ import {
   h3_36_bold,
   h4_24_bold,
   p_16_normal,
-} from "@osn/common-ui/es/styles/textStyles";
+} from "@osn/common-ui";
 import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`

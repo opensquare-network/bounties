@@ -1,7 +1,7 @@
 // copied from qa
 
 import styled from "styled-components";
-import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
+import { p_14_medium } from "@osn/common-ui";
 import {
   Time,
   Card,

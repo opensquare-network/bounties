@@ -17,9 +17,9 @@ import { accountSelector } from "store/reducers/accountSlice";
 import NotificationItem from "../components/Notification/NotificationItem";
 import NotificationTabs from "../components/Notification/NotificationTabs";
 import { text_dark_minor } from "@osn/common-ui/es/styles/colors";
-import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
+import { p_14_medium } from "@osn/common-ui";
 import { useNotifications } from "utils/useNotifications";
-import { ReactComponent as ReadedIcon } from "@osn/common-ui/imgs/icons/readed.svg";
+import { ReactComponent as ReadedIcon } from "@osn/common-ui/es/imgs/icons/readed.svg";
 
 const Wrapper = styled.div`
   position: relative;

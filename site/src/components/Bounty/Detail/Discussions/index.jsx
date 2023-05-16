@@ -18,7 +18,7 @@ import RichEditor from "@osn/common-ui/es/RichEditor";
 import { signMessage } from "utils/signature";
 import {
   discussionsSelector,
-  fetchChildBountyDiscussions,
+  fetchBountyDiscussions,
   setDiscussions,
 } from "store/reducers/discussionSlice";
 import {
@@ -28,7 +28,7 @@ import {
   useIsMounted,
 } from "@osn/common";
 import uniqWith from "lodash.uniqwith";
-import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
+import { p_16_semibold } from "@osn/common-ui";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import { useSearchParams } from "react-router-dom";
 import { identityChainMap } from "@osn/constants";
@@ -55,7 +55,7 @@ const LoadingWrapper = styled(FlexCenter)`
   height: 104px;
 `;
 
-export default function Discussion({ network, parentBountyIndex, index }) {
+export default function Discussion({ network, bountyId }) {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const discussions = useSelector(discussionsSelector);
@@ -78,15 +78,13 @@ export default function Discussion({ network, parentBountyIndex, index }) {
     }-${user.network}) `;
 
   useEffect(() => {
-    if (network && parentBountyIndex !== undefined && index !== undefined) {
-      dispatch(
-        fetchChildBountyDiscussions(network, parentBountyIndex, index, page),
-      );
+    if (network && bountyId) {
+      dispatch(fetchBountyDiscussions(network, bountyId, page));
     }
     return () => {
       dispatch(setDiscussions(null));
     };
-  }, [dispatch, network, parentBountyIndex, index, page]);
+  }, [dispatch, network, bountyId, page]);
 
   const onSubmit = async () => {
     if (!account) {
@@ -105,10 +103,9 @@ export default function Discussion({ network, parentBountyIndex, index }) {
 
     const data = {
       action: "comment",
-      type: "childBounty",
+      type: "bounty",
       network,
-      parentBountyIndex,
-      index,
+      bountyIndex: bountyId,
       content,
       commenterNetwork: account.network,
     };
@@ -130,15 +127,13 @@ export default function Discussion({ network, parentBountyIndex, index }) {
         signature,
       };
 
-      const { result, error } = await serverApi.post(`/network/${network}/child-bounties/${parentBountyIndex}_${index}/comments`, payload);
+      const { result, error } = await serverApi.post(`/network/${network}/bounties/${bountyId}/comments`, payload);
       if (result) {
         setContent("");
         notification.success({
           message: "Comment posted",
         });
-        dispatch(
-          fetchChildBountyDiscussions(network, parentBountyIndex, index, page),
-        );
+        dispatch(fetchBountyDiscussions(network, bountyId, page));
       }
       if (error) {
         notification.error({

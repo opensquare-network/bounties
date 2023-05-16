@@ -9,7 +9,7 @@ import { ReactComponent as InfoIcon } from "imgs/icons/info.svg";
 import {
   p_14_medium,
   p_16_semibold,
-} from "@osn/common-ui/es/styles/textStyles";
+} from "@osn/common-ui";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { LinkIdentityUser, LoadingIcon } from "@osn/common-ui";
 import { ErrorMessage } from "./styled";
