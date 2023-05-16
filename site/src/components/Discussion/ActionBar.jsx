@@ -1,12 +1,12 @@
 import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
-import { ReactComponent as ReplyIcon } from "imgs/icons/reply.svg";
 import Flex from "@osn/common-ui/es/styled/Flex";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import { p_14_normal } from "@osn/common-ui";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { useOnClickOutside } from "@osn/common";
+import IconMask from "components/Icon/Mask";
 
 const Wrapper = styled.div`
   position: relative;
@@ -23,16 +23,23 @@ const Wrapper = styled.div`
   }
 `;
 
+const ReplyIcon = styled(IconMask)``;
 const ReplyButton = styled(Flex)`
   cursor: pointer;
   margin-right: 20px;
   color: #a1a8b3;
 
+  ${ReplyIcon} {
+    background-color: #a1a8b3;
+    width: 16px;
+    height: 16px;
+  }
+
   :hover {
     color: #506176;
 
-    > svg path {
-      fill: #506176;
+    ${ReplyIcon} {
+      background-color: #506176;
     }
   }
 `;
@@ -83,7 +90,7 @@ export default function ActionBar({ network, address, onReply = () => {} }) {
       <FlexBetween>
         <Flex>
           <ReplyButton onClick={onReplyClick}>
-            <ReplyIcon />
+            <ReplyIcon src="/imgs/icons/reply.svg" />
             <Reply>Reply</Reply>
           </ReplyButton>
         </Flex>

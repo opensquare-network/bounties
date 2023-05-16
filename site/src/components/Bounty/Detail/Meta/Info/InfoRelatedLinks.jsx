@@ -1,8 +1,5 @@
 import InfoItem from "./InfoItem";
 import { InfoContent, InfoHeader } from "./styled";
-import { ReactComponent as PolkassemblyIcon } from "imgs/icons/polkassembly.svg";
-import { ReactComponent as SubSquareIcon } from "imgs/icons/subsquare.svg";
-import { ReactComponent as DotreasuryIcon } from "imgs/icons/dotreasury.svg";
 
 export default function InfoRelatedLinks({
   bountyDetail,
@@ -20,13 +17,13 @@ export default function InfoRelatedLinks({
       content={
         <InfoContent>
           <a target="_blank" rel="noreferrer" href={subsquareLink}>
-            <SubSquareIcon />
+            <img src="/imgs/icons/subsquare.svg" />
           </a>
           <a target="_blank" rel="noreferrer" href={dotreasuryLink}>
-            <DotreasuryIcon />
+            <img src="/imgs/icons/dotreasury.svg" />
           </a>
           <a target="_blank" rel="noreferrer" href={polkassemblyLink}>
-            <PolkassemblyIcon />
+            <img src="/imgs/icons/polkassembly.svg" />
           </a>
         </InfoContent>
       }

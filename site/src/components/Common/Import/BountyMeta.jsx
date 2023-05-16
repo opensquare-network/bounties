@@ -3,13 +3,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 
 import styled from "styled-components";
 import ChainIcon from "@osn/common-ui/es/Chain/ChainIcon";
-import { ReactComponent as NetworkIcon } from "imgs/icons/network.svg";
-import { ReactComponent as RewardIcon } from "imgs/icons/treasury.svg";
-import { ReactComponent as InfoIcon } from "imgs/icons/info.svg";
-import {
-  p_14_medium,
-  p_16_semibold,
-} from "@osn/common-ui";
+import { p_14_medium, p_16_semibold } from "@osn/common-ui";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { LinkIdentityUser, LoadingIcon } from "@osn/common-ui";
 import { ErrorMessage } from "./styled";
@@ -136,7 +130,8 @@ export default function BountyMeta({
 }) {
   const account = useSelector(accountSelector);
   const encodedAddress =
-    account?.address && encodeNetworkAddress(account?.address, account?.network);
+    account?.address &&
+    encodeNetworkAddress(account?.address, account?.network);
   const multisigCurators = curators.slice(1);
 
   const isCurator = encodedAddress && curators.includes(encodedAddress);
@@ -146,7 +141,7 @@ export default function BountyMeta({
       <Field>
         <FlexBetween>
           <StyledText>Network</StyledText>
-          <NetworkIcon />
+          <img src="/imgs/icons/network.svg" />
         </FlexBetween>
         <FieldBox>
           <ChainIcon chainName={network} />
@@ -156,7 +151,7 @@ export default function BountyMeta({
       <Field>
         <FlexBetween>
           <StyledText>Information</StyledText>
-          <InfoIcon />
+          <img src="/imgs/icons/info.svg" />
         </FlexBetween>
         <SubField>
           <FieldTitle>Funder</FieldTitle>
@@ -218,7 +213,7 @@ export default function BountyMeta({
       <Field>
         <FlexBetween>
           <StyledText>Bounty</StyledText>
-          <RewardIcon />
+          <img src="/imgs/icons/treasury.svg" />
         </FlexBetween>
         <FieldBox>
           <ChainIcon chainName={network} />

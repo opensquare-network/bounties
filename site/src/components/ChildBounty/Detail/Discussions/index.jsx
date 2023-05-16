@@ -92,7 +92,7 @@ export default function Discussion({ network, parentBountyIndex, index }) {
     return () => {
       dispatch(setDiscussions(null));
     };
-  }, [dispatch, network, parentBountyIndex, index, page, notification]);
+  }, [dispatch, network, parentBountyIndex, index, page]);
 
   const onSubmit = async () => {
     if (!account) {

@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { ReactComponent as KusamaLogoIcon } from "imgs/icons/bounty-logo-kusama.svg";
-import { ReactComponent as PolkadotLogoIcon } from "imgs/icons/bounty-logo-polkadot.svg";
 
 const Wrapper = styled.div`
   display: inline-flex;
@@ -20,12 +18,14 @@ const Wrapper = styled.div`
 `;
 
 export default function Logo({ network, logoUrl }) {
-  const defaultLogo =
-    network === "kusama" ? <KusamaLogoIcon /> : <PolkadotLogoIcon />;
+  const defaultLogoUrl =
+    network === "kusama"
+      ? "/imgs/icons/bounty-logo-kusama.svg"
+      : "/imgs/icons/bounty-logo-polkadot.svg";
 
   return (
     <Wrapper>
-      {logoUrl ? <img className="logo" src={logoUrl} alt="" /> : defaultLogo}
+      <img className="logo" src={logoUrl || defaultLogoUrl} />
     </Wrapper>
   );
 }

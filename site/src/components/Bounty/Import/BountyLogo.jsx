@@ -1,9 +1,6 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import { Title } from "components/Common/Import/styled";
-import { ReactComponent as KusamaLogoIcon } from "imgs/icons/bounty-logo-kusama.svg";
-import { ReactComponent as PolkadotLogoIcon } from "imgs/icons/bounty-logo-polkadot.svg";
-import { ReactComponent as UploadLogoIcon } from "imgs/icons/logo-upload.svg";
 
 const LogoContainer = styled.div`
   display: inline-flex;
@@ -92,19 +89,23 @@ export default function BountyLogo({ network, imageFile, setImageFile }) {
     }
   };
 
-  const defaultLogo =
-    network === "kusama" ? <KusamaLogoIcon /> : <PolkadotLogoIcon />;
+  const defaultLogoUrl =
+    network === "kusama"
+      ? "/imgs/icons/bounty-logo-kusama.svg"
+      : "/imgs/icons/bounty-logo-polkadot.svg";
 
   return (
     <>
       <Title>Logo</Title>
       <LogoContainer>
-        {!inputEl.current?.vaule && defaultLogo}
+        {!inputEl.current?.vaule && (
+          <img className="logo" src={defaultLogoUrl} />
+        )}
         <Layer style={{ opacity: imageDataUrl ? 1 : 0 }}>
           <img className="logo" src={imageDataUrl} alt="" />
         </Layer>
         <Layer className="upload" onClick={handleSelectFile}>
-          <UploadLogoIcon />
+          <img src="/imgs/icons/logo-upload.svg" />
         </Layer>
       </LogoContainer>
       <Info>Recommended size: 200x200px</Info>
