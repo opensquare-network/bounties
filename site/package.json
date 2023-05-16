@@ -45,6 +45,8 @@
     "@types/react-router": "^5.1.18",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.40.0",
+    "eslint-config-react-app": "^7.0.1",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
     "rollup-plugin-node-polyfills": "^0.2.1",
@@ -55,13 +57,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postinstall": "patch-package"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "postinstall": "patch-package",
+    "lint": "eslint ."
   },
   "browserslist": {
     "production": [
