@@ -1,15 +1,15 @@
 import styled from "styled-components";
-import Background from "components/Background";
+import Background from "@/components/Background";
 import { Container } from "@osn/common-ui";
 import Breadcrumb from "../components/Breadcrumb";
 import { useNavigate, useParams } from "react-router";
 import { capitalize } from "utils";
 import { useEffect } from "react";
-import ChildBountyDetail from "components/ChildBounty/Detail";
-import { resolveBountyDetailRoute } from "utils/route";
+import ChildBountyDetail from "@/components/ChildBounty/Detail";
+import { resolveBountyDetailRoute } from "@/utils/route";
 import { useDispatch } from "react-redux";
-import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
-import SEO from "components/SEO";
+import { useFetchChildBountyDetail } from "@/hooks/useFetchChildBountyDetail";
+import SEO from "@/components/SEO";
 
 const Wrapper = styled.div`
   position: relative;

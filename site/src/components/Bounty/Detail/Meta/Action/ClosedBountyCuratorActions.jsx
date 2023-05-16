@@ -8,16 +8,16 @@ import {
   useNotification,
   Time,
 } from "@osn/common-ui";
-import { accountSelector } from "store/reducers/accountSlice";
-import serverApi from "services/serverApi";
-import { signApiData } from "utils/signature";
+import { accountSelector } from "@/store/reducers/accountSlice";
+import serverApi from "@/services/serverApi";
+import { signApiData } from "@/utils/signature";
 import { ButtonGroup } from "../../../../Common/Detail/styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
-import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
-import { ButtonText } from "components/ChildBounty/Detail/Meta/actions/styled";
-import { useIsCurator } from "hooks/useIsCurator";
+import { useFetchBountyDetail } from "@/hooks/useFetchBountyDetail";
+import { ButtonText } from "@/components/ChildBounty/Detail/Meta/actions/styled";
+import { useIsCurator } from "@/hooks/useIsCurator";
 import { useState } from "react";
-import { useHandleSigningError } from "hooks/useHandleSigningError";
+import { useHandleSigningError } from "@/hooks/useHandleSigningError";
 
 export default function ClosedBountyCuratorActions({ bountyDetail }) {
   const dispatch = useDispatch();

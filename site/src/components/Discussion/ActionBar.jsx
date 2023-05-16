@@ -2,11 +2,11 @@ import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import Flex from "@osn/common-ui/es/styled/Flex";
 import { useSelector } from "react-redux";
-import { accountSelector } from "store/reducers/accountSlice";
+import { accountSelector } from "@/store/reducers/accountSlice";
 import { p_14_normal } from "@osn/common-ui";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { useOnClickOutside } from "@osn/common";
-import IconMask from "components/Icon/Mask";
+import IconMask from "@/components/Icon/Mask";
 
 const Wrapper = styled.div`
   position: relative;

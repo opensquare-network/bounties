@@ -3,7 +3,7 @@ import styled from "styled-components";
 import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
 import Time from "@osn/common-ui/es/Time";
 import IpfsSquare from "@osn/common-ui/es/IpfsSquare";
-import NetworkUser from "components/User/NetworkUser";
+import NetworkUser from "@/components/User/NetworkUser";
 import { encodeNetworkAddress } from "@osn/common";
 import { p_14_normal } from "@osn/common-ui";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";

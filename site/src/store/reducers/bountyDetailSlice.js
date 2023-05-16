@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import serverApi from "services/serverApi";
+import serverApi from "@/services/serverApi";
 
 const bountyDetailSlice = createSlice({
   name: "bountyDetailSlice",

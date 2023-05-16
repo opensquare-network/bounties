@@ -10,17 +10,17 @@ import {
   useNotification,
   noop,
 } from "@osn/common-ui";
-import Item from "components/Discussion/Item";
+import Item from "@/components/Discussion/Item";
 import Pagination from "@osn/common-ui/es/styled/Pagination";
-import { accountSelector } from "store/reducers/accountSlice";
-import serverApi from "services/serverApi";
+import { accountSelector } from "@/store/reducers/accountSlice";
+import serverApi from "@/services/serverApi";
 import RichEditor from "@osn/common-ui/es/RichEditor";
-import { signMessage } from "utils/signature";
+import { signMessage } from "@/utils/signature";
 import {
   discussionsSelector,
   fetchChildBountyDiscussions,
   setDiscussions,
-} from "store/reducers/discussionSlice";
+} from "@/store/reducers/discussionSlice";
 import {
   addressEllipsis,
   encodeNetworkAddress,
@@ -32,10 +32,10 @@ import { p_16_semibold } from "@osn/common-ui";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import { useSearchParams } from "react-router-dom";
 import { identityChainMap } from "@osn/constants";
-import NetworkUser from "components/User/NetworkUser";
+import NetworkUser from "@/components/User/NetworkUser";
 import { MentionIdentityUser } from "@osn/common-ui";
-import { useBountyPermission } from "hooks/useBountyPermission";
-import { useHandleSigningError } from "hooks/useHandleSigningError";
+import { useBountyPermission } from "@/hooks/useBountyPermission";
+import { useHandleSigningError } from "@/hooks/useHandleSigningError";
 
 const Title = styled.div`
   ${p_16_semibold};

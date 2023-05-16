@@ -1,10 +1,10 @@
 import { ButtonText } from "../../styled";
 import { Button, Dot, FlexCenter, Time } from "@osn/common-ui";
 import { useSubmitModal } from "./useSubmitModal";
-import { useWorkflowActionService } from "hooks/useWorkflowActionService";
+import { useWorkflowActionService } from "@/hooks/useWorkflowActionService";
 import { findSubmittedApplicant } from "../../utils";
-import { useAccount } from "hooks/useAccount";
-import { useIsActionLoading } from "context/ActionLoadingContext";
+import { useAccount } from "@/hooks/useAccount";
+import { useIsActionLoading } from "@/context/ActionLoadingContext";
 
 export function useHunterSubmittedAction(childBountyDetail) {
   const { applications = [] } = childBountyDetail ?? {};

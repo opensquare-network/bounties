@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { Title } from "components/Common/Import/styled";
-import { SKILLS } from "utils/constants";
+import { Title } from "@/components/Common/Import/styled";
+import { SKILLS } from "@/utils/constants";
 import { useCallback, useMemo } from "react";
-import { SkillTag } from "components/Skill/styled";
+import { SkillTag } from "@/components/Skill/styled";
 import {
   netural_grey_800,
   primary_purple_500,

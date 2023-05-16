@@ -5,7 +5,7 @@ import ChildBountyImport from "../components/ChildBounty/Import";
 import Breadcrumb from "../components/Breadcrumb";
 import { useSearchParams } from "react-router-dom";
 import { capitalize } from "utils";
-import { resolveBountyDetailRoute } from "utils/route";
+import { resolveBountyDetailRoute } from "@/utils/route";
 
 const Wrapper = styled.div`
   position: relative;

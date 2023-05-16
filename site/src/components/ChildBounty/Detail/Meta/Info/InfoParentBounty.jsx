@@ -1,11 +1,11 @@
-import InfoItem from "components/Bounty/Detail/Meta/Info/InfoItem";
+import InfoItem from "@/components/Bounty/Detail/Meta/Info/InfoItem";
 import {
   InfoContent,
   InfoHeader,
-} from "components/Bounty/Detail/Meta/Info/styled";
-import Ellipsis from "components/Ellipsis";
+} from "@/components/Bounty/Detail/Meta/Info/styled";
+import Ellipsis from "@/components/Ellipsis";
 import { Link } from "react-router-dom";
-import { resolveBountyDetailRoute } from "utils/route";
+import { resolveBountyDetailRoute } from "@/utils/route";
 
 export default function InfoParentBounty({ childBountyDetail }) {
   const {

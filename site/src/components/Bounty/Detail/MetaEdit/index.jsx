@@ -1,17 +1,17 @@
-import { useAccount } from "hooks/useAccount";
+import { useAccount } from "@/hooks/useAccount";
 import { useState } from "react";
 import { useAsyncState } from "@osn/common";
-import { signApiData } from "utils/signature";
-import serverApi from "services/serverApi";
+import { signApiData } from "@/utils/signature";
+import serverApi from "@/services/serverApi";
 import { Button, noop } from "@osn/common-ui";
-import InputTitle from "components/Common/Import/InputTitle";
-import InputDescription from "components/Common/Import/InputDescription";
-import { Main } from "components/Bounty/Import/styled";
-import InputBountyId from "components/Common/Import/InputBountyId";
-import BountyLogo from "components/Bounty/Import/BountyLogo";
-import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
+import InputTitle from "@/components/Common/Import/InputTitle";
+import InputDescription from "@/components/Common/Import/InputDescription";
+import { Main } from "@/components/Bounty/Import/styled";
+import InputBountyId from "@/components/Common/Import/InputBountyId";
+import BountyLogo from "@/components/Bounty/Import/BountyLogo";
+import { useFetchBountyDetail } from "@/hooks/useFetchBountyDetail";
 import { useDispatch } from "react-redux";
-import { useHandleSigningError } from "hooks/useHandleSigningError";
+import { useHandleSigningError } from "@/hooks/useHandleSigningError";
 
 export default function BountyMetaEdit({ bountyDetail, onEditEnd = noop }) {
   const account = useAccount();

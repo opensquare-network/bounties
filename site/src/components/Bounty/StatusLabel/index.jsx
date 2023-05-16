@@ -3,7 +3,7 @@ import {
   secondary_green_500,
   text_dark_accessory,
 } from "@osn/common-ui";
-import { APPLICATION_STATUS, CHILD_BOUNTY_STATUS } from "utils/constants";
+import { APPLICATION_STATUS, CHILD_BOUNTY_STATUS } from "@/utils/constants";
 import { Wrapper } from "./styled";
 
 const COLOR_MAP = {

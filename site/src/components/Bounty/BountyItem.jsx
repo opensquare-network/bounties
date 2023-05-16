@@ -6,7 +6,7 @@ import { Detail, Head, HeadLogo, SubTitle, HeadTitle } from "./styled/bounty";
 import { detailLoading, headLoading } from "./styled/bountyLoading";
 import BountyLogo from "./BountyLogo";
 import { capitalize } from "utils";
-import { resolveBountyDetailRoute } from "utils/route";
+import { resolveBountyDetailRoute } from "@/utils/route";
 
 function BountyItem(props) {
   const { network, title, bountyIndex, bounty, logoUrl, childBountiesCount } =

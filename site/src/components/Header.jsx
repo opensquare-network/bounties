@@ -9,7 +9,7 @@ import NodeSelect from "./NodeSelect";
 import { useSelector } from "react-redux";
 import ConnectedAccount from "./User/ConnectedAccount";
 import { useOnClickOutside, useWindowSize } from "@osn/common";
-import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
+import useUpdateNodesDelay from "@/utils/useUpdateNodesDelay";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";
 import { MOBILE_SIZE } from "@osn/constants";

@@ -8,7 +8,7 @@ import {
   FormLabelWrapper,
   TextEditorWrapper,
 } from "../../styled";
-import { useIsActionLoading } from "context/ActionLoadingContext";
+import { useIsActionLoading } from "@/context/ActionLoadingContext";
 
 const contentMaxLength = 200;
 

@@ -9,11 +9,11 @@ import {
   FlexCenter,
   FlexBetween,
 } from "@osn/common-ui";
-import { useIsActionLoading } from "context/ActionLoadingContext";
-import { useAccount } from "hooks/useAccount";
-import { useWorkflowActionService } from "hooks/useWorkflowActionService";
+import { useIsActionLoading } from "@/context/ActionLoadingContext";
+import { useAccount } from "@/hooks/useAccount";
+import { useWorkflowActionService } from "@/hooks/useWorkflowActionService";
 import { useMemo, useState } from "react";
-import { APPLICATION_STATUS } from "utils/constants";
+import { APPLICATION_STATUS } from "@/utils/constants";
 import {
   ModalTitle,
   ModalDescription,

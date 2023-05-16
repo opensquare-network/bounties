@@ -6,7 +6,7 @@ import { MOBILE_SIZE } from "@osn/constants";
 import ChildBounties from "./ChildBounties";
 import { useState } from "react";
 import BountyMetaEdit from "./MetaEdit";
-import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
+import { useDifferentNetworkNotice } from "@/hooks/useDifferentNetworkNotice";
 
 const Wrapper = styled.div`
   display: flex;

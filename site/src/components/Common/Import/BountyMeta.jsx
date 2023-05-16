@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { accountSelector } from "store/reducers/accountSlice";
+import { accountSelector } from "@/store/reducers/accountSlice";
 
 import styled from "styled-components";
 import ChainIcon from "@osn/common-ui/es/Chain/ChainIcon";

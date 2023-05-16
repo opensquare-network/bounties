@@ -1,11 +1,11 @@
 import { encodeNetworkAddress } from "@osn/common";
-import { useAccount } from "hooks/useAccount";
-import serverApi from "services/serverApi";
-import { signApiData } from "utils/signature";
+import { useAccount } from "@/hooks/useAccount";
+import serverApi from "@/services/serverApi";
+import { signApiData } from "@/utils/signature";
 import { useDispatch } from "react-redux";
 import { useFetchChildBountyDetail } from "./useFetchChildBountyDetail";
 import { useNotification } from "@osn/common-ui";
-import { useSetIsActionLoading } from "context/ActionLoadingContext";
+import { useSetIsActionLoading } from "@/context/ActionLoadingContext";
 import { useHandleSigningError } from "./useHandleSigningError";
 
 export function useWorkflowActionService(childBountyDetail) {

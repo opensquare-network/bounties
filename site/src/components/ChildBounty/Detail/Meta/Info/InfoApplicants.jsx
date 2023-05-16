@@ -1,8 +1,8 @@
-import InfoItem from "components/Bounty/Detail/Meta/Info/InfoItem";
+import InfoItem from "@/components/Bounty/Detail/Meta/Info/InfoItem";
 import {
   InfoContent,
   InfoHeader,
-} from "components/Bounty/Detail/Meta/Info/styled";
+} from "@/components/Bounty/Detail/Meta/Info/styled";
 
 export default function InfoApplicants({ childBountyDetail }) {
   const { applications = [] } = childBountyDetail ?? {};

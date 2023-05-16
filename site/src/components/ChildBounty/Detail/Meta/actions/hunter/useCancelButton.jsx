@@ -1,7 +1,7 @@
 import { Button } from "@osn/common-ui";
-import { useIsActionLoading } from "context/ActionLoadingContext";
-import { useAccount } from "hooks/useAccount";
-import { useWorkflowActionService } from "hooks/useWorkflowActionService";
+import { useIsActionLoading } from "@/context/ActionLoadingContext";
+import { useAccount } from "@/hooks/useAccount";
+import { useWorkflowActionService } from "@/hooks/useWorkflowActionService";
 
 export function useHunterCancelButton(childBountyDetail) {
   const account = useAccount();

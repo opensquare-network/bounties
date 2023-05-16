@@ -1,7 +1,7 @@
-import InfoCurator from "components/Bounty/Detail/Meta/Info/InfoCurator";
-import InfoFunder from "components/Bounty/Detail/Meta/Info/InfoFunder";
-import InfoRelatedLinks from "components/Bounty/Detail/Meta/Info/InfoRelatedLinks";
-import { InfoWrapper } from "components/Bounty/Detail/Meta/Info/styled";
+import InfoCurator from "@/components/Bounty/Detail/Meta/Info/InfoCurator";
+import InfoFunder from "@/components/Bounty/Detail/Meta/Info/InfoFunder";
+import InfoRelatedLinks from "@/components/Bounty/Detail/Meta/Info/InfoRelatedLinks";
+import { InfoWrapper } from "@/components/Bounty/Detail/Meta/Info/styled";
 import InfoApplicants from "./InfoApplicants";
 import InfoChildBountyId from "./InfoChildBountyId";
 import InfoParentBounty from "./InfoParentBounty";

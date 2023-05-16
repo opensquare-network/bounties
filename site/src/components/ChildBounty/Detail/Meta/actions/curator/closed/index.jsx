@@ -1,18 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Flex, noop, useNotification } from "@osn/common-ui";
-import { accountSelector } from "store/reducers/accountSlice";
-import { useApi } from "utils/hooks";
-import serverApi from "services/serverApi";
-import { signApiData } from "utils/signature";
+import { accountSelector } from "@/store/reducers/accountSlice";
+import { useApi } from "@/utils/hooks";
+import serverApi from "@/services/serverApi";
+import { signApiData } from "@/utils/signature";
 import { ButtonGroup, ButtonText } from "../../styled";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
-import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
-import { BOUNTY_STATUS } from "utils/constants";
+import { useFetchChildBountyDetail } from "@/hooks/useFetchChildBountyDetail";
+import { BOUNTY_STATUS } from "@/utils/constants";
 import {
   useIsActionLoading,
   useSetIsActionLoading,
-} from "context/ActionLoadingContext";
-import { useHandleSigningError } from "hooks/useHandleSigningError";
+} from "@/context/ActionLoadingContext";
+import { useHandleSigningError } from "@/hooks/useHandleSigningError";
 
 export function useCuratorClosedChildBountyAction(childBountyDetail) {
   const dispatch = useDispatch();

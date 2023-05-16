@@ -5,11 +5,11 @@ import ChildBountyDetailApplicants from "./Applicants";
 import ChildBountyDetailMeta from "./Meta";
 import ChildBountyDetailMetaEdit from "./MetaEdit";
 import { useState } from "react";
-import { accountSelector } from "store/reducers/accountSlice";
+import { accountSelector } from "@/store/reducers/accountSlice";
 import { useSelector } from "react-redux";
-import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
+import { useDifferentNetworkNotice } from "@/hooks/useDifferentNetworkNotice";
 import ChildBountyDetailSubmissions from "./Submissions";
-import { ActionLoadingProvider } from "context/ActionLoadingContext";
+import { ActionLoadingProvider } from "@/context/ActionLoadingContext";
 
 const Wrapper = styled.div`
   display: flex;

@@ -1,4 +1,4 @@
-import { APPLICATION_STATUS } from "utils/constants";
+import { APPLICATION_STATUS } from "@/utils/constants";
 
 /**
  * @description find a working applicant, status is `assigned`, `started` or `submitted`

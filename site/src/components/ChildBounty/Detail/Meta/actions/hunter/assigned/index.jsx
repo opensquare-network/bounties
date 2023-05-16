@@ -1,7 +1,7 @@
 import { encodeNetworkAddress } from "@osn/common";
 import { Flex } from "@osn/common-ui";
-import { useAccount } from "hooks/useAccount";
-import { APPLICATION_STATUS } from "utils/constants";
+import { useAccount } from "@/hooks/useAccount";
+import { APPLICATION_STATUS } from "@/utils/constants";
 import WorkingApplicantButton from "../../components/WorkingApplicantButton";
 import { ButtonGroup } from "../../styled";
 import { findWorkingApplicant } from "../../utils";

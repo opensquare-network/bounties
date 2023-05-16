@@ -2,21 +2,21 @@ import { Button, Card, noop, useNotification } from "@osn/common-ui";
 import {
   descriptionLoading,
   metaLoading,
-} from "components/Bounty/styled/metaLoading";
-import DisabledInputBountyId from "components/Common/Detail/DisabledInputBountyId";
-import InputTitle from "components/Common/Import/InputTitle";
-import BountySkills from "components/ChildBounty/Import/BountySkills";
-import InputDescription from "components/Common/Import/InputDescription";
+} from "@/components/Bounty/styled/metaLoading";
+import DisabledInputBountyId from "@/components/Common/Detail/DisabledInputBountyId";
+import InputTitle from "@/components/Common/Import/InputTitle";
+import BountySkills from "@/components/ChildBounty/Import/BountySkills";
+import InputDescription from "@/components/Common/Import/InputDescription";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import BountyLogo from "components/Bounty/BountyLogo";
-import { accountSelector } from "store/reducers/accountSlice";
+import BountyLogo from "@/components/Bounty/BountyLogo";
+import { accountSelector } from "@/store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { signApiData } from "utils/signature";
-import serverApi from "services/serverApi";
-import { fetchChildBountyDetail } from "store/reducers/childBountyDetailSlice";
+import { signApiData } from "@/utils/signature";
+import serverApi from "@/services/serverApi";
+import { fetchChildBountyDetail } from "@/store/reducers/childBountyDetailSlice";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
-import { useHandleSigningError } from "hooks/useHandleSigningError";
+import { useHandleSigningError } from "@/hooks/useHandleSigningError";
 
 const Box = styled.div`
   box-shadow: 0px 4px 31px rgba(26, 33, 44, 0.04),

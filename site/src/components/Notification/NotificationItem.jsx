@@ -26,8 +26,8 @@ import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/constants";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUnread } from "store/reducers/notificationSlice";
-import { accountSelector } from "store/reducers/accountSlice";
+import { clearUnread } from "@/store/reducers/notificationSlice";
+import { accountSelector } from "@/store/reducers/accountSlice";
 
 const NotificationItemWrapper = styled.div`
   &:hover {

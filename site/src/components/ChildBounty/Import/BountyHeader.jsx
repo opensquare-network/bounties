@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import serverApi from "services/serverApi";
-import BountyLogo from "components/Bounty/BountyLogo";
+import serverApi from "@/services/serverApi";
+import BountyLogo from "@/components/Bounty/BountyLogo";
 import styled from "styled-components";
 import { ReactComponent as BountyHeaderLoading } from "./BountyHeaderLoading.svg";
 import { useNotification } from "@osn/common-ui";

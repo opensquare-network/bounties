@@ -4,7 +4,7 @@ import BountyTag from "../../BountyTag";
 import { p_18_semibold } from "@osn/common-ui";
 import BountyLogo from "../../BountyLogo";
 import { Dot } from "@osn/common-ui";
-import StatusLabel from "components/Bounty/StatusLabel";
+import StatusLabel from "@/components/Bounty/StatusLabel";
 
 const Wrapper = styled.div`
   > :nth-child(1) {

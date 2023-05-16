@@ -10,11 +10,11 @@ import {
   OnlyMobile,
   Collapse,
 } from "@osn/common-ui";
-import StatusLabel from "components/Bounty/StatusLabel";
-import { useIsActionLoading } from "context/ActionLoadingContext";
-import { useBountyPermission } from "hooks/useBountyPermission";
-import { useWorkflowActionService } from "hooks/useWorkflowActionService";
-import { APPLICATION_STATUS, CHILD_BOUNTY_STATUS } from "utils/constants";
+import StatusLabel from "@/components/Bounty/StatusLabel";
+import { useIsActionLoading } from "@/context/ActionLoadingContext";
+import { useBountyPermission } from "@/hooks/useBountyPermission";
+import { useWorkflowActionService } from "@/hooks/useWorkflowActionService";
+import { APPLICATION_STATUS, CHILD_BOUNTY_STATUS } from "@/utils/constants";
 import { findWorkingApplicant } from "../Meta/actions/utils";
 import {
   DescriptionWrapper,

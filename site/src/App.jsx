@@ -3,17 +3,17 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import { Footer, Layout, Main, NotificationContainer } from "@osn/common-ui";
 
 // import Layout from "@osn/common-ui/es/styled/Layout";
-import Header from "components/Header";
+import Header from "@/components/Header";
 // import Main from "@osn/common-ui/es/styled/Main";
-import Home from "pages/Home";
-import ImportBounty from "pages/ImportBounty";
-import ImportChildBounty from "pages/ImportChildBounty";
-import BountyDetail from "pages/BountyDetail";
-import ChildBountyDetail from "pages/ChildBountyDetail";
-import FourOFour from "pages/404";
+import Home from "@/pages/Home";
+import ImportBounty from "@/pages/ImportBounty";
+import ImportChildBounty from "@/pages/ImportChildBounty";
+import BountyDetail from "@/pages/BountyDetail";
+import ChildBountyDetail from "@/pages/ChildBountyDetail";
+import FourOFour from "@/pages/404";
 import ScrollToTop from "./components/ScrollToTop";
-import Notifications from "pages/Notifications";
-import NotificationMonitor from "components/NotificationMonitor";
+import Notifications from "@/pages/Notifications";
+import NotificationMonitor from "@/components/NotificationMonitor";
 
 function App() {
   return (

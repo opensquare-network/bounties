@@ -1,16 +1,16 @@
 import { useParams } from "react-router";
 import styled from "styled-components";
 
-import Background from "components/Background";
+import Background from "@/components/Background";
 import { Container } from "@osn/common-ui";
 import Breadcrumb from "../components/Breadcrumb";
 import Detail from "../components/Bounty/Detail";
 import { useEffect } from "react";
 import { capitalize } from "utils";
-import { useFetchBountyDetail } from "hooks/useFetchBountyDetail";
+import { useFetchBountyDetail } from "@/hooks/useFetchBountyDetail";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import SEO from "components/SEO";
+import SEO from "@/components/SEO";
 
 const Wrapper = styled.div`
   position: relative;

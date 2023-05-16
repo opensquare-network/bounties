@@ -1,7 +1,7 @@
 import { Button } from "@osn/common-ui";
-import { useIsActionLoading } from "context/ActionLoadingContext";
-import { useAccount } from "hooks/useAccount";
-import { useWorkflowActionService } from "hooks/useWorkflowActionService";
+import { useIsActionLoading } from "@/context/ActionLoadingContext";
+import { useAccount } from "@/hooks/useAccount";
+import { useWorkflowActionService } from "@/hooks/useWorkflowActionService";
 import { findAssignedApplicant } from "../../utils";
 
 export function useHunterAcceptAndStart(childBountyDetail) {

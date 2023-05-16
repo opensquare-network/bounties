@@ -1,24 +1,24 @@
-import ConnectWallet from "components/ConnectWallet";
+import ConnectWallet from "@/components/ConnectWallet";
 // import Button from "@osn/common-ui/es/styled/Button";
-import { accountSelector } from "store/reducers/accountSlice";
+import { accountSelector } from "@/store/reducers/accountSlice";
 import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
-import serverApi from "services/serverApi";
+import serverApi from "@/services/serverApi";
 import { useNavigate } from "react-router-dom";
 import { useIsMounted, encodeNetworkAddress } from "@osn/common";
 import BountyLogo from "./BountyLogo";
 import debounce from "lodash.debounce";
-import { ASSETS } from "utils/constants";
-import { signApiData } from "utils/signature";
-import InputTitle from "components/Common/Import/InputTitle";
-import InputDescription from "components/Common/Import/InputDescription";
-import InputBountyId from "components/Common/Import/InputBountyId";
-import BountyMeta from "components/Common/Import/BountyMeta";
-import { resolveBountyDetailRoute } from "utils/route";
+import { ASSETS } from "@/utils/constants";
+import { signApiData } from "@/utils/signature";
+import InputTitle from "@/components/Common/Import/InputTitle";
+import InputDescription from "@/components/Common/Import/InputDescription";
+import InputBountyId from "@/components/Common/Import/InputBountyId";
+import BountyMeta from "@/components/Common/Import/BountyMeta";
+import { resolveBountyDetailRoute } from "@/utils/route";
 import { Wrapper, Box, Main, Side } from "./styled";
 import { noop, useNotification, Button } from "@osn/common-ui";
 import { delayPromise } from "../../../utils/delay";
-import { useHandleSigningError } from "hooks/useHandleSigningError";
+import { useHandleSigningError } from "@/hooks/useHandleSigningError";
 
 export default function ImportBounty() {
   const account = useSelector(accountSelector);

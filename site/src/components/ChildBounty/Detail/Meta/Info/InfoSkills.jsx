@@ -1,9 +1,9 @@
-import InfoItem from "components/Bounty/Detail/Meta/Info/InfoItem";
+import InfoItem from "@/components/Bounty/Detail/Meta/Info/InfoItem";
 import {
   InfoContent,
   InfoHeader,
-} from "components/Bounty/Detail/Meta/Info/styled";
-import SkillList from "components/Skill/List";
+} from "@/components/Bounty/Detail/Meta/Info/styled";
+import SkillList from "@/components/Skill/List";
 
 export default function InfoSkills({ childBountyDetail }) {
   const { skills = [] } = childBountyDetail ?? {};

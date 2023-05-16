@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { unreadSelector } from "store/reducers/notificationSlice";
+import { unreadSelector } from "@/store/reducers/notificationSlice";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 
 const Wrapper = styled(FlexCenter)`

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setUnread, fetchUnread } from "store/reducers/notificationSlice";
-import { accountSelector } from "store/reducers/accountSlice";
-import { connect } from "services/websocket";
+import { setUnread, fetchUnread } from "@/store/reducers/notificationSlice";
+import { accountSelector } from "@/store/reducers/accountSlice";
+import { connect } from "@/services/websocket";
 import { toPublicKey } from "@osn/common";
 
 export default function NotificationMonitor() {

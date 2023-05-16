@@ -1,6 +1,6 @@
 import { RichEditor } from "@osn/common-ui";
 import { Title } from "./styled";
-import { ErrorMessage } from "components/Common/Import/styled";
+import { ErrorMessage } from "@/components/Common/Import/styled";
 import styled from "styled-components";
 
 const CustomErrorMessage = styled(ErrorMessage)`

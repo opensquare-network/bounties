@@ -1,6 +1,6 @@
 import { Dot, ExternalLink, LinkIdentityUser } from "@osn/common-ui";
 import { MarkdownPreviewer } from "@osn/previewer";
-import Ellipsis from "components/Ellipsis";
+import Ellipsis from "@/components/Ellipsis";
 import {
   IdentityUserWrapper,
   DescriptionWrapper,

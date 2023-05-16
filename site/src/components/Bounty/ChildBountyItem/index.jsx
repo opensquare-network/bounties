@@ -13,8 +13,8 @@ import { Link } from "react-router-dom";
 import { HeadTitle } from "../styled/bounty";
 import { Mark } from "./styled";
 import StatusLabel from "../StatusLabel";
-import { resolveChildBountyDetailRoute } from "utils/route";
-import SkillList from "components/Skill/List";
+import { resolveChildBountyDetailRoute } from "@/utils/route";
+import SkillList from "@/components/Skill/List";
 import BountyLogo from "../BountyLogo";
 
 export default function ChildBountyItem({ children, ...props } = {}) {

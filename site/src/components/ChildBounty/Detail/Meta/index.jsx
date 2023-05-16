@@ -1,11 +1,11 @@
 import { Card, Divider } from "@osn/common-ui";
-import Description from "components/Bounty/Detail/Meta/Description";
-import Share from "components/Bounty/Detail/Meta/Share";
+import Description from "@/components/Bounty/Detail/Meta/Description";
+import Share from "@/components/Bounty/Detail/Meta/Share";
 import Title from "./Title";
 import {
   descriptionLoading,
   metaLoading,
-} from "components/Bounty/styled/metaLoading";
+} from "@/components/Bounty/styled/metaLoading";
 import { useAction } from "./actions";
 import Info from "./Info";
 import { Group } from "../../../Common/Detail/styled";

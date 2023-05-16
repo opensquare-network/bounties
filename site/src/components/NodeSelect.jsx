@@ -6,8 +6,8 @@ import {
   setCurrentNode,
   chainNodesSelector,
   activeChainNodeSelector,
-} from "store/reducers/nodeSlice";
-import { DEFAULT_NODES } from "utils/constants";
+} from "@/store/reducers/nodeSlice";
+import { DEFAULT_NODES } from "@/utils/constants";
 import Flex from "@osn/common-ui/es/styled/Flex";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 

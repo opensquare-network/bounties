@@ -13,12 +13,12 @@ import {
   OnlyMobile,
   Gap,
 } from "@osn/common-ui";
-import BountyTag from "components/Bounty/BountyTag";
-import StatusLabel from "components/Bounty/StatusLabel";
+import BountyTag from "@/components/Bounty/BountyTag";
+import StatusLabel from "@/components/Bounty/StatusLabel";
 import {
   resolveChildBountyDetailRoute,
   resolveImportChildBountyRoute,
-} from "utils/route";
+} from "@/utils/route";
 import {
   Index,
   IndexWrapper,
@@ -28,8 +28,8 @@ import {
   TimeWrapper,
   Title,
 } from "./styled";
-import { BOUNTY_STATUS } from "utils/constants";
-import { useBountyPermission } from "hooks/useBountyPermission";
+import { BOUNTY_STATUS } from "@/utils/constants";
+import { useBountyPermission } from "@/hooks/useBountyPermission";
 
 export default function ChildBounties({ bountyDetail = {} }) {
   const {

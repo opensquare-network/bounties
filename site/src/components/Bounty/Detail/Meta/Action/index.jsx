@@ -1,4 +1,4 @@
-import { BOUNTY_STATUS } from "utils/constants";
+import { BOUNTY_STATUS } from "@/utils/constants";
 import ClosedBountyCuratorActions from "./ClosedBountyCuratorActions";
 import OpenBountyCuratorActions from "./OpenBountyCuratorActions";
 

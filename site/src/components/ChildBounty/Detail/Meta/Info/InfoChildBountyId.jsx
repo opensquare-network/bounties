@@ -1,10 +1,10 @@
 import { FlexCenter } from "@osn/common-ui";
 import Tooltip from "@osn/common-ui/es/Tooltip";
-import InfoItem from "components/Bounty/Detail/Meta/Info/InfoItem";
+import InfoItem from "@/components/Bounty/Detail/Meta/Info/InfoItem";
 import {
   InfoContent,
   InfoHeader,
-} from "components/Bounty/Detail/Meta/Info/styled";
+} from "@/components/Bounty/Detail/Meta/Info/styled";
 
 export default function InfoChildBountyId({ childBountyDetail }) {
   return (

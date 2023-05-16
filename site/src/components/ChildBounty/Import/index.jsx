@@ -1,27 +1,27 @@
 import styled from "styled-components";
 
-import ConnectWallet from "components/ConnectWallet";
+import ConnectWallet from "@/components/ConnectWallet";
 // import Button from "@osn/common-ui/es/styled/Button";
-import { accountSelector } from "store/reducers/accountSlice";
+import { accountSelector } from "@/store/reducers/accountSlice";
 import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
-import serverApi from "services/serverApi";
+import serverApi from "@/services/serverApi";
 import { useNavigate } from "react-router-dom";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
 import debounce from "lodash.debounce";
-import { ASSETS } from "utils/constants";
-import { signApiData } from "utils/signature";
-import InputTitle from "components/Common/Import/InputTitle";
-import InputDescription from "components/Common/Import/InputDescription";
-import InputBountyId from "components/Common/Import/InputBountyId";
-import BountyMeta from "components/Common/Import/BountyMeta";
+import { ASSETS } from "@/utils/constants";
+import { signApiData } from "@/utils/signature";
+import InputTitle from "@/components/Common/Import/InputTitle";
+import InputDescription from "@/components/Common/Import/InputDescription";
+import InputBountyId from "@/components/Common/Import/InputBountyId";
+import BountyMeta from "@/components/Common/Import/BountyMeta";
 import BountySkills from "./BountySkills";
 import BountyHeader from "./BountyHeader";
-import { resolveChildBountyDetailRoute } from "utils/route";
+import { resolveChildBountyDetailRoute } from "@/utils/route";
 import { useNotification, Button } from "@osn/common-ui";
-import { useDifferentNetworkNotice } from "hooks/useDifferentNetworkNotice";
+import { useDifferentNetworkNotice } from "@/hooks/useDifferentNetworkNotice";
 import { delayPromise } from "../../../utils/delay";
-import { useHandleSigningError } from "hooks/useHandleSigningError";
+import { useHandleSigningError } from "@/hooks/useHandleSigningError";
 
 const Wrapper = styled.div`
   display: flex;

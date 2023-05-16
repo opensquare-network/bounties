@@ -1,6 +1,6 @@
 import { Title } from "./styled";
 import { Input, LoadingIcon } from "@osn/common-ui";
-import { ErrorMessage } from "components/Common/Import/styled";
+import { ErrorMessage } from "@/components/Common/Import/styled";
 
 export default function InputTitle({ title, setTitle, isLoading, errorMsg }) {
   return (

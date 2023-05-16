@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { Container, FlexBetween, FlexCenter } from "@osn/common-ui";
-import Background from "components/Background";
+import Background from "@/components/Background";
 import { MOBILE_SIZE } from "@osn/constants";
 import {
   h3_36_bold,
@@ -9,19 +9,19 @@ import {
   p_20_semibold,
   h5_24_bold,
 } from "@osn/common-ui/es/styles/textStyles";
-import ChildBountyList from "components/Bounty/ChildBountyList";
-import BountyList from "components/Bounty/BountyList";
+import ChildBountyList from "@/components/Bounty/ChildBountyList";
+import BountyList from "@/components/Bounty/BountyList";
 import { Link } from "react-router-dom";
 import { text_dark_minor } from "@osn/common-ui/es/styles/colors";
 import { useDispatch } from "react-redux";
 import {
   fetchBountyList,
   fetchChildBountyList,
-} from "store/reducers/bountySlice";
+} from "@/store/reducers/bountySlice";
 import { useAsyncState } from "@osn/common";
 import { useMemo } from "react";
-import { EmptyList } from "utils/constants";
-import SEO from "components/SEO";
+import { EmptyList } from "@/utils/constants";
+import SEO from "@/components/SEO";
 
 const Wrapper = styled.div`
   position: relative;

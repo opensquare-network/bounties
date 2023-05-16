@@ -1,4 +1,4 @@
-import { PROJECT_NAME, AVAILABLE_NETWORKS } from "utils/constants";
+import { PROJECT_NAME, AVAILABLE_NETWORKS } from "@/utils/constants";
 import CW, {
   ConnectWalletModal as CWM,
   ConnectWalletButton,

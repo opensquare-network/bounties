@@ -9,7 +9,7 @@ import Share from "./Share";
 import {
   descriptionLoading,
   metaLoading,
-} from "components/Bounty/styled/metaLoading";
+} from "@/components/Bounty/styled/metaLoading";
 import Action from "./Action";
 import { Group } from "../../../Common/Detail/styled";
 

@@ -1,20 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Flex, noop, useNotification } from "@osn/common-ui";
-import { useWorkflowActionService } from "hooks/useWorkflowActionService";
+import { useWorkflowActionService } from "@/hooks/useWorkflowActionService";
 import { ButtonGroup } from "../../styled";
 import { findWorkingApplicant } from "../../utils";
-import { accountSelector } from "store/reducers/accountSlice";
-import { useApi } from "utils/hooks";
-import { awardChildBounty } from "services/chainApi";
-import serverApi from "services/serverApi";
+import { accountSelector } from "@/store/reducers/accountSlice";
+import { useApi } from "@/utils/hooks";
+import { awardChildBounty } from "@/services/chainApi";
+import serverApi from "@/services/serverApi";
 import { encodeNetworkAddress, useIsMounted } from "@osn/common";
-import { signApiData } from "utils/signature";
-import { useFetchChildBountyDetail } from "hooks/useFetchChildBountyDetail";
+import { signApiData } from "@/utils/signature";
+import { useFetchChildBountyDetail } from "@/hooks/useFetchChildBountyDetail";
 import {
   useIsActionLoading,
   useSetIsActionLoading,
-} from "context/ActionLoadingContext";
-import { useHandleSigningError } from "hooks/useHandleSigningError";
+} from "@/context/ActionLoadingContext";
+import { useHandleSigningError } from "@/hooks/useHandleSigningError";
 
 export function useCuratorAssignedAction(childBountyDetail) {
   const dispatch = useDispatch();

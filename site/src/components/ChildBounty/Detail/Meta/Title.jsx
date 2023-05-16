@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
-import BountyTag from "components/Bounty/BountyTag";
+import BountyTag from "@/components/Bounty/BountyTag";
 import { p_18_semibold } from "@osn/common-ui";
-import BountyLogo from "components/Bounty/BountyLogo";
+import BountyLogo from "@/components/Bounty/BountyLogo";
 import { Dot, FlexBetween, p_14_medium, Select } from "@osn/common-ui";
-import StatusLabel from "components/Bounty/StatusLabel";
-import { useIsCurator } from "hooks/useIsCurator";
-import { CHILD_BOUNTY_CURATOR_VIEWS } from "utils/constants";
+import StatusLabel from "@/components/Bounty/StatusLabel";
+import { useIsCurator } from "@/hooks/useIsCurator";
+import { CHILD_BOUNTY_CURATOR_VIEWS } from "@/utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
   childBountyDetailCuratorViewSelector,
   setChildBountyDetailCuratorView,
-} from "store/reducers/childBountyDetailSlice";
+} from "@/store/reducers/childBountyDetailSlice";
 
 const Wrapper = styled.div`
   > :nth-child(1) {
