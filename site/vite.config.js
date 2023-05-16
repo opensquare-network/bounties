@@ -8,9 +8,6 @@ const alias = (alias) => path.resolve(__dirname, alias);
 
 export default defineConfig({
   plugins: [react(), svgr(), nodePolyfills()],
-  define: {
-    process: JSON.stringify({ env: process.env }),
-  },
   resolve: {
     alias: {
       buffer: "rollup-plugin-node-polyfills/polyfills/buffer-es6",
