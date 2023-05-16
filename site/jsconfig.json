@@ -1,6 +1,16 @@
 {
   "compilerOptions": {
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "target": "ES2016",
+    "allowJs": true,
+    "paths": {
+      "components": ["src/components"],
+      "services": ["src/services"],
+      "pages": ["src/pages"],
+      "utils": ["src/utils"],
+      "store": ["src/store"],
+      "context": ["src/context"]
+    }
   },
   "include": ["src"]
 }
