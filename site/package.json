@@ -58,7 +58,8 @@
     "dev": "vite",
     "build": "vite build",
     "postinstall": "patch-package",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix"
   },
   "browserslist": {
     "production": [
