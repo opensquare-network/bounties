@@ -671,20 +671,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-proposal-private-property-in-object@npm:^7.16.7":
-  version: 7.18.6
-  resolution: "@babel/plugin-proposal-private-property-in-object@npm:7.18.6"
-  dependencies:
-    "@babel/helper-annotate-as-pure": ^7.18.6
-    "@babel/helper-create-class-features-plugin": ^7.18.6
-    "@babel/helper-plugin-utils": ^7.18.6
-    "@babel/plugin-syntax-private-property-in-object": ^7.14.5
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: c8e56a972930730345f39f2384916fd8e711b3f4b4eae2ca9740e99958980118120d5cc9b6ac150f0965a5a35f825910e2c3013d90be3e9993ab6111df444569
-  languageName: node
-  linkType: hard
-
 "@babel/plugin-proposal-unicode-property-regex@npm:^7.18.6, @babel/plugin-proposal-unicode-property-regex@npm:^7.4.4":
   version: 7.18.6
   resolution: "@babel/plugin-proposal-unicode-property-regex@npm:7.18.6"
@@ -1649,7 +1635,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@bounties/site@workspace:."
   dependencies:
-    "@babel/plugin-proposal-private-property-in-object": ^7.16.7
     "@esbuild-plugins/node-modules-polyfill": ^0.2.2
     "@osn/common": ^1.3.7
     "@osn/common-ui": ^1.18.6
@@ -1683,7 +1668,6 @@ __metadata:
     react-redux: ^7.2.6
     react-router: ^6.11.1
     react-router-dom: ^6.11.1
-    rollup-plugin-node-polyfills: ^0.2.1
     semantic-ui-css: ^2.4.1
     semantic-ui-react: ^2.1.2
     socket.io-client: ^4.5.1
