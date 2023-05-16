@@ -17,7 +17,6 @@ export default defineConfig({
       path: "rollup-plugin-node-polyfills/polyfills/path",
       url: "rollup-plugin-node-polyfills/polyfills/url",
 
-      imgs: alias("public/imgs"),
       components: alias("src/components"),
       services: alias("src/services"),
       pages: alias("src/pages"),
