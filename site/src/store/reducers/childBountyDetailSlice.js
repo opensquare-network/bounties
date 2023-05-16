@@ -1,10 +1,10 @@
+import { createSlice } from "@reduxjs/toolkit";
 import serverApi from "services/serverApi";
 import {
   CHILD_BOUNTY_CURATOR_VIEWS,
   CHILD_BOUNTY_CURATOR_VIEW_KEY,
 } from "utils/constants";
 
-const { createSlice } = require("@reduxjs/toolkit");
 
 const childBountyDetailSlice = createSlice({
   name: "childBountyDetail",
