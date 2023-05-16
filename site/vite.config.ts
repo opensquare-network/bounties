@@ -1,10 +1,10 @@
 import { PluginOption, defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from 'node:path'
-import svgr from 'vite-plugin-svgr'
+import path from "node:path";
+import svgr from "vite-plugin-svgr";
 import nodePolyfills from "rollup-plugin-node-polyfills";
 
-const alias = (alias: string) => path.resolve(__dirname, alias)
+const alias = (alias: string) => path.resolve(__dirname, alias);
 
 export default defineConfig({
   plugins: [react(), svgr(), nodePolyfills() as PluginOption],
@@ -25,7 +25,7 @@ export default defineConfig({
       store: alias("src/store"),
       hooks: alias("src/hooks"),
       context: alias("src/context"),
-      '@osn/common-ui/es': alias('node_modules/@osn/common-ui/dist/esm')
+      "@osn/common-ui/es": alias("node_modules/@osn/common-ui/dist/esm"),
     },
   },
 });
