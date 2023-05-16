@@ -1,13 +1,13 @@
-import { PluginOption, defineConfig } from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
 import svgr from "vite-plugin-svgr";
 import nodePolyfills from "rollup-plugin-node-polyfills";
 
-const alias = (alias: string) => path.resolve(__dirname, alias);
+const alias = (alias) => path.resolve(__dirname, alias);
 
 export default defineConfig({
-  plugins: [react(), svgr(), nodePolyfills() as PluginOption],
+  plugins: [react(), svgr(), nodePolyfills()],
   define: {
     process: JSON.stringify({ env: process.env }),
   },
