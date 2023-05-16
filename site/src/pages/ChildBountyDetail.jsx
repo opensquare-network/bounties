@@ -3,7 +3,7 @@ import Background from "@/components/Background";
 import { Container } from "@osn/common-ui";
 import Breadcrumb from "../components/Breadcrumb";
 import { useNavigate, useParams } from "react-router";
-import { capitalize } from "utils";
+import { capitalize } from "@/utils";
 import { useEffect } from "react";
 import ChildBountyDetail from "@/components/ChildBounty/Detail";
 import { resolveBountyDetailRoute } from "@/utils/route";

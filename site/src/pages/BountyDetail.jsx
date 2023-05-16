@@ -6,7 +6,7 @@ import { Container } from "@osn/common-ui";
 import Breadcrumb from "../components/Breadcrumb";
 import Detail from "../components/Bounty/Detail";
 import { useEffect } from "react";
-import { capitalize } from "utils";
+import { capitalize } from "@/utils";
 import { useFetchBountyDetail } from "@/hooks/useFetchBountyDetail";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
