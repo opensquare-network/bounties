@@ -5,14 +5,14 @@ on:
     branches:
       - main
       - "release-*"
-    paths:
-      - "site/**"
+    paths-ignore:
+      - "backend/**"
   pull_request:
     branches:
       - main
       - "release-*"
-    paths:
-      - "site/**"
+    paths-ignore:
+      - "backend/**"
 
 jobs:
   build:
