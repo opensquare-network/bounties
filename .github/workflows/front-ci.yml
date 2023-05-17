@@ -1,0 +1,40 @@
+name: front ci
+
+on:
+  push:
+    branches:
+      - main
+      - "release-*"
+    paths:
+      - "site/**"
+  pull_request:
+    branches:
+      - main
+      - "release-*"
+    paths:
+      - "site/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: setup node LTS
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+          cache: yarn
+
+      - name: install deps
+        run: yarn
+        working-directory: ./site
+
+      - name: lint
+        run: yarn lint
+        working-directory: ./site
+
+      - name: build
+        run: yarn build
+        working-directory: ./site
