@@ -27,20 +27,14 @@ jobs:
           node-version: lts/*
           cache: yarn
 
-      - name: install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install
-          dir: "site"
+      - name: install deps
+        run: yarn
+        working-directory: ./site
 
       - name: lint
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: lint
-          dir: "site"
+        run: yarn lint
+        working-directory: ./site
 
       - name: build
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: build
-          dir: "site"
+        run: yarn build
+        working-directory: ./site
