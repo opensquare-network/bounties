@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import serverApi from "../services/serverApi";
 import { EmptyList } from "./constants";
-import { unreadSelector } from "store/reducers/notificationSlice";
+import { unreadSelector } from "@/store/reducers/notificationSlice";
 
 export function useNotifications(page, account, tab, setPage) {
   const pageSize = 10;

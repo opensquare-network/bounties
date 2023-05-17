@@ -7,7 +7,7 @@ import {
   bountyDetailSelector,
   fetchBountyDetail,
   resetBountyDetail,
-} from "store/reducers/bountyDetailSlice";
+} from "@/store/reducers/bountyDetailSlice";
 
 /**
  * @description ONLY use in page bounty detail

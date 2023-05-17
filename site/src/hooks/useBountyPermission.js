@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { childBountyDetailIsCuratorViewSelector } from "store/reducers/childBountyDetailSlice";
-import { BOUNTY_STATUS, CHILD_BOUNTY_STATUS } from "utils/constants";
+import { childBountyDetailIsCuratorViewSelector } from "@/store/reducers/childBountyDetailSlice";
+import { BOUNTY_STATUS, CHILD_BOUNTY_STATUS } from "@/utils/constants";
 import { useDifferentNetworkNotice } from "./useDifferentNetworkNotice";
 import { useIsCurator } from "./useIsCurator";
 

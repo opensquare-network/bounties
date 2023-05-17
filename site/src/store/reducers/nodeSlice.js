@@ -5,7 +5,7 @@ import {
   DEFAULT_POLKADOT_NODES,
   DEFAULT_KUSAMA_NODE_URL,
   DEFAULT_KUSAMA_NODES,
-} from "utils/constants";
+} from "@/utils/constants";
 
 let nodeUrl = (() => {
   let localNodeUrl = null;

@@ -1,7 +1,7 @@
 // copied from qa
 
 import { createSlice } from "@reduxjs/toolkit";
-import serverApi from "services/serverApi";
+import serverApi from "@/services/serverApi";
 
 const notificationSlice = createSlice({
   name: "notification",

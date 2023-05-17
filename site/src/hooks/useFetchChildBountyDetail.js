@@ -7,7 +7,7 @@ import {
   childBountyDetailSelector,
   fetchChildBountyDetail,
   resetChildBountyDetail,
-} from "store/reducers/childBountyDetailSlice";
+} from "@/store/reducers/childBountyDetailSlice";
 
 /**
  * @description ONLY use in page child bounty detail

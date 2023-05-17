@@ -1,18 +1,20 @@
 import { encodeNetworkAddress } from "@osn/common";
-import { useAccount } from "hooks/useAccount";
-import serverApi from "services/serverApi";
-import { signApiData } from "utils/signature";
+import { useAccount } from "@/hooks/useAccount";
+import serverApi from "@/services/serverApi";
+import { signApiData } from "@/utils/signature";
 import { useDispatch } from "react-redux";
 import { useFetchChildBountyDetail } from "./useFetchChildBountyDetail";
-import { notification } from "@osn/common-ui";
-import { handleSigningError } from "utils/exceptionHandle";
-import { useSetIsActionLoading } from "context/ActionLoadingContext";
+import { useNotification } from "@osn/common-ui";
+import { useSetIsActionLoading } from "@/context/ActionLoadingContext";
+import { useHandleSigningError } from "./useHandleSigningError";
 
 export function useWorkflowActionService(childBountyDetail) {
   const dispatch = useDispatch();
   const { network, parentBountyIndex, index } = childBountyDetail ?? {};
   const account = useAccount();
   const setIsLoading = useSetIsActionLoading();
+  const notification = useNotification();
+  const handleSigningError = useHandleSigningError();
 
   const { fetchChildBountyDetail } = useFetchChildBountyDetail();
 
