@@ -5,7 +5,7 @@ export function useAwardedAction(childBountyDetail) {
   const { applications = [], status, beneficiary } = childBountyDetail ?? {};
   const awardedApplication = applications.find(application => {
     const { address: applicant } = application;
-    return applicant === beneficiary && status === CHILD_BOUNTY_STATUS.Awarded
+    return applicant === beneficiary && status === CHILD_BOUNTY_STATUS.Awarded;
   })
 
   if (!awardedApplication) {
