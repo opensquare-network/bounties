@@ -9,11 +9,10 @@
       "url": "https://www.apache.org/licenses/LICENSE-2.0"
     }
   ],
-  "scripts": {},
   "dependencies": {
     "@koa/cors": "^3.1.0",
-    "@osn/polkadot-api-container": "1.0.11",
-    "@polkadot/util": "10.1.10",
+    "@osn/polkadot-api-container": "1.1.8",
+    "@polkadot/util": "12.2.2",
     "dotenv": "^10.0.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
