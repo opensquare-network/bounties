@@ -15,7 +15,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "scripts": {},
   "repository": "https://github.com/opensquare-network/bounties.git",
   "author": "OpenSquare <https://www.opensquare.network/>"
 }
