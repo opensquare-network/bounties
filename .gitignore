@@ -54,3 +54,5 @@ yalc.lock
 !.yarn/versions
 
 backend/.yarn/*
+
+webstorm.config.js
