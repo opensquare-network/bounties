@@ -1,13 +1,16 @@
 import AwardedApplicantButton from "./components/AwardedApplicantButton";
-import { findAwardedApplicant } from "./utils";
+import { CHILD_BOUNTY_STATUS } from "@/utils/constants";
 
 export function useAwardedAction(childBountyDetail) {
-  const { applicants = [] } = childBountyDetail ?? {};
-  const awardedApplicant = findAwardedApplicant(applicants);
+  const { applications = [], status, beneficiary } = childBountyDetail ?? {};
+  const awardedApplication = applications.find(application => {
+    const { address: applicant } = application;
+    return applicant === beneficiary && status === CHILD_BOUNTY_STATUS.Awarded
+  })
 
-  return (
-    awardedApplicant && (
-      <AwardedApplicantButton awardedApplicant={awardedApplicant} />
-    )
-  );
+  if (!awardedApplication) {
+    return null;
+  }
+
+  return <AwardedApplicantButton awardedApplicant={awardedApplication} />;
 }
