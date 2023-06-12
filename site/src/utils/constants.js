@@ -46,8 +46,20 @@ export const DEFAULT_KUSAMA_NODES = [
     url: "wss://kusama.api.onfinality.io/public-ws",
   },
   {
-    name: "Patract",
-    url: "wss://pub.elara.patract.io/kusama",
+    name: "Automata 1RPC",
+    url: "wss://1rpc.io/ksm",
+  },
+  {
+    name: "BlockOps",
+    url: "wss://kusama-public-rpc.blockops.network/ws",
+  },
+  {
+    name: "Dwellir",
+    url: "wss://kusama-rpc.dwellir.com",
+  },
+  {
+    name: "RadiumBlock",
+    url: "wss://kusama.public.curie.radiumblock.co/ws",
   },
 ];
 export const DEFAULT_KUSAMA_NODE_URL = DEFAULT_KUSAMA_NODES[0]?.url;
