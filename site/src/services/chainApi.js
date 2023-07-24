@@ -27,6 +27,25 @@ export const signMessage = async (text, address) => {
   return result.signature;
 };
 
+export function getDispatchError(dispatchError) {
+  let message = dispatchError.type;
+
+  if (dispatchError.isModule) {
+    try {
+      const mod = dispatchError.asModule;
+      const error = dispatchError.registry.findMetaError(mod);
+
+      message = `${error.section}.${error.name}`;
+    } catch (error) {
+      // swallow
+    }
+  } else if (dispatchError.isToken) {
+    message = `${dispatchError.type}.${dispatchError.asToken.type}`;
+  }
+
+  return message;
+}
+
 export const getSigner = async (signerAddress) => {
   await web3Enable(PROJECT_NAME);
   const injector = await web3FromAddress(signerAddress);
@@ -71,11 +90,13 @@ function signAndSendTx(tx, account, callback = () => {}) {
             }
             unsub();
 
-            for (const {
-              event: { method, section },
-            } of events) {
+            for (const event of events) {
+              const { section, method, data } = event.event;
+
               if (section === "system" && method === "ExtrinsicFailed") {
-                return reject(new Error("Extrinsic failed"));
+                const [dispatchError] = data;
+                const message = getDispatchError(dispatchError);
+                return reject(new Error(`Extrinsic failed: ${message}`));
               }
             }
 
