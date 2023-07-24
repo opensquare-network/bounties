@@ -1637,7 +1637,7 @@ __metadata:
   dependencies:
     "@esbuild-plugins/node-modules-polyfill": ^0.2.2
     "@osn/common": ^1.3.7
-    "@osn/common-ui": ^1.18.6
+    "@osn/common-ui": ^1.18.9
     "@osn/constants": ^1.1.2
     "@osn/previewer": ^0.12.4
     "@osn/rich-text-editor": ^0.1.59
@@ -2522,9 +2522,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@osn/common-ui@npm:^1.18.6":
-  version: 1.18.6
-  resolution: "@osn/common-ui@npm:1.18.6"
+"@osn/common-ui@npm:^1.18.9":
+  version: 1.18.9
+  resolution: "@osn/common-ui@npm:1.18.9"
   dependencies:
     "@osn/polkadot-react-identicon": ^1.0.10
     "@popperjs/core": ^2.11.6
@@ -2548,7 +2548,7 @@ __metadata:
     semantic-ui-css: ^2.4.1
     semantic-ui-react: ^2.1.3
     styled-components: ^5.3.1
-  checksum: 614b3386dc813280629c1b6ddea4cd3696027f674759298882cb0660b09361de664b2212d2e1224cf43fd6e0ca6d62d368cea019c0ad2116db895c1158d871eb
+  checksum: 1cd748c1f406f9f0175eee6726492d753a83008f99baa223597780379577950e9c3bd3025e108d2340574db2e9fb676f8d6aad514a93dd70cef649335597f024
   languageName: node
   linkType: hard
 
