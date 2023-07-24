@@ -97,7 +97,7 @@ function signAndSendTx(tx, account, callback = () => {}) {
       callback("Transaction broadcasting");
 
       timeoutId = setTimeout(() => {
-        reject(new Error("Timeout"));
+        reject(new Error("InBlock message is not received in 30 seconds"));
       }, 30*1000);
     } catch (e) {
       reject(e);
