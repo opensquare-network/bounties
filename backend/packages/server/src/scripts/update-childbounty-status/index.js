@@ -12,7 +12,7 @@ async function updateChildBountyToAwarded(childBounty, beneficiary) {
     {
       beneficiary,
       status: ChildBountyStatus.Awarded,
-    }
+    },
   );
 }
 
@@ -22,17 +22,19 @@ async function updateChildBountyToClosed(childBounty) {
     { _id: childBounty._id },
     {
       status: ChildBountyStatus.Closed,
-    }
+    },
   );
 }
 
 async function updateChildBountyStatus(childBounty) {
-  console.log(`Update child bounty: ${childBounty.network}/${childBounty.parentBountyIndex}/${childBounty.index}`);
+  console.log(
+    `Update child bounty: ${childBounty.network}/${childBounty.parentBountyIndex}/${childBounty.index}`,
+  );
 
   const { beneficiary, state } = await fetchChildBountyState(
     childBounty.network,
     childBounty.parentBountyIndex,
-    childBounty.index
+    childBounty.index,
   );
 
   if (["Awarded", "Claimed"].includes(state)) {
@@ -49,21 +51,21 @@ async function main() {
 
   const childBounties = await ChildBounty.find({
     status: {
-      $in: [
-        ChildBountyStatus.Open,
-        ChildBountyStatus.Assigned,
-      ]
-    }
+      $in: [ChildBountyStatus.Open, ChildBountyStatus.Assigned],
+    },
   });
 
   console.log(`Updating ${childBounties.length} child bounties`);
 
   for (const childBounty of childBounties) {
-    await updateChildBountyStatus(childBounty);
+    try {
+      await updateChildBountyStatus(childBounty);
+    } catch (e) {
+      console.error(e.message);
+    }
   }
 }
 
 main()
   .catch(console.error)
   .finally(() => process.exit());
-
