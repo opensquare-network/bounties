@@ -56,9 +56,7 @@ export async function awardChildBounty(
 
 function signAndSendTx(tx, account, callback = () => {}) {
   return new Promise(async (resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      reject(new Error("Timeout"));
-    }, 15*1000);
+    let timeoutId;
 
     try {
       const signer = await getSigner(account.address);
@@ -67,7 +65,10 @@ function signAndSendTx(tx, account, callback = () => {}) {
         { signer },
         ({ events = [], status }) => {
           if (status.isInBlock) {
-            clearTimeout(timeoutId);
+            if (timeoutId) {
+              clearTimeout(timeoutId);
+              timeoutId = null;
+            }
             unsub();
 
             for (const {
@@ -94,6 +95,10 @@ function signAndSendTx(tx, account, callback = () => {}) {
       );
 
       callback("Transaction broadcasting");
+
+      timeoutId = setTimeout(() => {
+        reject(new Error("InBlock message is not received in 30 seconds"));
+      }, 30*1000);
     } catch (e) {
       reject(e);
     }
