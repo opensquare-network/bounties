@@ -17,7 +17,7 @@ const ShareButton = styled(FlexCenter)`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #f0f3f8;
+  background-color: var(--fillBgTertiary);
   :hover {
     cursor: pointer;
     ${(p) =>

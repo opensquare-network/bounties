@@ -10,7 +10,7 @@ const JoinGroup = styled.div`
   width: 99px;
   height: 32px;
 
-  background: #F0F3F8;
+  background: var(--fillBgTertiary);
   border-radius: 18px;
 
   font-style: normal;
@@ -18,15 +18,15 @@ const JoinGroup = styled.div`
   font-size: 12px;
   line-height: 16px;
 
-  color: #A1A8B3;
+  color: #a1a8b3;
   cursor: pointer;
 
   :hover {
     svg path {
-      fill: #6848FF;
+      fill: #6848ff;
     }
-    color: #6848FF;
-    background: #F2F0FF;
+    color: #6848ff;
+    background: #f2f0ff;
   }
 `;
 

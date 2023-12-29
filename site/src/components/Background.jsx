@@ -6,8 +6,8 @@ const Background = styled.div`
   width: 100%;
   left: 0;
   top: 0;
-  border-bottom: solid 1px #f0f3f8;
-  background: #ffffff;
+  border-bottom: solid 1px var(--strokeBorderDefault);
+  background: var(--fillBgPrimary);
 `;
 
 export default Background;

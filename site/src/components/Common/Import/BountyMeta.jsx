@@ -97,7 +97,7 @@ const SignatoriesDivider = styled.div`
   flex-grow: 1;
   display: inline-block;
   height: 1px;
-  background: #f0f3f8;
+  background: var(--fillBgTertiary);
 `;
 
 const Field = styled.div`

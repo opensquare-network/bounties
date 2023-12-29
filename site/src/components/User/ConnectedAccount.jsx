@@ -81,7 +81,7 @@ const MenuWrapper = styled.div`
   right: 0;
   top: 100%;
   background: #ffffff;
-  border: 1px solid #f0f3f8;
+  border: 1px solid var(--strokeBorderDefault);
   padding: 16px 16px 8px;
   z-index: 1;
 
@@ -112,7 +112,7 @@ const MenuItem = styled.div`
 
 const MenuDivider = styled.div`
   height: 1px;
-  background: #f0f3f8;
+  background: var(--fillBgTertiary);
   margin: 12px 0;
 `;
 

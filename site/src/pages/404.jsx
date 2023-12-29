@@ -1,9 +1,5 @@
 import styled from "styled-components";
-import {
-  h3_36_bold,
-  h4_24_bold,
-  p_16_normal,
-} from "@osn/common-ui";
+import { h3_36_bold, h4_24_bold, p_16_normal } from "@osn/common-ui";
 import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -15,11 +11,11 @@ const Wrapper = styled.div`
 
 const Section = styled.div`
   background: #fff;
-  border-top: 1px solid #f0f3f8;
+  border-top: 1px solid var(--strokeBorderDefault);
   @media screen and (max-width: 800px) {
     border-top: none;
   }
-  border-bottom: 1px solid #f0f3f8;
+  border-bottom: 1px solid var(--strokeBorderDefault);
 `;
 
 const H1 = styled.h1`
