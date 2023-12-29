@@ -2,8 +2,6 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #1e2134;
-  background: #fbfcfe;
 }
 
 body * {
@@ -52,8 +50,8 @@ body a:hover {
   font-style: normal;
   font-weight: 400;
   src: url("/fonts/inter-v3-latin-regular.woff2") format("woff2"),
-    /* Super Modern Browsers */
-      url("/fonts/inter-v3-latin-regular.woff") format("woff");
+    /* Super Modern Browsers */ url("/fonts/inter-v3-latin-regular.woff")
+      format("woff");
 }
 
 @font-face {
