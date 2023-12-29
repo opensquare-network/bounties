@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 const Section = styled.div`
-  background: #fff;
+  background-color: var(--fillBgPrimary);
   border-top: 1px solid var(--strokeBorderDefault);
   @media screen and (max-width: 800px) {
     border-top: none;

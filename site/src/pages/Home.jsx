@@ -38,7 +38,7 @@ const BountiesWrapper = styled.div`
     p.bg &&
     css`
       border-bottom: solid 1px var(--strokeBorderDefault);
-      background-color: #ffffff;
+      background-color: var(--fillBgPrimary);
       padding-bottom: 40px;
     `}
 `;

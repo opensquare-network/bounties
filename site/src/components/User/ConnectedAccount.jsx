@@ -80,7 +80,7 @@ const MenuWrapper = styled.div`
   position: absolute;
   right: 0;
   top: 100%;
-  background: #ffffff;
+  background: var(--fillBgPrimary);
   border: 1px solid var(--strokeBorderDefault);
   padding: 16px 16px 8px;
   z-index: 1;

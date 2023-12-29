@@ -50,7 +50,7 @@ const Select = styled(Flex)`
 `;
 
 const Options = styled.div`
-  background: #ffffff;
+  background: var(--fillBgPrimary);
   box-shadow: 0px 6px 22px rgba(30, 33, 52, 0.11),
     0px 1.34018px 4.91399px rgba(30, 33, 52, 0.0655718),
     0px 0.399006px 1.46302px rgba(30, 33, 52, 0.0444282);
