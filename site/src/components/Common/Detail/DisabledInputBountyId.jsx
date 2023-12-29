@@ -10,11 +10,7 @@ const InputAndError = styled.div`
   gap: 8px;
 `;
 
-export default function DisabledInputBountyId({
-  title,
-  tooltip,
-  bountyId,
-}) {
+export default function DisabledInputBountyId({ title, tooltip, bountyId }) {
   return (
     <>
       <Title>
@@ -31,7 +27,7 @@ export default function DisabledInputBountyId({
         <Input
           defaultValue={bountyId}
           placeholder="0"
-          style={{ background: "#f0f3f8" }}
+          style={{ background: "var(--fillBgTertiary)" }}
         />
       </InputAndError>
     </>

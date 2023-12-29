@@ -17,7 +17,7 @@ import ActionBar from "./ActionBar";
 const ContentWrapper = styled.div`
   margin: 8px 0 0 28px;
   padding-bottom: 20px;
-  border-bottom: solid 1px #f0f3f8;
+  border-bottom: solid 1px var(--strokeBorderDefault);
   > :first-child {
     ${p_14_normal};
   }

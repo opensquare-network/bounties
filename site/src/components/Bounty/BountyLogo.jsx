@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   height: 64px;
   border: 1px solid #d2d9e2;
   border-radius: 50%;
-  background: #f0f3f8;
+  background: var(--fillBgTertiary);
   overflow: hidden;
 
   img.logo {
