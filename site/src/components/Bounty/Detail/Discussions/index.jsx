@@ -24,7 +24,6 @@ import {
 import {
   addressEllipsis,
   encodeNetworkAddress,
-  fetchIdentity,
   useIsMounted,
 } from "@osn/common";
 import uniqWith from "lodash.uniqwith";
@@ -36,6 +35,7 @@ import NetworkUser from "@/components/User/NetworkUser";
 import { MentionIdentityUser } from "@osn/common-ui";
 import { useBountyPermission } from "@/hooks/useBountyPermission";
 import { useHandleSigningError } from "@/hooks/useHandleSigningError";
+import { fetchIdentity } from "@/utils/identity";
 
 const Title = styled.div`
   ${p_16_semibold};
